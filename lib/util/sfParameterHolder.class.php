@@ -33,6 +33,33 @@ class sfParameterHolder implements Serializable
   }
 
   /**
+   * Serializes the current instance for PHP 7.4+.
+   *
+   * @return array
+   */
+  public function __serialize()
+  {
+    return $this->parameters;
+  }
+
+  /**
+   * Unserializes a sfParameterHolder instance for PHP 7.4+.
+   * [CVE-2024-28861] Check type of returned data to avoid deserialization vulnerabilities.
+   *
+   * @param array $data
+   */
+  public function __unserialize($data)
+  {
+    if (!is_array($data)) {
+      $this->parameters = [];
+
+      return;
+    }
+
+    $this->parameters = $data;
+  }
+
+  /**
    * Clears all parameters associated with this request.
    */
   public function clear()

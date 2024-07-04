@@ -85,6 +85,26 @@ class sfWebResponse extends sfResponse
   );
 
   /**
+     * @see sfResponse
+     *
+     * @return array
+     */
+    public function __serialize()
+    {
+        return [$this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots];
+    }
+
+    /**
+     * @see sfResponse
+     *
+     * @param array $data
+     */
+    public function __unserialize($data)
+    {
+        list($this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots) = $data;
+    }
+
+  /**
    * Initializes this sfWebResponse.
    *
    * Available options:

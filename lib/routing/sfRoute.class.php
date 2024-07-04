@@ -60,6 +60,32 @@ class sfRoute implements Serializable
     $this->options      = $options;
   }
 
+    /**
+     * Serializes the current instance for php 7.4+.
+     *
+     * @return array
+     */
+    public function __serialize()
+    {
+        // always serialize compiled routes
+        $this->compile();
+
+        // sfPatternRouting will always re-set defaultParameters, so no need to serialize them
+        return [$this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken];
+    }
+
+    /**
+     * Unserializes a sfRoute instance for php 7.4+.
+     *
+     * @param array $data
+     */
+    public function __unserialize($data)
+    {
+        list($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken) = $data;
+
+        $this->compiled = true;
+    }
+
   /**
    * Binds the current route for a given context and parameters.
    *

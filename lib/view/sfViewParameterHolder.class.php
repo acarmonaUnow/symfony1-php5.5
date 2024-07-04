@@ -33,6 +33,30 @@ class sfViewParameterHolder extends sfParameterHolder
     $this->initialize($dispatcher, $parameters, $options);
   }
 
+    /**
+     * Serializes the current instance for PHP 7.4+.
+     *
+     * @return array
+     */
+    public function __serialize()
+    {
+        return [$this->getAll(), $this->escapingMethod, $this->escaping];
+    }
+
+    /**
+     * Unserializes a sfParameterHolder instance for PHP 7.4+.
+     *
+     * @param array $data
+     */
+    public function __unserialize($data)
+    {
+        list($this->parameters, $escapingMethod, $escaping) = $data;
+        $this->initialize(sfContext::hasInstance() ? sfContext::getInstance()->getEventDispatcher() : new sfEventDispatcher());
+
+        $this->setEscapingMethod($escapingMethod);
+        $this->setEscaping($escaping);
+    }
+
   /**
    * Initializes this view parameter holder.
    *
@@ -165,11 +189,11 @@ class sfViewParameterHolder extends sfParameterHolder
   /**
    * Serializes the current instance.
    *
-   * @return array Objects instance
+     * @return string Objects instance
    */
   public function serialize()
   {
-    return serialize(array($this->getAll(), $this->escapingMethod, $this->escaping));
+        return serialize($this->__serialize());
   }
 
   /**
@@ -179,11 +203,6 @@ class sfViewParameterHolder extends sfParameterHolder
    */
   public function unserialize($serialized)
   {
-    list($this->parameters, $escapingMethod, $escaping) = unserialize($serialized);
-
-    $this->initialize(sfContext::hasInstance() ? sfContext::getInstance()->getEventDispatcher() : new sfEventDispatcher());
-
-    $this->setEscapingMethod($escapingMethod);
-    $this->setEscaping($escaping);
+        $this->__unserialize(unserialize($serialized));
   }
 }
