@@ -635,6 +635,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      *
      * @return integer
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->_connections);
@@ -645,6 +646,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      *
      * @return ArrayIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->_connections);

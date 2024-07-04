@@ -1883,6 +1883,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      *
      * @return integer          the number of columns in this record
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->_data);
@@ -2180,6 +2181,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      * implements IteratorAggregate interface
      * @return Doctrine_Record_Iterator     iterator through data
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new Doctrine_Record_Iterator($this);
