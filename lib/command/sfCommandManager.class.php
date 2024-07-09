@@ -111,7 +111,7 @@ class sfCommandManager
       $arguments = preg_replace_callback('/(\'|")(.+?)\\1/', fn($matches) => str_replace(' ', '=PLACEHOLDER=', $matches[2]),
         $arguments
       );
-      $arguments = preg_split('/\s+/', $arguments);
+      $arguments = preg_split('/\s+/', (string) $arguments);
       $arguments = str_replace('=PLACEHOLDER=', ' ', $arguments);
     }
 
@@ -130,13 +130,13 @@ class sfCommandManager
         break;
       }
 
-      if (str_starts_with($argument, '--'))
+      if (str_starts_with((string) $argument, '--'))
       {
-        $this->parseLongOption(substr($argument, 2));
+        $this->parseLongOption(substr((string) $argument, 2));
       }
       else if ('-' == $argument[0])
       {
-        $this->parseShortOption(substr($argument, 1));
+        $this->parseShortOption(substr((string) $argument, 1));
       }
       else
       {

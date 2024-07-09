@@ -85,7 +85,7 @@ abstract class AbstractHandler {
      * @access    public
      */
     public function characters($data) {
-        $s = trim($data);
+        $s = trim((string) $data);
         if (strlen($s) > 0) {
             throw new ExpatParseException("Unexpected text '$s'", $this->parser->getLocation());
         }

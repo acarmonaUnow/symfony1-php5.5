@@ -189,7 +189,7 @@ class sfModelGeneratorConfigurationField
   {
     if (in_array($flag = $field[0], array('=', '_', '~')))
     {
-      $field = substr($field, 1);
+      $field = substr((string) $field, 1);
     }
     else
     {

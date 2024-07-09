@@ -63,7 +63,7 @@ class sfFileLogger extends sfLogger
       $this->type = $options['type'];
     }
 
-    $dir = dirname($options['file']);
+    $dir = dirname((string) $options['file']);
     if (!is_dir($dir))
     {
       mkdir($dir, $options['dir_mode'] ?? 0777, true);

@@ -1665,11 +1665,11 @@ class Criterion  {
 		$h = crc32(serialize($this->value)) ^ crc32($this->comparison);
 
 		if ($this->table !== null) {
-			$h ^= crc32($this->table);
+			$h ^= crc32((string) $this->table);
 		}
 
 		if ($this->column !== null) {
-			$h ^= crc32($this->column);
+			$h ^= crc32((string) $this->column);
 		}
 
 		foreach ( $this->clauses as $clause ) {

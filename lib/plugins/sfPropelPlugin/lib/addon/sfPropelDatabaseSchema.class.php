@@ -448,7 +448,7 @@ class sfPropelDatabaseSchema
           $xml .= "    <index name=\"$index_name\">\n";
           foreach ($index as $index_column)
           {
-            preg_match('/^(.+?)\(([\d]+)\)$/', $index_column, $matches);
+            preg_match('/^(.+?)\(([\d]+)\)$/', (string) $index_column, $matches);
             if (isset($matches[2]))
             {
               $xml .= "      <index-column name=\"{$matches[1]}\" size=\"{$matches[2]}\" />\n";
@@ -470,7 +470,7 @@ class sfPropelDatabaseSchema
           $xml .= "    <unique name=\"$unique_name\">\n";
           foreach ($index as $unique_column)
           {
-            preg_match('/^(.+?)\(([\d]+)\)$/', $unique_column, $matches);
+            preg_match('/^(.+?)\(([\d]+)\)$/', (string) $unique_column, $matches);
             if (isset($matches[2]))
             {
               $xml .= "      <unique-column name=\"{$matches[1]}\" size=\"{$matches[2]}\" />\n";
@@ -644,11 +644,11 @@ class sfPropelDatabaseSchema
             $has_primary_key = true;
           }
 
-          $pos = strpos($column, '_id');
-          if ($pos > 0 && $pos == strlen($column) - 3)
+          $pos = strpos((string) $column, '_id');
+          if ($pos > 0 && $pos == strlen((string) $column) - 3)
           {
             // foreign key convention
-            $foreign_table = $this->findTable(substr($column, 0, $pos));
+            $foreign_table = $this->findTable(substr((string) $column, 0, $pos));
             if ($foreign_table)
             {
               $this->database[$table][$column] = array(
@@ -783,7 +783,7 @@ class sfPropelDatabaseSchema
       {
         if (!in_array($key, array('foreignClass', 'foreignTable', 'foreignReference', 'fkPhpName', 'fkRefPhpName', 'onDelete', 'onUpdate', 'index', 'unique', 'sequence', 'inheritance')))
         {
-          $attributes_string .= " $key=\"".htmlspecialchars($this->getCorrectValueFor($key, $value), ENT_QUOTES, sfConfig::get('sf_charset'))."\"";
+          $attributes_string .= " $key=\"".htmlspecialchars((string) $this->getCorrectValueFor($key, $value), ENT_QUOTES, sfConfig::get('sf_charset'))."\"";
         }
       }
       if (isset($column['inheritance']))
@@ -909,7 +909,7 @@ class sfPropelDatabaseSchema
     $attributes_string = '';
     foreach ($attributes as $key => $value)
     {
-      $attributes_string .= ' '.$key.'="'.htmlspecialchars($this->getCorrectValueFor($key, $value), ENT_QUOTES, sfConfig::get('sf_charset')).'"';
+      $attributes_string .= ' '.$key.'="'.htmlspecialchars((string) $this->getCorrectValueFor($key, $value), ENT_QUOTES, sfConfig::get('sf_charset')).'"';
     }
 
     return $attributes_string;
@@ -1162,7 +1162,7 @@ class sfPropelDatabaseSchema
         foreach ($indexes as $index => $references)
         {
           // Only single indexes can be simplified
-          if (count($references) == 1 && false !== substr($index, 0, strlen($index) - 6) && array_key_exists(substr($index, 0, strlen($index) - 6), $columns))
+          if (count($references) == 1 && false !== substr((string) $index, 0, strlen((string) $index) - 6) && array_key_exists(substr((string) $index, 0, strlen((string) $index) - 6), $columns))
           {
             $reference = $references[0];
 
@@ -1182,7 +1182,7 @@ class sfPropelDatabaseSchema
         foreach ($uniques as $index => $references)
         {
           // Only single unique indexes can be simplified
-          if (count($references) == 1 && false !== substr($index, 0, strlen($index) - 7) && array_key_exists(substr($index, 0, strlen($index) - 7), $columns))
+          if (count($references) == 1 && false !== substr((string) $index, 0, strlen((string) $index) - 7) && array_key_exists(substr((string) $index, 0, strlen((string) $index) - 7), $columns))
           {
             $reference = $references[0];
 
@@ -1222,8 +1222,8 @@ class sfPropelDatabaseSchema
           $this->database[$table][$column] = null;
         }
 
-        $pos                 = strpos($column, '_id');
-        $has_fk_name         = $pos > 0 && $pos == strlen($column) - 3;
+        $pos                 = strpos((string) $column, '_id');
+        $has_fk_name         = $pos > 0 && $pos == strlen((string) $column) - 3;
         $is_foreign_key      = isset($attributes['type']) && $attributes['type'] == 'integer' && isset($attributes['foreignReference']) && $attributes['foreignReference'] == 'id';
         $has_foreign_table   = isset($attributes['foreignTable']) && array_key_exists($attributes['foreignTable'], $this->getTables());
         $has_other_attribute = isset($attributes['onDelete']);

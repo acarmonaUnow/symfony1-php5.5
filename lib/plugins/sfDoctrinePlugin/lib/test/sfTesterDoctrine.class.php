@@ -67,10 +67,10 @@ class sfTesterDoctrine extends sfTester
         $operator = '=';
         if ('!' == $condition[0])
         {
-          $operator = str_contains($condition, '%') ? 'NOT LIKE' : '!=';
-          $condition = substr($condition, 1);
+          $operator = str_contains((string) $condition, '%') ? 'NOT LIKE' : '!=';
+          $condition = substr((string) $condition, 1);
         }
-        else if (str_contains($condition, '%'))
+        else if (str_contains((string) $condition, '%'))
         {
           $operator = 'LIKE';
         }
@@ -133,11 +133,11 @@ class sfTesterDoctrine extends sfTester
     {
       $events = array_slice($events, $limit * -1);
     }
-    else if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', $limit, $match))
+    else if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', (string) $limit, $match))
     {
       if ($match[1] == '!')
       {
-        $pattern = substr($limit, 1);
+        $pattern = substr((string) $limit, 1);
         $match = false;
       }
       else
@@ -158,9 +158,9 @@ class sfTesterDoctrine extends sfTester
       if (
         (!isset($pattern) && !isset($substring))
         ||
-        (isset($pattern) && $match == preg_match($pattern, $event->getQuery()))
+        (isset($pattern) && $match == preg_match($pattern, (string) $event->getQuery()))
         ||
-        (isset($substring) && false !== stripos($event->getQuery(), $substring))
+        (isset($substring) && false !== stripos((string) $event->getQuery(), $substring))
       )
       {
         $conn = $event->getInvoker() instanceof Doctrine_Connection ? $event->getInvoker() : $event->getInvoker()->getConnection();

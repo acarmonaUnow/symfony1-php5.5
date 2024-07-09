@@ -273,7 +273,7 @@ class CreoleSQLExecTask extends CreoleTask {
         
         $savedSqlCommand = $this->sqlCommand;
 
-        $this->sqlCommand = trim($this->sqlCommand);
+        $this->sqlCommand = trim((string) $this->sqlCommand);
 
         try {
             if ($this->srcFile === null && $this->sqlCommand === "" 
@@ -385,7 +385,7 @@ class CreoleSQLExecTask extends CreoleTask {
 
         try {
 			foreach ($lines as $line) {
-                $line = trim($line);
+                $line = trim((string) $line);
                 $line = ProjectConfigurator::replaceProperties($this->project, $line,
                         $this->project->getProperties());
                 
@@ -415,7 +415,7 @@ class CreoleSQLExecTask extends CreoleTask {
                         || $this->delimiterType == self::DELIM_ROW
                         && $line == $this->delimiter) {
                     $this->log("SQL: " . $sql, Project::MSG_VERBOSE);
-                    $this->execSQL(StringHelper::substring($sql, 0, strlen($sql) - strlen($this->delimiter)), $out);
+                    $this->execSQL(StringHelper::substring($sql, 0, strlen($sql) - strlen((string) $this->delimiter)), $out);
                     $sql = "";
                 }
             }
@@ -436,7 +436,7 @@ class CreoleSQLExecTask extends CreoleTask {
      */
     protected function execSQL($sql, $out = null) {
         // Check and ignore empty statements
-        if (trim($sql) == "") {
+        if (trim((string) $sql) == "") {
             return;
         }
 
@@ -502,7 +502,7 @@ class CreoleSQLExecTask extends CreoleTask {
                     foreach($fields as $columnValue) {
 
                         if ($columnValue != null) {
-                            $columnValue = trim($columnValue);
+                            $columnValue = trim((string) $columnValue);
                         }
 
                         if ($first) {

@@ -83,7 +83,7 @@ class sfRoutingConfigHandler extends sfYamlConfigHandler
       if (
         (isset($params['type']) && 'collection' == $params['type'])
         ||
-        (isset($params['class']) && str_contains($params['class'], 'Collection'))
+        (isset($params['class']) && str_contains((string) $params['class'], 'Collection'))
       )
       {
         $options = $params['options'] ?? array();

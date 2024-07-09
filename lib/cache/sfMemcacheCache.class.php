@@ -191,9 +191,9 @@ class sfMemcacheCache extends sfCache
     $regexp = $this->patternToRegexp($this->getOption('prefix').$pattern);
     foreach ($this->getCacheInfo() as $key)
     {
-      if (preg_match($regexp, $key))
+      if (preg_match($regexp, (string) $key))
       {
-        $this->remove(substr($key, strlen($this->getOption('prefix'))));
+        $this->remove(substr((string) $key, strlen((string) $this->getOption('prefix'))));
       }
     }
   }

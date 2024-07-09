@@ -91,7 +91,7 @@ class ContainsRegexpSelector extends BaseExtendSelector {
         if ($parameters !== null) {
             for ($i=0,$size=count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                match (strtolower($paramname)) {
+                match (strtolower((string) $paramname)) {
                     self::EXPRESSION_KEY => $this->setExpression($parameters[$i]->getValue()),
                     self::CASE_KEY => $this->setCasesensitive($parameters[$i]->getValue()),
                     default => $this->setError("Invalid parameter " . $paramname),

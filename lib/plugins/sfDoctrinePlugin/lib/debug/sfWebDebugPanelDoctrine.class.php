@@ -111,12 +111,12 @@ class sfWebDebugPanelDoctrine extends sfWebDebugPanel
     {
       $conn = $event->getInvoker() instanceof Doctrine_Connection ? $event->getInvoker() : $event->getInvoker()->getConnection();
       $params = sfDoctrineConnectionProfiler::fixParams($event->getParams());
-      $query = $this->formatSql(htmlspecialchars($event->getQuery(), ENT_QUOTES, sfConfig::get('sf_charset')));
+      $query = $this->formatSql(htmlspecialchars((string) $event->getQuery(), ENT_QUOTES, sfConfig::get('sf_charset')));
 
       // interpolate parameters
       foreach ($params as $param)
       {
-        $param = htmlspecialchars($param, ENT_QUOTES, sfConfig::get('sf_charset'));
+        $param = htmlspecialchars((string) $param, ENT_QUOTES, sfConfig::get('sf_charset'));
         $query = join(var_export(is_scalar($param) ? $param : (string) $param, true), explode('?', $query, 2));
       }
 
@@ -136,7 +136,7 @@ class sfWebDebugPanelDoctrine extends sfWebDebugPanel
           break;
         }
 
-        if (str_contains($log['message'], $event->getQuery()))
+        if (str_contains((string) $log['message'], (string) $event->getQuery()))
         {
           // assume queries are being requested in order
           unset($logs[$i]);

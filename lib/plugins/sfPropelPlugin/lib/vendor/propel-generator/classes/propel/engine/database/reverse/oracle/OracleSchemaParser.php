@@ -120,8 +120,8 @@ class OracleSchemaParser extends BaseSchemaParser {
 			if ($type == "FLOAT"&& $row["DATA_PRECISION"] == 126) {
 				$type = "DOUBLE";
 			}
-			if (str_contains($type, 'TIMESTAMP(')) {
-				$type = substr($type, 0, strpos($type, '('));
+			if (str_contains((string) $type, 'TIMESTAMP(')) {
+				$type = substr((string) $type, 0, strpos((string) $type, '('));
 				$default = "0000-00-00 00:00:00";
 				$size = null;
 				$scale = null;

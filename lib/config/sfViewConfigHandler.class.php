@@ -223,7 +223,7 @@ EOF;
 
     foreach ($this->mergeConfigValue('metas', $viewName) as $name => $content)
     {
-      $data[] = sprintf("  \$response->addMeta('%s', '%s', false, false);", $name, str_replace('\'', '\\\'', preg_replace('/&amp;(?=\w+;)/', '&', htmlspecialchars($content, ENT_QUOTES, sfConfig::get('sf_charset')))));
+      $data[] = sprintf("  \$response->addMeta('%s', '%s', false, false);", $name, str_replace('\'', '\\\'', preg_replace('/&amp;(?=\w+;)/', '&', htmlspecialchars((string) $content, ENT_QUOTES, sfConfig::get('sf_charset')))));
     }
 
     return implode("\n", $data)."\n";
@@ -283,7 +283,7 @@ EOF;
       }
       else if ('-' == $key[0])
       {
-        unset($tmp[substr($key, 1)]);
+        unset($tmp[substr((string) $key, 1)]);
       }
       else
       {

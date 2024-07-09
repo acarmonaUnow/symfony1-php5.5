@@ -107,8 +107,8 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
         $type  = '';
 
         if (isset($definition['type'])) {
-            $type = match (strtolower($definition['type'])) {
-                'unique' => strtoupper($definition['type']) . ' ',
+            $type = match (strtolower((string) $definition['type'])) {
+                'unique' => strtoupper((string) $definition['type']) . ' ',
                 default => throw new Doctrine_Export_Exception(
                     'Unknown type ' . $definition['type'] . ' for index ' . $name . ' in table ' . $table
                 ),
@@ -137,7 +137,7 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
 
             if (is_array($field)) {
                 if (isset($field['sorting'])) {
-                    $sort = strtoupper($field['sorting']);
+                    $sort = strtoupper((string) $field['sorting']);
                     match ($sort) {
                         'ASC', 'DESC' => $fieldString .= ' ' . $sort,
                         default => throw new Doctrine_Export_Exception('Unknown index sorting option given.'),

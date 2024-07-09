@@ -263,7 +263,7 @@ class sfClassManipulator
 
     if ($line)
     {
-      if (false === stripos($line, '<?php'))
+      if (false === stripos((string) $line, '<?php'))
       {
         // add a function so we can accurately slice
         $tokens = token_get_all('<?php function'.$line);

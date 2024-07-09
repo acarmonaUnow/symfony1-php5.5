@@ -122,7 +122,7 @@ class sfFinder
    */
   protected function to_regex($str)
   {
-    if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', $str))
+    if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', (string) $str))
     {
       return $str;
     }
@@ -501,7 +501,7 @@ class sfFinder
     {
       [$not, $regex] = $args;
       $not ? $one_not_name_rule = true : $one_name_rule = true;
-      if (preg_match($regex, $entry))
+      if (preg_match($regex, (string) $entry))
       {
         // We must match ONLY ONE "not_name" or "name" rule:
         // if "not_name" rule matched then we return "false"
@@ -547,7 +547,7 @@ class sfFinder
     foreach ($this->prunes as $args)
     {
       $regex = $args[1];
-      if (preg_match($regex, $entry)) return true;
+      if (preg_match($regex, (string) $entry)) return true;
     }
 
     return false;
@@ -560,7 +560,7 @@ class sfFinder
     foreach ($this->discards as $args)
     {
       $regex = $args[1];
-      if (preg_match($regex, $entry)) return true;
+      if (preg_match($regex, (string) $entry)) return true;
     }
 
     return false;
@@ -581,7 +581,7 @@ class sfFinder
   public static function isPathAbsolute($path)
   {
     if ($path[0] === '/' || $path[0] === '\\' ||
-        (strlen($path) > 3 && ctype_alpha($path[0]) &&
+        (strlen((string) $path) > 3 && ctype_alpha((string) $path[0]) &&
          $path[1] === ':' &&
          ($path[2] === '\\' || $path[2] === '/')
         )
@@ -749,7 +749,7 @@ class sfNumberCompare
 
   public function test($number)
   {
-    if (!preg_match('{^([<>]=?)?(.*?)([kmg]i?)?$}i', $this->test, $matches))
+    if (!preg_match('{^([<>]=?)?(.*?)([kmg]i?)?$}i', (string) $this->test, $matches))
     {
       throw new sfException(sprintf('don\'t understand "%s" as a test.', $this->test));
     }

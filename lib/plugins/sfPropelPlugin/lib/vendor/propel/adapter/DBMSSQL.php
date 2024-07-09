@@ -120,7 +120,7 @@ class DBMSSQL extends DBAdapter {
 
     //split the select and from clauses out of the original query
     $selectSegment = array();
-    preg_match('/\Aselect(.*)from(.*)/si',$sql,$selectSegment);
+    preg_match('/\Aselect(.*)from(.*)/si',(string) $sql,$selectSegment);
     if (count($selectSegment)==3)
     {      
       $selectStatement = trim($selectSegment[1]);

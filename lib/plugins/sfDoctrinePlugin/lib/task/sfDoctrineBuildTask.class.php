@@ -290,7 +290,7 @@ EOF;
     $options = array();
     foreach ($this->options as $option)
     {
-      if (defined($constant = self::class.'::OPTION_'.str_replace('-', '_', strtoupper($option->getName()))))
+      if (defined($constant = self::class.'::OPTION_'.str_replace('-', '_', strtoupper((string) $option->getName()))))
       {
         $options[$option->getName()] = constant($constant);
       }

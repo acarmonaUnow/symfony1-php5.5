@@ -46,7 +46,7 @@ class Doctrine_Task_Dql extends Doctrine_Task
         $query = Doctrine_Query::create();
 
         $params = $this->getArgument('params');
-        $params = $params ? explode(',', $params):array();
+        $params = $params ? explode(',', (string) $params):array();
 
         $this->notify('executing: "' . $dql . '" (' . implode(', ', $params) . ')');
 
@@ -58,7 +58,7 @@ class Doctrine_Task_Dql extends Doctrine_Task
     protected function _printResults($array)
     {
         $yaml = Doctrine_Parser::dump($array, 'yml');
-        $lines = explode("\n", $yaml);
+        $lines = explode("\n", (string) $yaml);
 
         unset($lines[0]);
 

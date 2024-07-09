@@ -342,7 +342,7 @@ class sfForm implements ArrayAccess, Iterator, Countable, \Stringable
    */
   public function getName()
   {
-    if (!str_ends_with($nameFormat = $this->widgetSchema->getNameFormat(), '[%s]'))
+    if (!str_ends_with((string) ($nameFormat = $this->widgetSchema->getNameFormat()), '[%s]'))
     {
       return false;
     }
@@ -1006,7 +1006,7 @@ class sfForm implements ArrayAccess, Iterator, Countable, \Stringable
   public function renderFormTag($url, array $attributes = array())
   {
     $attributes['action'] = $url;
-    $attributes['method'] = isset($attributes['method']) ? strtolower($attributes['method']) : 'post';
+    $attributes['method'] = isset($attributes['method']) ? strtolower((string) $attributes['method']) : 'post';
     if ($this->isMultipart())
     {
       $attributes['enctype'] = 'multipart/form-data';

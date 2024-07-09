@@ -35,7 +35,7 @@ class OsCondition implements Condition {
     private $family;
 
     function setFamily($f) {
-        $this->family = strtolower($f);
+        $this->family = strtolower((string) $f);
     }
 
     function evaluate() {

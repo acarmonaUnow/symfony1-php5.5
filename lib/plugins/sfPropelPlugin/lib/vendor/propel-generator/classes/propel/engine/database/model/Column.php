@@ -142,7 +142,7 @@ class Column extends XMLElement {
       if ($dom)  {
         $this->getDomain()->copy($this->getTable()->getDatabase()->getDomain($dom));
       } else {
-        $type = strtoupper($this->getAttribute("type"));
+        $type = strtoupper((string) $this->getAttribute("type"));
         if ($type) {
           $this->getDomain()->copy($this->getPlatform()->getDomainForType($type));
         } else {
@@ -217,7 +217,7 @@ class Column extends XMLElement {
       $this->getDomain()->replaceScale($this->getAttribute("scale"));
 
       $defval = $this->getAttribute("defaultValue", $this->getAttribute("default"));
-      if ($defval !== null && strtolower($defval) !== 'null') {
+      if ($defval !== null && strtolower((string) $defval) !== 'null') {
         $this->getDomain()->setDefaultValue(new ColumnDefaultValue($defval, ColumnDefaultValue::TYPE_VALUE));
       } elseif ($this->getAttribute("defaultExpr") !== null) {
         $this->getDomain()->setDefaultValue(new ColumnDefaultValue($this->getAttribute("defaultExpr"), ColumnDefaultValue::TYPE_EXPR));
@@ -399,7 +399,7 @@ class Column extends XMLElement {
     if ($this->getPeerName()) {
       $const = strtoupper($this->getPeerName());
     } else {
-      $const = strtoupper($this->getName());
+      $const = strtoupper((string) $this->getName());
     }
     return $classname.'::'.$const;
   }
@@ -1080,7 +1080,7 @@ class Column extends XMLElement {
    */
   public function setTypeFromString($typeName, $size)
   {
-    $tn = strtoupper($typeName);
+    $tn = strtoupper((string) $typeName);
     $this->setType($tn);
 
     if ($size !== null) {

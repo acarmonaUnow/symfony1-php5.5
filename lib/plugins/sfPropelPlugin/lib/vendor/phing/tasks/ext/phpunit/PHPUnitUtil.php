@@ -71,7 +71,7 @@ class PHPUnitUtil
 	 */
 	static function getClassFromFileName($filename)
 	{
-		$filename = basename($filename);
+		$filename = basename((string) $filename);
 		
 		$rpos = strrpos($filename, '.');
 		

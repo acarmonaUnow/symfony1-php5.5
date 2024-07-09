@@ -474,8 +474,8 @@ class Doctrine_Export extends Doctrine_Connection_Module
         $type   = '';
         
         if (isset($definition['type'])) {
-            $type = match (strtolower($definition['type'])) {
-                'unique' => strtoupper($definition['type']) . ' ',
+            $type = match (strtolower((string) $definition['type'])) {
+                'unique' => strtoupper((string) $definition['type']) . ' ',
                 default => throw new Doctrine_Export_Exception(
                     'Unknown type ' . $definition['type'] . ' for index ' . $name . ' in table ' . $table
                 ),
@@ -837,8 +837,8 @@ class Doctrine_Export extends Doctrine_Connection_Module
         $type   = '';
 
         if (isset($definition['type'])) {
-            if (strtolower($definition['type']) == 'unique') {
-                $type = strtoupper($definition['type']) . ' ';
+            if (strtolower((string) $definition['type']) == 'unique') {
+                $type = strtoupper((string) $definition['type']) . ' ';
             } else {
                 throw new Doctrine_Export_Exception(
                     'Unknown type ' . $definition['type'] . ' for index ' . $name
@@ -1113,7 +1113,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
              // We need these to happen first
              foreach ($sql as $key => $query) {
                  // If create table statement
-                 if (str_starts_with($query, 'CREATE TABLE')) {
+                 if (str_starts_with((string) $query, 'CREATE TABLE')) {
                      $connections[$connectionName]['create_tables'][] = $query;
 
                      unset($sql[$key]);
@@ -1121,7 +1121,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
                  }
 
                  // If create sequence statement
-                 if (str_starts_with($query, 'CREATE SEQUENCE')) {
+                 if (str_starts_with((string) $query, 'CREATE SEQUENCE')) {
                      $connections[$connectionName]['create_sequences'][] = $query;
 
                      unset($sql[$key]);
@@ -1137,8 +1137,8 @@ class Doctrine_Export extends Doctrine_Connection_Module
                  }
 
                  // If alter table statement or oracle anonymous block enclosing alter
-                 if (str_starts_with($query, 'ALTER TABLE')
-                       || str_starts_with($query, 'DECLARE')) {
+                 if (str_starts_with((string) $query, 'ALTER TABLE')
+                       || str_starts_with((string) $query, 'DECLARE')) {
                      $connections[$connectionName]['alters'][] = $query;
 
                      unset($sql[$key]);
@@ -1146,7 +1146,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
                  }
 
                  // If create trgger statement
-                 if (str_starts_with($query, 'CREATE TRIGGER')) {
+                 if (str_starts_with((string) $query, 'CREATE TRIGGER')) {
                      $connections[$connectionName]['create_triggers'][] = $query;
 
                  	 unset($sql[$key]);
@@ -1154,7 +1154,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
                  }
 
                  // If comment statement
-                 if (str_starts_with($query, 'COMMENT ON')) {
+                 if (str_starts_with((string) $query, 'COMMENT ON')) {
                      $connections[$connectionName]['comments'][] = $query;
 
                      unset($sql[$key]);

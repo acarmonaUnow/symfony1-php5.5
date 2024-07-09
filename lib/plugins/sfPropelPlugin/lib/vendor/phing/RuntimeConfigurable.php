@@ -107,7 +107,7 @@ class RuntimeConfigurable {
             // Configure all child of this object ...
             foreach($this->children as $child) {
                 $child->maybeConfigure($project);
-                ProjectConfigurator::storeChild($project, $this->wrappedObject, $child->wrappedObject, strtolower($child->getElementTag()));
+                ProjectConfigurator::storeChild($project, $this->wrappedObject, $child->wrappedObject, strtolower((string) $child->getElementTag()));
             }
         }
     }

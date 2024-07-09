@@ -71,15 +71,15 @@ abstract class sfPropelBaseTask extends sfBaseTask
       $localprefix = $prefix;
 
       // change prefix for plugins
-      if (preg_match('#plugins[/\\\\]([^/\\\\]+)[/\\\\]#', $schema, $match))
+      if (preg_match('#plugins[/\\\\]([^/\\\\]+)[/\\\\]#', (string) $schema, $match))
       {
         $localprefix = $prefix.$match[1].'-';
       }
 
       // save converted xml files in original directories
-      $yml_file_name = str_replace('.xml', '.yml', basename($schema));
+      $yml_file_name = str_replace('.xml', '.yml', basename((string) $schema));
 
-      $file = str_replace(basename($schema), $prefix.$yml_file_name,  $schema);
+      $file = str_replace(basename((string) $schema), $prefix.$yml_file_name,  $schema);
       $this->logSection('schema', sprintf('putting %s', $file));
       file_put_contents($file, $dbSchema->asYAML());
     }
@@ -141,15 +141,15 @@ abstract class sfPropelBaseTask extends sfBaseTask
       $localprefix = $prefix;
 
       // change prefix for plugins
-      if (preg_match('#plugins[/\\\\]([^/\\\\]+)[/\\\\]#', $schema, $match))
+      if (preg_match('#plugins[/\\\\]([^/\\\\]+)[/\\\\]#', (string) $schema, $match))
       {
         $localprefix = $prefix.$match[1].'-';
       }
 
       // save converted xml files in original directories
-      $xml_file_name = str_replace('.yml', '.xml', basename($schema));
+      $xml_file_name = str_replace('.yml', '.xml', basename((string) $schema));
 
-      $file = str_replace(basename($schema), $localprefix.$xml_file_name,  $schema);
+      $file = str_replace(basename((string) $schema), $localprefix.$xml_file_name,  $schema);
       $this->logSection('schema', sprintf('putting %s', $file));
       file_put_contents($file, $dbSchema->asXML());
     }
@@ -169,22 +169,22 @@ abstract class sfPropelBaseTask extends sfBaseTask
       $localprefix = '';
 
       // change prefix for plugins
-      if (preg_match('#plugins[/\\\\]([^/\\\\]+)[/\\\\]#', $schema, $match))
+      if (preg_match('#plugins[/\\\\]([^/\\\\]+)[/\\\\]#', (string) $schema, $match))
       {
         // if the plugin name is not in the schema filename, add it
-        if (!strstr(basename($schema), $match[1]))
+        if (!strstr(basename((string) $schema), $match[1]))
         {
           $localprefix = $match[1].'-';
         }
       }
 
       // if the prefix is not in the schema filename, add it
-      if (!strstr(basename($schema), (string) $prefix))
+      if (!strstr(basename((string) $schema), (string) $prefix))
       {
         $localprefix = $prefix.$localprefix;
       }
 
-      $this->getFilesystem()->copy($schema, 'config'.DIRECTORY_SEPARATOR.$localprefix.basename($schema));
+      $this->getFilesystem()->copy($schema, 'config'.DIRECTORY_SEPARATOR.$localprefix.basename((string) $schema));
       if ('' === $localprefix)
       {
         $this->getFilesystem()->remove($schema);

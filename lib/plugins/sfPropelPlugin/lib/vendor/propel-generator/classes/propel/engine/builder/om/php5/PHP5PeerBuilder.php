@@ -229,8 +229,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	{
 		foreach ($this->getTable()->getColumns() as $col) {
 			$script .= "
-	/** the column name for the ".strtoupper($col->getName()) ." field */
-	const ".$this->getColumnName($col) ." = '".$this->prefixTablename($this->getTable()->getName()).".".strtoupper($col->getName())."';
+	/** the column name for the ".strtoupper((string) $col->getName()) ." field */
+	const ".$this->getColumnName($col) ." = '".$this->prefixTablename($this->getTable()->getName()).".".strtoupper((string) $col->getName())."';
 ";
 		} // foreach
 	}
@@ -413,19 +413,19 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 					$script .= "
 	/** A key representing a particular subclass */
-	const CLASSKEY_".strtoupper($child->getKey())." = '" . $child->getKey() . "';
+	const CLASSKEY_".strtoupper((string) $child->getKey())." = '" . $child->getKey() . "';
 ";
 
-					if (strtoupper($child->getClassname()) != strtoupper($child->getKey())) {
+					if (strtoupper((string) $child->getClassname()) != strtoupper((string) $child->getKey())) {
 						$script .= "
 	/** A key representing a particular subclass */
-	const CLASSKEY_".strtoupper($child->getClassname())." = '" . $child->getKey() . "';
+	const CLASSKEY_".strtoupper((string) $child->getClassname())." = '" . $child->getKey() . "';
 ";
 					}
 
 					$script .= "
 	/** A class that can be returned by this peer. */
-	const CLASSNAME_".strtoupper($child->getKey())." = '". $childBuilder->getClasspath() . "';
+	const CLASSNAME_".strtoupper((string) $child->getKey())." = '". $childBuilder->getClasspath() . "';
 ";
 				} /* foreach children */
 			} /* if col->isenumerated...() */
@@ -996,8 +996,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
 			foreach ($col->getChildren() as $child) {
 				$script .= "
-				case self::CLASSKEY_".strtoupper($child->getKey()).":
-					\$omClass = self::CLASSNAME_".strtoupper($child->getKey()).";
+				case self::CLASSKEY_".strtoupper((string) $child->getKey()).":
+					\$omClass = self::CLASSNAME_".strtoupper((string) $child->getKey()).";
 					break;
 ";
 			} /* foreach */
@@ -1724,7 +1724,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	/**
 	 * Retrieve object using using composite pkey values.";
 		foreach ($table->getPrimaryKey() as $col) {
-			$clo = strtolower($col->getName());
+			$clo = strtolower((string) $col->getName());
 			$cptype = $col->getPhpType();
 			$script .= "
 	 * @param      $cptype $".$clo;
@@ -1737,7 +1737,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 		$php = array();
 		foreach ($table->getPrimaryKey() as $col) {
-			$clo = strtolower($col->getName());
+			$clo = strtolower((string) $col->getName());
 			$php[] = '$' . $clo;
 		} /* foreach */
 
@@ -1755,7 +1755,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		}
 		\$criteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);";
 		foreach ($table->getPrimaryKey() as $col) {
-			$clo = strtolower($col->getName());
+			$clo = strtolower((string) $col->getName());
 			$script .= "
 		\$criteria->add(".$this->getColumnConstant($col).", $".$clo.");";
 		}

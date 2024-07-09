@@ -149,7 +149,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
         $keys = $this->_getCacheKeys();
         if (is_array($keys)) {
             foreach ($keys as $key) {
-                if (preg_match($regex, $key)) {
+                if (preg_match($regex, (string) $key)) {
                     $count++;
                     $this->delete($key);
                 }
@@ -170,7 +170,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
         $keys = $this->_getCacheKeys();
         if (is_array($keys)) {
             foreach ($keys as $key) {
-                if (str_starts_with($key, $prefix)) {
+                if (str_starts_with((string) $key, $prefix)) {
                     $count++;
                     $this->delete($key);
                 }
@@ -191,7 +191,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
         $keys = $this->_getCacheKeys();
         if (is_array($keys)) {
             foreach ($keys as $key) {
-                if (substr($key, -1 * strlen($suffix)) == $suffix) {
+                if (substr((string) $key, -1 * strlen($suffix)) == $suffix) {
                     $count++;
                     $this->delete($key);
                 }
@@ -227,7 +227,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
     {
         $prefix = $this->_options['prefix'] ?? '';
 
-        if ( ! $prefix || str_starts_with($id, $prefix)) {
+        if ( ! $prefix || str_starts_with($id, (string) $prefix)) {
             return $id;
         } else {
             return $prefix . $id;

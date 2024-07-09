@@ -163,7 +163,7 @@ class AppendTask extends Task {
             
             // for debugging primarily, maybe comment
             // out for better performance(?)
-            $lines = explode("\n", $this->text);
+            $lines = explode("\n", (string) $this->text);
             foreach($lines as $line) {
                 $this->log($line, Project::MSG_VERBOSE);
             }

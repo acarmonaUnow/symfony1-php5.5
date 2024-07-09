@@ -201,7 +201,7 @@ class Target implements TaskContainer {
      *  @param string The description text
      */
     public function setDescription($description) {
-        if ($description !== null && strcmp($description, "") !== 0) {
+        if ($description !== null && strcmp((string) $description, "") !== 0) {
             $this->description = (string) $description;
         } else {
             $this->description = null;
@@ -281,7 +281,7 @@ class Target implements TaskContainer {
             return true;
         }
 
-        $properties = explode(",", $this->ifCondition);
+        $properties = explode(",", (string) $this->ifCondition);
 
         $result = true;
         foreach ($properties as $property) {
@@ -304,7 +304,7 @@ class Target implements TaskContainer {
             return true;
         }
         
-        $properties = explode(",", $this->unlessCondition);
+        $properties = explode(",", (string) $this->unlessCondition);
 
         $result = true;
         foreach ($properties as $property) {

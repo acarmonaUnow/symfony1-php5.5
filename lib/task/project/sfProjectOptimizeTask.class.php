@@ -128,7 +128,7 @@ EOF;
       $dirs = $this->configuration->getHelperDirs($module);
       foreach ($finder->in($dirs[0]) as $file)
       {
-        $helpers[basename($file, 'Helper.php')] = $file;
+        $helpers[basename((string) $file, 'Helper.php')] = $file;
       }
 
       if (count($helpers))
@@ -142,7 +142,7 @@ EOF;
     {
       foreach ($finder->in($dir) as $file)
       {
-        $helper = basename($file, 'Helper.php');
+        $helper = basename((string) $file, 'Helper.php');
         if (!isset($data[''][$helper]))
         {
           $data[''][$helper] = $file;

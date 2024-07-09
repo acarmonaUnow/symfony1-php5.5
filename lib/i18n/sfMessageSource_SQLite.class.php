@@ -390,7 +390,7 @@ class sfMessageSource_SQLite extends sfMessageSource_Database
     $result = array();
     while ($row = sqlite_fetch_array($rs, SQLITE_NUM))
     {
-      $details = explode('.', $row[0]);
+      $details = explode('.', (string) $row[0]);
       if (!isset($details[1]))
       {
         $details[1] = null;

@@ -85,7 +85,7 @@ EOF;
 
       if (isset($options['editor-cmd']))
       {
-        $this->getFilesystem()->execute($options['editor-cmd'].' '.escapeshellarg($file));
+        $this->getFilesystem()->execute($options['editor-cmd'].' '.escapeshellarg((string) $file));
       }
     }
   }

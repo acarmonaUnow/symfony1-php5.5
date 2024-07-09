@@ -77,7 +77,7 @@ class LineContainsRegexp extends BaseParamFilterReader implements ChainableReade
             return -1;
         }
         
-        $lines = explode("\n", $buffer);        
+        $lines = explode("\n", (string) $buffer);        
         $matched = array();        
         
         $regexpsSize = count($this->_regexps);

@@ -15,7 +15,7 @@ abstract class Base<?php echo $this->table->getClassname() ?>Form extends BaseFo
   {
     $this->setWidgets(array(
 <?php foreach ($this->table->getColumns() as $column): ?>
-      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($column->getName())) ?> => new <?php echo $this->getWidgetClassForColumn($column) ?>(<?php echo $this->getWidgetOptionsForColumn($column) ?>),
+      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen((string) $column->getName())) ?> => new <?php echo $this->getWidgetClassForColumn($column) ?>(<?php echo $this->getWidgetOptionsForColumn($column) ?>),
 <?php endforeach; ?>
 <?php foreach ($this->getManyToManyTables() as $tables): ?>
       '<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($this->underscore($tables['middleTable']->getClassname()).'_list')) ?> => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => '<?php echo $tables['relatedTable']->getClassname() ?>')),
@@ -24,7 +24,7 @@ abstract class Base<?php echo $this->table->getClassname() ?>Form extends BaseFo
 
     $this->setValidators(array(
 <?php foreach ($this->table->getColumns() as $column): ?>
-      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($column->getName())) ?> => new <?php echo $this->getValidatorClassForColumn($column) ?>(<?php echo $this->getValidatorOptionsForColumn($column) ?>),
+      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen((string) $column->getName())) ?> => new <?php echo $this->getValidatorClassForColumn($column) ?>(<?php echo $this->getValidatorOptionsForColumn($column) ?>),
 <?php endforeach; ?>
 <?php foreach ($this->getManyToManyTables() as $tables): ?>
       '<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($this->underscore($tables['middleTable']->getClassname()).'_list')) ?> => new sfValidatorPropelChoice(array('multiple' => true, 'model' => '<?php echo $tables['relatedTable']->getClassname() ?>', 'required' => false)),
@@ -118,7 +118,7 @@ abstract class Base<?php echo $this->table->getClassname() ?>Form extends BaseFo
     }
 
     $c = new Criteria();
-    $c->add(<?php echo constant($tables['middleTable']->getClassname().'::PEER') ?>::<?php echo strtoupper($tables['column']->getName()) ?>, $this->object->getPrimaryKey());
+    $c->add(<?php echo constant($tables['middleTable']->getClassname().'::PEER') ?>::<?php echo strtoupper((string) $tables['column']->getName()) ?>, $this->object->getPrimaryKey());
     <?php echo constant($tables['middleTable']->getClassname().'::PEER') ?>::doDelete($c, $con);
 
     $values = $this->getValue('<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list');

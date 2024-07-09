@@ -325,17 +325,17 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet, \Stringable
   /** Save a Header to the internal collection */
   private function _storeHeader($name, Swift_Mime_Header $header, $offset = null)
   {
-    if (!isset($this->_headers[strtolower($name)]))
+    if (!isset($this->_headers[strtolower((string) $name)]))
     {
-      $this->_headers[strtolower($name)] = array();
+      $this->_headers[strtolower((string) $name)] = array();
     }
     if (!isset($offset))
     {
-      $this->_headers[strtolower($name)][] = $header;
+      $this->_headers[strtolower((string) $name)][] = $header;
     }
     else
     {
-      $this->_headers[strtolower($name)][$offset] = $header;
+      $this->_headers[strtolower((string) $name)][$offset] = $header;
     }
   }
   
@@ -348,8 +348,8 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet, \Stringable
   /** uksort() algorithm for Header ordering */
   private function _sortHeaders($a, $b)
   {
-    $lowerA = strtolower($a);
-    $lowerB = strtolower($b);
+    $lowerA = strtolower((string) $a);
+    $lowerB = strtolower((string) $b);
     $aPos = array_key_exists($lowerA, $this->_order)
       ? $this->_order[$lowerA]
       : -1;

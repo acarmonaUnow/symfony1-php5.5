@@ -15,7 +15,7 @@ abstract class Base<?php echo $this->table->getOption('name') ?>FormFilter exten
     $this->setWidgets(array(
 <?php foreach ($this->getColumns() as $column): ?>
 <?php if ($column->isPrimaryKey()) continue ?>
-      '<?php echo $column->getFieldName() ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($column->getFieldName())) ?> => new <?php echo $this->getWidgetClassForColumn($column) ?>(<?php echo $this->getWidgetOptionsForColumn($column) ?>),
+      '<?php echo $column->getFieldName() ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen((string) $column->getFieldName())) ?> => new <?php echo $this->getWidgetClassForColumn($column) ?>(<?php echo $this->getWidgetOptionsForColumn($column) ?>),
 <?php endforeach; ?>
 <?php foreach ($this->getManyToManyRelations() as $relation): ?>
       '<?php echo $this->underscore($relation['alias']) ?>_list'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($this->underscore($relation['alias']).'_list')) ?> => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => '<?php echo $relation['table']->getOption('name') ?>')),
@@ -25,7 +25,7 @@ abstract class Base<?php echo $this->table->getOption('name') ?>FormFilter exten
     $this->setValidators(array(
 <?php foreach ($this->getColumns() as $column): ?>
 <?php if ($column->isPrimaryKey()) continue ?>
-      '<?php echo $column->getFieldName() ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($column->getFieldName())) ?> => <?php echo $this->getValidatorForColumn($column) ?>,
+      '<?php echo $column->getFieldName() ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen((string) $column->getFieldName())) ?> => <?php echo $this->getValidatorForColumn($column) ?>,
 <?php endforeach; ?>
 <?php foreach ($this->getManyToManyRelations() as $relation): ?>
       '<?php echo $this->underscore($relation['alias']) ?>_list'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($this->underscore($relation['alias']).'_list')) ?> => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => '<?php echo $relation['table']->getOption('name') ?>', 'required' => false)),
@@ -70,7 +70,7 @@ abstract class Base<?php echo $this->table->getOption('name') ?>FormFilter exten
   {
     return array(
 <?php foreach ($this->getColumns() as $column): ?>
-      '<?php echo $column->getFieldName() ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($column->getFieldName())) ?> => '<?php echo $this->getType($column) ?>',
+      '<?php echo $column->getFieldName() ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen((string) $column->getFieldName())) ?> => '<?php echo $this->getType($column) ?>',
 <?php endforeach; ?>
 <?php foreach ($this->getManyToManyRelations() as $relation): ?>
       '<?php echo $this->underscore($relation['alias']) ?>_list'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($this->underscore($relation['alias']).'_list')) ?> => 'ManyKey',

@@ -351,7 +351,7 @@ class PropelDataDumpTask extends AbstractPropelDataModelTask {
 				foreach ($tbl->getColumns() as $col) {
 					$cval = $row[$col->getName()];
 					if ($cval !== null) {
-						$rowNode->setAttribute($col->getPhpName(), iconv($this->dbEncoding, 'utf-8', $cval));
+						$rowNode->setAttribute($col->getPhpName(), iconv((string) $this->dbEncoding, 'utf-8', (string) $cval));
 					}
 				}
 				$dsNode->appendChild($rowNode);

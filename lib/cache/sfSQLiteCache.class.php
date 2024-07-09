@@ -181,7 +181,7 @@ class sfSQLiteCache extends sfCache
    */
   public function removePatternRegexpCallback($regexp, $key)
   {
-    return preg_match($regexp, $key);
+    return preg_match($regexp, (string) $key);
   }
 
   /**

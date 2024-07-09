@@ -66,7 +66,7 @@ class CoverageMergerTask extends Task
 			
 			foreach ($includedFiles as $file)
 			{
-				$fs = new PhingFile(basename($ds->getBaseDir()), $file);
+				$fs = new PhingFile(basename((string) $ds->getBaseDir()), $file);
 					
 				$files[] = $fs->getAbsolutePath();
 			}

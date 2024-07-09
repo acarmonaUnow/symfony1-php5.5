@@ -103,23 +103,23 @@ class PEAR_PackageFileManager_Fileset {
             foreach($files as $file) {
                             
                 // paths are relative to $basedir above
-                $path = strtr(dirname($file), DIRECTORY_SEPARATOR, '/');
+                $path = strtr(dirname((string) $file), DIRECTORY_SEPARATOR, '/');
     
                 if (!$path || $path == '.') {
                     $path = '/'; // for array index
                 }
                 
-				$parts = explode('.', basename($file));
+				$parts = explode('.', basename((string) $file));
                 $ext = array_pop($parts);
-                if (strlen($ext) == strlen($file)) {
+                if (strlen($ext) == strlen((string) $file)) {
                     $ext = '';
                 }
                 
                 $f = new PhingFile($basedir, $file);
                 
-                $struc[$path][] = array('file' => basename($file),
+                $struc[$path][] = array('file' => basename((string) $file),
                                         'ext' => $ext,
-                                        'path' => (($path == '/') ? basename($file) : $path . '/' . basename($file)),
+                                        'path' => (($path == '/') ? basename((string) $file) : $path . '/' . basename((string) $file)),
                                         'fullpath' => $f->getAbsolutePath());        
             }                                        
         }
@@ -212,7 +212,7 @@ class PEAR_PackageFileManager_Fileset {
      */
     function sortfiles($a, $b)
     {
-        return strnatcasecmp($a['file'],$b['file']);
+        return strnatcasecmp((string) $a['file'],(string) $b['file']);
     }
     
     function mystrucsort($a, $b)
@@ -225,7 +225,7 @@ class PEAR_PackageFileManager_Fileset {
             if ($a < $b) return -1;
             if ($a == $b) return 0;
         }
-        return strnatcasecmp($a,$b);
+        return strnatcasecmp((string) $a,(string) $b);
     }
 }
 

@@ -93,9 +93,9 @@ EOF;
     $width = 0;
     foreach ($tasks as $name => $task)
     {
-      $width = strlen($task->getName()) > $width ? strlen($task->getName()) : $width;
+      $width = strlen((string) $task->getName()) > $width ? strlen((string) $task->getName()) : $width;
     }
-    $width += strlen($this->formatter->format('  ', 'INFO'));
+    $width += strlen((string) $this->formatter->format('  ', 'INFO'));
 
     $messages = array();
     if ($namespace)

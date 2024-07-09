@@ -9,7 +9,7 @@ class Author extends BaseAuthor
   {
     if ( ! $this->exists())
     {
-      $author = Doctrine_Core::getTable('Author')->findOneByName(trim($name));
+      $author = Doctrine_Core::getTable('Author')->findOneByName(trim((string) $name));
       if ($author)
       {
         $this->assignIdentifier($author->identifier());

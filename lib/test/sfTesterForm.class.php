@@ -146,7 +146,7 @@ class sfTesterForm extends sfTester
     {
       $this->tester->ok($error && count($error) == $value, sprintf('the submitted form has %s "%s" error(s).', $value, $field));
     }
-    else if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', $value, $match))
+    else if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', (string) $value, $match))
     {
       if (!$error)
       {
@@ -156,7 +156,7 @@ class sfTesterForm extends sfTester
       {
         if ($match[1] == '!')
         {
-          $this->tester->unlike($error->getCode(), substr($value, 1), sprintf('the submitted form has a "%s" error that does not match "%s".', $field, $value));
+          $this->tester->unlike($error->getCode(), substr((string) $value, 1), sprintf('the submitted form has a "%s" error that does not match "%s".', $field, $value));
         }
         else
         {

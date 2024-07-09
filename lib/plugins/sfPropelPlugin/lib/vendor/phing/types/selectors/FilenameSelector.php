@@ -107,7 +107,7 @@ class FilenameSelector extends BaseExtendSelector {
         if ($parameters !== null) {
             for ($i=0, $len=count($parameters); $i < $len; $i++) {
                 $paramname = $parameters[$i]->getName();
-                match (strtolower($paramname)) {
+                match (strtolower((string) $paramname)) {
                     self::NAME_KEY => $this->setName($parameters[$i]->getValue()),
                     self::CASE_KEY => $this->setCasesensitive($parameters[$i]->getValue()),
                     self::NEGATE_KEY => $this->setNegate($parameters[$i]->getValue()),

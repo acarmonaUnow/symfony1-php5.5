@@ -88,7 +88,7 @@ EOF;
       'PROJECT_NAME'   => $properties['symfony']['name'] ?? 'symfony',
       'APP_NAME'       => $arguments['application'],
       'MODULE_NAME'    => $arguments['module'],
-      'UC_MODULE_NAME' => ucfirst($arguments['module']),
+      'UC_MODULE_NAME' => ucfirst((string) $arguments['module']),
       'MODEL_CLASS'    => $arguments['model'],
       'AUTHOR_NAME'    => $properties['symfony']['author'] ?? 'Your name here',
     );
@@ -123,7 +123,7 @@ EOF;
     $moduleDir = sfConfig::get('sf_app_module_dir').'/'.$arguments['module'];
 
     // copy our generated module
-    $this->getFilesystem()->mirror($tmpDir.DIRECTORY_SEPARATOR.'auto'.ucfirst($arguments['module']), $moduleDir, sfFinder::type('any'));
+    $this->getFilesystem()->mirror($tmpDir.DIRECTORY_SEPARATOR.'auto'.ucfirst((string) $arguments['module']), $moduleDir, sfFinder::type('any'));
 
     if (!$options['with-show'])
     {
@@ -132,7 +132,7 @@ EOF;
 
     // change module name
     $finder = sfFinder::type('file')->name('*.php');
-    $this->getFilesystem()->replaceTokens($finder->in($moduleDir), '', '', array('auto'.ucfirst($arguments['module']) => $arguments['module']));
+    $this->getFilesystem()->replaceTokens($finder->in($moduleDir), '', '', array('auto'.ucfirst((string) $arguments['module']) => $arguments['module']));
 
     // customize php and yml files
     $finder = sfFinder::type('file')->name('*.php', '*.yml');

@@ -90,11 +90,11 @@ class sfWebDebugPanelPropel extends sfWebDebugPanel
       $details = array();
       $slowQuery = false;
 
-      $parts = explode($outerGlue, $log['message']);
+      $parts = explode($outerGlue, (string) $log['message']);
       foreach ($parts as $i => $part)
       {
         // is this a key-glue-value fragment ?
-        if (preg_match('/^(\w+)'.preg_quote($innerGlue, '/').'(.*)/', $part, $match))
+        if (preg_match('/^(\w+)'.preg_quote((string) $innerGlue, '/').'(.*)/', $part, $match))
         {
           $details[] = $part;
           unset($parts[$i]);

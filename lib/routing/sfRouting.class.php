@@ -254,7 +254,7 @@ abstract class sfRouting
   {
     if (isset($this->options['context']['prefix']))
     {
-      if (str_starts_with($url, 'http'))
+      if (str_starts_with((string) $url, 'http'))
       {
         $url = preg_replace('#https?\://[^/]+#', '$0'.$this->options['context']['prefix'], $url);
       }
@@ -264,7 +264,7 @@ abstract class sfRouting
       }
     }
 
-    if ($absolute && isset($this->options['context']['host']) && !str_starts_with($url, 'http'))
+    if ($absolute && isset($this->options['context']['host']) && !str_starts_with((string) $url, 'http'))
     {
       $url = 'http'.(isset($this->options['context']['is_secure']) && $this->options['context']['is_secure'] ? 's' : '').'://'.$this->options['context']['host'].$url;
     }

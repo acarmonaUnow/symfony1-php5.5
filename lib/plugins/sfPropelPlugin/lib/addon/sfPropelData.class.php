@@ -273,10 +273,10 @@ class sfPropelData extends sfData
     $files = sfFinder::type('file')->name('*TableMap.php')->in(sfProjectConfiguration::getActive()->getModelDirs());
     foreach ($files as $file)
     {
-      $omClass = basename($file, 'TableMap.php');
+      $omClass = basename((string) $file, 'TableMap.php');
       if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject') && constant($omClass.'Peer::DATABASE_NAME') == $connectionName)
       {
-        $tableMapClass = basename($file, '.php');
+        $tableMapClass = basename((string) $file, '.php');
         $dbMap->addTableFromMapClass($tableMapClass);
       }
     }
@@ -352,7 +352,7 @@ class sfPropelData extends sfData
       $fixColumn = null;
       foreach ($tableMap->getColumns() as $column)
       {
-        $col = strtolower($column->getName());
+        $col = strtolower((string) $column->getName());
         if ($column->isForeignKey())
         {
           $relatedTable = $this->dbMap->getTable($column->getRelatedTableName());
@@ -388,7 +388,7 @@ class sfPropelData extends sfData
         $in = array();
         foreach ($tableMap->getColumns() as $column)
         {
-          $in[] = strtolower($column->getName());
+          $in[] = strtolower((string) $column->getName());
         }
         $stmt = $this->con->query(sprintf('SELECT %s FROM %s', implode(',', $in), constant(constant($tableName.'::PEER').'::TABLE_NAME')));
 
@@ -412,7 +412,7 @@ class sfPropelData extends sfData
 
             foreach ($tableMap->getColumns() as $column)
             {
-              $col = strtolower($column->getName());
+              $col = strtolower((string) $column->getName());
               $isPrimaryKey = $column->isPrimaryKey();
 
               if (null === $row[$col])
@@ -439,7 +439,7 @@ class sfPropelData extends sfData
                 {
                   $values[$col] = $relatedTable->getPhpName().'_'.$row[$col];
 
-                  $values[$col] = strlen($row[$col]) ? $relatedTable->getPhpName().'_'.$row[$col] : '';
+                  $values[$col] = strlen((string) $row[$col]) ? $relatedTable->getPhpName().'_'.$row[$col] : '';
                 }
               }
               elseif (!$isPrimaryKey || ($isPrimaryKey && !$tableMap->isUseIdGenerator()))
@@ -507,7 +507,7 @@ class sfPropelData extends sfData
   {
     $sql = sprintf('SELECT * FROM %s WHERE %s %s',
                    constant(constant($tableName.'::PEER').'::TABLE_NAME'),
-                   strtolower($column->getName()),
+                   strtolower((string) $column->getName()),
                    null === $in ? 'IS NULL' : 'IN ('.$in.')');
     $stmt = $this->con->prepare($sql);
 
@@ -516,7 +516,7 @@ class sfPropelData extends sfData
     $in = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
-      $in[] = "'".$row[strtolower($column->getRelatedColumnName())]."'";
+      $in[] = "'".$row[strtolower((string) $column->getRelatedColumnName())]."'";
       $resultsSets[] = $row;
     }
 

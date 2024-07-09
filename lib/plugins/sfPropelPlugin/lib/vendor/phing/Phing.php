@@ -356,7 +356,7 @@ class Phing {
 					$this->listeners[] = $args[++$i];
 				}
 			} elseif (StringHelper::startsWith("-D", $arg)) {
-				$name = substr($arg, 2);
+				$name = substr((string) $arg, 2);
 				$value = null;
 				$posEq = strpos($name, "=");
 				if ($posEq !== false) {
@@ -393,7 +393,7 @@ class Phing {
 				} else {
 					$this->searchForThis = self::DEFAULT_BUILD_FILENAME;
 				}
-			} elseif (str_starts_with($arg, "-")) {
+			} elseif (str_starts_with((string) $arg, "-")) {
 				// we don't have any more args
 				self::$err->write("Unknown argument: $arg" . PHP_EOL);
 				self::printUsage();
@@ -799,7 +799,7 @@ class Phing {
 			$file = new PhingFile($versionPath);
 			$reader = new FileReader($file);
 			$reader->readInto($buffer);
-			$buffer = trim($buffer);
+			$buffer = trim((string) $buffer);
 			//$buffer = "PHING version 1.0, Released 2002-??-??";
 			$phingVersion = $buffer;
 		} catch (IOException) {
@@ -844,8 +844,8 @@ class Phing {
 				// topNames and topDescriptions are handled later
 				// here we store in hash map (for sorting purposes)
 				$topNameDescMap[$targetName] = $targetDescription;
-				if (strlen($targetName) > $maxLength) {
-					$maxLength = strlen($targetName);
+				if (strlen((string) $targetName) > $maxLength) {
+					$maxLength = strlen((string) $targetName);
 				}
 			}
 		}
@@ -909,7 +909,7 @@ class Phing {
 			$msg .= " ";
 			$msg .= $names[$i];
 			if (!empty($descriptions)) {
-				$msg .= substr($spaces, 0, $maxlen - strlen($names[$i]) + 2);
+				$msg .= substr($spaces, 0, $maxlen - strlen((string) $names[$i]) + 2);
 				$msg .= $descriptions[$i];
 			}
 			$msg .= PHP_EOL;

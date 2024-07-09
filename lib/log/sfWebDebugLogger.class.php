@@ -151,9 +151,9 @@ class sfWebDebugLogger extends sfVarLogger
       ||
       $request->isXmlHttpRequest()
       ||
-      !str_contains($response->getContentType(), 'html')
+      !str_contains((string) $response->getContentType(), 'html')
       ||
-      str_starts_with($response->getStatusCode(), '3')
+      str_starts_with((string) $response->getStatusCode(), '3')
       ||
       $this->context->getController()->getRenderMode() != sfView::RENDER_CLIENT
       ||

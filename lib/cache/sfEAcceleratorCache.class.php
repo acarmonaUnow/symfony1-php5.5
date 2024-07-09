@@ -84,7 +84,7 @@ class sfEAcceleratorCache extends sfCache
 
       foreach ($infos as $info)
       {
-        if (preg_match($regexp, $info['name']))
+        if (preg_match($regexp, (string) $info['name']))
         {
           eaccelerator_rm($this->getOption('prefix').$key);
         }
@@ -107,10 +107,10 @@ class sfEAcceleratorCache extends sfCache
     {
       foreach ($infos as $info)
       {
-        if (str_contains($info['name'], $this->getOption('prefix')))
+        if (str_contains((string) $info['name'], (string) $this->getOption('prefix')))
         {
           // eaccelerator bug (http://eaccelerator.net/ticket/287)
-          $key = str_starts_with($info['name'], ':') ? substr($info['name'], 1) : $info['name'];
+          $key = str_starts_with((string) $info['name'], ':') ? substr((string) $info['name'], 1) : $info['name'];
           if (!eaccelerator_rm($key))
           {
             return false;

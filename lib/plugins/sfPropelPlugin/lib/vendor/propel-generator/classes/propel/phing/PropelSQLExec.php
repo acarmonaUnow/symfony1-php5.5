@@ -271,7 +271,7 @@ class PropelSQLExec extends Task {
 	 */
 	public function main()
 	{
-		$this->sqlCommand = trim($this->sqlCommand);
+		$this->sqlCommand = trim((string) $this->sqlCommand);
 
 		if ($this->sqldbmap === null || $this->getSqlDbMap()->exists() === false) {
 			throw new BuildException("You haven't provided an sqldbmap, or "
@@ -304,7 +304,7 @@ class PropelSQLExec extends Task {
 
 			// We want to make sure that the base schemas
 			// are inserted first.
-			if (str_contains($sqlfile, "schema.sql")) {
+			if (str_contains((string) $sqlfile, "schema.sql")) {
 				// add to the beginning of the array
 				array_unshift($databases[$database], $sqlfile);
 			} else {
@@ -448,7 +448,7 @@ class PropelSQLExec extends Task {
 
 		while (($line = $in->readLine()) !== null) {
 
-			$line = trim($line);
+			$line = trim((string) $line);
 			$line = ProjectConfigurator::replaceProperties($this->project, $line,
 			$this->project->getProperties());
 
@@ -544,7 +544,7 @@ class PropelSQLExec extends Task {
 
 			if ($hasQuery || ($this->delimiterType == self::DELIM_ROW && $line == $this->delimiter)) {
 				// this assumes there is always a delimter on the end of the SQL statement.
-				$sql = StringHelper::substring($sql, 0, strlen($sql) - 1 - strlen($this->delimiter));
+				$sql = StringHelper::substring($sql, 0, strlen($sql) - 1 - strlen((string) $this->delimiter));
 				$this->log("SQL: " . $sql, Project::MSG_VERBOSE);
 				$this->execSQL($sql, $out);
 				$sql = "";
@@ -575,7 +575,7 @@ class PropelSQLExec extends Task {
 	protected function execSQL($sql, $out = null)
 	{
 		// Check and ignore empty statements
-		if (trim($sql) == "") {
+		if (trim((string) $sql) == "") {
 			return;
 		}
 

@@ -356,7 +356,7 @@ class sfNumberFormatInfo
     $info['groupSize2']    = $groupSize2;
     $info['decimalPos']    = $decimalPos;
     $info['decimalPoints'] = $decimalPoints;
-    $info['digitSize']     = strlen($digitPattern);
+    $info['digitSize']     = strlen((string) $digitPattern);
 
     return $info;
   }

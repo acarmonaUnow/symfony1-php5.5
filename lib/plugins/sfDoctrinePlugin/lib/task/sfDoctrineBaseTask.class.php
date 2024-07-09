@@ -159,7 +159,7 @@ abstract class sfDoctrineBaseTask extends sfBaseTask
             $models[$model]['package'] = $plugin->getName().'.lib.model.doctrine';
           }
 
-          if (!isset($models[$model]['package_custom_path']) && str_starts_with($models[$model]['package'], $plugin->getName()))
+          if (!isset($models[$model]['package_custom_path']) && str_starts_with((string) $models[$model]['package'], (string) $plugin->getName()))
           {
             $models[$model]['package_custom_path'] = $plugin->getRootDir().'/lib/model/doctrine';
           }
@@ -242,7 +242,7 @@ abstract class sfDoctrineBaseTask extends sfBaseTask
         }
 
         // expand short type(length, scale) syntax
-        if (isset($value['type']) && preg_match('/ *(\w+) *\( *(\d+)(?: *, *(\d+))? *\)/', $value['type'], $match))
+        if (isset($value['type']) && preg_match('/ *(\w+) *\( *(\d+)(?: *, *(\d+))? *\)/', (string) $value['type'], $match))
         {
           $definition['columns'][$key]['type'] = $match[1];
           $definition['columns'][$key]['length'] = $match[2];

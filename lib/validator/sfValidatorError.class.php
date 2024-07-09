@@ -114,7 +114,7 @@ class sfValidatorError extends Exception implements Serializable
         continue;
       }
 
-      $arguments["%$key%"] = htmlspecialchars($value, ENT_QUOTES, sfValidatorBase::getCharset());
+      $arguments["%$key%"] = htmlspecialchars((string) $value, ENT_QUOTES, sfValidatorBase::getCharset());
     }
 
     return $arguments;

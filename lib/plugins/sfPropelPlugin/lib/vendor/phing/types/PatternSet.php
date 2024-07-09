@@ -118,7 +118,7 @@ class PatternSet extends DataType {
     	if ($this->isReference()) {
     		throw $this->tooManyAttributes();
     	}
-    	if ($includes !== null && strlen($includes) > 0) {
+    	if ($includes !== null && strlen((string) $includes) > 0) {
     		$tok = strtok($includes, ", ");
     		while ($tok !== false) {
     			$o = $this->createInclude();
@@ -141,7 +141,7 @@ class PatternSet extends DataType {
     	if ($this->isReference()) {
     		throw $this->tooManyAttributes();
     	}
-    	if ($excludes !== null && strlen($excludes) > 0) {
+    	if ($excludes !== null && strlen((string) $excludes) > 0) {
     		$tok = strtok($excludes, ", ");
     		while ($tok !== false) {
     			$o = $this->createExclude();

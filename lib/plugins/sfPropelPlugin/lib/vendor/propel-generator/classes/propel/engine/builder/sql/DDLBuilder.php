@@ -70,13 +70,13 @@ abstract class DDLBuilder extends DataModelBuilder {
 					if (!isset($longNamesMap[$table->getName()])) {
 						$longNamesMap[$table->getName()] = strval(count($longNamesMap) + 1);
 					}
-					$result = substr($table->getName(), 0, $maxIdentifierLength - strlen("_SEQ_" . $longNamesMap[$table->getName()])) . "_SEQ_" . $longNamesMap[$table->getName()];
+					$result = substr((string) $table->getName(), 0, $maxIdentifierLength - strlen("_SEQ_" . $longNamesMap[$table->getName()])) . "_SEQ_" . $longNamesMap[$table->getName()];
 				}
 				else {
-					$result = substr($table->getName(), 0, $maxIdentifierLength -4) . "_SEQ";
+					$result = substr((string) $table->getName(), 0, $maxIdentifierLength -4) . "_SEQ";
 				}
 			} else {
-				$result = substr($idMethodParams[0]->getValue(), 0, $maxIdentifierLength);
+				$result = substr((string) $idMethodParams[0]->getValue(), 0, $maxIdentifierLength);
 			}
 		}
 		return $result;

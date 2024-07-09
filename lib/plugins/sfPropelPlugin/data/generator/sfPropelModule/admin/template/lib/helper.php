@@ -7,7 +7,7 @@
  * @subpackage <?php echo $this->getModuleName()."\n" ?>
  * @author     ##AUTHOR_NAME##
  */
-abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends sfModelGeneratorHelper
+abstract class Base<?php echo ucfirst((string) $this->getModuleName()) ?>GeneratorHelper extends sfModelGeneratorHelper
 {
   public function getUrlForAction($action)
   {

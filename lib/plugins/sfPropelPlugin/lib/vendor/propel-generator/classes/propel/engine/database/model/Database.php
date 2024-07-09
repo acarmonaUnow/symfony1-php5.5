@@ -415,7 +415,7 @@ class Database extends XMLElement {
     if($config && ($defaultBehaviors = $config->getBuildProperty('behaviorDefault')))
     {
       // add generic behaviors from build.properties 
-      $defaultBehaviors = explode(',', $defaultBehaviors);
+      $defaultBehaviors = explode(',', (string) $defaultBehaviors);
       foreach ($defaultBehaviors as $behavior)
       {
         $this->addBehavior(array('name' => trim($behavior)));

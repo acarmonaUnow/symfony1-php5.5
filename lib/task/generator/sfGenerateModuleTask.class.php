@@ -69,7 +69,7 @@ EOF;
     $module = $arguments['module'];
 
     // Validate the module name
-    if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $module))
+    if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', (string) $module))
     {
       throw new sfCommandException(sprintf('The module name "%s" is invalid.', $module));
     }

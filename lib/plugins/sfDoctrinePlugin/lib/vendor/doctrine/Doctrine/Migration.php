@@ -207,7 +207,7 @@ class Doctrine_Migration
         $this->_migrationClasses[$classMigrationNum] = $name;
 
         if ($path) {
-            $dir = dirname($path);
+            $dir = dirname((string) $path);
             self::$_migrationClassesForDirectories[$dir][$classMigrationNum] = $name;
         }
     }

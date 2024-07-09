@@ -270,7 +270,7 @@ CREATE TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))
 
 		foreach ($table->getForeignKeys() as $fk) {
 
-			$indexName = $this->quoteIdentifier(substr_replace($fk->getName(), 'FI_',  strrpos($fk->getName(), 'FK_'), 3));
+			$indexName = $this->quoteIdentifier(substr_replace($fk->getName(), 'FI_',  strrpos((string) $fk->getName(), 'FK_'), 3));
 			
 			$localColumns = $fk->getLocalColumns();
 			$localColumnsHash = $this->getColumnList($localColumns);

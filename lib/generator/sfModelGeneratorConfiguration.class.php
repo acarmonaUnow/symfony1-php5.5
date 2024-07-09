@@ -152,7 +152,7 @@ abstract class sfModelGeneratorConfiguration
     {
       $parameters = $this->fixActionParameters($action, $parameters);
 
-      $action = 'batch'.ucfirst(str_starts_with($action, '_') ? substr($action, 1) : $action);
+      $action = 'batch'.ucfirst(str_starts_with((string) $action, '_') ? substr((string) $action, 1) : $action);
 
       $this->configuration['list']['batch_actions'][$action] = $parameters;
     }
@@ -195,13 +195,13 @@ abstract class sfModelGeneratorConfiguration
     );
     foreach ($this->getActionsDefault() as $action => $params)
     {
-      if (str_starts_with($action, '_'))
+      if (str_starts_with((string) $action, '_'))
       {
-        $action = substr($action, 1);
+        $action = substr((string) $action, 1);
       }
 
       $this->configuration['credentials'][$action] = $params['credentials'] ?? array();
-      $this->configuration['credentials']['batch'.ucfirst($action)] = $params['credentials'] ?? array();
+      $this->configuration['credentials']['batch'.ucfirst((string) $action)] = $params['credentials'] ?? array();
     }
     $this->configuration['credentials']['create'] = $this->configuration['credentials']['new'];
     $this->configuration['credentials']['update'] = $this->configuration['credentials']['edit'];
@@ -209,7 +209,7 @@ abstract class sfModelGeneratorConfiguration
 
   protected function parseVariables($context, $key)
   {
-    preg_match_all('/%%([^%]+)%%/', $this->configuration[$context][$key], $matches, PREG_PATTERN_ORDER);
+    preg_match_all('/%%([^%]+)%%/', (string) $this->configuration[$context][$key], $matches, PREG_PATTERN_ORDER);
     foreach ($matches[1] as $name)
     {
       [$name, $flag] = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
@@ -454,9 +454,9 @@ abstract class sfModelGeneratorConfiguration
 
   public function getCredentials($action)
   {
-    if (str_starts_with($action, '_'))
+    if (str_starts_with((string) $action, '_'))
     {
-      $action = substr($action, 1);
+      $action = substr((string) $action, 1);
     }
 
     return $this->configuration['credentials'][$action] ?? array();
@@ -526,7 +526,7 @@ abstract class sfModelGeneratorConfiguration
       $parameters['confirm'] = 'Are you sure?';
     }
 
-    $parameters['class_suffix'] = strtolower('_' == $action[0] ? substr($action, 1) : $action);
+    $parameters['class_suffix'] = strtolower('_' == $action[0] ? substr((string) $action, 1) : $action);
 
     // merge with defaults
     $defaults = $this->getActionsDefault();
@@ -545,7 +545,7 @@ abstract class sfModelGeneratorConfiguration
     }
     else
     {
-      $label = '_list' == $action ? 'Back to list' : substr($action, 1);
+      $label = '_list' == $action ? 'Back to list' : substr((string) $action, 1);
     }
 
     $parameters['label'] = sfInflector::humanize($label);

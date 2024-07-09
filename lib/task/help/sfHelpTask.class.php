@@ -77,13 +77,13 @@ EOF;
     $max = 0;
     foreach ($task->getOptions() as $option)
     {
-      $max = strlen($option->getName()) + 2 > $max ? strlen($option->getName()) + 2 : $max;
+      $max = strlen((string) $option->getName()) + 2 > $max ? strlen((string) $option->getName()) + 2 : $max;
     }
     foreach ($task->getArguments() as $argument)
     {
-      $max = strlen($argument->getName()) > $max ? strlen($argument->getName()) : $max;
+      $max = strlen((string) $argument->getName()) > $max ? strlen((string) $argument->getName()) : $max;
     }
-    $max += strlen($this->formatter->format(' ', 'INFO'));
+    $max += strlen((string) $this->formatter->format(' ', 'INFO'));
 
     if ($task->getAliases())
     {

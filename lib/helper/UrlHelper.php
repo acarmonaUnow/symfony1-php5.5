@@ -74,7 +74,7 @@ function link_to1($name, $internal_uri, $options = array())
     }
   }
 
-  if (!strlen($name))
+  if (!strlen((string) $name))
   {
     $name = $html_options['href'];
   }
@@ -122,7 +122,7 @@ function url_for()
 {
   // for BC with 1.1
   $arguments = func_get_args();
-  if (is_array($arguments[0]) || str_starts_with($arguments[0], '@') || str_contains($arguments[0], '/'))
+  if (is_array($arguments[0]) || str_starts_with((string) $arguments[0], '@') || str_contains((string) $arguments[0], '/'))
   {
     return call_user_func_array(url_for1(...), $arguments);
   }
@@ -175,7 +175,7 @@ function link_to()
 {
   // for BC with 1.1
   $arguments = func_get_args();
-  if (empty($arguments[1]) || is_array($arguments[1]) || str_starts_with($arguments[1], '@') || str_contains($arguments[1], '/'))
+  if (empty($arguments[1]) || is_array($arguments[1]) || str_starts_with((string) $arguments[1], '@') || str_contains((string) $arguments[1], '/'))
   {
     return call_user_func_array(link_to1(...), $arguments);
   }
@@ -195,7 +195,7 @@ function url_for_form(sfFormObject $form, $routePrefix)
   if ('@' == $routePrefix[0])
   {
     $format = '%s_%s';
-    $routePrefix = substr($routePrefix, 1);
+    $routePrefix = substr((string) $routePrefix, 1);
   }
 
   $uri = sprintf($format, $routePrefix, $form->getObject()->isNew() ? 'create' : 'update');
@@ -243,7 +243,7 @@ function form_tag_for(sfForm $form, $routePrefix, $attributes = array())
 function link_to_if()
 {
   $arguments = func_get_args();
-  if (empty($arguments[2]) || str_starts_with($arguments[2], '@') || str_contains($arguments[2], '/'))
+  if (empty($arguments[2]) || str_starts_with((string) $arguments[2], '@') || str_contains((string) $arguments[2], '/'))
   {
     [$condition, $name, $params, $options] = array_pad($arguments, 4, null);
   }
@@ -440,7 +440,7 @@ function form_tag($url_for_options = '', $options = array())
 
   $html_options = $options;
 
-  $html_options['method'] = isset($html_options['method']) ? strtolower($html_options['method']) : 'post';
+  $html_options['method'] = isset($html_options['method']) ? strtolower((string) $html_options['method']) : 'post';
 
   if (_get_option($html_options, 'multipart'))
   {
@@ -498,7 +498,7 @@ function mail_to($email, $name = '', $options = array(), $default_value = array(
   $default = array();
   foreach ($default_tmp as $key => $value)
   {
-    $default[] = urlencode($key).'='.urlencode($value);
+    $default[] = urlencode((string) $key).'='.urlencode((string) $value);
   }
   $options = count($default) ? '?'.implode('&', $default) : '';
 
@@ -607,10 +607,10 @@ function _method_javascript_function($method)
 {
   $function = "var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'post'; f.action = this.href;";
 
-  if ('post' != strtolower($method))
+  if ('post' != strtolower((string) $method))
   {
     $function .= "var m = document.createElement('input'); m.setAttribute('type', 'hidden'); ";
-    $function .= sprintf("m.setAttribute('name', 'sf_method'); m.setAttribute('value', '%s'); f.appendChild(m);", strtolower($method));
+    $function .= sprintf("m.setAttribute('name', 'sf_method'); m.setAttribute('value', '%s'); f.appendChild(m);", strtolower((string) $method));
   }
 
   // CSRF protection
@@ -630,7 +630,7 @@ function _encodeText($text)
 {
   $encoded_text = '';
 
-  for ($i = 0; $i < strlen($text); $i++)
+  for ($i = 0; $i < strlen((string) $text); $i++)
   {
     $char = $text[$i];
     $r = random_int(0, 100);

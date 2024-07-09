@@ -353,7 +353,7 @@ class CrudBrowser extends sfTestBrowser
   protected function cleanup()
   {
     $this->clearDirectory(sprintf($this->projectDir.'/apps/crud/modules/%s', $this->urlPrefix));
-    $this->clearDirectory(sprintf($this->projectDir.'/cache/crud/test/modules/auto%s', ucfirst($this->urlPrefix)));
+    $this->clearDirectory(sprintf($this->projectDir.'/cache/crud/test/modules/auto%s', ucfirst((string) $this->urlPrefix)));
     $this->clearDirectory($this->projectDir.'/test/functional/crud');
   }
 }

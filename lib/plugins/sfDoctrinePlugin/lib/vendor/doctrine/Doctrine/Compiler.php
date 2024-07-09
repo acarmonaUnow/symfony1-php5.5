@@ -65,13 +65,13 @@ class Doctrine_Compiler
         $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path . '/Doctrine'), RecursiveIteratorIterator::LEAVES_ONLY);
 
         foreach ($it as $file) {
-            $e = explode('.', $file->getFileName());
+            $e = explode('.', (string) $file->getFileName());
             
             //@todo what is a versioning file? do we have these anymore? None 
             //exists in my version of doctrine from svn.
             // we don't want to require versioning files
-            if (end($e) === 'php' && !str_contains($file->getFileName(), '.inc')
-                && !str_contains($file->getFileName(), 'sfYaml')) {
+            if (end($e) === 'php' && !str_contains((string) $file->getFileName(), '.inc')
+                && !str_contains((string) $file->getFileName(), 'sfYaml')) {
                 require_once $file->getPathName();
             }
         }

@@ -692,7 +692,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity, \Stringable
   {
     if (!preg_match(
       '/^[a-z0-9\'\(\)\+_\-,\.\/:=\?\ ]{0,69}[a-z0-9\'\(\)\+_\-,\.\/:=\?]$/Di',
-      $boundary))
+      (string) $boundary))
     {
       throw new Swift_RfcComplianceException('Mime boundary set is not RFC 2046 compliant.');
     }
@@ -733,7 +733,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity, \Stringable
     }
     
     $realLevel = $child->getNestingLevel();
-    $lowercaseType = strtolower($child->getContentType());
+    $lowercaseType = strtolower((string) $child->getContentType());
     
     if (isset($filter[$realLevel])
       && isset($filter[$realLevel][$lowercaseType]))
@@ -794,8 +794,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity, \Stringable
   {
     $typePrefs = array();
     $types = array(
-      strtolower($a->getContentType()),
-      strtolower($b->getContentType())
+      strtolower((string) $a->getContentType()),
+      strtolower((string) $b->getContentType())
       );
     foreach ($types as $type)
     {

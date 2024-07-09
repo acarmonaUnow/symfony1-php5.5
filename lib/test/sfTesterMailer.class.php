@@ -157,7 +157,7 @@ class sfTesterMailer extends sfTester
     {
       if ($mustMatch)
       {
-        if (preg_match($regex, $body))
+        if (preg_match($regex, (string) $body))
         {
           $ok = true;
           $this->tester->pass(sprintf('email body matches "%s"', $value));
@@ -165,7 +165,7 @@ class sfTesterMailer extends sfTester
       }
       else
       {
-        if (preg_match($regex, $body))
+        if (preg_match($regex, (string) $body))
         {
           $ok = true;
           $this->tester->fail(sprintf('email body does not match "%s"', $value));
@@ -233,7 +233,7 @@ class sfTesterMailer extends sfTester
       {
         if ($mustMatch)
         {
-          if (preg_match($regex, $header))
+          if (preg_match($regex, (string) $header))
           {
             $ok = true;
             $this->tester->pass(sprintf('email header "%s" matches "%s" (%s)', $key, $value, $current));
@@ -242,7 +242,7 @@ class sfTesterMailer extends sfTester
         }
         else
         {
-          if (preg_match($regex, $header))
+          if (preg_match($regex, (string) $header))
           {
             $ok = true;
             $this->tester->fail(sprintf('email header "%s" does not match "%s" (%s)', $key, $value, $current));

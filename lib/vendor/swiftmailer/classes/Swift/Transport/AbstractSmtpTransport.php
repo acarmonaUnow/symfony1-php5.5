@@ -537,9 +537,9 @@ abstract class Swift_Transport_AbstractSmtpTransport
   private function _isFqdn($hostname)
   {
     //We could do a really thorough check, but there's really no point
-    if (false !== $dotPos = strpos($hostname, '.'))
+    if (false !== $dotPos = strpos((string) $hostname, '.'))
     {
-      return ($dotPos > 0) && ($dotPos != strlen($hostname) - 1);
+      return ($dotPos > 0) && ($dotPos != strlen((string) $hostname) - 1);
     }
     else
     {

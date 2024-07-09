@@ -1149,7 +1149,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         // For example in places where Doctrine should support composite foreign/primary keys
         $fieldName = is_array($fieldName) ? $fieldName[0]:$fieldName;
 
-        return $this->_columnNames[$fieldName] ?? strtolower($fieldName);
+        return $this->_columnNames[$fieldName] ?? strtolower((string) $fieldName);
     }
 
     /**
@@ -1577,8 +1577,8 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         $m = $name;
 
         // Check for possible cross-access
-        if ( ! is_array($name) && str_contains($name, '/')) {
-            [$ns, $m] = explode('/', $name);
+        if ( ! is_array($name) && str_contains((string) $name, '/')) {
+            [$ns, $m] = explode('/', (string) $name);
         }
 
         // Define query to be used
@@ -2716,7 +2716,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         $fields = array_merge($fields, $classifyFields);
         $ucfirstFields = array();
         foreach ($fields as $k => $v) {
-            $ucfirstFields[$k] = ucfirst($v);
+            $ucfirstFields[$k] = ucfirst((string) $v);
         }
         $fields = array_merge($fields, $ucfirstFields);
 
@@ -2726,7 +2726,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         $fields = array_reverse(array_unique($fields));
 
         // Identify fields and operators
-        preg_match_all('/(' . implode('|', $fields) . ')(Or|And)?/', $fieldName, $matches);
+        preg_match_all('/(' . implode('|', $fields) . ')(Or|And)?/', (string) $fieldName, $matches);
         $fieldsFound = $matches[1];
         $operatorFound = $matches[2];
         foreach ($operatorFound as &$v) {
@@ -2734,7 +2734,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         }
 
         // Check if $fieldName has unidentified parts left 
-        if (strlen(implode('', $fieldsFound) . implode('', $operatorFound)) !== strlen($fieldName)) {
+        if (strlen(implode('', $fieldsFound) . implode('', $operatorFound)) !== strlen((string) $fieldName)) {
             $expression = preg_replace('/(' . implode('|', $fields) . ')(Or|And)?/', '($1)$2', $fieldName);
             throw new Doctrine_Table_Exception('Invalid expression found: ' . $expression);    
         }
@@ -2877,13 +2877,13 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function __call($method, $arguments)
     {
-        $lcMethod = strtolower($method);
+        $lcMethod = strtolower((string) $method);
 
         if (str_starts_with($lcMethod, 'findby')) {
-            $by = substr($method, 6, strlen($method));
+            $by = substr((string) $method, 6, strlen((string) $method));
             $method = 'findBy';
         } else if (str_starts_with($lcMethod, 'findoneby')) {
-            $by = substr($method, 9, strlen($method));
+            $by = substr((string) $method, 9, strlen((string) $method));
             $method = 'findOneBy';
         }
 

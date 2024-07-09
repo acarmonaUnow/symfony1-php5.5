@@ -64,9 +64,9 @@ EOF;
       $requirements = $route->getRequirements();
       $method = isset($requirements['sf_method']) ? strtoupper(is_array($requirements['sf_method']) ? implode(', ', $requirements['sf_method']) : $requirements['sf_method']) : 'ANY';
 
-      if (strlen($name) > $maxName)
+      if (strlen((string) $name) > $maxName)
       {
-        $maxName = strlen($name);
+        $maxName = strlen((string) $name);
       }
 
       if (strlen($method) > $maxMethod)

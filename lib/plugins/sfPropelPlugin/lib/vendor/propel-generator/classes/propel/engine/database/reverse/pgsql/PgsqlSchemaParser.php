@@ -187,15 +187,15 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 			$name = $row['attname'];
 
 			// If they type is a domain, Process it
-			if (strtolower ($row['typtype']) == 'd') {
+			if (strtolower ((string) $row['typtype']) == 'd') {
 				$arrDomain = $this->processDomain ($row['typname']);
 				$type = $arrDomain['type'];
 				$size = $arrDomain['length'];
 				$precision = $size;
 				$scale = $arrDomain['scale'];
-				$boolHasDefault = (strlen (trim ($row['atthasdef'])) > 0) ? $row['atthasdef'] : $arrDomain['hasdefault'];
-				$default = (strlen (trim ($row['adsrc'])) > 0) ? $row['adsrc'] : $arrDomain['default'];
-				$is_nullable = (strlen (trim ($row['attnotnull'])) > 0) ? $row['attnotnull'] : $arrDomain['notnull'];
+				$boolHasDefault = (strlen (trim ((string) $row['atthasdef'])) > 0) ? $row['atthasdef'] : $arrDomain['hasdefault'];
+				$default = (strlen (trim ((string) $row['adsrc'])) > 0) ? $row['adsrc'] : $arrDomain['default'];
+				$is_nullable = (strlen (trim ((string) $row['attnotnull'])) > 0) ? $row['attnotnull'] : $arrDomain['notnull'];
 				$is_nullable = (($is_nullable == 't') ? false : true);
 			} else {
 				$type = $row['typname'];
@@ -211,8 +211,8 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 			$autoincrement = null;
 
 			// if column has a default
-			if (($boolHasDefault == 't') && (strlen (trim ($default)) > 0)) {
-				if (!preg_match('/^nextval\(/', $default)) {
+			if (($boolHasDefault == 't') && (strlen (trim ((string) $default)) > 0)) {
+				if (!preg_match('/^nextval\(/', (string) $default)) {
 					$strDefault= preg_replace ('/::[\W\D]*/', '', $default);
 					$default = str_replace ("'", '', $strDefault);
 				} else {
@@ -286,7 +286,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 
 	private function processDomain($strDomain)
 	{
-		if (strlen(trim ($strDomain)) < 1) {
+		if (strlen(trim ((string) $strDomain)) < 1) {
 			throw new EngineException ("Invalid domain name [" . $strDomain . "]");
 		}
 
@@ -318,7 +318,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 		$arrDomain['scale'] = $arrLengthPrecision['scale'];
 		$arrDomain['notnull'] = $row['typnotnull'];
 		$arrDomain['default'] = $row['typdefault'];
-		$arrDomain['hasdefault'] = (strlen (trim ($row['typdefault'])) > 0) ? 't' : 'f';
+		$arrDomain['hasdefault'] = (strlen (trim ((string) $row['typdefault'])) > 0) ? 't' : 'f';
 
 		$stmt = null; // cleanup
 		return $arrDomain;
@@ -451,7 +451,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 				$table->addIndex($indexes[$name]);
 			}
 
-			$arrColumns = explode (' ', $row['indkey']);
+			$arrColumns = explode (' ', (string) $row['indkey']);
 			foreach ($arrColumns as $intColNum)
 			{
 			   	$stmt2->bindValue(1, $oid);
@@ -490,7 +490,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 		// adding each column for that key.
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$arrColumns = explode (' ', $row['indkey']);
+			$arrColumns = explode (' ', (string) $row['indkey']);
 			foreach ($arrColumns as $intColNum) {
 				$stmt2 = $this->dbh->prepare("SELECT a.attname
 												FROM pg_catalog.pg_class c JOIN pg_catalog.pg_attribute a ON a.attrelid = c.oid

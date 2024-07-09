@@ -55,7 +55,7 @@ EOF;
     $models = $arguments['models'];
     foreach ($models as $key => $model)
     {
-      $model = trim($model);
+      $model = trim((string) $model);
       $conn = Doctrine_Core::getTable($model)->getConnection();
       $connections[$conn->getName()][] = $model;
     }

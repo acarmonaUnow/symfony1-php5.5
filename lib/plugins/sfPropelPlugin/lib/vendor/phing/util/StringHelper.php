@@ -58,7 +58,7 @@ class StringHelper {
      */
     public static function toCharArray($str) {
         $ret=array();
-        $len=strlen($str);
+        $len=strlen((string) $str);
         for ($i=0; $i < $len; $i++) {
             $ret[] = $str[$i];
         }
@@ -71,11 +71,11 @@ class StringHelper {
      * @return string
      */    
     public static function qualifier($qualifiedName, $seperator = '.') {
-        $pos = strrchr($qualifiedName, (string) $seperator);
+        $pos = strrchr((string) $qualifiedName, (string) $seperator);
         if ($pos === false) {
             return '';
         } else {
-            return substr($qualifiedName, 0, $pos);
+            return substr((string) $qualifiedName, 0, $pos);
         }
     }
     
@@ -98,15 +98,15 @@ class StringHelper {
      * @return string
      */ 
     public static function root($qualifiedName, $separator = '.') {
-        $loc = strpos($qualifiedName, (string) $separator);
-        return ($loc === false) ? $qualifiedName : substr($qualifiedName, 0, $loc);
+        $loc = strpos((string) $qualifiedName, (string) $separator);
+        return ($loc === false) ? $qualifiedName : substr((string) $qualifiedName, 0, $loc);
     }
     
     /**
      * @return int
      */
     public static function hashCode($string) {
-        return crc32($string);
+        return crc32((string) $string);
     }
     
     /**
@@ -117,7 +117,7 @@ class StringHelper {
             return $s; // it's already boolean (not a string)
         }
         // otherwise assume it's something like "true" or "t"
-        $trimmed = strtolower(trim($s));
+        $trimmed = strtolower(trim((string) $s));
         return (boolean) in_array($trimmed, self::$TRUE_VALUES);
     }
 
@@ -150,7 +150,7 @@ class StringHelper {
         if ($check === "" || $check === $string) {
             return true;
         } else {
-            return (str_starts_with($string, $check)) ? true : false;
+            return (str_starts_with((string) $string, (string) $check)) ? true : false;
         }
     }
     
@@ -159,7 +159,7 @@ class StringHelper {
         if ($check === "" || $check === $string) {
             return true;
         } else {
-            return (str_starts_with(strrev($string), strrev($check))) ? true : false;
+            return (str_starts_with(strrev((string) $string), strrev((string) $check))) ? true : false;
         }
     }            
 
@@ -168,7 +168,7 @@ class StringHelper {
      * return values suck if you want to program strict as of C or friends 
      */
     public static function substring($string, $startpos, $endpos = -1) {
-        $len    = strlen($string);
+        $len    = strlen((string) $string);
         $endpos = (int) (($endpos === -1) ? $len-1 : $endpos);
         if ($startpos > $len-1 || $startpos < 0) {
             trigger_error("substring(), Startindex out of bounds must be 0<n<$len", E_USER_ERROR);
@@ -181,7 +181,7 @@ class StringHelper {
         } else {
             $len = $endpos-$startpos;
         }
-        return substr($string, $startpos, $len+1);
+        return substr((string) $string, $startpos, $len+1);
     }
 
     /**

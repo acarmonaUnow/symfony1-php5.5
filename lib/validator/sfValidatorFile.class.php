@@ -189,7 +189,7 @@ class sfValidatorFile extends sfValidatorBase
 
       if (null !== $type && $type !== false)
       {
-        return strtolower($type);
+        return strtolower((string) $type);
       }
     }
 

@@ -556,7 +556,7 @@ class PropelCreoleTransformTask extends Task {
 		}
 
 		if (($defValue = $column->getDefaultValue()) !== null) {
-			$node->setAttribute("default", iconv($this->dbEncoding, 'utf-8', $defValue));
+			$node->setAttribute("default", iconv((string) $this->dbEncoding, 'utf-8', (string) $defValue));
 		}
 
 		if ($vendorNode = $this->createVendorInfoNode($column->getVendorSpecificInfo())) {
@@ -785,7 +785,7 @@ class PropelCreoleTransformTask extends Task {
 		// create message
 		$colName = $column->getName();
 		$tableName = $column->getTable()->getName();
-		$msg = self::$validatorMessages[strtolower($type)];
+		$msg = self::$validatorMessages[strtolower((string) $type)];
 		$tmp = compact($msg['var']);
 		array_unshift($tmp, $msg['msg']);
 		$msg = call_user_func_array(sprintf(...), $tmp);
@@ -817,7 +817,7 @@ class PropelCreoleTransformTask extends Task {
 
 		foreach ($vendorInfo as $key => $value) {
 			$parameterNode = $this->doc->createElement("parameter");
-			$value = iconv($this->dbEncoding, "utf-8", $value);
+			$value = iconv((string) $this->dbEncoding, "utf-8", (string) $value);
 			$parameterNode->setAttribute("name", $key);
 			$parameterNode->setAttribute("value", $value);
 			$vendorNode->appendChild($parameterNode);

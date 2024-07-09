@@ -90,12 +90,12 @@ class sfWebRequest extends sfRequest
         case 'POST':
           if (isset($_POST['sf_method']))
           {
-            $this->setMethod(strtoupper($_POST['sf_method']));
+            $this->setMethod(strtoupper((string) $_POST['sf_method']));
             unset($postParameters['sf_method']);
           }
           elseif (isset($_GET['sf_method']))
           {
-            $this->setMethod(strtoupper($_GET['sf_method']));
+            $this->setMethod(strtoupper((string) $_GET['sf_method']));
             unset($_GET['sf_method']);
           }
           else
@@ -203,7 +203,7 @@ class sfWebRequest extends sfRequest
   {
     $pathArray = $this->getPathInfoArray();
 
-    return isset($pathArray['REQUEST_URI']) ? str_starts_with($pathArray['REQUEST_URI'], 'http') : false;
+    return isset($pathArray['REQUEST_URI']) ? str_starts_with((string) $pathArray['REQUEST_URI'], 'http') : false;
   }
 
   /**
@@ -271,8 +271,8 @@ class sfWebRequest extends sfRequest
         $pathInfo = preg_replace('/^'.preg_quote($uri_prefix, '/').'/','',$pathArray['REQUEST_URI']);
         $pathInfo = preg_replace('/^'.preg_quote($script_name, '/').'/', '', $pathInfo);
         $prefix_name = preg_replace('#/[^/]+$#', '', $script_name);
-        $pathInfo = preg_replace('/^'.preg_quote($prefix_name, '/').'/', '', $pathInfo);
-        $pathInfo = preg_replace('/\??'.preg_quote($qs, '/').'$/', '', $pathInfo);
+        $pathInfo = preg_replace('/^'.preg_quote((string) $prefix_name, '/').'/', '', $pathInfo);
+        $pathInfo = preg_replace('/\??'.preg_quote((string) $qs, '/').'$/', '', $pathInfo);
       }
     }
     else
@@ -285,9 +285,9 @@ class sfWebRequest extends sfRequest
     }
 
     // for IIS
-    if (isset($_SERVER['SERVER_SOFTWARE']) && false !== stripos($_SERVER['SERVER_SOFTWARE'], 'iis') && $pos = stripos($pathInfo, '.php'))
+    if (isset($_SERVER['SERVER_SOFTWARE']) && false !== stripos((string) $_SERVER['SERVER_SOFTWARE'], 'iis') && $pos = stripos((string) $pathInfo, '.php'))
     {
-      $pathInfo = substr($pathInfo, $pos + 4);
+      $pathInfo = substr((string) $pathInfo, $pos + 4);
     }
 
     if (!$pathInfo)
@@ -382,7 +382,7 @@ class sfWebRequest extends sfRequest
 
     if (isset($pathArray['HTTP_X_FORWARDED_HOST']))
     {
-      $elements = explode(',', $pathArray['HTTP_X_FORWARDED_HOST']);
+      $elements = explode(',', (string) $pathArray['HTTP_X_FORWARDED_HOST']);
 
       return trim($elements[count($elements) - 1]);
     }
@@ -460,9 +460,9 @@ class sfWebRequest extends sfRequest
     $languages = $this->splitHttpAcceptHeader($_SERVER['HTTP_ACCEPT_LANGUAGE']);
     foreach ($languages as $lang)
     {
-      if (str_contains($lang, '-'))
+      if (str_contains((string) $lang, '-'))
       {
-        $codes = explode('-', $lang);
+        $codes = explode('-', (string) $lang);
         if ($codes[0] == 'i')
         {
           // Language not listed in ISO 639 that are not variants
@@ -603,9 +603,9 @@ class sfWebRequest extends sfRequest
     $pathArray = $this->getPathInfoArray();
 
     return
-      (isset($pathArray['HTTPS']) && ('on' == strtolower($pathArray['HTTPS']) || 1 == $pathArray['HTTPS']))
+      (isset($pathArray['HTTPS']) && ('on' == strtolower((string) $pathArray['HTTPS']) || 1 == $pathArray['HTTPS']))
       ||
-      (isset($pathArray['HTTP_SSL_HTTPS']) && ('on' == strtolower($pathArray['HTTP_SSL_HTTPS']) || 1 == $pathArray['HTTP_SSL_HTTPS']))
+      (isset($pathArray['HTTP_SSL_HTTPS']) && ('on' == strtolower((string) $pathArray['HTTP_SSL_HTTPS']) || 1 == $pathArray['HTTP_SSL_HTTPS']))
       ||
       $this->isForwardedSecure()
     ;
@@ -620,7 +620,7 @@ class sfWebRequest extends sfRequest
   {
     $pathArray = $this->getPathInfoArray();
 
-    return isset($pathArray['HTTP_X_FORWARDED_PROTO']) && 'https' == strtolower($pathArray['HTTP_X_FORWARDED_PROTO']);
+    return isset($pathArray['HTTP_X_FORWARDED_PROTO']) && 'https' == strtolower((string) $pathArray['HTTP_X_FORWARDED_PROTO']);
   }
 
   /**
@@ -953,7 +953,7 @@ class sfWebRequest extends sfRequest
       return null;
     }
 
-    return explode(', ', $pathInfo['HTTP_X_FORWARDED_FOR']);
+    return explode(', ', (string) $pathInfo['HTTP_X_FORWARDED_FOR']);
   }
 
   /**
@@ -1009,10 +1009,10 @@ class sfWebRequest extends sfRequest
   {
     foreach ($this->parameterHolder->getAll() as $key => $value)
     {
-      if (0 === stripos($key, '_sf_'))
+      if (0 === stripos((string) $key, '_sf_'))
       {
         $this->parameterHolder->remove($key);
-        $this->setAttribute(substr($key, 1), $value);
+        $this->setAttribute(substr((string) $key, 1), $value);
       }
     }
   }

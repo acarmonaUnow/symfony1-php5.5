@@ -107,7 +107,7 @@ class sfSymfonyCommandApplication extends sfCommandApplication
     $finder = sfFinder::type('file')->name('*Task.class.php');
     foreach ($finder->in($dirs) as $file)
     {
-      $this->taskFiles[basename($file, '.class.php')] = $file;
+      $this->taskFiles[basename((string) $file, '.class.php')] = $file;
     }
 
     // register local autoloader for tasks

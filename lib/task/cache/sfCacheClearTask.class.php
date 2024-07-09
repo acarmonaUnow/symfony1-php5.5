@@ -131,7 +131,7 @@ EOF;
 
   protected function getClearCacheMethod($type)
   {
-    return sprintf('clear%sCache', ucfirst($type));
+    return sprintf('clear%sCache', ucfirst((string) $type));
   }
 
   protected function clearAllCache(sfApplicationConfiguration $appConfiguration)

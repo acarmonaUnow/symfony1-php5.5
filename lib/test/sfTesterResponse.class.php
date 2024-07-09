@@ -39,7 +39,7 @@ class sfTesterResponse extends sfTester
 
     $this->dom = null;
     $this->domCssSelector = null;
-    if (preg_match('/(x|ht)ml/i', $this->response->getContentType(), $matches))
+    if (preg_match('/(x|ht)ml/i', (string) $this->response->getContentType(), $matches))
     {
       $this->dom = new DOMDocument('1.0', $this->response->getCharset());
       $this->dom->validateOnParse = true;
@@ -92,12 +92,12 @@ class sfTesterResponse extends sfTester
     {
       $this->tester->is(count($values), $value, sprintf('response selector "%s" matches "%s" times', $selector, $value));
     }
-    else if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', $value, $match))
+    else if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', (string) $value, $match))
     {
       $position = $options['position'] ?? 0;
       if ($match[1] == '!')
       {
-        $this->tester->unlike(@$values[$position], substr($value, 1), sprintf('response selector "%s" does not match regex "%s"', $selector, substr($value, 1)));
+        $this->tester->unlike(@$values[$position], substr((string) $value, 1), sprintf('response selector "%s" does not match regex "%s"', $selector, substr((string) $value, 1)));
       }
       else
       {
@@ -173,7 +173,7 @@ class sfTesterResponse extends sfTester
    */
   public function isValid(mixed $checkDTD = false)
   {
-    if (preg_match('/(x|ht)ml/i', $this->response->getContentType()))
+    if (preg_match('/(x|ht)ml/i', (string) $this->response->getContentType()))
     {
       $revert = libxml_use_internal_errors(true);
 
@@ -216,16 +216,16 @@ class sfTesterResponse extends sfTester
 
       $dom->loadXML($content);
 
-      switch (pathinfo($checkDTD, PATHINFO_EXTENSION))
+      switch (pathinfo((string) $checkDTD, PATHINFO_EXTENSION))
       {
         case 'xsd':
           $dom->schemaValidate($checkDTD);
-          $message = sprintf('response validates per XSD schema "%s"', basename($checkDTD));
+          $message = sprintf('response validates per XSD schema "%s"', basename((string) $checkDTD));
           break;
         case 'rng':
         case 'rnc':
           $dom->relaxNGValidate($checkDTD);
-          $message = sprintf('response validates per relaxNG schema "%s"', basename($checkDTD));
+          $message = sprintf('response validates per relaxNG schema "%s"', basename((string) $checkDTD));
           break;
         default:
           $message = $dom->validateOnParse ? sprintf('response validates as "%s"', $dom->doctype->name) : 'response is well-formed "xml"';
@@ -233,7 +233,7 @@ class sfTesterResponse extends sfTester
 
       if (count($errors = libxml_get_errors()))
       {
-        $lines = explode(PHP_EOL, $this->response->getContent());
+        $lines = explode(PHP_EOL, (string) $this->response->getContent());
 
         $this->tester->fail($message);
         foreach ($errors as $error)
@@ -271,7 +271,7 @@ class sfTesterResponse extends sfTester
    */
   public function isHeader($key, $value)
   {
-    $headers = explode(', ', $this->response->getHttpHeader($key));
+    $headers = explode(', ', (string) $this->response->getHttpHeader($key));
     $ok = false;
     $regex = false;
     $mustMatch = true;
@@ -383,14 +383,14 @@ class sfTesterResponse extends sfTester
    */
   public function matches($regex)
   {
-    if (!preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', $regex, $match))
+    if (!preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', (string) $regex, $match))
     {
       throw new InvalidArgumentException(sprintf('"%s" is not a valid regular expression.', $regex));
     }
 
     if ($match[1] == '!')
     {
-      $this->tester->unlike($this->response->getContent(), substr($regex, 1), sprintf('response content does not match regex "%s"', substr($regex, 1)));
+      $this->tester->unlike($this->response->getContent(), substr((string) $regex, 1), sprintf('response content does not match regex "%s"', substr((string) $regex, 1)));
     }
     else
     {

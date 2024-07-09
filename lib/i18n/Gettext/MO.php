@@ -90,7 +90,7 @@ class TGettext_MO extends TGettext
     function _readInt($bigendian = false)
     {
 		//unpack returns a reference????
-		$unpacked = unpack($bigendian ? 'N' : 'V', $this->_read(4));
+		$unpacked = unpack($bigendian ? 'N' : 'V', (string) $this->_read(4));
         return array_shift($unpacked);
     }
 
@@ -170,7 +170,7 @@ class TGettext_MO extends TGettext
         // read (part of) magic number from MO file header and define endianess
 
 		//unpack returns a reference????
-		$unpacked = unpack('c', $this->_read(4));
+		$unpacked = unpack('c', (string) $this->_read(4));
         switch ($magic = array_shift($unpacked))
         {
             case -34:
@@ -313,7 +313,7 @@ class TGettext_MO extends TGettext
 
         // write offsets for translated strings
         foreach ($strings as $t) {
-            $len = strlen($t);
+            $len = strlen((string) $t);
             $this->_writeInt($len);
             $this->_writeInt($offset);
             $offset += $len + 1;

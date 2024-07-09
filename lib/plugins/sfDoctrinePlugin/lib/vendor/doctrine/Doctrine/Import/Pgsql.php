@@ -169,7 +169,7 @@ class Doctrine_Import_Pgsql extends Doctrine_Import
                 // get length from varchar definition
                 $length = preg_replace('~.*\(([0-9]*)\).*~', '$1', $val['complete_type']);
                 $val['length'] = $length;
-            } else if (str_contains($val['complete_type'], 'character varying')) {
+            } else if (str_contains((string) $val['complete_type'], 'character varying')) {
                 // get length from varchar definition
                 $length = preg_replace('~.*\(([0-9]*)\).*~', '$1', $val['complete_type']);
                 $val['length'] = $length;
@@ -205,12 +205,12 @@ class Doctrine_Import_Pgsql extends Doctrine_Import
 
             $matches = array(); 
 
-            if (preg_match("/^nextval\('(.*)'(::.*)?\)$/", $description['default'], $matches)) { 
+            if (preg_match("/^nextval\('(.*)'(::.*)?\)$/", (string) $description['default'], $matches)) { 
                 $description['sequence'] = $this->conn->formatter->fixSequenceName($matches[1]); 
                 $description['default'] = null; 
-            } else if (preg_match("/^'(.*)'::character varying$/", $description['default'], $matches)) {
+            } else if (preg_match("/^'(.*)'::character varying$/", (string) $description['default'], $matches)) {
                 $description['default'] = $matches[1];
-            } else if (preg_match("/^(.*)::character varying$/", $description['default'], $matches)) {
+            } else if (preg_match("/^(.*)::character varying$/", (string) $description['default'], $matches)) {
                 $description['default'] = $matches[1];
             } else if ($description['type'] == 'boolean') {
                 if ($description['default'] === 'true') {
@@ -290,7 +290,7 @@ class Doctrine_Import_Pgsql extends Doctrine_Import
 
         $results = $this->conn->fetchAssoc($sql, $param);
         foreach ($results as $result) {
-            preg_match('/FOREIGN KEY \((.+)\) REFERENCES (.+)\((.+)\)/', $result['condef'], $values);
+            preg_match('/FOREIGN KEY \((.+)\) REFERENCES (.+)\((.+)\)/', (string) $result['condef'], $values);
             if ((!str_contains($values[1], ',')) && (!str_contains($values[3], ','))) {
                 $tableName = trim($values[2], '"');
                 $relations[] = array('table'   => $tableName,

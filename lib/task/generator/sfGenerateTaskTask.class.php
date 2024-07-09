@@ -73,7 +73,7 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $taskName = $arguments['task_name'];
-    $taskNameComponents = explode(':', $taskName);
+    $taskNameComponents = explode(':', (string) $taskName);
     $namespace = isset($taskNameComponents[1]) ? $taskNameComponents[0] : '';
     $name = $taskNameComponents[1] ?? $taskNameComponents[0];
     $taskClassName = str_replace('-', '', ($namespace ? $namespace.ucfirst($name) : $name)).'Task';

@@ -139,7 +139,7 @@ class sfAPCCache extends sfCache
 
     foreach ($infos['cache_list'] as $info)
     {
-      if (preg_match($regexp, $info['info']))
+      if (preg_match($regexp, (string) $info['info']))
       {
         apc_delete($info['info']);
       }

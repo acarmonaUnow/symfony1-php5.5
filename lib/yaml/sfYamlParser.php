@@ -209,12 +209,12 @@ class sfYamlParser
           if (is_array($value))
           {
             $first = reset($value);
-            if (str_starts_with($first, '*'))
+            if (str_starts_with((string) $first, '*'))
             {
               $data = array();
               foreach ($value as $alias)
               {
-                $data[] = $this->refs[substr($alias, 1)];
+                $data[] = $this->refs[substr((string) $alias, 1)];
               }
               $value = $data;
             }
@@ -271,7 +271,7 @@ class sfYamlParser
    */
   protected function getCurrentLineIndentation()
   {
-    return strlen($this->currentLine) - strlen(ltrim($this->currentLine, ' '));
+    return strlen((string) $this->currentLine) - strlen(ltrim((string) $this->currentLine, ' '));
   }
 
   /**
@@ -290,7 +290,7 @@ class sfYamlParser
       throw new InvalidArgumentException(sprintf('Indentation problem at line %d (%s)', $this->getRealCurrentLineNb() + 1, $this->currentLine));
     }
 
-    $data = array(substr($this->currentLine, $newIndent));
+    $data = array(substr((string) $this->currentLine, $newIndent));
 
     while ($this->moveToNextLine())
     {
@@ -298,7 +298,7 @@ class sfYamlParser
       {
         if ($this->isCurrentLineBlank())
         {
-          $data[] = substr($this->currentLine, $newIndent);
+          $data[] = substr((string) $this->currentLine, $newIndent);
         }
 
         continue;
@@ -306,14 +306,14 @@ class sfYamlParser
 
       $indent = $this->getCurrentLineIndentation();
 
-      if (preg_match('#^(?P<text> *)$#', $this->currentLine, $match))
+      if (preg_match('#^(?P<text> *)$#', (string) $this->currentLine, $match))
       {
         // empty line
         $data[] = $match['text'];
       }
       else if ($indent >= $newIndent)
       {
-        $data[] = substr($this->currentLine, $newIndent);
+        $data[] = substr((string) $this->currentLine, $newIndent);
       }
       else if (0 == $indent)
       {
@@ -420,7 +420,7 @@ class sfYamlParser
       return '';
     }
 
-    if (!preg_match('#^(?P<indent>'.($indentation ? str_repeat(' ', $indentation) : ' +').')(?P<text>.*)$#u', $this->currentLine, $matches))
+    if (!preg_match('#^(?P<indent>'.($indentation ? str_repeat(' ', $indentation) : ' +').')(?P<text>.*)$#u', (string) $this->currentLine, $matches))
     {
       $this->moveToPreviousLine();
 
@@ -435,7 +435,7 @@ class sfYamlParser
     {
       $this->moveToNextLine();
 
-      if (preg_match('#^(?P<indent> {'.strlen($textIndent).',})(?P<text>.+)$#u', $this->currentLine, $matches))
+      if (preg_match('#^(?P<indent> {'.strlen($textIndent).',})(?P<text>.+)$#u', (string) $this->currentLine, $matches))
       {
         if (' ' == $separator && $previousIndent != $matches['indent'])
         {
@@ -445,7 +445,7 @@ class sfYamlParser
 
         $text .= str_repeat(' ', $diff = strlen($matches['indent']) - strlen($textIndent)).$matches['text'].($diff ? "\n" : $separator);
       }
-      else if (preg_match('#^(?P<text> *)$#', $this->currentLine, $matches))
+      else if (preg_match('#^(?P<text> *)$#', (string) $this->currentLine, $matches))
       {
         $text .= preg_replace('#^ {1,'.strlen($textIndent).'}#', '', $matches['text'])."\n";
       }
@@ -526,7 +526,7 @@ class sfYamlParser
    */
   protected function isCurrentLineBlank()
   {
-    return '' == trim($this->currentLine, ' ');
+    return '' == trim((string) $this->currentLine, ' ');
   }
 
   /**
@@ -537,7 +537,7 @@ class sfYamlParser
   protected function isCurrentLineComment()
   {
     //checking explicitly the first char of the trim is faster than loops or strpos
-    $ltrimmedLine = ltrim($this->currentLine, ' ');
+    $ltrimmedLine = ltrim((string) $this->currentLine, ' ');
     return $ltrimmedLine[0] === '#';
   }
 
@@ -567,7 +567,7 @@ class sfYamlParser
     if ($count == 1)
     {
       // items have been removed, update the offset
-      $this->offset += substr_count($value, "\n") - substr_count($trimmedValue, "\n");
+      $this->offset += substr_count((string) $value, "\n") - substr_count((string) $trimmedValue, "\n");
       $value = $trimmedValue;
     }
 
@@ -576,7 +576,7 @@ class sfYamlParser
     if ($count == 1)
     {
       // items have been removed, update the offset
-      $this->offset += substr_count($value, "\n") - substr_count($trimmedValue, "\n");
+      $this->offset += substr_count((string) $value, "\n") - substr_count((string) $trimmedValue, "\n");
       $value = $trimmedValue;
 
       // remove end of the document marker (...)

@@ -91,7 +91,7 @@ class Domain extends XMLElement {
 	 */
 	protected function setupObject()
 	{
-		$schemaType = strtoupper($this->getAttribute("type"));
+		$schemaType = strtoupper((string) $this->getAttribute("type"));
 		$this->copy($this->getDatabase()->getPlatform()->getDomainForType($schemaType));
 
 		//Name

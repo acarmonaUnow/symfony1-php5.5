@@ -90,7 +90,7 @@ class Doctrine_Data_Import extends Doctrine_Data
                     // force correct order
                     natcasesort($filesOrdered);
                     foreach ($filesOrdered as $file) {
-                        $e = explode('.', $file->getFileName());
+                        $e = explode('.', (string) $file->getFileName());
                         if (in_array(end($e), $this->getFormats())) {
                             $array = $mergeFunction($array, Doctrine_Parser::load($file->getPathName(), $this->getFormat()));
                         }

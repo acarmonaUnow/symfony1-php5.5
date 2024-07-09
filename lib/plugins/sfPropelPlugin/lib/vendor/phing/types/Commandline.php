@@ -157,14 +157,14 @@ class Commandline implements \Stringable {
      *                           and double quotes.
      */
     public static function quoteArgument($argument) {
-        if (str_contains($argument, "\"")) {
-            if (str_contains($argument, "'")) {
+        if (str_contains((string) $argument, "\"")) {
+            if (str_contains((string) $argument, "'")) {
                 throw new BuildException("Can't handle single and double quotes in same argument");
             } else {
-                return escapeshellarg($argument);
+                return escapeshellarg((string) $argument);
             }
-        } elseif (str_contains($argument, "'") || str_contains($argument, " ")) {
-            return escapeshellarg($argument);
+        } elseif (str_contains((string) $argument, "'") || str_contains((string) $argument, " ")) {
+            return escapeshellarg((string) $argument);
             //return '\"' . $argument . '\"';
         } else {
             return $argument;

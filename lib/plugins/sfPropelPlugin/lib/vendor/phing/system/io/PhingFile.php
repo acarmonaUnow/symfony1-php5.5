@@ -143,11 +143,11 @@ class PhingFile implements \Stringable {
      */
     function getName() {
         // that's a lastIndexOf
-        $index = ((($res = strrpos($this->path, (string) self::$separator)) === false) ? -1 : $res);
+        $index = ((($res = strrpos((string) $this->path, (string) self::$separator)) === false) ? -1 : $res);
         if ($index < $this->prefixLength) {
-            return substr($this->path, $this->prefixLength);
+            return substr((string) $this->path, $this->prefixLength);
         }
-        return substr($this->path, $index + 1);
+        return substr((string) $this->path, $index + 1);
     }
 
     /**
@@ -164,14 +164,14 @@ class PhingFile implements \Stringable {
      */
     function getParent() {
         // that's a lastIndexOf
-        $index = ((($res = strrpos($this->path, (string) self::$separator)) === false) ? -1 : $res);
+        $index = ((($res = strrpos((string) $this->path, (string) self::$separator)) === false) ? -1 : $res);
         if ($index < $this->prefixLength) {
             if (($this->prefixLength > 0) && (strlen($this->path > $this->prefixLength))) {
-                return substr($this->path, 0, $this->prefixLength);
+                return substr((string) $this->path, 0, $this->prefixLength);
             }
             return null;
         }
-        return substr($this->path, 0, $index);
+        return substr((string) $this->path, 0, $index);
     }
 
     /**

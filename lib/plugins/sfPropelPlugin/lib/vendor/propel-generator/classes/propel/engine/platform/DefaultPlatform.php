@@ -275,7 +275,7 @@ class DefaultPlatform implements Platform {
 	 */
 	public function getBooleanString($b)
 	{
-		$b = ($b === true || strtolower($b) === 'true' || $b === 1 || $b === '1' || strtolower($b) === 'y' || strtolower($b) === 'yes');
+		$b = ($b === true || strtolower((string) $b) === 'true' || $b === 1 || $b === '1' || strtolower((string) $b) === 'y' || strtolower((string) $b) === 'yes');
 		return ($b ? '1' : '0');
 	}
 

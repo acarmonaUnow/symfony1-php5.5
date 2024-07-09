@@ -163,10 +163,10 @@ class Doctrine_Export_Mysql extends Doctrine_Export
             // Case Insensitive checking for duplicate indexes...
             $dupes = array();
             foreach ($options['indexes'] as $key => $index) {
-                if (in_array(strtolower($key), $dupes)) {
+                if (in_array(strtolower((string) $key), $dupes)) {
                     unset($options['indexes'][$key]);
                 } else {
-                    $dupes[] = strtolower($key);
+                    $dupes[] = strtolower((string) $key);
                 }
             }
             unset($dupes);
@@ -595,8 +595,8 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         $name   = $this->conn->quoteIdentifier($name);
         $type   = '';
         if (isset($definition['type'])) {
-            $type = match (strtolower($definition['type'])) {
-                'fulltext', 'unique' => strtoupper($definition['type']) . ' ',
+            $type = match (strtolower((string) $definition['type'])) {
+                'fulltext', 'unique' => strtoupper((string) $definition['type']) . ' ',
                 default => throw new Doctrine_Export_Exception(
                     'Unknown type ' . $definition['type'] . ' for index ' . $name . ' in table ' . $table
                 ),
@@ -660,8 +660,8 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         $name   = $this->conn->formatter->getIndexName($name);
         $type   = '';
         if (isset($definition['type'])) {
-            $type = match (strtolower($definition['type'])) {
-                'fulltext', 'unique' => strtoupper($definition['type']) . ' ',
+            $type = match (strtolower((string) $definition['type'])) {
+                'fulltext', 'unique' => strtoupper((string) $definition['type']) . ' ',
                 default => throw new Doctrine_Export_Exception(
                     'Unknown type ' . $definition['type'] . ' for index ' . $name
                 ),
@@ -702,7 +702,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
                 }
 
                 if (isset($field['sorting'])) {
-                    $sort = strtoupper($field['sorting']);
+                    $sort = strtoupper((string) $field['sorting']);
                     match ($sort) {
                         'ASC', 'DESC' => $fieldString .= ' ' . $sort,
                         default => throw new Doctrine_Export_Exception('Unknown index sorting option given.'),

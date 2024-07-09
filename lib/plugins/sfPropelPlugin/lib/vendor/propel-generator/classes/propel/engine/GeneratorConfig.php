@@ -67,8 +67,8 @@ class GeneratorConfig {
 
     $renamedPropelProps = array();
     foreach ($props as $key => $propValue) {
-      if (str_starts_with($key, "propel.")) {
-        $newKey = substr($key, strlen("propel."));
+      if (str_starts_with((string) $key, "propel.")) {
+        $newKey = substr((string) $key, strlen("propel."));
         $j = strpos($newKey, '.');
         while ($j !== false) {
           $newKey =  substr($newKey, 0, $j) . ucfirst(substr($newKey, $j + 1));
@@ -116,11 +116,11 @@ class GeneratorConfig {
 
     // This is a slight hack to workaround camel case inconsistencies for the DDL classes.
     // Basically, we want to turn ?.?.?.sqliteDDLBuilder into ?.?.?.SqliteDDLBuilder
-    $lastdotpos = strrpos($classpath, '.');
+    $lastdotpos = strrpos((string) $classpath, '.');
     if ($lastdotpos !== null) {
-      $classpath[$lastdotpos+1] = strtoupper($classpath[$lastdotpos+1]);
+      $classpath[$lastdotpos+1] = strtoupper((string) $classpath[$lastdotpos+1]);
     } else {
-      $classpath = ucfirst($classpath);
+      $classpath = ucfirst((string) $classpath);
     }
 
     if (empty($classpath)) {

@@ -162,10 +162,10 @@ class Doctrine_Import_Mysql extends Doctrine_Import
                           'fixed'         => (bool) $decl['fixed'],
                           'unsigned'      => (bool) $decl['unsigned'],
                           'values'        => $values,
-                          'primary'       => (strtolower($val['key']) == 'pri'),
+                          'primary'       => (strtolower((string) $val['key']) == 'pri'),
                           'default'       => $val['default'],
                           'notnull'       => (bool) ($val['null'] != 'YES'),
-                          'autoincrement' => (bool) (str_contains($val['extra'], 'auto_increment')),
+                          'autoincrement' => (bool) (str_contains((string) $val['extra'], 'auto_increment')),
                           );
             if (isset($decl['scale'])) {
                 $description['scale'] = $decl['scale'];

@@ -50,7 +50,7 @@ class DbDeployTask extends Task {
     function main() {
     	try{
     		// get correct DbmsSyntax object
-    		$dbms = substr($this->url, 0, strpos($this->url, ':'));
+    		$dbms = substr((string) $this->url, 0, strpos((string) $this->url, ':'));
     		$dbmsSyntaxFactory = new DbmsSyntaxFactory($dbms);
     		$this->dbmsSyntax = $dbmsSyntaxFactory->getDbmsSyntax();
     		
@@ -67,8 +67,8 @@ class DbDeployTask extends Task {
 			$undoSql = $this->undoDeploy();
 			
 			// write the do and undo SQL to their respective files
-			fwrite($outputFileHandle, $doSql);
-			fwrite($undoOutputFileHandle, $undoSql);
+			fwrite($outputFileHandle, (string) $doSql);
+			fwrite($undoOutputFileHandle, (string) $undoSql);
 			
     	} catch (Exception $e){
     		throw new BuildException($e);

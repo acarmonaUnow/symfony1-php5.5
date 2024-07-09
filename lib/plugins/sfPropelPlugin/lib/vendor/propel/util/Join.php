@@ -189,12 +189,12 @@ class Join
 
 	public function getLeftColumnName($index = 0)
 	{
-		return substr($this->left[$index], strrpos($this->left[$index], '.') + 1);
+		return substr((string) $this->left[$index], strrpos((string) $this->left[$index], '.') + 1);
 	}
 
 	public function getLeftTableName($index = 0)
 	{
-		return substr($this->left[$index], 0, strrpos($this->left[$index], '.'));
+		return substr((string) $this->left[$index], 0, strrpos((string) $this->left[$index], '.'));
 	}
 
 	/**
@@ -215,12 +215,12 @@ class Join
 
 	public function getRightColumnName($index = 0)
 	{
-		return substr($this->right[$index], strrpos($this->right[$index], '.') + 1);
+		return substr((string) $this->right[$index], strrpos((string) $this->right[$index], '.') + 1);
 	}
 
 	public function getRightTableName($index = 0)
 	{
-		return substr($this->right[$index], 0, strrpos($this->right[$index], '.'));
+		return substr((string) $this->right[$index], 0, strrpos((string) $this->right[$index], '.'));
 	}
 
 	/**

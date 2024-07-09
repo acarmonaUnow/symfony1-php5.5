@@ -103,19 +103,19 @@ $t->is_deeply($filter->processedFields, array('name'), '->getQuery() processes f
 $filter = new TestFormFilter();
 $filter->bind(array('author_id' => array('text' => 0)));
 $query = $filter->getQuery();
-$t->is(trim($query->getDql()), 'FROM Article r WHERE r.author_id = ?', '->getQuery() filters by a 0 number');
+$t->is(trim((string) $query->getDql()), 'FROM Article r WHERE r.author_id = ?', '->getQuery() filters by a 0 number');
 $t->is($query->getFlattenedParams(), array(0), '->getQuery() filters by a 0 number');
 
 $filter = new ArticleFormFilter();
 $filter->bind(array('type' => array('is_empty' => '1', 'text' => '')));
 $query = $filter->getQuery();
-$t->is(trim($query->getDql()), 'FROM Article r WHERE (r.type IS NULL OR r.type = ?)', '->getQuery() tests for null or empty text fields');
+$t->is(trim((string) $query->getDql()), 'FROM Article r WHERE (r.type IS NULL OR r.type = ?)', '->getQuery() tests for null or empty text fields');
 $t->is($query->getFlattenedParams(), array(''), '->getQuery() tests for null or empty text fields');
 
 $filter = new ArticleFormFilter();
 $filter->bind(array('views' => array('is_empty' => '1', 'text' => '')));
 $query = $filter->getQuery();
-$t->is(trim($query->getDql()), 'FROM Article r WHERE (r.views IS NULL OR r.views = ?)', '->getQuery() tests for null or empty number fields');
+$t->is(trim((string) $query->getDql()), 'FROM Article r WHERE (r.views IS NULL OR r.views = ?)', '->getQuery() tests for null or empty number fields');
 $t->is($query->getFlattenedParams(), array(''), '->getQuery() tests for null or empty number fields');
 
 $t->diag('->setTableMethod()');

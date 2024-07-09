@@ -88,7 +88,7 @@ class HeadFilter extends BaseParamFilterReader implements ChainableReader {
 
             // now grab first X lines from buffer
 
-            $lines = explode("\n", $buffer);
+            $lines = explode("\n", (string) $buffer);
 
             $linesCount = count($lines);
 

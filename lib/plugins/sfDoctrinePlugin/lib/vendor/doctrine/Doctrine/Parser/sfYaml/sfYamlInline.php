@@ -92,23 +92,23 @@ class sfYamlInline
         return 'true';
       case false === $value:
         return 'false';
-      case ctype_digit($value):
+      case ctype_digit((string) $value):
         return is_string($value) ? "'$value'" : (int) $value;
       case is_numeric($value):
         return is_infinite($value) ? str_ireplace('INF', '.Inf', strval($value)) : (is_string($value) ? "'$value'" : $value);
-      case str_contains($value, "\n") || str_contains($value, "\r"):
+      case str_contains((string) $value, "\n") || str_contains((string) $value, "\r"):
         return sprintf('"%s"', str_replace(array('"', "\n", "\r"), array('\\"', '\n', '\r'), $value));
-      case preg_match('/[ \s \' " \: \{ \} \[ \] , & \* \# \?] | \A[ - ? | < > = ! % @ ` ]/x', $value):
+      case preg_match('/[ \s \' " \: \{ \} \[ \] , & \* \# \?] | \A[ - ? | < > = ! % @ ` ]/x', (string) $value):
         return sprintf("'%s'", str_replace('\'', '\'\'', $value));
       case '' == $value:
         return "''";
-      case preg_match(self::getTimestampRegex(), $value):
+      case preg_match(self::getTimestampRegex(), (string) $value):
         return "'$value'";
-      case in_array(strtolower($value), $trueValues):
+      case in_array(strtolower((string) $value), $trueValues):
         return "'$value'";
-      case in_array(strtolower($value), $falseValues):
+      case in_array(strtolower((string) $value), $falseValues):
         return "'$value'";
-      case in_array(strtolower($value), array('null', '~')):
+      case in_array(strtolower((string) $value), array('null', '~')):
         return "'$value'";
       default:
         return $value;

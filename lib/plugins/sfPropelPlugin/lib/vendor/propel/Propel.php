@@ -767,10 +767,10 @@ class Propel
 	public static function importClass($path) {
 
 		// extract classname
-		if (($pos = strrpos($path, '.')) === false) {
+		if (($pos = strrpos((string) $path, '.')) === false) {
 			$class = $path;
 		} else {
-			$class = substr($path, $pos + 1);
+			$class = substr((string) $path, $pos + 1);
 		}
 
 		// check if class exists, using autoloader to attempt to load it.

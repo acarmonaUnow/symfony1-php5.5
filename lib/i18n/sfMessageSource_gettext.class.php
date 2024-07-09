@@ -100,7 +100,7 @@ class sfMessageSource_gettext extends sfMessageSource_File
 
   protected function getPOFile($MOFile)
   {
-    return substr($MOFile, 0, strlen($MOFile) - strlen($this->dataExt)).$this->poExt;
+    return substr((string) $MOFile, 0, strlen((string) $MOFile) - strlen($this->dataExt)).$this->poExt;
   }
 
   /**

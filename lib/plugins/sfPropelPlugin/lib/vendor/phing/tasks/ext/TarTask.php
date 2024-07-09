@@ -231,7 +231,7 @@ class TarTask extends MatchingTask {
             
             foreach($this->filesets as $fs) {                                
                     $files = $fs->getFiles($this->project, $this->includeEmpty);
-                    if (count($files) > 1 && strlen($fs->getFullpath()) > 0) {
+                    if (count($files) > 1 && strlen((string) $fs->getFullpath()) > 0) {
                         throw new BuildException("fullpath attribute may only "
                                                  . "be specified for "
                                                  . "filesets that specify a "
@@ -308,7 +308,7 @@ class TarFileSet extends FileSet {
 	            // first any empty directories that will not be implicitly added by any of the files
 				$implicitDirs = array();
 				foreach($this->files as $file) {
-					$implicitDirs[] = dirname($file);
+					$implicitDirs[] = dirname((string) $file);
 				} 
 
 				$incDirs = $ds->getIncludedDirectories();
@@ -318,7 +318,7 @@ class TarFileSet extends FileSet {
 				// we get duplicate directories in the resulting tar
 				foreach($incDirs as $dir) {
 					foreach($incDirs as $dircheck) {
-						if (!empty($dir) && $dir == dirname($dircheck)) {
+						if (!empty($dir) && $dir == dirname((string) $dircheck)) {
 							$implicitDirs[] = $dir;
 						}
 					}

@@ -120,7 +120,7 @@ class Doctrine_Data_Export extends Doctrine_Data
             if (is_array($directory)) {
                 throw new Doctrine_Data_Exception('You must specify a single path to a folder in order to export individual files.');
             } else if ( ! is_dir($directory) && is_file($directory)) {
-                $directory = dirname($directory);
+                $directory = dirname((string) $directory);
             }
 
             foreach ($data as $className => $classData) {

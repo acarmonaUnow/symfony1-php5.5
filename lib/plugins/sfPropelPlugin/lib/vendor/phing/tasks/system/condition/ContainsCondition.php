@@ -70,7 +70,7 @@ class ContainsCondition implements Condition {
         }
 
         return $this->caseSensitive 
-            ? str_contains($this->string, $this->subString)
-            : str_contains(strtolower($this->string), strtolower($this->subString));
+            ? str_contains((string) $this->string, (string) $this->subString)
+            : str_contains(strtolower((string) $this->string), strtolower((string) $this->subString));
     }
 }

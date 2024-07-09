@@ -422,7 +422,7 @@ class sfToolkit
    */
   public static function isUTF8($string)
   {
-    for ($idx = 0, $strlen = strlen($string); $idx < $strlen; $idx++)
+    for ($idx = 0, $strlen = strlen((string) $string); $idx < $strlen; $idx++)
     {
       $byte = ord($string[$idx]);
 

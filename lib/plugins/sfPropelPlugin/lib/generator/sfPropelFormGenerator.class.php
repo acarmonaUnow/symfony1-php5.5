@@ -87,7 +87,7 @@ class sfPropelFormGenerator extends sfGenerator
       $this->table = $table;
 
       // find the package to store forms in the same directory as the model classes
-      $packages = explode('.', constant(constant($table->getClassname().'::PEER').'::CLASS_DEFAULT'));
+      $packages = explode('.', (string) constant(constant($table->getClassname().'::PEER').'::CLASS_DEFAULT'));
       array_pop($packages);
       if (false === $pos = array_search($this->params['model_dir_name'], $packages))
       {
@@ -365,7 +365,7 @@ class sfPropelFormGenerator extends sfGenerator
     $max = 0;
     foreach ($this->table->getColumns() as $column)
     {
-      if (($m = strlen($column->getName())) > $max)
+      if (($m = strlen((string) $column->getName())) > $max)
       {
         $max = $m;
       }
@@ -473,10 +473,10 @@ class sfPropelFormGenerator extends sfGenerator
     $classes = sfFinder::type('file')->name('*TableMap.php')->in($this->generatorManager->getConfiguration()->getModelDirs());
     foreach ($classes as $class)
     {
-      $omClass = basename($class, 'TableMap.php');
+      $omClass = basename((string) $class, 'TableMap.php');
       if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject') && constant($omClass.'Peer::DATABASE_NAME') == $this->params['connection'])
       {
-        $tableMapClass = basename($class, '.php');
+        $tableMapClass = basename((string) $class, '.php');
         $this->dbMap->addTableFromMapClass($tableMapClass);
       }
     }

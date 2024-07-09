@@ -84,7 +84,7 @@ class sfPropelFormFilterGenerator extends sfPropelFormGenerator
       $this->table = $table;
 
       // find the package to store filter forms in the same directory as the model classes
-      $packages = explode('.', constant(constant($table->getClassname().'::PEER').'::CLASS_DEFAULT'));
+      $packages = explode('.', (string) constant(constant($table->getClassname().'::PEER').'::CLASS_DEFAULT'));
       array_pop($packages);
       if (false === $pos = array_search($this->params['model_dir_name'], $packages))
       {

@@ -99,7 +99,7 @@ abstract class sfResponse implements Serializable
 
     if ($this->options['logging'])
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Send content (%s o)', strlen($content)))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Send content (%s o)', strlen((string) $content)))));
     }
 
     echo $content;

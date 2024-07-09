@@ -79,7 +79,7 @@ class ContainsSelector extends BaseExtendSelector {
         if ($parameters !== null) {
             for ($i=0,$size=count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                match (strtolower($paramname)) {
+                match (strtolower((string) $paramname)) {
                     self::CONTAINS_KEY => $this->setText($parameters[$i]->getValue()),
                     self::CASE_KEY => $this->setCasesensitive($parameters[$i]->getValue()),
                     default => $this->setError("Invalid parameter " . $paramname),
@@ -118,7 +118,7 @@ class ContainsSelector extends BaseExtendSelector {
 
         $userstr = $this->contains;
         if (!$this->casesensitive) {
-            $userstr = strtolower($this->contains);
+            $userstr = strtolower((string) $this->contains);
         }
         
         $in = null;
@@ -127,9 +127,9 @@ class ContainsSelector extends BaseExtendSelector {
             $teststr = $in->readLine();
             while ($teststr !== null) {
                 if (!$this->casesensitive) {
-                    $teststr = strtolower($teststr);
+                    $teststr = strtolower((string) $teststr);
                 }
-                if (str_contains($teststr, $userstr)) {
+                if (str_contains((string) $teststr, (string) $userstr)) {
                     return true;
                 }
                 $teststr = $in->readLine();

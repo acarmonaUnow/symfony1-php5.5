@@ -48,7 +48,7 @@ class Win32FileSystem extends FileSystem {
     }
 
     function slashify($p) {
-        if ((strlen($p) > 0) && ($p[0] != $this->slash)) {
+        if ((strlen((string) $p) > 0) && ($p[0] != $this->slash)) {
             return $this->slash.$p;
         }
         else {
@@ -132,7 +132,7 @@ class Win32FileSystem extends FileSystem {
         } else {
             // Partial normalization
             $src = $offset;
-            $sb .= substr($strPath, 0, $offset);
+            $sb .= substr((string) $strPath, 0, $offset);
         }
 
         // Remove redundant slashes from the remainder of the path, forcing all
@@ -145,7 +145,7 @@ class Win32FileSystem extends FileSystem {
                 }
                 if ($src === $len) {
                     /* Check for trailing separator */
-                    $sn = (int) strlen($sb);
+                    $sn = (int) strlen((string) $sb);
                     if (($sn == 2) && ($sb[1] === ':')) {
                         // "z:\\"
                         $sb .= $slash;

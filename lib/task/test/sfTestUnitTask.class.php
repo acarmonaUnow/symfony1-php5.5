@@ -73,8 +73,8 @@ EOF;
 
       foreach ($arguments['name'] as $name)
       {
-        $finder = sfFinder::type('file')->follow_link()->name(basename($name).'Test.php');
-        $files = array_merge($files, $finder->in(sfConfig::get('sf_test_dir').'/unit/'.dirname($name)));
+        $finder = sfFinder::type('file')->follow_link()->name(basename((string) $name).'Test.php');
+        $files = array_merge($files, $finder->in(sfConfig::get('sf_test_dir').'/unit/'.dirname((string) $name)));
       }
 
       if($allFiles = $this->filterTestFiles($files, $arguments, $options))

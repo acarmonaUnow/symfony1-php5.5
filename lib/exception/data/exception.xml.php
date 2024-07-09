@@ -2,7 +2,7 @@
 <error code="<?php echo $code ?>" message="<?php echo $text ?>">
   <debug>
     <name><?php echo $name ?></name>
-    <message><?php echo htmlspecialchars($message, ENT_QUOTES, sfConfig::get('sf_charset', 'UTF-8')) ?></message>
+    <message><?php echo htmlspecialchars((string) $message, ENT_QUOTES, sfConfig::get('sf_charset', 'UTF-8')) ?></message>
     <traces>
 <?php foreach ($traces as $trace): ?>
         <trace><?php echo $trace ?></trace>

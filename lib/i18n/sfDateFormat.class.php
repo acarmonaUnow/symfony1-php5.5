@@ -125,7 +125,7 @@ class sfDateFormat
     {
       if (!$pattern)
       {
-        if (strlen($time) == 10)
+        if (strlen((string) $time) == 10)
         {
           $pattern = 'i';
         }
@@ -159,7 +159,7 @@ class sfDateFormat
           }
         }
       }
-      preg_match('@'.$pregPattern.'@', $time, $matches);
+      preg_match('@'.$pregPattern.'@', (string) $time, $matches);
 
       array_shift($matches);
 
@@ -180,7 +180,7 @@ class sfDateFormat
     {
       if ($isString)
       {
-        $numericalTime = @strtotime($time);
+        $numericalTime = @strtotime((string) $time);
         if ($numericalTime === false)
         {
           throw new sfException(sprintf('Impossible to parse date "%s" with format "%s".', $time, $pattern));
@@ -229,7 +229,7 @@ class sfDateFormat
     for ($i = 0, $max = count($tokens); $i < $max; $i++)
     {
       $pattern = $tokens[$i];
-      if ($pattern[0] == "'" && $pattern[strlen($pattern) - 1] == "'")
+      if ($pattern[0] == "'" && $pattern[strlen((string) $pattern) - 1] == "'")
       {
         $tokens[$i] = str_replace('``````', '\'', preg_replace('/(^\')|(\'$)/', '', $pattern));
       }
@@ -239,7 +239,7 @@ class sfDateFormat
       }
       else
       {
-        $function = ucfirst($this->getFunctionName($pattern));
+        $function = ucfirst((string) $this->getFunctionName($pattern));
         if ($function != null)
         {
           $fName = 'get'.$function;
@@ -402,7 +402,7 @@ class sfDateFormat
   {
     $year = $date['year'];
     return match ($pattern) {
-        'yy' => substr($year, 2),
+        'yy' => substr((string) $year, 2),
         'y', 'yyy', 'yyyy' => $year,
         default => throw new sfException('The pattern for year is either "y", "yy", "yyy" or "yyyy".'),
     };
@@ -426,7 +426,7 @@ class sfDateFormat
 
     return match ($pattern) {
         'M' => $month,
-        'MM' => str_pad($month, 2, '0', STR_PAD_LEFT),
+        'MM' => str_pad((string) $month, 2, '0', STR_PAD_LEFT),
         'MMM' => $this->formatInfo->AbbreviatedMonthNames[$month - 1],
         'MMMM' => $this->formatInfo->MonthNames[$month - 1],
         'MMMMM' => $this->formatInfo->NarrowMonthNames[$month - 1],
@@ -477,7 +477,7 @@ class sfDateFormat
 
     return match ($pattern) {
         'd' => $day,
-        'dd' => str_pad($day, 2, '0', STR_PAD_LEFT),
+        'dd' => str_pad((string) $day, 2, '0', STR_PAD_LEFT),
         'dddd' => $this->getWday($date),
         default => throw new sfException('The pattern for day of the month is "d", "dd" or "dddd".'),
     };
@@ -515,7 +515,7 @@ class sfDateFormat
 
     return match ($pattern) {
         'H' => $hour,
-        'HH' => str_pad($hour, 2, '0', STR_PAD_LEFT),
+        'HH' => str_pad((string) $hour, 2, '0', STR_PAD_LEFT),
         default => throw new sfException('The pattern for 24 hour format is "H" or "HH".'),
     };
   }
@@ -571,7 +571,7 @@ class sfDateFormat
 
     return match ($pattern) {
         'm' => $minutes,
-        'mm' => str_pad($minutes, 2, '0', STR_PAD_LEFT),
+        'mm' => str_pad((string) $minutes, 2, '0', STR_PAD_LEFT),
         default => throw new sfException('The pattern for minutes is "m" or "mm".'),
     };
   }
@@ -590,7 +590,7 @@ class sfDateFormat
 
     return match ($pattern) {
         's' => $seconds,
-        'ss' => str_pad($seconds, 2, '0', STR_PAD_LEFT),
+        'ss' => str_pad((string) $seconds, 2, '0', STR_PAD_LEFT),
         default => throw new sfException('The pattern for seconds is "s" or "ss".'),
     };
   }

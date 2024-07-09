@@ -465,7 +465,7 @@ class sfFilesystem
     }
 
     $out = array();
-    foreach (explode(DIRECTORY_SEPARATOR, $path) as $i => $fold)
+    foreach (explode(DIRECTORY_SEPARATOR, (string) $path) as $i => $fold)
     {
       if ('' == $fold || '.' == $fold)
       {
@@ -484,7 +484,7 @@ class sfFilesystem
 
     $result  = DIRECTORY_SEPARATOR == $path[0] ? DIRECTORY_SEPARATOR : '';
     $result .= implode(DIRECTORY_SEPARATOR, $out);
-    $result .= DIRECTORY_SEPARATOR == $path[strlen($path) - 1] ? DIRECTORY_SEPARATOR : '';
+    $result .= DIRECTORY_SEPARATOR == $path[strlen((string) $path) - 1] ? DIRECTORY_SEPARATOR : '';
 
     return $result;
   }

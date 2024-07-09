@@ -159,7 +159,7 @@ class XmlToDataSQL extends AbstractHandler {
 				$columnValues = array();
 				foreach ($attributes as $name => $value) {
 					$col = $table->getColumnByPhpName($name);
-					$columnValues[] = new ColumnValue($col, iconv('utf-8',$this->encoding, $value));
+					$columnValues[] = new ColumnValue($col, iconv('utf-8',$this->encoding, (string) $value));
 				}
 
 				$data = new DataRow($table, $columnValues);

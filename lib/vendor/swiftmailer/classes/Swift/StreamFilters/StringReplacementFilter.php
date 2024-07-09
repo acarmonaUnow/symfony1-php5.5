@@ -36,7 +36,7 @@ class Swift_StreamFilters_StringReplacementFilter implements Swift_StreamFilter
     $endOfBuffer = substr($buffer, -1);
     foreach ((array) $this->_search as $needle)
     {
-      if (str_contains($needle, $endOfBuffer))
+      if (str_contains((string) $needle, $endOfBuffer))
       {
         return true;
       }

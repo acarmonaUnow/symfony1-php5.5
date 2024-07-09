@@ -262,7 +262,7 @@ abstract class sfBrowserBase
 
     foreach ($this->vars as $key => $value)
     {
-      $_SERVER[strtoupper($key)] = $value;
+      $_SERVER[strtoupper((string) $key)] = $value;
     }
 
     foreach ($this->headers as $header => $value)
@@ -841,7 +841,7 @@ abstract class sfBrowserBase
 
         unset($arguments[$elementName]);
 
-        $this->parseArgumentAsArray($elementName, array('name' => basename($filename), 'type' => '', 'tmp_name' => $filename, 'error' => $fileError, 'size' => $fileSize), $this->files);
+        $this->parseArgumentAsArray($elementName, array('name' => basename((string) $filename), 'type' => '', 'tmp_name' => $filename, 'error' => $fileError, 'size' => $fileSize), $this->files);
       }
       else if ('input' == $nodeName && !in_array($element->getAttribute('type'), array('submit', 'button', 'image')))
       {
@@ -907,7 +907,7 @@ abstract class sfBrowserBase
     else
     {
       $queryString = http_build_query($arguments, '', '&');
-      $sep = !str_contains($url, '?') ? '?' : '&';
+      $sep = !str_contains((string) $url, '?') ? '?' : '&';
 
       return array($url.($queryString ? $sep.$queryString : ''), 'get', array());
     }

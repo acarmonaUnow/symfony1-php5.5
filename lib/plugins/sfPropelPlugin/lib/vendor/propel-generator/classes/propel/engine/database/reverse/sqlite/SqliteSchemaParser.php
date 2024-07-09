@@ -129,11 +129,11 @@ class SqliteSchemaParser extends BaseSchemaParser {
 			$precision = null;
 			$scale = null;
 
-			if (preg_match('/^([^\(]+)\(\s*(\d+)\s*,\s*(\d+)\s*\)$/', $fulltype, $matches)) {
+			if (preg_match('/^([^\(]+)\(\s*(\d+)\s*,\s*(\d+)\s*\)$/', (string) $fulltype, $matches)) {
 				$type = $matches[1];
 				$precision = $matches[2];
 				$scale = $matches[3]; // aka precision
-			} elseif (preg_match('/^([^\(]+)\(\s*(\d+)\s*\)$/', $fulltype, $matches)) {
+			} elseif (preg_match('/^([^\(]+)\(\s*(\d+)\s*\)$/', (string) $fulltype, $matches)) {
 				$type = $matches[1];
 				$size = $matches[2];
 			} else {
@@ -141,7 +141,7 @@ class SqliteSchemaParser extends BaseSchemaParser {
 			}
 			// If column is primary key and of type INTEGER, it is auto increment
 			// See: http://sqlite.org/faq.html#q1
-			$autoincrement = ($row['pk'] == 1 && strtolower($type) == 'integer');
+			$autoincrement = ($row['pk'] == 1 && strtolower((string) $type) == 'integer');
 			$not_null = $row['notnull'];
 			$default = $row['dflt_value'];
 
@@ -166,7 +166,7 @@ class SqliteSchemaParser extends BaseSchemaParser {
 			$column->setNotNull($not_null);
 
 
-			if (($row['pk'] == 1) || (strtolower($type) == 'integer')) {
+			if (($row['pk'] == 1) || (strtolower((string) $type) == 'integer')) {
 				$column->setPrimaryKey(true);
 			}
 

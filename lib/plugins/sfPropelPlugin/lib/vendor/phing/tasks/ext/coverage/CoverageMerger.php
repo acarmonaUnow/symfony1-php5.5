@@ -104,7 +104,7 @@ class CoverageMerger
 		{
 			foreach ($coverage as $filename => $coverageFile)
 			{
-				$filename = strtolower($filename);
+				$filename = strtolower((string) $filename);
 				
 				if ($props->getProperty($filename) != null)
 				{

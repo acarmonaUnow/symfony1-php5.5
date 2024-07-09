@@ -30,14 +30,14 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
   public function execute($configFiles)
   {
     // get our prefix
-    $prefix = strtolower($this->getParameterHolder()->get('prefix', ''));
+    $prefix = strtolower((string) $this->getParameterHolder()->get('prefix', ''));
 
     // add module prefix if needed
     if ($this->getParameterHolder()->get('module', false))
     {
       $wildcardValues = $this->getParameterHolder()->get('wildcardValues');
       // either the module name is in wildcard values, or it needs to be inserted on runtime
-      $moduleName = $wildcardValues ? strtolower($wildcardValues[0]) : "'.strtolower(\$moduleName).'";
+      $moduleName = $wildcardValues ? strtolower((string) $wildcardValues[0]) : "'.strtolower(\$moduleName).'";
       $prefix .= $moduleName."_";
     }
 

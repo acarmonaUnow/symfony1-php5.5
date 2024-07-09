@@ -122,7 +122,7 @@ EOF;
     $dir  = $properties['dir'];
     $user = isset($properties['user']) ? $properties['user'].'@' : '';
 
-    if (!str_ends_with($dir, '/'))
+    if (!str_ends_with((string) $dir, '/'))
     {
       $dir .= '/';
     }
@@ -168,11 +168,11 @@ EOF;
 
   public function logOutput($output)
   {
-    if (false !== $pos = strpos($output, "\n"))
+    if (false !== $pos = strpos((string) $output, "\n"))
     {
-      $this->outputBuffer .= substr($output, 0, $pos);
+      $this->outputBuffer .= substr((string) $output, 0, $pos);
       $this->log($this->outputBuffer);
-      $this->outputBuffer = substr($output, $pos + 1);
+      $this->outputBuffer = substr((string) $output, $pos + 1);
     }
     else
     {
@@ -182,11 +182,11 @@ EOF;
 
   public function logErrors($output)
   {
-    if (false !== $pos = strpos($output, "\n"))
+    if (false !== $pos = strpos((string) $output, "\n"))
     {
-      $this->errorBuffer .= substr($output, 0, $pos);
+      $this->errorBuffer .= substr((string) $output, 0, $pos);
       $this->log($this->formatter->format($this->errorBuffer, 'ERROR'));
-      $this->errorBuffer = substr($output, $pos + 1);
+      $this->errorBuffer = substr((string) $output, $pos + 1);
     }
     else
     {

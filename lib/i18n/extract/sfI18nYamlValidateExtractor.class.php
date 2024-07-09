@@ -66,7 +66,7 @@ class sfI18nYamlValidateExtractor extends sfI18nYamlExtractor
 
         foreach ($config['validators'][$name]['param'] as $key => $value)
         {
-          if (preg_match('/(msg|error)$/', $key))
+          if (preg_match('/(msg|error)$/', (string) $key))
           {
             $strings[] = $value;
           }
@@ -95,7 +95,7 @@ class sfI18nYamlValidateExtractor extends sfI18nYamlExtractor
       {
         foreach ($value['param'] as $key => $value)
         {
-          if (preg_match('/(msg|error)$/', $key))
+          if (preg_match('/(msg|error)$/', (string) $key))
           {
             $strings[] = $value;
           }

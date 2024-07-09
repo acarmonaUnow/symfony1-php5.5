@@ -307,7 +307,7 @@ class sfNumberFormat
   {
     $string = (string) $float;
 
-    if (!str_contains($float, 'E'))
+    if (!str_contains((string) $float, 'E'))
     {
       return $string;
     }

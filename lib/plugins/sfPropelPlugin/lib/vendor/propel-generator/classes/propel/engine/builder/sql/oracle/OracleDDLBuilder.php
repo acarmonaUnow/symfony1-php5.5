@@ -97,14 +97,14 @@ CREATE TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))
 		$table = $this->getTable();
 		$platform = $this->getPlatform();
 		$tableName = $table->getName();
-		$length = strlen($tableName);
+		$length = strlen((string) $tableName);
 		if ($length > 27) {
 			$length = 27;
 		}
 		if ( is_array($table->getPrimaryKey()) && count($table->getPrimaryKey()) ) {
 			$script .= "
 	ALTER TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))."
-		ADD CONSTRAINT ".$this->quoteIdentifier(substr($tableName,0,$length)."_PK")."
+		ADD CONSTRAINT ".$this->quoteIdentifier(substr((string) $tableName,0,$length)."_PK")."
 	PRIMARY KEY (";
 			$delim = "";
 			foreach ($table->getPrimaryKey() as $col) {

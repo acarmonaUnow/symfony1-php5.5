@@ -199,9 +199,9 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
 
     foreach ($params as $key => $param)
     {
-      if (strlen($param) >= 255)
+      if (strlen((string) $param) >= 255)
       {
-        $params[$key] = '['.number_format(strlen($param) / 1024, 2).'Kb]';
+        $params[$key] = '['.number_format(strlen((string) $param) / 1024, 2).'Kb]';
       }
     }
 

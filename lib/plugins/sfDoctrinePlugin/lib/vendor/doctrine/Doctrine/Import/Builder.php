@@ -531,7 +531,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
         $build = null;
         foreach ($columns as $name => $column) {
             // An alias cannot passed via column name and column alias definition
-            if (isset($column['name']) && stripos($column['name'], ' as ') && isset($column['alias'])) {
+            if (isset($column['name']) && stripos((string) $column['name'], ' as ') && isset($column['alias'])) {
                 throw new Doctrine_Import_Exception(
                     sprintf('When using a column alias you cannot pass it via column name and column alias definition (column: %s).', $column['name'])
                 );
@@ -544,7 +544,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
 
             $columnName = $column['name'] ?? $name;
             if ($manager->getAttribute(Doctrine_Core::ATTR_AUTO_ACCESSOR_OVERRIDE)) {
-                $e = explode(' as ', $columnName);
+                $e = explode(' as ', (string) $columnName);
                 $fieldName = $e[1] ?? $e[0];
                 $classified = Doctrine_Inflector::classify($fieldName);
                 $getter = 'get' . $classified;
@@ -653,12 +653,12 @@ class Doctrine_Import_Builder extends Doctrine_Builder
             foreach ($definition['columns'] as $name => $column) {
                 $name = $column['name'] ?? $name;
                 // extract column name & field name
-                if (stripos($name, ' as '))
+                if (stripos((string) $name, ' as '))
                 {
-                    if (strpos($name, ' as')) {
-                        $parts = explode(' as ', $name);
+                    if (strpos((string) $name, ' as')) {
+                        $parts = explode(' as ', (string) $name);
                     } else {
-                        $parts = explode(' AS ', $name);
+                        $parts = explode(' AS ', (string) $name);
                     }
 
                     if (count($parts) > 1) {
@@ -673,8 +673,8 @@ class Doctrine_Import_Builder extends Doctrine_Builder
                     $name = $name;
                 }
 
-                $name = trim($name);
-                $fieldName = trim($fieldName);
+                $name = trim((string) $name);
+                $fieldName = trim((string) $fieldName);
 
                 $ret[] = '@property ' . $column['type'] . ' $' . $fieldName;
             }
@@ -742,7 +742,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
      */
     private function emitAddChild($level, $parent, $name)
     {
-        return "        \$" . strtolower($parent) . ($level - 1) . "->addChild(\$" . strtolower($name) . "$level);" . PHP_EOL;
+        return "        \$" . strtolower((string) $parent) . ($level - 1) . "->addChild(\$" . strtolower($name) . "$level);" . PHP_EOL;
     }
 
     /**
@@ -894,7 +894,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
                 }
 
                 foreach ($value as $attr) {
-                    $const = "Doctrine_Core::" . strtoupper($key) . "_" . strtoupper($attr);
+                    $const = "Doctrine_Core::" . strtoupper($key) . "_" . strtoupper((string) $attr);
                     if (defined($const)) {
                         $values[] = $const;
                     } else {
@@ -1032,7 +1032,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
             $definition['is_package'] = (isset($definition['package']) && $definition['package']) ? true:false;
 
             if ($definition['is_package']) {
-                $e = explode('.', trim($definition['package']));
+                $e = explode('.', trim((string) $definition['package']));
                 $definition['package_name'] = $e[0];
 
                 $definition['package_path'] = ! empty($e) ? implode(DIRECTORY_SEPARATOR, $e):$definition['package_name'];

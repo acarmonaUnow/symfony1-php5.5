@@ -231,17 +231,17 @@ class Swift_Plugins_PopBeforeSmtpPlugin
   
   private function _command($command)
   {
-    if (!fwrite($this->_socket, $command))
+    if (!fwrite($this->_socket, (string) $command))
     {
       throw new Swift_Plugins_Pop_Pop3Exception(
-        sprintf('Failed to write command [%s] to POP3 host', trim($command))
+        sprintf('Failed to write command [%s] to POP3 host', trim((string) $command))
       );
     }
     
     if (false === $response = fgets($this->_socket))
     {
       throw new Swift_Plugins_Pop_Pop3Exception(
-        sprintf('Failed to read from POP3 host after command [%s]', trim($command))
+        sprintf('Failed to read from POP3 host after command [%s]', trim((string) $command))
       );
     }
     
@@ -252,10 +252,10 @@ class Swift_Plugins_PopBeforeSmtpPlugin
   
   private function _assertOk($response)
   {
-    if (!str_starts_with($response, '+OK'))
+    if (!str_starts_with((string) $response, '+OK'))
     {
       throw new Swift_Plugins_Pop_Pop3Exception(
-        sprintf('POP3 command failed [%s]', trim($response))
+        sprintf('POP3 command failed [%s]', trim((string) $response))
       );
     }
   }
@@ -263,7 +263,7 @@ class Swift_Plugins_PopBeforeSmtpPlugin
   private function _getHostString()
   {
     $host = $this->_host;
-    $host = match (strtolower($this->_crypto)) {
+    $host = match (strtolower((string) $this->_crypto)) {
         'ssl' => 'ssl://' . $host,
         'tls' => 'tls://' . $host,
         default => $host,

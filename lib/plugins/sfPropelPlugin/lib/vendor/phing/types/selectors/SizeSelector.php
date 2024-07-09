@@ -156,7 +156,7 @@ class SizeSelector extends BaseExtendSelector {
         if ($parameters !== null) {
             for ($i = 0, $size=count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                switch(strtolower($paramname)) {
+                switch(strtolower((string) $paramname)) {
                     case self::SIZE_KEY:
                         try {
                             $this->setValue($parameters[$i]->getValue());

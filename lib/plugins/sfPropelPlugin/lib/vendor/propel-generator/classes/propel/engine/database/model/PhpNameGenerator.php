@@ -61,8 +61,8 @@ class PhpNameGenerator implements NameGenerator {
 
 		if (count($inputs)>2) {
 			$prefix = $inputs[2];
-			if ($prefix != '' && str_starts_with($schemaName, $prefix)) {
-				$schemaName = substr($schemaName, strlen($prefix));
+			if ($prefix != '' && str_starts_with((string) $schemaName, (string) $prefix)) {
+				$schemaName = substr((string) $schemaName, strlen((string) $prefix));
 			}
 		}
 

@@ -313,7 +313,7 @@ class Path extends DataType implements \Stringable {
             $pathElement = $tok->nextToken();
             try {
                 $element = self::resolveFile($project, $pathElement);
-                for ($i = 0, $_i=strlen($element); $i < $_i; $i++) {
+                for ($i = 0, $_i=strlen((string) $element); $i < $_i; $i++) {
                     self::translateFileSep($element, $i);
                 }
                 $result[] = $element;
@@ -337,7 +337,7 @@ class Path extends DataType implements \Stringable {
         }
 
         $result = $source;
-        for ($i = 0, $_i=strlen($source); $i < $_i; $i++) {
+        for ($i = 0, $_i=strlen((string) $source); $i < $_i; $i++) {
             self::translateFileSep($result, $i);
         }
 

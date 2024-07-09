@@ -132,7 +132,7 @@ class ProjectConfigurator {
             }            
             $value = self::replaceProperties($project, $value, $project->getProperties());
             try { // try to set the attribute
-                $ih->setAttribute($project, $target, strtolower($key), $value);
+                $ih->setAttribute($project, $target, strtolower((string) $key), $value);
             } catch (BuildException $be) {
                 // id attribute must be set externally
                 if ($key !== "id") {
@@ -151,7 +151,7 @@ class ProjectConfigurator {
      * @access public
      */
     public static function addText($project, $target, $text = null) {
-        if ($text === null || strlen(trim($text)) === 0) {
+        if ($text === null || strlen(trim((string) $text)) === 0) {
             return;
         }    
         $ih = IntrospectionHelper::getHelper($target::class);

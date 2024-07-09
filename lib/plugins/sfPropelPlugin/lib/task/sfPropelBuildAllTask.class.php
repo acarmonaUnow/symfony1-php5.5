@@ -73,7 +73,7 @@ EOF;
     $basePhingOptions = array();
     foreach ($options['phing-arg'] as $arg)
     {
-      $basePhingOptions[] = '--phing-arg='.escapeshellarg($arg);
+      $basePhingOptions[] = '--phing-arg='.escapeshellarg((string) $arg);
     }
 
     $buildModel = new sfPropelBuildModelTask($this->dispatcher, $this->formatter);

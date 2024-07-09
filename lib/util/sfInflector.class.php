@@ -31,8 +31,8 @@ class sfInflector
     $tmp = sfToolkit::pregtrcb(
                         $tmp,
                         array(
-                          '#/(.?)#' => fn($matches) => '::'.strtoupper($matches[1]),
-                          '/(^|_|-)+(.)/' => fn($matches) => strtoupper($matches[2])
+                          '#/(.?)#' => fn($matches) => '::'.strtoupper((string) $matches[1]),
+                          '/(^|_|-)+(.)/' => fn($matches) => strtoupper((string) $matches[2])
                         )
                       );
 
@@ -53,7 +53,7 @@ class sfInflector
     $tmp = sfToolkit::pregtr($tmp, array('/([A-Z]+)([A-Z][a-z])/' => '\\1_\\2',
                                          '/([a-z\d])([A-Z])/'     => '\\1_\\2'));
 
-    return strtolower($tmp);
+    return strtolower((string) $tmp);
   }
 
   /**

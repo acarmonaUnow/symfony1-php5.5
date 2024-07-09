@@ -66,7 +66,7 @@ class sfMailer extends Swift_Mailer
        ),
     ), $options);
 
-    $constantName = 'sfMailer::'.strtoupper($options['delivery_strategy']);
+    $constantName = 'sfMailer::'.strtoupper((string) $options['delivery_strategy']);
     $this->strategy = defined($constantName) ? constant($constantName) : false;
     if (!$this->strategy)
     {
@@ -80,7 +80,7 @@ class sfMailer extends Swift_Mailer
     {
       foreach ($options['transport']['param'] as $key => $value)
       {
-        $method = 'set'.ucfirst($key);
+        $method = 'set'.ucfirst((string) $key);
         if (method_exists($transport, $method))
         {
           $transport->$method($value);

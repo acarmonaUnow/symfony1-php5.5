@@ -202,8 +202,8 @@ abstract class sfPluginConfiguration
 
     foreach ($names as $name)
     {
-      $finder = sfFinder::type('file')->follow_link()->name(basename($name).'Test.php');
-      $files = array_merge($files, $finder->in($directory.'/'.dirname($name)));
+      $finder = sfFinder::type('file')->follow_link()->name(basename((string) $name).'Test.php');
+      $files = array_merge($files, $finder->in($directory.'/'.dirname((string) $name)));
     }
 
     return array_unique($files);

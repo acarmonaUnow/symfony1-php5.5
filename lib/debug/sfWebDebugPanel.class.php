@@ -121,7 +121,7 @@ abstract class sfWebDebugPanel
       $file = $trace['file'] ?? null;
       $line = $trace['line'] ?? null;
 
-      $isProjectFile = $file && str_starts_with($file, sfConfig::get('sf_root_dir')) && !preg_match('/(cache|plugins|vendor)/', $file);
+      $isProjectFile = $file && str_starts_with((string) $file, (string) sfConfig::get('sf_root_dir')) && !preg_match('/(cache|plugins|vendor)/', (string) $file);
 
       $html .= sprintf('<span%s>#%s &raquo; ', $isProjectFile ? ' class="sfWebDebugHighlight"' : '', $keys[$j] + 1);
 

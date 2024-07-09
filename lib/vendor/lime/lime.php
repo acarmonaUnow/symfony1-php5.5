@@ -88,7 +88,7 @@ class lime_test
     foreach ($results as $result)
     {
       $testsuites->appendChild($testsuite = $dom->createElement('testsuite'));
-      $testsuite->setAttribute('name', basename($result['file'], '.php'));
+      $testsuite->setAttribute('name', basename((string) $result['file'], '.php'));
       $testsuite->setAttribute('file', $result['file']);
       $testsuite->setAttribute('failures', count($result['stats']['failed']));
       $testsuite->setAttribute('errors', count($result['stats']['errors']));
@@ -615,7 +615,7 @@ class lime_output
     $message = $this->strip_base_dir($message);
 
     $space = $this->colorizer->colorize(str_repeat(' ', 71), 'RED_BAR')."\n";
-    $message = trim($message);
+    $message = trim((string) $message);
     $message = wordwrap($message, 66, "\n");
 
     echo "\n".$space;
@@ -690,12 +690,12 @@ class lime_output
 
   public function green_bar($message)
   {
-    echo $this->colorizer->colorize($message.str_repeat(' ', 71 - min(71, strlen($message))), 'GREEN_BAR')."\n";
+    echo $this->colorizer->colorize($message.str_repeat(' ', 71 - min(71, strlen((string) $message))), 'GREEN_BAR')."\n";
   }
 
   public function red_bar($message)
   {
-    echo $this->colorizer->colorize($message.str_repeat(' ', 71 - min(71, strlen($message))), 'RED_BAR')."\n";
+    echo $this->colorizer->colorize($message.str_repeat(' ', 71 - min(71, strlen((string) $message))), 'RED_BAR')."\n";
   }
 
   protected function strip_base_dir($text)
@@ -900,7 +900,7 @@ EOF
 
       ob_start();
       // see http://trac.symfony-project.org/ticket/5437 for the explanation on the weird "cd" thing
-      passthru(sprintf('cd & %s %s 2>&1', escapeshellarg($this->php_cli), escapeshellarg($test_file)), $return);
+      passthru(sprintf('cd & %s %s 2>&1', escapeshellarg((string) $this->php_cli), escapeshellarg($test_file)), $return);
       ob_end_clean();
       unlink($test_file);
 
@@ -942,7 +942,7 @@ EOF
         }
       }
 
-      $this->output->echoln(sprintf('%s%s%s', substr($relative_file, -min(67, strlen($relative_file))), str_repeat('.', 70 - min(67, strlen($relative_file))), $stats['status']));
+      $this->output->echoln(sprintf('%s%s%s', substr((string) $relative_file, -min(67, strlen((string) $relative_file))), str_repeat('.', 70 - min(67, strlen((string) $relative_file))), $stats['status']));
 
       if ('dubious' == $stats['status'])
       {
@@ -1004,11 +1004,11 @@ EOF
 
         if (isset($stat['output'][0]))
         {
-          $this->output->echoln(sprintf($format, substr($relative_file, -min(30, strlen($relative_file))), $stat['status_code'], count($stat['output'][0]['stats']['failed']) + count($stat['output'][0]['stats']['passed']), count($stat['output'][0]['stats']['failed']), count($stat['output'][0]['stats']['errors']), implode(' ', $stat['output'][0]['stats']['failed'])));
+          $this->output->echoln(sprintf($format, substr((string) $relative_file, -min(30, strlen((string) $relative_file))), $stat['status_code'], count($stat['output'][0]['stats']['failed']) + count($stat['output'][0]['stats']['passed']), count($stat['output'][0]['stats']['failed']), count($stat['output'][0]['stats']['errors']), implode(' ', $stat['output'][0]['stats']['failed'])));
         }
         else
         {
-          $this->output->echoln(sprintf($format, substr($relative_file, -min(30, strlen($relative_file))), $stat['status_code'], '', '', ''));
+          $this->output->echoln(sprintf($format, substr((string) $relative_file, -min(30, strlen((string) $relative_file))), $stat['status_code'], '', '', ''));
         }
       }
 
@@ -1212,7 +1212,7 @@ EOF;
       $total_covered_lines += count($covered_lines);
 
       $relative_file = $this->get_relative_file($file);
-      $output->echoln(sprintf("%-70s %3.0f%%", substr($relative_file, -min(70, strlen($relative_file))), $percent), $percent == 100 ? 'INFO' : ($percent > 90 ? 'PARAMETER' : ($percent < 20 ? 'ERROR' : '')));
+      $output->echoln(sprintf("%-70s %3.0f%%", substr((string) $relative_file, -min(70, strlen((string) $relative_file))), $percent), $percent == 100 ? 'INFO' : ($percent > 90 ? 'PARAMETER' : ($percent < 20 ? 'ERROR' : '')));
       if ($this->verbose && $is_covered && $percent != 100)
       {
         $output->comment(sprintf("missing: %s", $this->format_range($missing_lines)));

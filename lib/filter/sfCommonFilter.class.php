@@ -33,7 +33,7 @@ class sfCommonFilter extends sfFilter
 
     // include javascripts and stylesheets
     $content = $response->getContent();
-    if (false !== ($pos = strpos($content, '</head>')))
+    if (false !== ($pos = strpos((string) $content, '</head>')))
     {
       $this->context->getConfiguration()->loadHelpers(array('Tag', 'Asset'));
       $html = '';
@@ -48,7 +48,7 @@ class sfCommonFilter extends sfFilter
 
       if ($html)
       {
-        $response->setContent(substr($content, 0, $pos).$html.substr($content, $pos));
+        $response->setContent(substr((string) $content, 0, $pos).$html.substr((string) $content, $pos));
       }
     }
 

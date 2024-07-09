@@ -247,7 +247,7 @@ abstract class sfWidgetForm extends sfWidget
       $name = str_replace(array('[]', '][', '[', ']'), array((null !== $value && !is_array($value) ? '_'.$value : ''), '_', '_', ''), $name);
     }
 
-    if (str_contains($this->getOption('id_format'), '%s'))
+    if (str_contains((string) $this->getOption('id_format'), '%s'))
     {
       $name = sprintf($this->getOption('id_format'), $name);
     }

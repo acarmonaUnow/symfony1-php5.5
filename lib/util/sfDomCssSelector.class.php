@@ -108,7 +108,7 @@ class sfDomCssSelector implements Countable, Iterator
         $combinator = $token['combinator'];
         $selector = $token['selector'];
 
-        $token = trim($token['name']);
+        $token = trim((string) $token['name']);
 
         $pos = strpos($token, '#');
         if (false !== $pos && preg_match('/^[A-Za-z0-9]*$/', substr($token, 0, $pos)))
@@ -147,7 +147,7 @@ class sfDomCssSelector implements Countable, Iterator
           $nodes = array();
           foreach ($founds as $found)
           {
-            if (preg_match('/(^|\s+)'.$className.'($|\s+)/', $found->getAttribute('class')))
+            if (preg_match('/(^|\s+)'.$className.'($|\s+)/', (string) $found->getAttribute('class')))
             {
               $nodes[] = $found;
             }
@@ -189,11 +189,11 @@ class sfDomCssSelector implements Countable, Iterator
 
               $ok = match ($attrOperator) {
                   '=' => $found->getAttribute($attrName) == $attrValue,
-                  '~' => preg_match('/\b'.preg_quote($attrValue, '/').'\b/', $found->getAttribute($attrName)),
-                  '|' => preg_match('/^'.preg_quote($attrValue, '/').'-?/', $found->getAttribute($attrName)),
-                  '^' => str_starts_with($found->getAttribute($attrName), $attrValue),
-                  '$' => str_ends_with($found->getAttribute($attrName), $attrValue),
-                  '*' => str_contains($found->getAttribute($attrName), $attrValue),
+                  '~' => preg_match('/\b'.preg_quote($attrValue, '/').'\b/', (string) $found->getAttribute($attrName)),
+                  '|' => preg_match('/^'.preg_quote($attrValue, '/').'-?/', (string) $found->getAttribute($attrName)),
+                  '^' => str_starts_with((string) $found->getAttribute($attrName), $attrValue),
+                  '$' => str_ends_with((string) $found->getAttribute($attrName), $attrValue),
+                  '*' => str_contains((string) $found->getAttribute($attrName), $attrValue),
                   default => $found->hasAttribute($attrName),
               };
 
@@ -282,7 +282,7 @@ class sfDomCssSelector implements Countable, Iterator
     $tokens = array();
     $quoted = false;
     $token = '';
-    for ($i = 0, $max = strlen($selector); $i < $max; $i++)
+    for ($i = 0, $max = strlen((string) $selector); $i < $max; $i++)
     {
       if (',' == $selector[$i] && !$quoted)
       {
@@ -314,7 +314,7 @@ class sfDomCssSelector implements Countable, Iterator
     $combinators = array(' ', '>', '+');
     $quoted = false;
     $token = array('combinator' => ' ', 'name' => '');
-    for ($i = 0, $max = strlen($selector); $i < $max; $i++)
+    for ($i = 0, $max = strlen((string) $selector); $i < $max; $i++)
     {
       if (in_array($selector[$i], $combinators) && !$quoted)
       {
@@ -361,7 +361,7 @@ class sfDomCssSelector implements Countable, Iterator
     $name = '';
     $selector = '';
     $in_selector = false;
-    for ($i = 0, $max = strlen($token_name); $i < $max; $i++)
+    for ($i = 0, $max = strlen((string) $token_name); $i < $max; $i++)
     {
       if ('"' == $token_name[$i])
       {
@@ -413,7 +413,7 @@ class sfDomCssSelector implements Countable, Iterator
       switch ($selector['selector'])
       {
         case 'contains':
-          if (str_contains($nodes[$i]->textContent, $selector['parameter']))
+          if (str_contains($nodes[$i]->textContent, (string) $selector['parameter']))
           {
             $matchingNodes[] = $nodes[$i];
           }
@@ -501,7 +501,7 @@ class sfDomCssSelector implements Countable, Iterator
           )
         \)
       )?
-    /x', $selectors, $matches, PREG_PATTERN_ORDER))
+    /x', (string) $selectors, $matches, PREG_PATTERN_ORDER))
     {
       throw new Exception(sprintf('Unable to split custom selector "%s".', $selectors));
     }
@@ -521,7 +521,7 @@ class sfDomCssSelector implements Countable, Iterator
           )
         \)
       )?
-    /x', substr($selector, 1), $matches))
+    /x', substr((string) $selector, 1), $matches))
     {
       throw new Exception(sprintf('Unable to parse custom selector "%s".', $selector));
     }

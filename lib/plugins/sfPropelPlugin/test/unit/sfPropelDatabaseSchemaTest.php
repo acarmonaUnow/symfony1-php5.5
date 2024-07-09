@@ -30,8 +30,8 @@ class my_lime_test extends lime_test
 
   public function is_line_by_line($exp1, $exp2)
   {
-    $array_exp1 = explode("\n", $exp1);
-    $array_exp2 = explode("\n", $exp2);
+    $array_exp1 = explode("\n", (string) $exp1);
+    $array_exp2 = explode("\n", (string) $exp2);
     $nb_lines = count($array_exp1);
     for ($i=0; $i < $nb_lines; $i++)
     {

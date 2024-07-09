@@ -67,7 +67,7 @@ class sfPropelPluginConfiguration extends sfPluginConfiguration
     $finder = sfFinder::type('file')->name('*TableMap.php');
     foreach ($finder->in($this->configuration->getModelDirs()) as $file)
     {
-      $omClass = basename($file, 'TableMap.php');
+      $omClass = basename((string) $file, 'TableMap.php');
       if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject'))
       {
         $peer = constant($omClass.'::PEER');

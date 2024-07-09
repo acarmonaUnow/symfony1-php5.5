@@ -272,7 +272,7 @@ class BasePeer
 			$qualifiedCols = $criteria->keys(); // we need table.column cols when populating values
 			$columns = array(); // but just 'column' cols for the SQL
 			foreach ($qualifiedCols as $qualifiedCol) {
-				$columns[] = substr($qualifiedCol, strrpos($qualifiedCol, '.') + 1);
+				$columns[] = substr((string) $qualifiedCol, strrpos((string) $qualifiedCol, '.') + 1);
 			}
 
 			// add identifiers
@@ -357,7 +357,7 @@ class BasePeer
 				$sql = "UPDATE " . $tableName . " SET ";
 				$p = 1;
 				foreach ($updateTablesColumns[$tableName] as $col) {
-					$updateColumnName = substr($col, strrpos($col, '.') + 1);
+					$updateColumnName = substr((string) $col, strrpos((string) $col, '.') + 1);
 					// add identifiers for the actual database?
 					if ($db->useQuoteIdentifier()) {
 						$updateColumnName = $db->quoteIdentifier($updateColumnName);
@@ -372,7 +372,7 @@ class BasePeer
 								$raw = $param['raw'];
 								$rawcvt = '';
 								// parse the $params['raw'] for ? chars
-								for($r=0,$len=strlen($raw); $r < $len; $r++) {
+								for($r=0,$len=strlen((string) $raw); $r < $len; $r++) {
 									if ($raw[$r] == '?') {
 										$rawcvt .= ':p'.$p++;
 									} else {
@@ -678,8 +678,8 @@ class BasePeer
 	{
 		$columnNames = array();
 		foreach ($criteria->getSelectColumns() as $fullyQualifiedColumnName) {
-			if ($pos = strrpos($fullyQualifiedColumnName, '.')) {
-				$columnName = substr($fullyQualifiedColumnName, $pos);
+			if ($pos = strrpos((string) $fullyQualifiedColumnName, '.')) {
+				$columnName = substr((string) $fullyQualifiedColumnName, $pos);
 				if (isset($columnNames[$columnName])) {
 					// more than one column with the same name, so aliasing is required
 					return true;
@@ -775,8 +775,8 @@ class BasePeer
 
 			$selectClause[] = $columnName; // the full column name: e.g. MAX(books.price)
 
-			$parenPos = strrpos($columnName, '(');
-			$dotPos = strrpos($columnName, '.', ($parenPos !== false ? $parenPos : 0));
+			$parenPos = strrpos((string) $columnName, '(');
+			$dotPos = strrpos((string) $columnName, '.', ($parenPos !== false ? $parenPos : 0));
 
 			// [HL] I think we really only want to worry about adding stuff to
 			// the fromClause if this function has a TABLE.COLUMN in it at all.
@@ -785,9 +785,9 @@ class BasePeer
 			if ($dotPos !== false) {
 
 				if ($parenPos === false) { // table.column
-					$tableName = substr($columnName, 0, $dotPos);
+					$tableName = substr((string) $columnName, 0, $dotPos);
 				} else { // FUNC(table.column)
-					$tableName = substr($columnName, $parenPos + 1, $dotPos - ($parenPos + 1));
+					$tableName = substr((string) $columnName, $parenPos + 1, $dotPos - ($parenPos + 1));
 					// functions may contain qualifiers so only take the last
 					// word as the table name.
 					// COUNT(DISTINCT books.price)
@@ -933,29 +933,29 @@ class BasePeer
 
 				// Add function expression as-is.
 
-				if (str_contains($orderByColumn, '(')) {
+				if (str_contains((string) $orderByColumn, '(')) {
 					$orderByClause[] = $orderByColumn;
 					continue;
 				}
 
 				// Split orderByColumn (i.e. "table.column DESC")
 
-				$dotPos = strrpos($orderByColumn, '.');
+				$dotPos = strrpos((string) $orderByColumn, '.');
 
 				if ($dotPos !== false) {
-					$tableName = substr($orderByColumn, 0, $dotPos);
-					$columnName = substr($orderByColumn, $dotPos+1);
+					$tableName = substr((string) $orderByColumn, 0, $dotPos);
+					$columnName = substr((string) $orderByColumn, $dotPos+1);
 				}
 				else {
 					$tableName = '';
 					$columnName = $orderByColumn;
 				}
 
-				$spacePos = strpos($columnName, ' ');
+				$spacePos = strpos((string) $columnName, ' ');
 
 				if ($spacePos !== false) {
-					$direction = substr($columnName, $spacePos);
-					$columnName = substr($columnName, 0, $spacePos);
+					$direction = substr((string) $columnName, $spacePos);
+					$columnName = substr((string) $columnName, 0, $spacePos);
 				}
 				else {
 					$direction = '';

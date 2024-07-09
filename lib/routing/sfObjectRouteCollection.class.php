@@ -74,7 +74,7 @@ class sfObjectRouteCollection extends sfRouteCollection
     $actions = false === $this->options['actions'] ? $this->getDefaultActions() : $this->options['actions'];
     foreach ($actions as $action)
     {
-      $method = 'getRouteFor'.ucfirst($action);
+      $method = 'getRouteFor'.ucfirst((string) $action);
       if (!method_exists($this, $method))
       {
         throw new InvalidArgumentException(sprintf('Unable to generate a route for the "%s" action.', $action));

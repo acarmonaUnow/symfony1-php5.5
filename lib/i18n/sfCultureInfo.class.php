@@ -845,7 +845,7 @@ class sfCultureInfo implements \Stringable
     {
       $timeZones[$key] = $metadata['meta:'.$value];
       $timeZones[$key]['identifier'] = $key;
-      $timeZones[$key]['city'] = str_replace('_', ' ', substr($key, strpos($key, '/') + 1));
+      $timeZones[$key]['city'] = str_replace('_', ' ', substr((string) $key, strpos((string) $key, '/') + 1));
     }
     return $timeZones;
   }

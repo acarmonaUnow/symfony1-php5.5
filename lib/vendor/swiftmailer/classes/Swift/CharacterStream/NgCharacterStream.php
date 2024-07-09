@@ -288,7 +288,7 @@ Class Swift_CharacterStream_NgCharacterStream
   	$this->_datas .= $chars;
     $this->_charCount += $this->_charReader->getCharPositions(substr($this->_datas, $this->_datasSize), $this->_datasSize, $this->_map, $ignored);
     if ($ignored!==false) {
-      $this->_datasSize=strlen($this->_datas)-strlen($ignored);
+      $this->_datasSize=strlen($this->_datas)-strlen((string) $ignored);
     }
     else
     {

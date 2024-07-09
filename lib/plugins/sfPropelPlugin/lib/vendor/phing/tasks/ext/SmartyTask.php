@@ -538,7 +538,7 @@ class SmartyTask extends Task {
                 if (StringHelper::endsWith("file.contents", $property)) {
                     // pull in contents of file specified 
 
-                    $property = substr($property, 0, strpos($property, "file.contents") - 1);
+                    $property = substr((string) $property, 0, strpos((string) $property, "file.contents") - 1);
 
                     // reset value, and then 
                     // read in teh contents of the file into that var

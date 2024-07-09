@@ -97,7 +97,7 @@ abstract class XMLElement implements \Stringable {
 		if (is_numeric($val)) {
 			return (bool) $val;
 		} else {
-			return (in_array(strtolower($val), array('true', 't', 'y', 'yes'), true) ? true : false);
+			return (in_array(strtolower((string) $val), array('true', 't', 'y', 'yes'), true) ? true : false);
 		}
 	}
 
@@ -178,7 +178,7 @@ abstract class XMLElement implements \Stringable {
 		$doc->formatOutput = true;
 		$this->appendXml($doc);
 		$xmlstr = $doc->saveXML();
-		return trim(preg_replace('/<\?xml.*?\?>/', '', $xmlstr));
+		return trim((string) preg_replace('/<\?xml.*?\?>/', '', $xmlstr));
 	}
 	
 	/**

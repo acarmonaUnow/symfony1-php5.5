@@ -84,7 +84,7 @@ class sfWebDebugPanelView extends sfWebDebugPanel
       if (
         ($class == $log['type'] || (class_exists($log['type'], false) && is_subclass_of($log['type'], $class)))
         &&
-        preg_match('/^Render "(.*)"$/', $log['message'], $match)
+        preg_match('/^Render "(.*)"$/', (string) $log['message'], $match)
       )
       {
         return $match[1];

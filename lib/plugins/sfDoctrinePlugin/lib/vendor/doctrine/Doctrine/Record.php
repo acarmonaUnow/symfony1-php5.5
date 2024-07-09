@@ -830,7 +830,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
                         $vars['_data'][$k] = serialize($vars['_data'][$k]);
                         break;
                     case 'gzip':
-                        $vars['_data'][$k] = gzcompress($vars['_data'][$k]);
+                        $vars['_data'][$k] = gzcompress((string) $vars['_data'][$k]);
                         break;
                     case 'enum':
                         $vars['_data'][$k] = $this->_table->enumIndex($k, $vars['_data'][$k]);
@@ -1844,7 +1844,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
                     $a[$field] = serialize($this->_data[$field]);
                     break;
                 case 'gzip':
-                    $a[$field] = gzcompress($this->_data[$field],5);
+                    $a[$field] = gzcompress((string) $this->_data[$field],5);
                     break;
                 case 'boolean':
                     $a[$field] = $this->getTable()->getConnection()->convertBooleans($this->_data[$field]);

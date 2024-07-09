@@ -34,7 +34,7 @@ class Doctrine_Query_JoinCondition extends Doctrine_Query_Condition
 {
     public function load($condition)
     {
-        $condition = trim($condition);
+        $condition = trim((string) $condition);
         $e = $this->_tokenizer->sqlExplode($condition);
 
         foreach ($e as $k => $v) {
@@ -63,7 +63,7 @@ class Doctrine_Query_JoinCondition extends Doctrine_Query_Condition
                 unset($e[3], $e[4]); // Remove unused indexes
             }
 
-            if (!str_starts_with(trim($e[2]), '(')) {
+            if (!str_starts_with(trim((string) $e[2]), '(')) {
                 $expr = new Doctrine_Expression($e[2], $this->query->getConnection());
                 $e[2] = $expr->getSql();
             }
@@ -75,10 +75,10 @@ class Doctrine_Query_JoinCondition extends Doctrine_Query_Condition
             // Defining needed information
             $value = $e[2];
 
-            if (str_starts_with($value, '(')) {
+            if (str_starts_with((string) $value, '(')) {
                 // trim brackets
                 $trimmed   = $this->_tokenizer->bracketTrim($value);
-                $trimmed_upper = strtoupper($trimmed);
+                $trimmed_upper = strtoupper((string) $trimmed);
 
                 if (str_starts_with($trimmed_upper, 'FROM') || str_starts_with($trimmed_upper, 'SELECT')) {
                     // subquery found
@@ -89,7 +89,7 @@ class Doctrine_Query_JoinCondition extends Doctrine_Query_Condition
                 } elseif (str_starts_with($trimmed_upper, 'SQL:')) {
                     // Change due to bug "(" XXX ")"
                     //$value = '(' . substr($trimmed, 4) . ')';
-                    $value = substr($trimmed, 4);
+                    $value = substr((string) $trimmed, 4);
                 } else {
                     // simple in expression found
                     $e = $this->_tokenizer->sqlExplode($trimmed, ',');
@@ -134,7 +134,7 @@ class Doctrine_Query_JoinCondition extends Doctrine_Query_Condition
 
     protected function _processPossibleAggExpression(& $expr, & $matches = array())
     {
-        $hasAggExpr = preg_match('/(.*[^\s\(\=])\(([^\)]*)\)(.*)/', $expr, $matches);
+        $hasAggExpr = preg_match('/(.*[^\s\(\=])\(([^\)]*)\)(.*)/', (string) $expr, $matches);
 
         if ($hasAggExpr) {
             $expr = $matches[2];

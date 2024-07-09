@@ -91,7 +91,7 @@ EOF;
 
     $data = new sfPropelData();
 
-    $classes = null === $options['classes'] ? 'all' : explode(',', $options['classes']);
+    $classes = null === $options['classes'] ? 'all' : explode(',', (string) $options['classes']);
 
     if (null !== $filename)
     {

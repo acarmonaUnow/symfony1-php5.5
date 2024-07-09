@@ -578,7 +578,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         if (strtoupper(substr(trim($expr, '( '), 0, 6)) !== 'SELECT') {
             // Fix for http://www.doctrine-project.org/jira/browse/DC-754
             $expr = preg_replace('/([\'\"])[^\1]*\1/', '', $expr);
-            preg_match_all("/[a-z_][a-z0-9_]*\.[a-z_][a-z0-9_]*[\.[a-z0-9]+]*/i", $expr, $matches);
+            preg_match_all("/[a-z_][a-z0-9_]*\.[a-z_][a-z0-9_]*[\.[a-z0-9]+]*/i", (string) $expr, $matches);
 
             $match = current($matches);
 
@@ -604,38 +604,38 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
     {
         $refs = $this->_tokenizer->sqlExplode($dql, ',');
 
-        $pos   = strpos(trim($refs[0]), ' ');
-        $first = substr($refs[0], 0, $pos);
+        $pos   = strpos(trim((string) $refs[0]), ' ');
+        $first = substr((string) $refs[0], 0, $pos);
 
         // check for DISTINCT keyword
         if ($first === 'DISTINCT') {
             $this->_sqlParts['distinct'] = true;
 
-            $refs[0] = substr($refs[0], ++$pos);
+            $refs[0] = substr((string) $refs[0], ++$pos);
         }
 
         $parsedComponents = array();
 
         foreach ($refs as $reference) {
-            $reference = trim($reference);
+            $reference = trim((string) $reference);
 
             if (empty($reference)) {
                 continue;
             }
 
             $terms = $this->_tokenizer->sqlExplode($reference, ' ');
-            $pos   = strpos($terms[0], '(');
+            $pos   = strpos((string) $terms[0], '(');
 
             if (count($terms) > 1 || $pos !== false) {
                 $expression = array_shift($terms);
                 $alias = array_pop($terms);
 
                 if ( ! $alias) {
-                    $alias = substr($expression, 0, $pos);
+                    $alias = substr((string) $expression, 0, $pos);
                 }
 
                 // Fix for http://www.doctrine-project.org/jira/browse/DC-706
-                if ($pos !== false && !str_starts_with($expression, "'") && substr($expression, 0, $pos) == '') {
+                if ($pos !== false && !str_starts_with((string) $expression, "'") && substr((string) $expression, 0, $pos) == '') {
                     $_queryComponents = $this->_queryComponents;
                     $componentAlias = array_key_first($_queryComponents);
                 } else {
@@ -666,7 +666,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                 }
 
             } else {
-                $e = explode('.', $terms[0]);
+                $e = explode('.', (string) $terms[0]);
 
                 if (isset($e[1])) {
                     $componentAlias = $e[0];
@@ -699,7 +699,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
      */
     public function parseClause($clause)
     {
-        $clause = $this->_conn->dataDict->parseBoolean(trim($clause));
+        $clause = $this->_conn->dataDict->parseBoolean(trim((string) $clause));
 
         if (is_numeric($clause)) {
            return $clause;
@@ -709,17 +709,17 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         $str = '';
 
         foreach ($terms as $term) {
-            $pos = strpos($term[0], '(');
+            $pos = strpos((string) $term[0], '(');
 
-            if ($pos !== false && !str_starts_with($term[0], "'")) {
-                $name = substr($term[0], 0, $pos);
+            if ($pos !== false && !str_starts_with((string) $term[0], "'")) {
+                $name = substr((string) $term[0], 0, $pos);
 
                 $term[0] = $this->parseFunctionExpression($term[0]);
             } else {
-                if (!str_starts_with($term[0], "'") && !str_ends_with($term[0], "'")) {
-                    if (str_contains($term[0], '.')) {
+                if (!str_starts_with((string) $term[0], "'") && !str_ends_with((string) $term[0], "'")) {
+                    if (str_contains((string) $term[0], '.')) {
                         if ( ! is_numeric($term[0])) {
-                            $e = explode('.', $term[0]);
+                            $e = explode('.', (string) $term[0]);
 
                             $field = array_pop($e);
 
@@ -766,8 +766,8 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                             }
                         }
                     } else {
-                        if ( ! empty($term[0]) && ! in_array(strtoupper($term[0]), self::$_keywords) &&
-                             ! is_numeric($term[0]) && $term[0] !== '?' && !str_starts_with($term[0], ':')) {
+                        if ( ! empty($term[0]) && ! in_array(strtoupper((string) $term[0]), self::$_keywords) &&
+                             ! is_numeric($term[0]) && $term[0] !== '?' && !str_starts_with((string) $term[0], ':')) {
 
                             $componentAlias = $this->getRootAlias();
 
@@ -826,14 +826,14 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
 
     public function parseFunctionExpression($expr, $parseCallback = null)
     {
-        $pos = strpos($expr, '(');
-        $name = substr($expr, 0, $pos);
+        $pos = strpos((string) $expr, '(');
+        $name = substr((string) $expr, 0, $pos);
 
         if ($name === '') {
             return $this->parseSubquery($expr);
         }
 
-        $argStr = substr($expr, ($pos + 1), -1);
+        $argStr = substr((string) $expr, ($pos + 1), -1);
         $args   = array();
         // parse args
 
@@ -937,7 +937,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                         continue;
                     }
 
-                    $e = explode('.', $component);
+                    $e = explode('.', (string) $component);
 
                     $field = array_pop($e);
                     $componentAlias = implode('.', $e);
@@ -1024,7 +1024,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         $q = '';
 
         foreach ($this->_sqlParts['from'] as $k => $part) {
-            $e = explode(' ', $part);
+            $e = explode(' ', (string) $part);
 
             if ($k === 0) {
                 if ( ! $ignorePending && $this->_type == self::SELECT) {
@@ -1055,10 +1055,10 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
 
             // preserve LEFT JOINs only if needed
             // Check if it's JOIN, if not add a comma separator instead of space
-            if ( ! preg_match('/\bJOIN\b/i', $part) && ! isset($this->_pendingJoinConditions[$k])) {
+            if ( ! preg_match('/\bJOIN\b/i', (string) $part) && ! isset($this->_pendingJoinConditions[$k])) {
                 $q .= ', ' . $part;
             } else {
-                if (str_starts_with($part, 'LEFT JOIN')) {
+                if (str_starts_with((string) $part, 'LEFT JOIN')) {
                     $aliases = array_merge($this->_subqueryAliases,
                                 array_keys($this->_neededTables));
 
@@ -1069,7 +1069,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                 }
 
                 if ( ! $ignorePending && isset($this->_pendingJoinConditions[$k])) {
-                    if (str_contains($part, ' ON ')) {
+                    if (str_contains((string) $part, ' ON ')) {
                         $part .= ' AND ';
                     } else {
                         $part .= ' ON ';
@@ -1277,7 +1277,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
             // what about composite keys?
             $idColumnName = $table->getColumnName($table->getIdentifier());
 
-            switch (strtolower($this->_conn->getDriverName())) {
+            switch (strtolower((string) $this->_conn->getDriverName())) {
                 case 'mysql':
                     $this->useQueryCache(false);
 
@@ -1325,7 +1325,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
 
         // Fix the orderbys so we only have one orderby per value
         foreach ($this->_sqlParts['orderby'] as $k => $orderBy) {
-            $e = explode(', ', $orderBy);
+            $e = explode(', ', (string) $orderBy);
             unset($this->_sqlParts['orderby'][$k]);
             foreach ($e as $v) {
                 $this->_sqlParts['orderby'][] = $v;
@@ -1351,7 +1351,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                 }
 
                 if ($orderBy) {
-                    $e = explode(',', $orderBy);
+                    $e = explode(',', (string) $orderBy);
                     foreach ($e as $v) {
                         $v = trim($v);
                         if ( ! in_array($v, $this->_sqlParts['orderby'])) {
@@ -1418,7 +1418,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                 $e = $this->_tokenizer->bracketExplode($part, ' ');
                 foreach ($e as $f) {
                     if ($f == 0 || $f % 2 == 0) {
-                        $partOriginal = str_replace(',', '', trim($f));
+                        $partOriginal = str_replace(',', '', trim((string) $f));
                         $e = explode('.', $partOriginal);
                         foreach ($e as &$v) {
                             $v = trim($v, '[]`"');
@@ -1458,7 +1458,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                         $having[$k] = str_replace($this->_aggregateAliasMap[$dqlAlias], $expr[0], $v);
                     }
                     foreach ($orderby as $k => $v) {
-                        $e = explode(' ', $v);
+                        $e = explode(' ', (string) $v);
                         if ($e[0] == $this->_aggregateAliasMap[$dqlAlias]) {
                             $orderby[$k] = $expr[0];
                         }
@@ -1477,8 +1477,8 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
 
         foreach ($this->_sqlParts['from'] as $part) {
             // preserve LEFT JOINs only if needed
-            if (str_starts_with($part, 'LEFT JOIN')) {
-                $e = explode(' ', $part);
+            if (str_starts_with((string) $part, 'LEFT JOIN')) {
+                $e = explode(' ', (string) $part);
                 // Fix for http://www.doctrine-project.org/jira/browse/DC-706
                 // Fix for http://www.doctrine-project.org/jira/browse/DC-594
                 if (empty($this->_sqlParts['orderby']) && empty($this->_sqlParts['where']) && empty($this->_sqlParts['having']) && empty($this->_sqlParts['groupby'])) {
@@ -1514,7 +1514,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         $parts = $this->_tokenizer->quoteExplode($subquery, ' ');
 
         foreach ($parts as $k => $part) {
-            if (str_contains($part, ' ')) {
+            if (str_contains((string) $part, ' ')) {
                 continue;
             }
 
@@ -1560,14 +1560,14 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
 
         if ($driverName == 'mysql' || $driverName == 'pgsql') {
             foreach ($parts as $k => $part) {
-                if (str_contains($part, "'")) {
+                if (str_contains((string) $part, "'")) {
                     continue;
                 }
-                if (!str_contains($part, '__')) {
+                if (!str_contains((string) $part, '__')) {
                     continue;
                 }
 
-                preg_match_all("/[a-zA-Z0-9_]+\_\_[a-z0-9_]+/i", $part, $m);
+                preg_match_all("/[a-zA-Z0-9_]+\_\_[a-z0-9_]+/i", (string) $part, $m);
 
                 foreach ($m[0] as $match) {
                     $e = explode('__', $match);
@@ -1597,9 +1597,9 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         $componentAlias = key($this->_queryComponents);
         $mainTableAlias = $this->getSqlTableAlias($componentAlias);
         foreach ($this->_sqlParts['orderby'] as $part) {
-            $part = trim($part);
+            $part = trim((string) $part);
             $e = $this->_tokenizer->bracketExplode($part, ' ');
-            $part = trim($e[0]);
+            $part = trim((string) $e[0]);
             if (!str_contains($part, '.')) {
                 continue;
             }
@@ -1635,7 +1635,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         $parts = $this->_tokenizer->tokenizeQuery($query);
 
         foreach ($parts as $partName => $subParts) {
-            $subParts = trim($subParts);
+            $subParts = trim((string) $subParts);
             $partName = strtolower($partName);
             switch ($partName) {
                 case 'create':
@@ -1690,7 +1690,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
 
         $mapWith = null;
         if (count($e) > 1) {
-            $mapWith = trim($e[1]);
+            $mapWith = trim((string) $e[1]);
 
             $path = $e[0];
         }
@@ -1701,22 +1701,22 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         $joinCondition = '';
 
         if (count($e) > 1) {
-            $joinCondition = substr($path, strlen($e[0]) + 4, strlen($e[1]));
-            $path = substr($path, 0, strlen($e[0]));
+            $joinCondition = substr((string) $path, strlen($e[0]) + 4, strlen($e[1]));
+            $path = substr((string) $path, 0, strlen($e[0]));
 
             $overrideJoin = true;
         } else {
             $e = explode(' WITH ', str_ireplace(' with ', ' WITH ', $path));
 
             if (count($e) > 1) {
-                $joinCondition = substr($path, strlen($e[0]) + 6, strlen($e[1]));
-                $path = substr($path, 0, strlen($e[0]));
+                $joinCondition = substr((string) $path, strlen($e[0]) + 6, strlen($e[1]));
+                $path = substr((string) $path, 0, strlen($e[0]));
             }
 
             $overrideJoin = false;
         }
 
-        $tmp            = explode(' ', $path);
+        $tmp            = explode(' ', (string) $path);
         $componentAlias = $originalAlias = (count($tmp) > 1) ? end($tmp) : null;
 
         $e = preg_split("/[.:]/", $tmp[0], -1);
@@ -1888,7 +1888,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
         $column = false;
 
         if (isset($mapWith)) {
-            $terms = explode('.', $mapWith);
+            $terms = explode('.', (string) $mapWith);
 
             if (count($terms) == 1) {
                 $indexBy = $terms[0];
@@ -2085,7 +2085,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
                 foreach ($this->_sqlParts['select'] as $field) {
                     // We only include aggregate expressions to count query
                     // This is needed because HAVING clause will use field aliases
-                    if (str_contains($field, '(')) {
+                    if (str_contains((string) $field, '(')) {
                         $selectFields .= ', ' . $field;
                     }
                 }

@@ -390,7 +390,7 @@ class Project {
 
 
     function setDefaultTarget($targetName) {
-        $this->defaultTarget = (string) trim($targetName);
+        $this->defaultTarget = (string) trim((string) $targetName);
     }
 
     function getDefaultTarget() {
@@ -407,7 +407,7 @@ class Project {
      */
 
     function setName($name) {
-        $this->name = (string) trim($name);
+        $this->name = (string) trim((string) $name);
         $this->setProperty("phing.project.name", $this->name);
     }
 
@@ -424,7 +424,7 @@ class Project {
 
     /** Set the projects description */
     function setDescription($description) {
-        $this->description = (string) trim($description);
+        $this->description = (string) trim((string) $description);
     }
 
     /** return the description, null otherwise */
@@ -583,7 +583,7 @@ class Project {
             $cls = "";
             $tasklwr = strtolower($taskType);
             foreach ($this->taskdefs as $name => $class) {
-                if (strtolower($name) === $tasklwr) {
+                if (strtolower((string) $name) === $tasklwr) {
                     $cls = StringHelper::unqualify($class);                                    
                     break;
                 }
@@ -632,9 +632,9 @@ class Project {
     function createDataType($typeName) {        
         try {
             $cls = "";
-            $typelwr = strtolower($typeName);
+            $typelwr = strtolower((string) $typeName);
             foreach ($this->typedefs as $name => $class) {
-                if (strtolower($name) === $typelwr) {
+                if (strtolower((string) $name) === $typelwr) {
                     $cls = StringHelper::unqualify($class);                                    
                     break;
                 }

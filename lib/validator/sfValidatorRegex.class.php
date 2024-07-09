@@ -49,9 +49,9 @@ class sfValidatorRegex extends sfValidatorString
     $pattern = $this->getPattern();
 
     if (
-      ($this->getOption('must_match') && !preg_match($pattern, $clean))
+      ($this->getOption('must_match') && !preg_match($pattern, (string) $clean))
       ||
-      (!$this->getOption('must_match') && preg_match($pattern, $clean))
+      (!$this->getOption('must_match') && preg_match($pattern, (string) $clean))
     )
     {
       throw new sfValidatorError($this, 'invalid', array('value' => $value));

@@ -44,9 +44,9 @@ class Doctrine_Validator_Timestamp extends Doctrine_Validator_Driver
             return true;
         }
 
-        $splitChar = str_contains($value, 'T') ? 'T' : ' ';
+        $splitChar = str_contains((string) $value, 'T') ? 'T' : ' ';
 
-        $e = explode($splitChar, trim($value));
+        $e = explode($splitChar, trim((string) $value));
         $date = $e[0] ?? null;
         $time = $e[1] ?? null;
 

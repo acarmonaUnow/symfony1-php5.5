@@ -91,7 +91,7 @@ class sfWidgetFormSelectRadio extends sfWidgetFormChoiceBase
     foreach ($choices as $key => $option)
     {
       $baseAttributes = array(
-        'name'  => substr($name, 0, -2),
+        'name'  => substr((string) $name, 0, -2),
         'type'  => 'radio',
         'value' => self::escapeOnce($key),
         'id'    => $id = $this->generateId($name, self::escapeOnce($key)),

@@ -499,15 +499,15 @@ class sfPatternRouting extends sfRouting
   protected function normalizeUrl($url)
   {
     // an URL should start with a '/', mod_rewrite doesn't respect that, but no-mod_rewrite version does.
-    if (!str_starts_with($url, '/'))
+    if (!str_starts_with((string) $url, '/'))
     {
       $url = '/'.$url;
     }
 
     // we remove the query string
-    if (false !== $pos = strpos($url, '?'))
+    if (false !== $pos = strpos((string) $url, '?'))
     {
-      $url = substr($url, 0, $pos);
+      $url = substr((string) $url, 0, $pos);
     }
 
     // remove multiple /

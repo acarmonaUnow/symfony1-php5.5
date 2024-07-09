@@ -161,7 +161,7 @@ abstract class sfTask
       }
 
       // add -- before each option if needed
-      if (!str_starts_with($value, '--'))
+      if (!str_starts_with((string) $value, '--'))
       {
         $value = '--'.$value;
       }
@@ -483,18 +483,18 @@ abstract class sfTask
   public function askConfirmation($question, $style = 'QUESTION', $default = true)
   {
     $answer = 'z';
-    while ($answer && !in_array(strtolower($answer[0]), array('y', 'n')))
+    while ($answer && !in_array(strtolower((string) $answer[0]), array('y', 'n')))
     {
       $answer = $this->ask($question, $style);
     }
 
     if (false === $default)
     {
-      return $answer && 'y' == strtolower($answer[0]);
+      return $answer && 'y' == strtolower((string) $answer[0]);
     }
     else
     {
-      return !$answer || 'y' == strtolower($answer[0]);
+      return !$answer || 'y' == strtolower((string) $answer[0]);
     }
   }
 
@@ -653,13 +653,13 @@ abstract class sfTask
    protected function strlen($string)
    {
      if (!function_exists('mb_strlen')) {
-         return strlen($string);
+         return strlen((string) $string);
      }
 
-     if (false === $encoding = mb_detect_encoding($string)) {
-         return strlen($string);
+     if (false === $encoding = mb_detect_encoding((string) $string)) {
+         return strlen((string) $string);
      }
 
-     return mb_strlen($string, $encoding);
+     return mb_strlen((string) $string, $encoding);
    }
 }

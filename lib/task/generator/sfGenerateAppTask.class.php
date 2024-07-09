@@ -83,7 +83,7 @@ EOF;
     $app = $arguments['app'];
 
     // Validate the application name
-    if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $app))
+    if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', (string) $app))
     {
       throw new sfCommandException(sprintf('The application name "%s" is invalid.', $app));
     }

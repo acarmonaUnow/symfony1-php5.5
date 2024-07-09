@@ -355,7 +355,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 **/
 	protected function addColumnAttributeComment(&$script, Column $col) {
 		$cptype = $col->getPhpType();
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 
 		$script .= "
 	/**
@@ -380,7 +380,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 * @param      Column $col
 	 **/
 	protected function addColumnAttributeDeclaration(&$script, Column $col) {
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 		$script .= "
 	protected \$" . $clo . ";
 ";
@@ -406,7 +406,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 * @param      Column $col
 	 **/
 	protected function addColumnAttributeLoaderDeclaration(&$script, Column $col) {
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 		$script .= "
 	protected \$".$clo."_isLoaded = false;
 ";
@@ -589,7 +589,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 
 		$colconsts = array();
 		foreach ($colsWithDefaults as $col) {
-			$clo = strtolower($col->getName());
+			$clo = strtolower((string) $col->getName());
 			$script .= "
 		\$this->".$clo." = ".$this->getDefaultValueString($col).";";
 
@@ -636,7 +636,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 * @see        addTemporalAccessor
 	 **/
 	protected function addTemporalAccessorComment(&$script, Column $col) {
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 		$useDateTime = $this->getBuildProperty('useDateTimeClass');
 
 		$dateTimeClass = $this->getBuildProperty('dateTimeClass');
@@ -719,7 +719,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 **/
 	protected function addTemporalAccessorBody(&$script, Column $col) {
 		$cfc = $col->getPhpName();
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 
 		$useDateTime = $this->getBuildProperty('useDateTimeClass');
 
@@ -843,7 +843,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 * @see        addDefaultAccessor()
 	 **/
 	protected function addDefaultAccessorComment(&$script, Column $col) {
-		$clo=strtolower($col->getName());
+		$clo=strtolower((string) $col->getName());
 
 		$script .= "
 	/**
@@ -883,7 +883,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 **/
 	protected function addDefaultAccessorBody(&$script, Column $col) {
 		$cfc = $col->getPhpName();
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 		if ($col->isLazyLoad()) {
 			$script .= "
 		if (!\$this->".$clo."_isLoaded && \$this->$clo === null && !\$this->isNew()) {
@@ -929,7 +929,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 * @see        addLazyLoader()
 	 **/
 	protected function addLazyLoaderComment(&$script, Column $col) {
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 
 		$script .= "
 	/**
@@ -966,7 +966,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 **/
 	protected function addLazyLoaderBody(&$script, Column $col) {
 		$platform = $this->getPlatform();
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 
 		$script .= "
 		\$c = \$this->buildPkeyCriteria();
@@ -1039,7 +1039,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 * @see        addMutatorOpen()
 	 **/
 	protected function addMutatorComment(&$script, Column $col) {
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 		$script .= "
 	/**
 	 * Set the value of [$clo] column.
@@ -1071,7 +1071,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 * @see        addMutatorOpen()
 	 **/
 	protected function addMutatorOpenBody(&$script, Column $col) {
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 				$cfc = $col->getPhpName();
 		if ($col->isLazyLoad()) {
 			$script .= "
@@ -1105,7 +1105,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	protected function addMutatorCloseBody(&$script, Column $col) {
 		$table = $this->getTable();
 		$cfc = $col->getPhpName();
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 
 		if ($col->isForeignKey()) {
 
@@ -1184,7 +1184,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	protected function addLobMutator(&$script, Column $col)
 	{
 		$this->addMutatorOpen($script, $col);
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 		$script .= "
 		// Because BLOB columns are streams in PDO we have to assume that they are
 		// always modified when a new value is passed in.  For example, the contents
@@ -1210,7 +1210,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	protected function addTemporalMutator(&$script, Column $col)
 	{
 		$cfc = $col->getPhpName();
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 		$visibility = $col->getMutatorVisibility();
 
 		$dateTimeClass = $this->getBuildProperty('dateTimeClass');
@@ -1297,7 +1297,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 */
 	protected function addDefaultMutator(&$script, Column $col)
 	{
-		$clo = strtolower($col->getName());
+		$clo = strtolower((string) $col->getName());
 
 		$this->addMutatorOpen($script, $col);
 
@@ -1381,7 +1381,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 
 		foreach ($colsWithDefaults as $col) {
 
-			$clo = strtolower($col->getName());
+			$clo = strtolower((string) $col->getName());
 			$def = $col->getDefaultValue();
 
 			$script .= "
@@ -1466,7 +1466,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		$n = 0;
 		foreach ($table->getColumns() as $col) {
 			if (!$col->isLazyLoad()) {
-				$clo = strtolower($col->getName());
+				$clo = strtolower((string) $col->getName());
 				if ($col->isLobType() && !$platform->hasStreamBlobImpl()) {
 					$script .= "
 			if (\$row[\$startcol + $n] !== null) {
@@ -1571,7 +1571,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		\$criteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);
 ";
 		foreach ($this->getTable()->getColumns() as $col) {
-			$clo = strtolower($col->getName());
+			$clo = strtolower((string) $col->getName());
 			if ($col->isPrimaryKey()) {
 				$script .= "
 		\$criteria->add(".$this->getColumnConstant($col).", \$this->$clo);";
@@ -1639,7 +1639,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		\$criteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);
 ";
 		foreach ($this->getTable()->getColumns() as $col) {
-			$clo = strtolower($col->getName());
+			$clo = strtolower((string) $col->getName());
 			$script .= "
 		if (\$this->isColumnModified(".$this->getColumnConstant($col).")) \$criteria->add(".$this->getColumnConstant($col).", \$this->$clo);";
 		}
@@ -2116,7 +2116,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		// support for lazy load columns
 		foreach ($table->getColumns() as $col) {
 			if ($col->isLazyLoad()) {
-				$clo = strtolower($col->getName());
+				$clo = strtolower((string) $col->getName());
 				$script .= "
 		// Reset the $clo lazy-load column
 		\$this->" . $clo . " = null;
@@ -2331,7 +2331,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 
 		$pkeys = $this->getTable()->getPrimaryKey();
 		$col = $pkeys[0];
-		$clo=strtolower($col->getName());
+		$clo=strtolower((string) $col->getName());
 		$ctype = $col->getPhpType();
 
 		$script .= "
@@ -2585,7 +2585,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 
 			$column = $table->getColumn($columnName);
 			$cptype = $column->getPhpType();
-			$clo = strtolower($column->getName());
+			$clo = strtolower((string) $column->getName());
 
 			if ($cptype == "integer" || $cptype == "float" || $cptype == "double") {
 				$conditional .= $and . "\$this->". $clo ." != 0";
@@ -2627,7 +2627,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 			foreach ($argmap as $el) {
 				$fcol = $el['foreign'];
 				$lcol = $el['local'];
-				$clo = strtolower($lcol->getName());
+				$clo = strtolower((string) $lcol->getName());
 				$script .= "
 			\$c->add(".$fkPeerBuilder->getColumnConstant($fcol).", \$this->".$clo.");";
 			}
@@ -2791,7 +2791,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 					if ($colFK === null) {
 						throw new EngineException("Column $colFKName not found in " . $tblFK->getName());
 					}
-					$clo = strtolower($column->getName());
+					$clo = strtolower((string) $column->getName());
 					$script .= "
 				\$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
 ";
@@ -2810,7 +2810,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 					$flMap = $refFK->getForeignLocalMapping();
 					$colFKName = $flMap[$columnName];
 					$colFK = $tblFK->getColumn($colFKName);
-					$clo = strtolower($column->getName());
+					$clo = strtolower((string) $column->getName());
 					$script .= "
 			\$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
 ";
@@ -3035,7 +3035,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 			$lfmap = $refFK->getLocalForeignMapping();
 			$localColumn = $this->getTable()->getColumn($lfmap[$colFKName]);
 			$colFK = $refFK->getTable()->getColumn($colFKName);
-			$clo = strtolower($localColumn->getName());
+			$clo = strtolower((string) $localColumn->getName());
 			$script .= "
 				\$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
 ";
@@ -3056,7 +3056,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 			$lfmap = $refFK->getLocalForeignMapping();
 			$localColumn = $this->getTable()->getColumn($lfmap[$colFKName]);
 			$colFK = $refFK->getTable()->getColumn($colFKName);
-			$clo = strtolower($localColumn->getName());
+			$clo = strtolower((string) $localColumn->getName());
 			$script .= "
 
 				\$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
@@ -3132,7 +3132,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 			$localColumn = $this->getTable()->getColumn($lfmap[$colFKName]);
 			$colFK = $refFK->getTable()->getColumn($colFKName);
 
-			$clo = strtolower($localColumn->getName());
+			$clo = strtolower((string) $localColumn->getName());
 
 			$script .= "
 				\$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
@@ -3155,7 +3155,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 			$lfmap = $refFK->getLocalForeignMapping();
 			$localColumn = $this->getTable()->getColumn($lfmap[$colFKName]);
 			$colFK = $refFK->getTable()->getColumn($colFKName);
-			$clo = strtolower($localColumn->getName());
+			$clo = strtolower((string) $localColumn->getName());
 			$script .= "
 
 				\$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
@@ -3218,7 +3218,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		$params = array();
 		foreach ($tblFK->getPrimaryKey() as $col) {
 			$localColumn = $table->getColumn($lfmap[$col->getName()]);
-			$clo = strtolower($localColumn->getName());
+			$clo = strtolower((string) $localColumn->getName());
 			$params[] = "\$this->$clo";
 		}
 
@@ -3392,7 +3392,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 
 		// We need to rewind any LOB columns
 		foreach ($table->getColumns() as $col) {
-			$clo = strtolower($col->getName());
+			$clo = strtolower((string) $col->getName());
 			if ($col->isLobType()) {
 				$script .= "
 				// Rewind the $clo LOB column, since PDO does not rewind after inserting value.
@@ -3823,7 +3823,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 ";
 		foreach ($table->getColumns() as $col) {
 
-			$clo=strtolower($col->getName());
+			$clo=strtolower((string) $col->getName());
 
 			if ($col->isForeignKey()) {
 				foreach ($col->getForeignKeys() as $fk) {
@@ -3915,7 +3915,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		foreach ($table->getColumns() as $col) {
 			if (!in_array($col, $autoIncCols, true)) {
 				$script .= "
-		\$copyObj->set".$col->getPhpName()."(\$this->".strtolower($col->getName()).");
+		\$copyObj->set".$col->getPhpName()."(\$this->".strtolower((string) $col->getName()).");
 ";
 			}
 		} // foreach

@@ -46,7 +46,7 @@ class sfMixer
       $mixinMethod = $callable;
     }
 
-    $tmp = explode(':', $name);
+    $tmp = explode(':', (string) $name);
     $class = $tmp[0];
 
     // do we have a method name

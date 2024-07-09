@@ -373,7 +373,7 @@ class PDOSQLExecTask extends PDOTask {
 
 		try {
 			while (($line = $in->readLine()) !== null) {
-				$line = trim($line);
+				$line = trim((string) $line);
 				$line = ProjectConfigurator::replaceProperties($this->project, $line,
 						$this->project->getProperties());
 
@@ -462,7 +462,7 @@ class PDOSQLExecTask extends PDOTask {
     protected function execSQL($sql) {
 
     	// Check and ignore empty statements
-    	if (trim($sql) == "") {
+    	if (trim((string) $sql) == "") {
     		return;
     	}
 

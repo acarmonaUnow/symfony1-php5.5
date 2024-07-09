@@ -213,7 +213,7 @@ function get_partial($templateName, $vars = array())
   }
   $actionName = '_'.$templateName;
 
-  $class = sfConfig::get('mod_'.strtolower($moduleName).'_partial_view_class', 'sf').'PartialView';
+  $class = sfConfig::get('mod_'.strtolower((string) $moduleName).'_partial_view_class', 'sf').'PartialView';
   $view = new $class($context, $moduleName, $actionName, '');
   $view->setPartialVars(true === sfConfig::get('sf_escaping_strategy') ? sfOutputEscaper::unescape($vars) : $vars);
 
@@ -362,7 +362,7 @@ function _call_component($moduleName, $componentName, $vars)
   $componentInstance->getVarHolder()->add(true === sfConfig::get('sf_escaping_strategy') ? sfOutputEscaper::unescape($vars) : $vars);
 
   // dispatch component
-  $componentToRun = 'execute'.ucfirst($componentName);
+  $componentToRun = 'execute'.ucfirst((string) $componentName);
   if (!method_exists($componentInstance, $componentToRun))
   {
     if (!method_exists($componentInstance, 'execute'))

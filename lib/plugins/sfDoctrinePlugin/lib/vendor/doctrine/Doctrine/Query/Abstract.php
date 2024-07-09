@@ -694,8 +694,8 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     {
         if (isset($this->_tableAliasMap[$oldAlias])) {
             // generate a new alias
-            $name = substr($oldAlias, 0, 1);
-            $i    = ((int) substr($oldAlias, 1));
+            $name = substr((string) $oldAlias, 0, 1);
+            $i    = ((int) substr((string) $oldAlias, 1));
 
             // Fix #1530: It was reaching unexistent seeds index
             if ( ! isset($this->_tableAliasSeeds[$name])) {
@@ -1181,7 +1181,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
         $queryComponents = array();
         $cachedComponents = $cached[1];
         foreach ($cachedComponents as $alias => $components) {
-            $e = explode('.', $components['name']);
+            $e = explode('.', (string) $components['name']);
             if (count($e) === 1) {
                 $manager = Doctrine_Manager::getInstance();
                 if ( ! $this->_passedConn && $manager->hasConnectionForComponent($e[0])) {
@@ -2104,7 +2104,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     protected function _getParser($name)
     {
         if ( ! isset($this->_parsers[$name])) {
-            $class = 'Doctrine_Query_' . ucwords(strtolower($name));
+            $class = 'Doctrine_Query_' . ucwords(strtolower((string) $name));
 
             Doctrine_Core::autoload($class);
 

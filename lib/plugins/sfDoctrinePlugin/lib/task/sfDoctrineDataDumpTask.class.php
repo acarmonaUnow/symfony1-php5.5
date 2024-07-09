@@ -80,7 +80,7 @@ EOF;
         $filename = $args['data_fixtures_path'].'/'.$filename;
       }
 
-      $this->getFilesystem()->mkdirs(dirname($filename));
+      $this->getFilesystem()->mkdirs(dirname((string) $filename));
 
       $args['data_fixtures_path'] = $filename;
     }

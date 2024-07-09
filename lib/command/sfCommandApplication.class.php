@@ -403,7 +403,7 @@ abstract class sfCommandApplication
 
     if ($this->trace)
     {
-      fwrite(STDERR, $this->formatter->format("Exception trace:\n", 'COMMENT'));
+      fwrite(STDERR, (string) $this->formatter->format("Exception trace:\n", 'COMMENT'));
 
       // exception related properties
       $trace = $e->getTrace();
@@ -520,14 +520,14 @@ abstract class sfCommandApplication
   protected function strlen($string)
   {
     if (!function_exists('mb_strlen')) {
-        return strlen($string);
+        return strlen((string) $string);
     }
 
-    if (false === $encoding = mb_detect_encoding($string)) {
-        return strlen($string);
+    if (false === $encoding = mb_detect_encoding((string) $string)) {
+        return strlen((string) $string);
     }
 
-    return mb_strlen($string, $encoding);
+    return mb_strlen((string) $string, $encoding);
   }
 
   /**
@@ -579,9 +579,9 @@ abstract class sfCommandApplication
 
     foreach ($names as $name)
     {
-      for ($len = strlen($name) - 1; $len > 0; --$len)
+      for ($len = strlen((string) $name) - 1; $len > 0; --$len)
       {
-        $abbrev = substr($name, 0, $len);
+        $abbrev = substr((string) $name, 0, $len);
         if (!array_key_exists($abbrev, $table))
         {
           $table[$abbrev] = 1;

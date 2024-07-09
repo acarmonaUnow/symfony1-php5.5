@@ -112,10 +112,10 @@ class NestedElementHandler extends AbstractHandler {
         $ih = IntrospectionHelper::getHelper($parentClass);
         try {
             if ($this->parent instanceof UnknownElement) {
-                $this->child = new UnknownElement(strtolower($propType));
+                $this->child = new UnknownElement(strtolower((string) $propType));
                 $this->parent->addChild($this->child);
             } else {                
-                $this->child = $ih->createElement($project, $this->parent, strtolower($propType));
+                $this->child = $ih->createElement($project, $this->parent, strtolower((string) $propType));
             }
             
             $configurator->configureId($this->child, $attrs);
@@ -126,7 +126,7 @@ class NestedElementHandler extends AbstractHandler {
                 $this->parentWrapper->addChild($this->childWrapper);
             } else {
                 $configurator->configure($this->child, $attrs, $project);
-                $ih->storeElement($project, $this->parent, $this->child, strtolower($propType));
+                $ih->storeElement($project, $this->parent, $this->child, strtolower((string) $propType));
             }
         } catch (BuildException $exc) {
             throw new ExpatParseException("Error initializing nested element <$propType>", $exc, $this->parser->getLocation());

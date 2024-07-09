@@ -126,7 +126,7 @@ class SimpleTestTask extends Task
 
 			foreach ($files as $file)
 			{
-				if (strstr($file, ".php"))
+				if (strstr((string) $file, ".php"))
 				{
 					$filenames[] = $ds->getBaseDir() . "/" . $file;
 				}

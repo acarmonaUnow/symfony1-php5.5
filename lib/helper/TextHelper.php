@@ -34,7 +34,7 @@ function truncate_text($text, $length = 30, $truncate_string = '...', $truncate_
   if ($mbstring)
   {
     $old_encoding = mb_internal_encoding();
-    @mb_internal_encoding(mb_detect_encoding($text));
+    @mb_internal_encoding(mb_detect_encoding((string) $text));
   }
   $strlen = $mbstring ? 'mb_strlen' : 'strlen';
   $substr = $mbstring ? 'mb_substr' : 'substr';
@@ -117,7 +117,7 @@ function excerpt_text($text, $phrase, $radius = 100, $excerpt_string = '...', $e
   if($mbstring)
   {
     $old_encoding = mb_internal_encoding();
-    @mb_internal_encoding(mb_detect_encoding($text));
+    @mb_internal_encoding(mb_detect_encoding((string) $text));
   }
   $strlen = ($mbstring) ? 'mb_strlen' : 'strlen';
   $strpos = ($mbstring) ? 'mb_strpos' : 'strpos';
@@ -248,7 +248,7 @@ function _auto_link_urls($text, $href_options = array(), $truncate = false, $tru
   $href_options = _tag_options($href_options);
 
   $callback_function = function($matches) use ($href_options, $truncate, $truncate_len, $pad) {
-      if (preg_match("/<a\s/i", $matches[1]))
+      if (preg_match("/<a\s/i", (string) $matches[1]))
       {
           return $matches[0];
       }

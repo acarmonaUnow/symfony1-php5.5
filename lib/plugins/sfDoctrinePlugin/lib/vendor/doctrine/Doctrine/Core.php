@@ -648,9 +648,9 @@ class Doctrine_Core
                                                         RecursiveIteratorIterator::LEAVES_ONLY);
                                                         
                 foreach ($it as $file) {
-                    $e = explode('.', $file->getFileName());
+                    $e = explode('.', (string) $file->getFileName());
                     
-                    if (end($e) === 'php' && !str_contains($file->getFileName(), '.inc')) {
+                    if (end($e) === 'php' && !str_contains((string) $file->getFileName(), '.inc')) {
                         if ($modelLoading == Doctrine_Core::MODEL_LOADING_PEAR) {
                             $className = str_replace($dir . DIRECTORY_SEPARATOR, null, $file->getPathName());
                             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
@@ -659,7 +659,7 @@ class Doctrine_Core
                             $className = $e[0];
                         }
 
-                        if ($classPrefix && !str_starts_with($className, $classPrefix)) {
+                        if ($classPrefix && !str_starts_with($className, (string) $classPrefix)) {
                             $className = $classPrefix . $className;
                         }
 

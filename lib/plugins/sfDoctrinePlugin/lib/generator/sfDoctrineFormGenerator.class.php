@@ -156,7 +156,7 @@ class sfDoctrineFormGenerator extends sfGenerator
 
         foreach (sfFinder::type('file')->name('*.php')->in($path.'/lib/model/doctrine') as $path)
         {
-          $info = pathinfo($path);
+          $info = pathinfo((string) $path);
           $e = explode('.', $info['filename']);
           $modelName = substr($e[0], 6, strlen($e[0]));
 
@@ -466,7 +466,7 @@ class sfDoctrineFormGenerator extends sfGenerator
     $max = 0;
     foreach ($this->getColumns() as $column)
     {
-      if (($m = strlen($column->getFieldName())) > $max)
+      if (($m = strlen((string) $column->getFieldName())) > $max)
       {
         $max = $m;
       }

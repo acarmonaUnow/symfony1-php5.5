@@ -67,7 +67,7 @@ class TypeSelector extends BaseExtendSelector {
         if ($parameters !== null) {
             for ($i = 0, $size=count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                if (self::TYPE_KEY == strtolower($paramname)) {
+                if (self::TYPE_KEY == strtolower((string) $paramname)) {
                     $this->setType($parameters[$i]->getValue());
                 } else {
                     $this->setError("Invalid parameter " . $paramname);

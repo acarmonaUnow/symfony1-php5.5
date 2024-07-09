@@ -39,7 +39,7 @@ class Doctrine_Expression_Sqlite extends Doctrine_Expression_Driver
      */
     public static function md5Impl(mixed $data)
     {
-        return md5($data);
+        return md5((string) $data);
     }
 
     /**
@@ -81,22 +81,22 @@ class Doctrine_Expression_Sqlite extends Doctrine_Expression_Driver
 
     public static function sha1Impl($str)
     {
-        return sha1($str);
+        return sha1((string) $str);
     }
 
     public static function ltrimImpl($str)
     {
-        return ltrim($str);
+        return ltrim((string) $str);
     }
 
     public static function rtrimImpl($str)
     {
-        return rtrim($str);
+        return rtrim((string) $str);
     }
 
     public static function trimImpl($str)
     {
-        return trim($str);
+        return trim((string) $str);
     }
     public static function nowImpl()
     {

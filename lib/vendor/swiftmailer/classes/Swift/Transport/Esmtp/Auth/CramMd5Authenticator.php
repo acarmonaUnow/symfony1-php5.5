@@ -41,7 +41,7 @@ class Swift_Transport_Esmtp_Auth_CramMd5Authenticator
     try
     {
       $challenge = $agent->executeCommand("AUTH CRAM-MD5\r\n", array(334));
-      $challenge = base64_decode(substr($challenge, 4));
+      $challenge = base64_decode(substr((string) $challenge, 4));
       $message = base64_encode(
         $username . ' ' . $this->_getResponse($password, $challenge)
         );

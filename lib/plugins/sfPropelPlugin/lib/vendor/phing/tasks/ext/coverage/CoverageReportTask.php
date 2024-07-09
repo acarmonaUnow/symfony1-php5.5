@@ -133,10 +133,10 @@ class CoverageReportTask extends Task
 
 	protected function stripDiv($source)
 	{
-		$openpos = strpos($source, "<div");
-		$closepos = strpos($source, ">", $openpos);
+		$openpos = strpos((string) $source, "<div");
+		$closepos = strpos((string) $source, ">", $openpos);
 
-		$line = substr($source, $closepos + 1);
+		$line = substr((string) $source, $closepos + 1);
 
 		$tagclosepos = strpos($line, "</div>");
 
@@ -204,7 +204,7 @@ class CoverageReportTask extends Task
 	protected function transformSourceFile($filename, $coverageInformation, $classStartLine = 1)
 	{
 		$sourceElement = $this->doc->createElement('sourcefile');
-		$sourceElement->setAttribute('name', basename($filename));
+		$sourceElement->setAttribute('name', basename((string) $filename));
 		
 		/**
 		 * Add original/full filename to document

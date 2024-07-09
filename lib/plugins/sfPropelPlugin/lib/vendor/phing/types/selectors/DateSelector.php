@@ -148,7 +148,7 @@ class DateSelector extends BaseExtendSelector {
         if ($parameters !== null) {
             for ($i=0,$size=count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                match (strtolower($paramname)) {
+                match (strtolower((string) $paramname)) {
                     self::MILLIS_KEY => $this->setMillis($parameters[$i]->getValue()),
                     self::DATETIME_KEY => $this->setDatetime($parameters[$i]->getValue()),
                     self::CHECKDIRS_KEY => $this->setCheckdirs($parameters[$i]->getValue()),

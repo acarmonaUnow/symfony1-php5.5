@@ -173,7 +173,7 @@ class XmlToAppData extends AbstractHandler {
 						//and it's ingnored in the nested external-schemas
 						if (!$this->isExternalSchema()) {
 							$isForRefOnly = @$attributes["referenceOnly"];
-							$this->isForReferenceOnly = ($isForRefOnly !== null ? (strtolower($isForRefOnly) === "true") : true); // defaults to TRUE
+							$this->isForReferenceOnly = ($isForRefOnly !== null ? (strtolower((string) $isForRefOnly) === "true") : true); // defaults to TRUE
 						}
 
 						if ($xmlFile[0] != '/') {

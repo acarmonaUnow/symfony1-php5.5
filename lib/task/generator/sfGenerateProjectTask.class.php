@@ -90,7 +90,7 @@ EOF;
       throw new sfCommandException(sprintf('A symfony project already exists in this directory (%s).', getcwd()));
     }
 
-    if (!in_array(strtolower($options['orm']), array('propel', 'doctrine', 'none')))
+    if (!in_array(strtolower((string) $options['orm']), array('propel', 'doctrine', 'none')))
     {
       throw new InvalidArgumentException(sprintf('Invalid ORM name "%s".', $options['orm']));
     }
@@ -101,7 +101,7 @@ EOF;
     }
 
     // clean orm option
-    $options['orm'] = ucfirst(strtolower($options['orm']));
+    $options['orm'] = ucfirst(strtolower((string) $options['orm']));
 
     $this->arguments = $arguments;
     $this->options = $options;
@@ -110,7 +110,7 @@ EOF;
     $this->installDir(__DIR__.'/skeleton/project');
 
     // update ProjectConfiguration class (use a relative path when the symfony core is nested within the project)
-    $symfonyCoreAutoload = str_starts_with(sfConfig::get('sf_symfony_lib_dir'), sfConfig::get('sf_root_dir')) ?
+    $symfonyCoreAutoload = str_starts_with((string) sfConfig::get('sf_symfony_lib_dir'), (string) sfConfig::get('sf_root_dir')) ?
       sprintf('dirname(__FILE__).\'/..%s/autoload/sfCoreAutoload.class.php\'', str_replace(sfConfig::get('sf_root_dir'), '', sfConfig::get('sf_symfony_lib_dir'))) :
       var_export(sfConfig::get('sf_symfony_lib_dir').'/autoload/sfCoreAutoload.class.php', true);
 
@@ -152,7 +152,7 @@ EOF;
 
   protected function canRunInstaller($installer)
   {
-    if (preg_match('#^(https?|ftps?)://#', $installer))
+    if (preg_match('#^(https?|ftps?)://#', (string) $installer))
     {
       if (ini_get('allow_url_fopen') === false)
       {

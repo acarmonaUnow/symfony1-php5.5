@@ -281,7 +281,7 @@ class IntrospectionHelper {
         
         if (StringHelper::isSlotVar($value)) {
 
-            $as = "setlistening" . strtolower($attributeName);
+            $as = "setlistening" . strtolower((string) $attributeName);
 
             if (!isset($this->slotListeners[$as])) {
                 $msg = $this->getElementName($project, $element) . " doesn't support a slot-listening '$attributeName' attribute.";
@@ -297,7 +297,7 @@ class IntrospectionHelper {
 
             // Traditional value options
 
-            $as = "set".strtolower($attributeName);
+            $as = "set".strtolower((string) $attributeName);
 
             if (!isset($this->attributeSetters[$as])) {
                 $msg = $this->getElementName($project, $element) . " doesn't support the '$attributeName' attribute.";
@@ -311,7 +311,7 @@ class IntrospectionHelper {
             } else {
 
                 // decode any html entities in string
-                $value = html_entity_decode($value);                
+                $value = html_entity_decode((string) $value);                
 
                 // value is a string representation of a boolean type,
                 // convert it to primitive
@@ -332,7 +332,7 @@ class IntrospectionHelper {
 
                 // there should only be one param; we'll just assume ....
                 if ($classname !== null) {
-                    switch(strtolower($classname)) {
+                    switch(strtolower((string) $classname)) {
                         case "phingfile":
                             $value = $project->resolveFile($value);
                             break;
@@ -383,8 +383,8 @@ class IntrospectionHelper {
      */
     function createElement(Project $project, $element, $elementName) {
     
-        $addMethod = "add".strtolower($elementName);
-        $createMethod = "create".strtolower($elementName);
+        $addMethod = "add".strtolower((string) $elementName);
+        $createMethod = "create".strtolower((string) $elementName);
         $nestedElement = null;
         
         if (isset($this->nestedCreators[$createMethod])) {
@@ -447,7 +447,7 @@ class IntrospectionHelper {
             return;
         }
         
-        $storer = "addconfigured".strtolower($elementName);
+        $storer = "addconfigured".strtolower((string) $elementName);
           
         if (isset($this->nestedStorers[$storer])) {
             
@@ -505,7 +505,7 @@ class IntrospectionHelper {
                 // loop through taskdefs and typesdefs and see if the class name
                 // matches (case-insensitive) any of the classes in there
                 foreach(array_merge($taskdefs, $typedefs) as $elName => $class) {
-                    if (0 === strcasecmp($elClass, StringHelper::unqualify($class))) {
+                    if (0 === strcasecmp($elClass, (string) StringHelper::unqualify($class))) {
                         return $class;
                     }
                 }
@@ -526,8 +526,8 @@ class IntrospectionHelper {
 
     /** extract the name of a property from a method name - subtracting  a given prefix. */
     function getPropertyName($methodName, $prefix) {
-        $start = strlen($prefix);
-        return strtolower(substr($methodName, $start));
+        $start = strlen((string) $prefix);
+        return strtolower(substr((string) $methodName, $start));
     }
     
     /**

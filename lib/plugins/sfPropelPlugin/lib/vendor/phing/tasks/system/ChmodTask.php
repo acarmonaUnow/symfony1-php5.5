@@ -116,7 +116,7 @@ class ChmodTask extends Task {
         }
 
         // check for mode to be in the correct format
-        if (!preg_match('/^([0-7]){3,4}$/', $this->mode)) {
+        if (!preg_match('/^([0-7]){3,4}$/', (string) $this->mode)) {
             throw new BuildException("You have specified an invalid mode.");
         }
      
@@ -128,8 +128,8 @@ class ChmodTask extends Task {
      */
     private function chmod() {
     	
-		if (strlen($this->mode) === 4) {
-			$mode = octdec($this->mode);
+		if (strlen((string) $this->mode) === 4) {
+			$mode = octdec((string) $this->mode);
 		} else {
 			// we need to prepend the 0 before converting
 			$mode = octdec("0". $this->mode);

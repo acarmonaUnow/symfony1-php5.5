@@ -83,8 +83,8 @@ class Doctrine_Parser_Xml extends Doctrine_Parser
                 $xml->addChild($value, 'true');
             } else {
                 $charset = $charset ?: 'utf-8';
-                if (strcasecmp($charset, 'utf-8') !== 0 && strcasecmp($charset, 'utf8') !== 0) {
-                    $value = iconv($charset, 'UTF-8', $value);
+                if (strcasecmp((string) $charset, 'utf-8') !== 0 && strcasecmp((string) $charset, 'utf8') !== 0) {
+                    $value = iconv((string) $charset, 'UTF-8', $value);
                 }
                 $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
                 $xml->addChild($key, $value);
@@ -106,7 +106,7 @@ class Doctrine_Parser_Xml extends Doctrine_Parser
     {
         $contents = $this->doLoad($path);
         
-        $simpleXml = simplexml_load_string($contents);
+        $simpleXml = simplexml_load_string((string) $contents);
         
         return $this->prepareData($simpleXml);
     }

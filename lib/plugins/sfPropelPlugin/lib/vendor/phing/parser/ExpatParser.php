@@ -122,7 +122,7 @@ class ExpatParser extends AbstractSAXParser {
     function parse() {
     
         while ( ($data = $this->reader->read()) !== -1 ) {            
-            if (!xml_parse($this->parser, $data, $this->reader->eof())) {
+            if (!xml_parse($this->parser, (string) $data, $this->reader->eof())) {
                 $error = xml_error_string(xml_get_error_code($this->parser));
                 $e = new ExpatParseException($error, $this->getLocation());
                 xml_parser_free($this->parser);                

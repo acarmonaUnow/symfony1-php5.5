@@ -8,7 +8,7 @@
  * @author     ##AUTHOR_NAME##
  * @version    SVN: $Id: configuration.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
  */
-abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfiguration extends sfModelGeneratorConfiguration
+abstract class Base<?php echo ucfirst((string) $this->getModuleName()) ?>GeneratorConfiguration extends sfModelGeneratorConfiguration
 {
 <?php include __DIR__.'/actionsConfiguration.php' ?>
 

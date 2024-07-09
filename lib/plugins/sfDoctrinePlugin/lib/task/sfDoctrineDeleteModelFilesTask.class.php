@@ -123,7 +123,7 @@ EOF;
       $regex = '(';
       foreach ($values as $i => $value)
       {
-        $regex .= preg_quote($value, $delimiter);
+        $regex .= preg_quote((string) $value, $delimiter);
         if (isset($values[$i + 1]))
         {
           $regex .= '|';

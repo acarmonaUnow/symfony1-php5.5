@@ -59,7 +59,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     $sql = preg_replace('/^\s*\-\-.+$/m', '', $sql);
     $sql = preg_replace('/^\s*DROP TABLE .+?$/m', '', $sql);
     $con = Propel::getConnection();
-    $tables = preg_split('/CREATE TABLE/', $sql);
+    $tables = preg_split('/CREATE TABLE/', (string) $sql);
     foreach ($tables as $table)
     {
       $table = trim($table);

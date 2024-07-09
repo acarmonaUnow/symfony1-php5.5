@@ -41,7 +41,7 @@ abstract class sfModelGenerator extends sfGenerator
 
     // generated module name
     $this->setModuleName($this->params['moduleName']);
-    $this->setGeneratedModuleName('auto'.ucfirst($this->params['moduleName']));
+    $this->setGeneratedModuleName('auto'.ucfirst((string) $this->params['moduleName']));
 
     // theme exists?
     $theme = $this->params['theme'] ?? 'default';
@@ -63,7 +63,7 @@ abstract class sfModelGenerator extends sfGenerator
     // move helper file
     if (file_exists($file = $this->generatorManager->getBasePath().'/'.$this->getGeneratedModuleName().'/lib/helper.php'))
     {
-      @rename($file, $this->generatorManager->getBasePath().'/'.$this->getGeneratedModuleName().'/lib/Base'.ucfirst($this->moduleName).'GeneratorHelper.class.php');
+      @rename($file, $this->generatorManager->getBasePath().'/'.$this->getGeneratedModuleName().'/lib/Base'.ucfirst((string) $this->moduleName).'GeneratorHelper.class.php');
     }
 
     return "require_once(sfConfig::get('sf_module_cache_dir').'/".$this->generatedModuleName."/actions/actions.class.php');";
@@ -301,7 +301,7 @@ EOF;
     $context = $parts[0];
 
     // find %%xx%% strings
-    preg_match_all('/%%([^%]+)%%/', $value, $matches, PREG_PATTERN_ORDER);
+    preg_match_all('/%%([^%]+)%%/', (string) $value, $matches, PREG_PATTERN_ORDER);
     $fields = array();
     foreach ($matches[1] as $name)
     {

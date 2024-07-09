@@ -297,7 +297,7 @@ class Doctrine_Validator_Country extends Doctrine_Validator_Driver
         if (is_null($value)) {
             return true;
         }
-        $value = strtolower($value);
+        $value = strtolower((string) $value);
 
         return isset(self::$countries[$value]);
     }

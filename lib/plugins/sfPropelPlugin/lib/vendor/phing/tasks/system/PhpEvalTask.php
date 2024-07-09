@@ -107,7 +107,7 @@ class PhpEvalTask extends Task {
      */
     protected function evalExpression() {
         $this->log("Evaluating PHP expression: " . $this->expression);
-        if (!StringHelper::endsWith(';', trim($this->expression))) {
+        if (!StringHelper::endsWith(';', trim((string) $this->expression))) {
             $this->expression .= ';';
         }
         $retval = null;

@@ -81,7 +81,7 @@ class sfProjectConfiguration
     {
       if (false === $plugin = array_search($path, $this->overriddenPluginPaths))
       {
-        $plugin = basename($path);
+        $plugin = basename((string) $path);
       }
       $class = $plugin.'Configuration';
 
@@ -484,7 +484,7 @@ class sfProjectConfiguration
 
     foreach ($finder->in($dirs) as $path)
     {
-      $pluginPaths[basename($path)] = $path;
+      $pluginPaths[basename((string) $path)] = $path;
     }
 
     foreach ($this->overriddenPluginPaths as $plugin => $path)

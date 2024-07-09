@@ -129,12 +129,12 @@ class MysqlSchemaParser extends BaseSchemaParser {
 
 			$name = $row['Field'];
 			$is_nullable = ($row['Null'] == 'YES');
-			$autoincrement = (str_contains($row['Extra'], 'auto_increment'));
+			$autoincrement = (str_contains((string) $row['Extra'], 'auto_increment'));
 			$size = null;
 			$precision = null;
 			$scale = null;
 
-			if (preg_match('/^(\w+)[\(]?([\d,]*)[\)]?( |$)/', $row['Type'], $matches)) {
+			if (preg_match('/^(\w+)[\(]?([\d,]*)[\)]?( |$)/', (string) $row['Type'], $matches)) {
 				//            colname[1]   size/precision[2]
 				$nativeType = $matches[1];
 				if ($matches[2]) {
@@ -146,14 +146,14 @@ class MysqlSchemaParser extends BaseSchemaParser {
 						$size = (int) $matches[2];
 					}
 				}
-			} elseif (preg_match('/^(\w+)\(/', $row['Type'], $matches)) {
+			} elseif (preg_match('/^(\w+)\(/', (string) $row['Type'], $matches)) {
 				$nativeType = $matches[1];
 			} else {
 				$nativeType = $row['Type'];
 			}
 
 			//BLOBs can't have any default values in MySQL
-			$default = preg_match('~blob|text~', $nativeType) ? null : $row['Default'];
+			$default = preg_match('~blob|text~', (string) $nativeType) ? null : $row['Default'];
 
 			$propelType = $this->getMappedPropelType($nativeType);
 			if (!$propelType) {
@@ -199,7 +199,7 @@ class MysqlSchemaParser extends BaseSchemaParser {
 
 		// Get the information on all the foreign keys
 		$regEx = '/CONSTRAINT `([^`]+)` FOREIGN KEY \((.+)\) REFERENCES `([^`]*)` \((.+)\)(.*)/';
-		if (preg_match_all($regEx,$row[1],$matches)) {
+		if (preg_match_all($regEx,(string) $row[1],$matches)) {
 			$tmpArray = array_keys($matches[0]);
 			foreach ($tmpArray as $curKey) {
 				$name = $matches[1][$curKey];

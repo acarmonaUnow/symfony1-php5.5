@@ -171,7 +171,7 @@ class sfXCacheCache extends sfCache
 
       foreach ($infos['cache_list'] as $info)
       {
-        if (preg_match($regexp, $info['name']))
+        if (preg_match($regexp, (string) $info['name']))
         {
           xcache_unset($info['name']);
         }

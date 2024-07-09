@@ -304,9 +304,9 @@ class Doctrine_Cli
              * Class-files must start with an uppercase letter.  This additional check will help prevent us
              * accidentally running 'executable' scripts that may be mixed-in with the class files.
              */
-            $matched = (bool) preg_match('/^([A-Z].*?)\.php$/', $baseName, $matches);
+            $matched = (bool) preg_match('/^([A-Z].*?)\.php$/', (string) $baseName, $matches);
 
-            if ( ! ($matched && (!str_contains($baseName, '.inc')))) {
+            if ( ! ($matched && (!str_contains((string) $baseName, '.inc')))) {
                 continue;
             }
 
@@ -578,7 +578,7 @@ class Doctrine_Cli
         $taskIndex = $formatter->format('Doctrine Command Line Interface', 'HEADER') . "\n\n";
 
         foreach ($this->getRegisteredTasks() as $task) {
-            if ($taskName && (strtolower($taskName) != strtolower($task->getTaskName()))) {
+            if ($taskName && (strtolower((string) $taskName) != strtolower((string) $task->getTaskName()))) {
                 continue;
             }
 

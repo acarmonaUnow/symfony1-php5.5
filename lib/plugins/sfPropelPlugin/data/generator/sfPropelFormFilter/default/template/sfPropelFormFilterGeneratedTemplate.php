@@ -14,7 +14,7 @@ abstract class Base<?php echo $this->table->getClassname() ?>FormFilter extends 
     $this->setWidgets(array(
 <?php foreach ($this->table->getColumns() as $column): ?>
 <?php if ($column->isPrimaryKey()) continue ?>
-      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($column->getName())) ?> => new <?php echo $this->getWidgetClassForColumn($column) ?>(<?php echo $this->getWidgetOptionsForColumn($column) ?>),
+      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen((string) $column->getName())) ?> => new <?php echo $this->getWidgetClassForColumn($column) ?>(<?php echo $this->getWidgetOptionsForColumn($column) ?>),
 <?php endforeach; ?>
 <?php foreach ($this->getManyToManyTables() as $tables): ?>
       '<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($this->underscore($tables['middleTable']->getClassname()).'_list')) ?> => new sfWidgetFormPropelChoice(array('model' => '<?php echo $tables['relatedTable']->getClassname() ?>', 'add_empty' => true)),
@@ -24,7 +24,7 @@ abstract class Base<?php echo $this->table->getClassname() ?>FormFilter extends 
     $this->setValidators(array(
 <?php foreach ($this->table->getColumns() as $column): ?>
 <?php if ($column->isPrimaryKey()) continue ?>
-      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($column->getName())) ?> => <?php echo $this->getValidatorForColumn($column) ?>,
+      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen((string) $column->getName())) ?> => <?php echo $this->getValidatorForColumn($column) ?>,
 <?php endforeach; ?>
 <?php foreach ($this->getManyToManyTables() as $tables): ?>
       '<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($this->underscore($tables['middleTable']->getClassname()).'_list')) ?> => new sfValidatorPropelChoice(array('model' => '<?php echo $tables['relatedTable']->getClassname() ?>', 'required' => false)),
@@ -51,7 +51,7 @@ abstract class Base<?php echo $this->table->getClassname() ?>FormFilter extends 
       return;
     }
 
-    $criteria->addJoin(<?php echo constant($tables['middleTable']->getPhpName().'::PEER') ?>::<?php echo strtoupper($tables['column']->getName()) ?>, <?php echo constant($this->table->getPhpName().'::PEER') ?>::<?php echo strtoupper($this->getPrimaryKey()->getName()) ?>);
+    $criteria->addJoin(<?php echo constant($tables['middleTable']->getPhpName().'::PEER') ?>::<?php echo strtoupper((string) $tables['column']->getName()) ?>, <?php echo constant($this->table->getPhpName().'::PEER') ?>::<?php echo strtoupper((string) $this->getPrimaryKey()->getName()) ?>);
 
     $value = array_pop($values);
     $criterion = $criteria->getNewCriterion(<?php echo constant($tables['middleTable']->getPhpName().'::PEER') ?>::<?php echo $tables['relatedColumn']->getName() ?>, $value);
@@ -74,7 +74,7 @@ abstract class Base<?php echo $this->table->getClassname() ?>FormFilter extends 
   {
     return array(
 <?php foreach ($this->table->getColumns() as $column): ?>
-      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($column->getName())) ?> => '<?php echo $this->getType($column) ?>',
+      '<?php echo $this->translateColumnName($column) ?>'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen((string) $column->getName())) ?> => '<?php echo $this->getType($column) ?>',
 <?php endforeach; ?>
 <?php foreach ($this->getManyToManyTables() as $tables): ?>
       '<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list'<?php echo str_repeat(' ', $this->getColumnNameMaxLength() - strlen($this->underscore($tables['middleTable']->getClassname()).'_list')) ?> => 'ManyKey',

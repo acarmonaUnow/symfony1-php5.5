@@ -231,13 +231,13 @@ class Swift_Transport_EsmtpTransport
   {
     foreach ($this->_handlers as $handler)
     {
-      if (in_array(strtolower($method),
+      if (in_array(strtolower((string) $method),
         array_map(strtolower(...), (array) $handler->exposeMixinMethods())
         ))
       {
         $return = call_user_func_array(array($handler, $method), $args);
         //Allow fluid method calls
-        if (is_null($return) && str_starts_with($method, 'set'))
+        if (is_null($return) && str_starts_with((string) $method, 'set'))
         {
           return $this;
         }
@@ -344,7 +344,7 @@ class Swift_Transport_EsmtpTransport
   private function _getCapabilities($ehloResponse)
   {
     $capabilities = array();
-    $ehloResponse = trim($ehloResponse);
+    $ehloResponse = trim((string) $ehloResponse);
     $lines = explode("\r\n", $ehloResponse);
     array_shift($lines);
     foreach ($lines as $line)

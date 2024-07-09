@@ -58,7 +58,7 @@ class BatchTest
 	 */
 	function setExclude($exclude)
 	{
-		$this->excludeClasses = explode(" ", $exclude);
+		$this->excludeClasses = explode(" ", (string) $exclude);
 	}
 
 	/**

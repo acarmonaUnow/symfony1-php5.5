@@ -92,7 +92,7 @@ EOF;
     // update propel.ini
     if (
       null === $options['app'] &&
-      str_contains($options['class'], 'Propel') &&
+      str_contains((string) $options['class'], 'Propel') &&
       'all' == $options['env']
     )
     {
@@ -100,7 +100,7 @@ EOF;
       if (file_exists($propelini))
       {
         $content = file_get_contents($propelini);
-        if (preg_match('/^(.+?):/', $arguments['dsn'], $match))
+        if (preg_match('/^(.+?):/', (string) $arguments['dsn'], $match))
         {
           $content = preg_replace('/^propel\.database(\s*)=(\s*)(.+?)$/m', 'propel.database$1=${2}'.$match[1], $content);
           $content = preg_replace('/^propel\.database.driver(\s*)=(\s*)(.+?)$/m', 'propel.database.driver$1=${2}'.$match[1], $content);

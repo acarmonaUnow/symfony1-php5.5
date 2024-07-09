@@ -124,9 +124,9 @@ class sfPluginManager
     $version   = $options['version'] ?? null;
 
     $isPackage = true;
-    if (str_starts_with($plugin, 'http://') || file_exists($plugin))
+    if (str_starts_with((string) $plugin, 'http://') || file_exists($plugin))
     {
-      if (str_starts_with($plugin, 'http://plugins.symfony-project.'))
+      if (str_starts_with((string) $plugin, 'http://plugins.symfony-project.'))
       {
         throw new sfPluginException("You try to install a symfony 1.0 plugin.\nPlease read the help message of this task to know how to install a plugin for the current version of symfony.");
       }
@@ -134,9 +134,9 @@ class sfPluginManager
       $download  = $plugin;
       $isPackage = false;
     }
-    else if (str_contains($plugin, '/'))
+    else if (str_contains((string) $plugin, '/'))
     {
-      [$channel, $plugin] = explode('/', $plugin);
+      [$channel, $plugin] = explode('/', (string) $plugin);
     }
 
     $this->dispatcher->notify(new sfEvent($this, 'plugin.pre_install', array('channel' => $channel, 'plugin' => $plugin, 'is_package' => $isPackage)));
@@ -145,7 +145,7 @@ class sfPluginManager
     {
       $this->environment->getRest()->setChannel($channel);
 
-      if (!preg_match(PEAR_COMMON_PACKAGE_NAME_PREG, $plugin))
+      if (!preg_match(PEAR_COMMON_PACKAGE_NAME_PREG, (string) $plugin))
       {
         throw new sfPluginException(sprintf('Plugin name "%s" is not a valid package name', $plugin));
       }
@@ -162,7 +162,7 @@ class sfPluginManager
         }
       }
 
-      if (!preg_match(PEAR_COMMON_PACKAGE_VERSION_PREG, $version))
+      if (!preg_match(PEAR_COMMON_PACKAGE_VERSION_PREG, (string) $version))
       {
         throw new sfPluginException(sprintf('Plugin version "%s" is not a valid version', $version));
       }

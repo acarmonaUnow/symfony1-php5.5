@@ -406,7 +406,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
         $dsn = preg_replace("/\/\/\/(.*):\//", "//$1:/", $dsn);
 
         // silence any warnings
-        $parts = @parse_url($dsn);
+        $parts = @parse_url((string) $dsn);
 
         $names = array('dsn', 'scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment');
 
@@ -459,7 +459,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
                     throw new Doctrine_Manager_Exception('No database available in data source name');
                 }
                 if (isset($parts['path'])) {
-                    $parts['database'] = substr($parts['path'], 1);
+                    $parts['database'] = substr((string) $parts['path'], 1);
                 }
                 if ( ! isset($parts['host'])) {
                     throw new Doctrine_Manager_Exception('No hostname set in data source name');
@@ -482,7 +482,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
                     throw new Doctrine_Manager_Exception('No database available in data source name');
                 }
                 if (isset($parts['path'])) {
-                    $parts['database'] = substr($parts['path'], 1);
+                    $parts['database'] = substr((string) $parts['path'], 1);
                 }
                 if ( ! isset($parts['host'])) {
                     throw new Doctrine_Manager_Exception('No hostname set in data source name');

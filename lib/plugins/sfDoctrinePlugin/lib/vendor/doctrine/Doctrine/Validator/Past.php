@@ -42,14 +42,14 @@ class Doctrine_Validator_Past extends Doctrine_Validator_Driver
         if (is_null($value)) {
             return true;
         }
-        $e = explode('-', $value);
+        $e = explode('-', (string) $value);
 
         if (count($e) !== 3) {
             return false;
         }
         
         if (is_array($this->args) && isset($this->args['timezone'])) {
-            $now = match (strtolower($this->args['timezone'])) {
+            $now = match (strtolower((string) $this->args['timezone'])) {
                 'gmt' => gmdate("U") - date("Z"),
                 default => getdate(),
             };

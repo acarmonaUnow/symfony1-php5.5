@@ -108,7 +108,7 @@ class XMLPDOResultFormatter extends PDOResultFormatter {
 			$colNode->setAttribute('name', $columnName);
 			
 			if ($columnValue != null) {
-				$columnValue = trim($columnValue);
+				$columnValue = trim((string) $columnValue);
 				$colNode->nodeValue = $columnValue;
 			}
 			$rowNode->appendChild($colNode);

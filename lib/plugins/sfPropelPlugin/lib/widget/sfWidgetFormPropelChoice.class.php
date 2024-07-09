@@ -81,7 +81,7 @@ class sfWidgetFormPropelChoice extends sfWidgetFormChoice
     $criteria = null === $this->getOption('criteria') ? new Criteria() : clone $this->getOption('criteria');
     if ($order = $this->getOption('order_by'))
     {
-      $method = sprintf('add%sOrderByColumn', str_starts_with(strtoupper($order[1]), 'ASC') ? 'Ascending' : 'Descending');
+      $method = sprintf('add%sOrderByColumn', str_starts_with(strtoupper((string) $order[1]), 'ASC') ? 'Ascending' : 'Descending');
       $criteria->$method(call_user_func(array($class, 'translateFieldName'), $order[0], BasePeer::TYPE_PHPNAME, BasePeer::TYPE_COLNAME));
     }
     $objects = call_user_func(array($class, $this->getOption('peer_method')), $criteria, $this->getOption('connection'));

@@ -131,11 +131,11 @@ class sfTesterRequest extends sfTester
       return $this->getObjectToReturn();
     }
 
-    if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', $value, $match))
+    if (preg_match('/^(!)?([^a-zA-Z0-9\\\\]).+?\\2[ims]?$/', (string) $value, $match))
     {
       if ($match[1] == '!')
       {
-        $this->tester->unlike($_COOKIE[$name], substr($value, 1), sprintf('cookie "%s" content does not match regex "%s"', $name, $value));
+        $this->tester->unlike($_COOKIE[$name], substr((string) $value, 1), sprintf('cookie "%s" content does not match regex "%s"', $name, $value));
       }
       else
       {

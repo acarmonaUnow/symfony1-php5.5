@@ -77,10 +77,10 @@ class ForeignKey extends XMLElement {
 	 */
 	private function normalizeFKey($attrib)
 	{
-		if ($attrib === null  || strtoupper($attrib) == "NONE") {
+		if ($attrib === null  || strtoupper((string) $attrib) == "NONE") {
 			$attrib = self::NONE;
 		}
-		$attrib = strtoupper($attrib);
+		$attrib = strtoupper((string) $attrib);
 		if ($attrib == "SETNULL") {
 			$attrib =  self::SETNULL;
 		}

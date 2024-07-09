@@ -210,7 +210,7 @@ class Swift_Mime_MimePart extends Swift_Mime_SimpleMimeEntity
       }
       else if (function_exists('iconv'))
       {
-        $string = iconv($charset, 'utf-8//TRANSLIT//IGNORE', $string);
+        $string = iconv($charset, 'utf-8//TRANSLIT//IGNORE', (string) $string);
       }
       else
       {
