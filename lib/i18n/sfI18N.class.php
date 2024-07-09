@@ -240,7 +240,7 @@ class sfI18N
    */
   public function getCountry($iso, $culture = null)
   {
-    $c = sfCultureInfo::getInstance(null === $culture ? $this->culture : $culture);
+    $c = sfCultureInfo::getInstance($culture ?? $this->culture);
     $countries = $c->getCountries();
 
     return (array_key_exists($iso, $countries)) ? $countries[$iso] : '';
@@ -268,8 +268,8 @@ class sfI18N
    */
   public function getTimestampForCulture($dateTime, $culture = null)
   {
-    [$day, $month, $year] = $this->getDateForCulture($dateTime, null === $culture ? $this->culture : $culture);
-    [$hour, $minute] = $this->getTimeForCulture($dateTime, null === $culture ? $this->culture : $culture);
+    [$day, $month, $year] = $this->getDateForCulture($dateTime, $culture ?? $this->culture);
+    [$hour, $minute] = $this->getTimeForCulture($dateTime, $culture ?? $this->culture);
 
     return null === $day ? null : mktime($hour, $minute, 0, $month, $day, $year);
   }
@@ -289,7 +289,7 @@ class sfI18N
       return null;
     }
 
-    $dateFormatInfo = @sfDateTimeFormatInfo::getInstance(null === $culture ? $this->culture : $culture);
+    $dateFormatInfo = @sfDateTimeFormatInfo::getInstance($culture ?? $this->culture);
     $dateFormat = $dateFormatInfo->getShortDatePattern();
 
     // We construct the regexp based on date format
@@ -332,7 +332,7 @@ class sfI18N
   {
     if (!$time) return 0;
 
-    $culture = null === $culture ? $this->culture : $culture;
+    $culture = $culture ?? $this->culture;
 
     $timeFormatInfo = @sfDateTimeFormatInfo::getInstance($culture);
     $timeFormat = $timeFormatInfo->getShortTimePattern();

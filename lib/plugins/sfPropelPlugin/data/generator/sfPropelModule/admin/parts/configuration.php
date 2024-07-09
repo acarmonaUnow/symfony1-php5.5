@@ -21,7 +21,7 @@ abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfigu
    */
   public function getFormClass()
   {
-    return '<?php echo isset($this->config['form']['class']) ? $this->config['form']['class'] : $this->getModelClass().'Form' ?>';
+    return '<?php echo $this->config['form']['class'] ?? $this->getModelClass().'Form' ?>';
 <?php unset($this->config['form']['class']) ?>
   }
 
@@ -47,13 +47,13 @@ abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfigu
 
   public function getPeerMethod()
   {
-    return '<?php echo isset($this->config['list']['peer_method']) ? $this->config['list']['peer_method'] : 'doSelect' ?>';
+    return '<?php echo $this->config['list']['peer_method'] ?? 'doSelect' ?>';
 <?php unset($this->config['list']['peer_method']) ?>
   }
 
   public function getPeerCountMethod()
   {
-    return '<?php echo isset($this->config['list']['peer_count_method']) ? $this->config['list']['peer_count_method'] : 'doCount' ?>';
+    return '<?php echo $this->config['list']['peer_count_method'] ?? 'doCount' ?>';
 <?php unset($this->config['list']['peer_count_method']) ?>
   }
 }

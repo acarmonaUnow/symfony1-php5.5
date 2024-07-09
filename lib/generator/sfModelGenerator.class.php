@@ -44,7 +44,7 @@ abstract class sfModelGenerator extends sfGenerator
     $this->setGeneratedModuleName('auto'.ucfirst($this->params['moduleName']));
 
     // theme exists?
-    $theme = isset($this->params['theme']) ? $this->params['theme'] : 'default';
+    $theme = $this->params['theme'] ?? 'default';
     $this->setTheme($theme);
     $themeDir = $this->generatorManager->getConfiguration()->getGeneratorTemplate($this->getGeneratorClass(), $theme, '');
     if (!is_dir($themeDir))
@@ -76,7 +76,7 @@ abstract class sfModelGenerator extends sfGenerator
    */
   public function getActionsBaseClass()
   {
-    return isset($this->params['actions_base_class']) ? $this->params['actions_base_class'] : 'sfActions';
+    return $this->params['actions_base_class'] ?? 'sfActions';
   }
 
   /**
@@ -108,7 +108,7 @@ abstract class sfModelGenerator extends sfGenerator
    */
   public function getSingularName()
   {
-    return isset($this->params['singular']) ? $this->params['singular'] : sfInflector::underscore($this->getModelClass());
+    return $this->params['singular'] ?? sfInflector::underscore($this->getModelClass());
   }
 
   /**
@@ -118,7 +118,7 @@ abstract class sfModelGenerator extends sfGenerator
    */
   public function getPluralName()
   {
-    return isset($this->params['plural']) ? $this->params['plural'] : $this->getSingularName().'_list';
+    return $this->params['plural'] ?? $this->getSingularName().'_list';
   }
 
   /**
@@ -128,7 +128,7 @@ abstract class sfModelGenerator extends sfGenerator
    */
   public function getI18nCatalogue()
   {
-    return isset($this->params['i18n_catalogue']) ? $this->params['i18n_catalogue'] : 'messages';
+    return $this->params['i18n_catalogue'] ?? 'messages';
   }
 
   /**
@@ -212,7 +212,7 @@ abstract class sfModelGenerator extends sfGenerator
    */
   public function getLinkToAction($actionName, $params, $pk_link = false)
   {
-    $action = isset($params['action']) ? $params['action'] : 'List'.sfInflector::camelize($actionName);
+    $action = $params['action'] ?? 'List'.sfInflector::camelize($actionName);
 
     $url_params = $pk_link ? '?'.$this->getPrimaryKeyUrlParams() : '\'';
 
@@ -371,7 +371,7 @@ EOF;
       throw new sfInitializationException(sprintf('Unable to generate a module for non-existent model "%s".', $params['model_class']));
     }
 
-    $this->config = isset($params['config']) ? $params['config'] : array();
+    $this->config = $params['config'] ?? array();
 
     unset($params['config']);
     $this->params = $params;

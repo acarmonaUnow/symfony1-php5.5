@@ -353,9 +353,9 @@ class Doctrine_Import_Schema
                 }
             }
 
-            $connection = isset($table['connection']) ? $table['connection']:'current';
+            $connection = $table['connection'] ?? 'current';
 
-            $columns = isset($table['columns']) ? $table['columns']:array();
+            $columns = $table['columns'] ?? array();
 
             if ( ! empty($columns)) {
                 foreach ($columns as $columnName => $field) {
@@ -394,7 +394,7 @@ class Doctrine_Import_Schema
 
                     $colDesc['fixed'] = isset($field['fixed']) ? (int) $field['fixed']:null;
                     $colDesc['primary'] = isset($field['primary']) ? (bool) (isset($field['primary']) && $field['primary']):null;
-                    $colDesc['default'] = isset($field['default']) ? $field['default']:null;
+                    $colDesc['default'] = $field['default'] ?? null;
                     $colDesc['autoincrement'] = isset($field['autoincrement']) ? (bool) (isset($field['autoincrement']) && $field['autoincrement']):null;
 
                     if (isset($field['sequence'])) {
@@ -427,7 +427,7 @@ class Doctrine_Import_Schema
                 if (isset($table[$key]) && ! isset($build[$className][$key])) {
                     $build[$className][$key] = $table[$key];
                 } else {
-                    $build[$className][$key] = isset($build[$className][$key]) ? $build[$className][$key]:$defaultValue;
+                    $build[$className][$key] = $build[$className][$key] ?? $defaultValue;
                 }
             }
 
@@ -576,8 +576,8 @@ class Doctrine_Import_Schema
 
                             // Set the detected foreign key type and length to the same as the primary key
                             // of the related table
-                            $type = isset($array[$columnClassName]['columns']['id']['type']) ? $array[$columnClassName]['columns']['id']['type']:'integer';
-                            $length = isset($array[$columnClassName]['columns']['id']['length']) ? $array[$columnClassName]['columns']['id']['length']:8;
+                            $type = $array[$columnClassName]['columns']['id']['type'] ?? 'integer';
+                            $length = $array[$columnClassName]['columns']['id']['length'] ?? 8;
                             $array[$className]['columns'][$column['name']]['type'] = $type;
                             $array[$className]['columns'][$column['name']]['length'] = $length;
                         }
@@ -595,20 +595,20 @@ class Doctrine_Import_Schema
             $relations = $properties['relations'];
 
             foreach ($relations as $alias => $relation) {
-                $class = isset($relation['class']) ? $relation['class']:$alias;
+                $class = $relation['class'] ?? $alias;
                 if ( ! isset($array[$class])) {
                     continue;
                 }
                 $relation['class'] = $class;
-                $relation['alias'] = isset($relation['alias']) ? $relation['alias'] : $alias;
+                $relation['alias'] = $relation['alias'] ?? $alias;
 
                 // Attempt to guess the local and foreign
                 if (isset($relation['refClass'])) {
-                    $relation['local'] = isset($relation['local']) ? $relation['local']:Doctrine_Inflector::tableize($name) . '_id';
-                    $relation['foreign'] = isset($relation['foreign']) ? $relation['foreign']:Doctrine_Inflector::tableize($class) . '_id';
+                    $relation['local'] = $relation['local'] ?? Doctrine_Inflector::tableize($name) . '_id';
+                    $relation['foreign'] = $relation['foreign'] ?? Doctrine_Inflector::tableize($class) . '_id';
                 } else {
-                    $relation['local'] = isset($relation['local']) ? $relation['local']:Doctrine_Inflector::tableize($relation['class']) . '_id';
-                    $relation['foreign'] = isset($relation['foreign']) ? $relation['foreign']:'id';
+                    $relation['local'] = $relation['local'] ?? Doctrine_Inflector::tableize($relation['class']) . '_id';
+                    $relation['foreign'] = $relation['foreign'] ?? 'id';
                 }
 
                 if (isset($relation['refClass'])) {
@@ -666,8 +666,8 @@ class Doctrine_Import_Schema
                 $newRelation = array();
                 $newRelation['foreign'] = $relation['local'];
                 $newRelation['local'] = $relation['foreign'];
-                $newRelation['class'] = isset($relation['foreignClass']) ? $relation['foreignClass']:$className;
-                $newRelation['alias'] = isset($relation['foreignAlias']) ? $relation['foreignAlias']:$className;
+                $newRelation['class'] = $relation['foreignClass'] ?? $className;
+                $newRelation['alias'] = $relation['foreignAlias'] ?? $className;
                 $newRelation['foreignAlias'] = $alias;
 
                 // this is so that we know that this relation was autogenerated and
@@ -676,7 +676,7 @@ class Doctrine_Import_Schema
 
                 if (isset($relation['refClass'])) {
                     $newRelation['refClass'] = $relation['refClass'];
-                    $newRelation['type'] = isset($relation['foreignType']) ? $relation['foreignType']:$relation['type'];
+                    $newRelation['type'] = $relation['foreignType'] ?? $relation['type'];
                 } else {
                     if (isset($relation['foreignType'])) {
                         $newRelation['type'] = $relation['foreignType'];
@@ -735,7 +735,7 @@ class Doctrine_Import_Schema
      */
     protected function _buildUniqueRelationKey($relation)
     {
-        return md5($relation['local'].$relation['foreign'].$relation['class'].(isset($relation['refClass']) ? $relation['refClass']:null));
+        return md5($relation['local'].$relation['foreign'].$relation['class'].($relation['refClass'] ?? null));
     }
 
     /**

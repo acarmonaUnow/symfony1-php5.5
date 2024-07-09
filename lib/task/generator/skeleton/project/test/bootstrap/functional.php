@@ -19,7 +19,7 @@ if (!isset($app))
 }
 
 require_once __DIR__.'/../../config/ProjectConfiguration.class.php';
-$configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', isset($debug) ? $debug : true);
+$configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', $debug ?? true);
 sfContext::createInstance($configuration);
 
 // remove all cache

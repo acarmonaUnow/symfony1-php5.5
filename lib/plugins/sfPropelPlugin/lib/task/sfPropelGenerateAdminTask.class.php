@@ -130,7 +130,7 @@ EOF;
 
 
 EOF
-      , $name, $model, $module, isset($options['plural']) ? $options['plural'] : $module, $primaryKey).$content;
+      , $name, $model, $module, $options['plural'] ?? $module, $primaryKey).$content;
 
       $this->logSection('file+', $routing);
 

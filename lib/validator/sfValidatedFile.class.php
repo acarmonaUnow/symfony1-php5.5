@@ -49,7 +49,7 @@ class sfValidatedFile implements \Stringable
    */
   public function __toString(): string
   {
-    return (string) (null === $this->savedName ? '' : $this->savedName);
+    return (string) ($this->savedName ?? '');
   }
 
   /**

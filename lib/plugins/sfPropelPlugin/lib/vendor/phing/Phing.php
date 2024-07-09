@@ -1120,17 +1120,17 @@ class Phing {
 			$sysInfo['nodename'] = php_uname('n');
 			$sysInfo['machine']= php_uname('m') ;
 			//this is a not so ideal substition, but maybe better than nothing
-			$sysInfo['domain'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : "unknown";
+			$sysInfo['domain'] = $_SERVER['SERVER_NAME'] ?? "unknown";
 			$sysInfo['release'] = php_uname('r');
 			$sysInfo['version'] = php_uname('v');
 		}
 
 
-		self::setProperty("host.name", isset($sysInfo['nodename']) ? $sysInfo['nodename'] : "unknown");
-		self::setProperty("host.arch", isset($sysInfo['machine']) ? $sysInfo['machine'] : "unknown");
-		self::setProperty("host.domain",isset($sysInfo['domain']) ? $sysInfo['domain'] : "unknown");
-		self::setProperty("host.os.release", isset($sysInfo['release']) ? $sysInfo['release'] : "unknown");
-		self::setProperty("host.os.version", isset($sysInfo['version']) ? $sysInfo['version'] : "unknown");
+		self::setProperty("host.name", $sysInfo['nodename'] ?? "unknown");
+		self::setProperty("host.arch", $sysInfo['machine'] ?? "unknown");
+		self::setProperty("host.domain",$sysInfo['domain'] ?? "unknown");
+		self::setProperty("host.os.release", $sysInfo['release'] ?? "unknown");
+		self::setProperty("host.os.version", $sysInfo['version'] ?? "unknown");
 		unset($sysInfo);
 	}
 
@@ -1173,7 +1173,7 @@ class Phing {
 		// some are cached, see below
 
 		// default is the cached value:
-		$val = isset(self::$properties[$propName]) ? self::$properties[$propName] : null;
+		$val = self::$properties[$propName] ?? null;
 
 		// special exceptions
 		switch($propName) {

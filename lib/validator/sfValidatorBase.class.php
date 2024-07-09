@@ -111,7 +111,7 @@ abstract class sfValidatorBase
    */
   public function getMessage($name)
   {
-    return isset($this->messages[$name]) ? $this->messages[$name] : '';
+    return $this->messages[$name] ?? '';
   }
 
   /**
@@ -124,7 +124,7 @@ abstract class sfValidatorBase
    */
   public function addMessage($name, $value)
   {
-    $this->messages[$name] = isset(self::$globalDefaultMessages[$name]) ? self::$globalDefaultMessages[$name] : $value;
+    $this->messages[$name] = self::$globalDefaultMessages[$name] ?? $value;
 
     return $this;
   }
@@ -182,7 +182,7 @@ abstract class sfValidatorBase
    */
   public function getOption($name)
   {
-    return isset($this->options[$name]) ? $this->options[$name] : null;
+    return $this->options[$name] ?? null;
   }
 
   /**

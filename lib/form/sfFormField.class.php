@@ -148,7 +148,7 @@ class sfFormField implements \Stringable
 
     $error = $this->error instanceof sfValidatorErrorSchema ? $this->error->getGlobalErrors() : $this->error;
 
-    $help = null === $help ? $this->parent->getWidget()->getHelp($this->name) : $help;
+    $help = $help ?? $this->parent->getWidget()->getHelp($this->name);
 
     return strtr($this->parent->getWidget()->getFormFormatter()->formatRow($this->renderLabel($label), $field, $error, $help), array('%hidden_fields%' => ''));
   }

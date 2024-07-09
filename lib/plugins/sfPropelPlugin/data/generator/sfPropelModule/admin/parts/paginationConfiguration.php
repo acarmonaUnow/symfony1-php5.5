@@ -1,6 +1,6 @@
-  public function getPagerClass()
+public function getPagerClass()
   {
-    return '<?php echo isset($this->config['list']['pager_class']) ? $this->config['list']['pager_class'] : 'sfPropelPager' ?>';
+    return '<?php echo $this->config['list']['pager_class'] ?? 'sfPropelPager' ?>';
 <?php unset($this->config['list']['pager_class']) ?>
   }
 

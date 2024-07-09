@@ -479,7 +479,7 @@ class sfToolkit
   {
     if (false === $offset = strpos($name, '['))
     {
-      return isset($values[$name]) ? $values[$name] : $default;
+      return $values[$name] ?? $default;
     }
 
     if (!isset($values[substr($name, 0, $offset)]))

@@ -43,7 +43,7 @@ class sfTestBrowser extends sfTestFunctional
 
       if (null === self::$test)
       {
-        $lime = new lime_test(null, isset($options['output']) ? $options['output'] : null);
+        $lime = new lime_test(null, $options['output'] ?? null);
       }
       else
       {

@@ -147,7 +147,7 @@ abstract class SvnBaseTask extends Task
 	 */
 	function getForce()
 	{
-		return isset( $this->svnSwitches['force'] ) ? $this->svnSwitches['force'] : '';
+		return $this->svnSwitches['force'] ?? '';
 	}
 
 	/**
@@ -163,7 +163,7 @@ abstract class SvnBaseTask extends Task
 	 */
 	function getUsername()
 	{
-		return isset( $this->svnSwitches['username'] ) ? $this->svnSwitches['username'] : '';
+		return $this->svnSwitches['username'] ?? '';
 	}
 
 	/**
@@ -179,7 +179,7 @@ abstract class SvnBaseTask extends Task
 	 */
 	function getPassword()
 	{
-		return isset( $this->svnSwitches['password'] ) ? $this->svnSwitches['password'] : '';
+		return $this->svnSwitches['password'] ?? '';
 	}
 
 	/**
@@ -195,7 +195,7 @@ abstract class SvnBaseTask extends Task
 	 */
 	function getNoCache()
 	{
-		return isset( $this->svnSwitches['no-auth-cache'] ) ? $this->svnSwitches['no-auth-cache'] : '';
+		return $this->svnSwitches['no-auth-cache'] ?? '';
 	}
 	
 	/**
@@ -211,7 +211,7 @@ abstract class SvnBaseTask extends Task
 	 */
 	function getRecursive()
 	{
-		return isset( $this->svnSwitches['non-recursive'] ) ? $this->svnSwitches['non-recursive'] : '';
+		return $this->svnSwitches['non-recursive'] ?? '';
 	}
 
 	/**
@@ -227,7 +227,7 @@ abstract class SvnBaseTask extends Task
 	 */
 	function getIgnoreExternals()
 	{
-		return isset( $this->svnSwitches['ignore-externals'] ) ? $this->svnSwitches['ignore-externals'] : '';
+		return $this->svnSwitches['ignore-externals'] ?? '';
 	}
 	
 	/**

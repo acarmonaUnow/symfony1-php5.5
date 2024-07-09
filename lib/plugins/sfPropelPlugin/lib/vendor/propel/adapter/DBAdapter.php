@@ -73,7 +73,7 @@ abstract class DBAdapter {
 	 * @throws     PropelException if the adapter could not be instantiated.
 	 */
 	public static function factory($driver) {
-		$adapterClass = isset(self::$adapters[$driver]) ? self::$adapters[$driver] : null;
+		$adapterClass = self::$adapters[$driver] ?? null;
 		if ($adapterClass !== null) {
 			$a = new $adapterClass();
 			return $a;

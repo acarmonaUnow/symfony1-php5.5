@@ -156,7 +156,7 @@ class sfViewCacheManager
         $cacheKey = $contextualPrefix;
       }
       [$route_name, $params] = $this->controller->convertUrlStringToParameters($internalUri);
-      $cacheKey .= sprintf('/%s/%s/%s', $params['module'], $params['action'], isset($params['sf_cache_key']) ? $params['sf_cache_key'] : '');
+      $cacheKey .= sprintf('/%s/%s/%s', $params['module'], $params['action'], $params['sf_cache_key'] ?? '');
     }
     else
     {
@@ -311,17 +311,17 @@ class sfViewCacheManager
       }
     }
 
-    $options['lifeTime'] = isset($options['lifeTime']) ? $options['lifeTime'] : 0;
+    $options['lifeTime'] = $options['lifeTime'] ?? 0;
     if (!isset($this->cacheConfig[$moduleName]))
     {
       $this->cacheConfig[$moduleName] = array();
     }
     $this->cacheConfig[$moduleName][$actionName] = array(
-      'withLayout'     => isset($options['withLayout']) ? $options['withLayout'] : false,
+      'withLayout'     => $options['withLayout'] ?? false,
       'lifeTime'       => $options['lifeTime'],
-      'clientLifeTime' => isset($options['clientLifeTime']) ? $options['clientLifeTime'] : $options['lifeTime'],
-      'contextual'     => isset($options['contextual']) ? $options['contextual'] : false,
-      'vary'           => isset($options['vary']) ? $options['vary'] : array(),
+      'clientLifeTime' => $options['clientLifeTime'] ?? $options['lifeTime'],
+      'contextual'     => $options['contextual'] ?? false,
+      'vary'           => $options['vary'] ?? array(),
     );
   }
 

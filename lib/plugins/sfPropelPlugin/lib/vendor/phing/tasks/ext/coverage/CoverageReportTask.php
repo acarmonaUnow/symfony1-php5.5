@@ -218,7 +218,7 @@ class CoverageReportTask extends Task
 		foreach ($filelines as $line)
 		{
 			$lineElement = $this->doc->createElement('sourceline');
-			$lineElement->setAttribute('coveredcount', (isset($coverageInformation[$linenr]) ? $coverageInformation[$linenr] : '0'));
+			$lineElement->setAttribute('coveredcount', ($coverageInformation[$linenr] ?? '0'));
 
 			if ($linenr == $classStartLine)
 			{

@@ -119,7 +119,7 @@ class DebugPDOStatement extends PDOStatement
 	public function bindValue($pos, mixed $value, $type = PDO::PARAM_STR)
 	{
 		$debug		= $this->pdo->getDebugSnapshot();
-		$typestr	= isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';
+		$typestr	= self::$typeMap[$type] ?? '(default)';
 		$return		= parent::bindValue($pos, $value, $type);
 		$valuestr	= $type == PDO::PARAM_LOB ? '[LOB value]' : var_export($value, true);
 		$msg		= "Binding $valuestr at position $pos w/ PDO type $typestr";

@@ -177,7 +177,7 @@ abstract class BaseSchemaParser implements SchemaParser {
 		if ($this->reverseTypeMap === null) {
 			$this->reverseTypeMap = array_flip($this->getTypeMapping());
 		}
-		return isset($this->reverseTypeMap[$propelType]) ? $this->reverseTypeMap[$propelType] : null;
+		return $this->reverseTypeMap[$propelType] ?? null;
 	}
 
 	/**

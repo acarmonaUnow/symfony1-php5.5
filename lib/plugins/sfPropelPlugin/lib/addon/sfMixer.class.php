@@ -132,7 +132,7 @@ class sfMixer
   {
     self::getMixinInstance($name);
 
-    return isset(self::$mixins[$name]) ? self::$mixins[$name] : array();
+    return self::$mixins[$name] ?? array();
   }
 
   static public function getCallable($name)

@@ -1049,7 +1049,7 @@ class BasePeer
 	public static function getValidator($classname)
 	{
 		try {
-			$v = isset(self::$validatorMap[$classname]) ? self::$validatorMap[$classname] : null;
+			$v = self::$validatorMap[$classname] ?? null;
 			if ($v === null) {
 				$cls = Propel::importClass($classname);
 				$v = new $cls();

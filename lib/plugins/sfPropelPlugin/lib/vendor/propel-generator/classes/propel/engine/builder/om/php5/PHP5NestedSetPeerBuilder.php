@@ -221,7 +221,7 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 			throw new EngineException("One column must have nestedSetRightKey attribute set to true for [" . $table->getName() . "] table");
 		}
 
-		$colname['scope'] = isset($colname['scope']) ? $colname['scope'] : null;
+		$colname['scope'] = $colname['scope'] ?? null;
 
 		$script .= "
 	/**

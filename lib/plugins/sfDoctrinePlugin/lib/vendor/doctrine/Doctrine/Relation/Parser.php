@@ -132,7 +132,7 @@ class Doctrine_Relation_Parser
             $v = trim($v);
         }
         $name = $e[0];
-        $alias = isset($e[1]) ? $e[1] : $name;
+        $alias = $e[1] ?? $name;
 
         if ( ! isset($options['type'])) {
             throw new Doctrine_Relation_Exception('Relation type not set.');
@@ -170,8 +170,7 @@ class Doctrine_Relation_Parser
                 $def = $this->completeAssocDefinition($def);
                 $localClasses = array_merge($this->_table->getOption('parents'), array($this->_table->getComponentName()));
 
-                $backRefRelationName = isset($def['refClassRelationAlias']) ?
-                        $def['refClassRelationAlias'] : $def['refClass'];
+                $backRefRelationName = $def['refClassRelationAlias'] ?? $def['refClass'];
                 if ( ! isset($this->_pending[$backRefRelationName]) && ! isset($this->_relations[$backRefRelationName])) {
 
                     $parser = $def['refTable']->getRelationParser();

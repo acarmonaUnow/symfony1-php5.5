@@ -444,8 +444,8 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
 
                     $definition = array('type' => (isset($identifierOptions['type']) && $identifierOptions['type']) ? $identifierOptions['type']:'integer',
                                         'length' => (isset($identifierOptions['length']) && $identifierOptions['length']) ? $identifierOptions['length']:8,
-                                        'autoincrement' => isset($identifierOptions['autoincrement']) ? $identifierOptions['autoincrement']:true,
-                                        'primary' => isset($identifierOptions['primary']) ? $identifierOptions['primary']:true);
+                                        'autoincrement' => $identifierOptions['autoincrement'] ?? true,
+                                        'primary' => $identifierOptions['primary'] ?? true);
 
                     unset($identifierOptions['name'], $identifierOptions['type'], $identifierOptions['length']);
                     foreach ($identifierOptions as $key => $value) {
@@ -606,8 +606,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function getMethodOwner($method)
     {
-        return (isset($this->_invokedMethods[$method])) ?
-                      $this->_invokedMethods[$method] : false;
+        return $this->_invokedMethods[$method] ?? false;
     }
 
     /**
@@ -672,8 +671,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             }
         }
 
-        $options['foreignKeys'] = isset($this->_options['foreignKeys']) ?
-                $this->_options['foreignKeys'] : array();
+        $options['foreignKeys'] = $this->_options['foreignKeys'] ?? array();
 
         if ($parseForeignKeys && $this->getAttribute(Doctrine_Core::ATTR_EXPORT) & Doctrine_Core::EXPORT_CONSTRAINTS) {
 
@@ -1987,7 +1985,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
 
         $columnName = $this->getColumnName($fieldName);
 
-        return isset($this->_columns[$columnName]['values'][$index]) ? $this->_columns[$columnName]['values'][$index] : false;
+        return $this->_columns[$columnName]['values'][$index] ?? false;
     }
 
     /**
@@ -2359,7 +2357,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
     {
         if (isset($this->_options['treeImpl'])) {
             if ( ! $this->_tree) {
-                $options = isset($this->_options['treeOptions']) ? $this->_options['treeOptions'] : array();
+                $options = $this->_options['treeOptions'] ?? array();
                 $this->_tree = Doctrine_Tree::factory($this,
                     $this->_options['treeImpl'],
                     $options

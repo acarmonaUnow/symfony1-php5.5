@@ -120,7 +120,7 @@ abstract class sfFormDoctrine extends sfFormObject
 
     $relation = $this->getObject()->getTable()->getRelation($relationName);
 
-    $r = new ReflectionClass(null === $formClass ? $relation->getClass().'Form' : $formClass);
+    $r = new ReflectionClass($formClass ?? $relation->getClass().'Form');
 
     if (Doctrine_Relation::ONE == $relation->getType())
     {
@@ -314,7 +314,7 @@ abstract class sfFormDoctrine extends sfFormObject
       // the parent form has already changed the value of the field
       $oldValues = $this->getObject()->getModified(true, false);
 
-      return isset($oldValues[$field]) ? $oldValues[$field] : $this->object->$field;
+      return $oldValues[$field] ?? $this->object->$field;
     }
 
     // we need the base directory

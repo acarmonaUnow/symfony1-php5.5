@@ -41,7 +41,7 @@ class sfWebDebugLogger extends sfVarLogger
   {
     $this->context = sfContext::getInstance();
 
-    $this->webDebugClass = isset($options['web_debug_class']) ? $options['web_debug_class'] : 'sfWebDebug';
+    $this->webDebugClass = $options['web_debug_class'] ?? 'sfWebDebug';
 
     if (sfConfig::get('sf_web_debug'))
     {

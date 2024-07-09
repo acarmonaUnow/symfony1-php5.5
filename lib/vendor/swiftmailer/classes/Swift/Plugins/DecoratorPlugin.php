@@ -182,9 +182,7 @@ class Swift_Plugins_DecoratorPlugin
     }
     else
     {
-      return isset($this->_replacements[$address])
-        ? $this->_replacements[$address]
-        : null
+      return $this->_replacements[$address] ?? null
         ;
     }
   }

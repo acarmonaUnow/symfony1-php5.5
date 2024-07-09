@@ -65,7 +65,7 @@ class sfSQLiteCache extends sfCache
   {
     $data = $this->dbh->singleQuery(sprintf("SELECT data FROM cache WHERE key = '%s' AND timeout > %d", sqlite_escape_string($key), time()));
 
-    return null === $data ? $default : $data;
+    return $data ?? $default;
   }
 
   /**

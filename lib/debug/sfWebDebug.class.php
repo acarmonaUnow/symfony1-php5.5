@@ -142,7 +142,7 @@ class sfWebDebug
    */
   public function getOption($name, $default = null)
   {
-    return isset($this->options[$name]) ? $this->options[$name] : $default;
+    return $this->options[$name] ?? $default;
   }
 
   /**
@@ -193,7 +193,7 @@ class sfWebDebug
    */
   public function asHtml()
   {
-    $current = isset($this->options['request_parameters']['sfWebDebugPanel']) ? $this->options['request_parameters']['sfWebDebugPanel'] : null;
+    $current = $this->options['request_parameters']['sfWebDebugPanel'] ?? null;
 
     $titles = array();
     $panels = array();

@@ -64,8 +64,8 @@ abstract class sfBrowserBase
     unset($_SERVER['argc']);
 
     // setup our fake environment
-    $this->hostname = null === $hostname ? 'localhost' : $hostname;
-    $this->remote   = null === $remote ? '127.0.0.1' : $remote;
+    $this->hostname = $hostname ?? 'localhost';
+    $this->remote   = $remote ?? '127.0.0.1';
 
     // we set a session id (fake cookie / persistence)
     $this->newSession();
@@ -759,7 +759,7 @@ abstract class sfBrowserBase
    */
   public function doClickElement(DOMElement $item, $arguments = array(), $options = array())
   {
-    $method = strtolower(isset($options['method']) ? $options['method'] : 'get');
+    $method = strtolower($options['method'] ?? 'get');
 
     if ('a' == $item->nodeName)
     {
@@ -799,7 +799,7 @@ abstract class sfBrowserBase
     {
       $url = $this->stack[$this->stackPosition]['uri'];
     }
-    $method = strtolower(isset($options['method']) ? $options['method'] : ($item->getAttribute('method') ?: 'get'));
+    $method = strtolower($options['method'] ?? ($item->getAttribute('method') ?: 'get'));
 
     // merge form default values and arguments
     $defaults = array();

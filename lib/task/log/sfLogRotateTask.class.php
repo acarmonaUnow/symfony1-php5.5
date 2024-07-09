@@ -80,8 +80,8 @@ EOF;
     $logdir = sfConfig::get('sf_log_dir');
 
     // set history and period values if not passed to default values
-    $period = isset($period) ? $period : self::DEF_PERIOD;
-    $history = isset($history) ? $history : self::DEF_HISTORY;
+    $period = $period ?? self::DEF_PERIOD;
+    $history = $history ?? self::DEF_HISTORY;
 
     // get todays date
     $today = date('Ymd');

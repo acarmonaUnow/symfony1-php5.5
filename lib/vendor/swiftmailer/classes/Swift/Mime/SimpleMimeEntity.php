@@ -250,9 +250,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity, \Stringable
   {
     //TODO: Try to refactor this logic
     
-    $compoundLevel = isset($compoundLevel)
-      ? $compoundLevel
-      : $this->_getCompoundLevel($children)
+    $compoundLevel = $compoundLevel ?? $this->_getCompoundLevel($children)
       ;
     
     $immediateChildren = array();

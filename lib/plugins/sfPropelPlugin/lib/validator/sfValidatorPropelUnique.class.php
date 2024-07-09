@@ -88,7 +88,7 @@ class sfValidatorPropelUnique extends sfValidatorSchema
     $criteria = new Criteria();
     foreach ($columns as $i => $column)
     {
-      $name = isset($fields[$i]) ? $fields[$i] : $column;
+      $name = $fields[$i] ?? $column;
       if (!array_key_exists($name, $values))
       {
         // one of the columns has be removed from the form
@@ -115,7 +115,7 @@ class sfValidatorPropelUnique extends sfValidatorSchema
       throw $error;
     }
 
-    throw new sfValidatorErrorSchema($this, array(isset($fields[0]) ? $fields[0] : $columns[0] => $error));
+    throw new sfValidatorErrorSchema($this, array($fields[0] ?? $columns[0] => $error));
   }
 
   /**

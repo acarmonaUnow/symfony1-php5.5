@@ -148,7 +148,7 @@ class sfDoctrineGenerator extends sfModelGenerator
         'is_partial'   => false,
         'is_component' => false,
         'type'         => $this->getType($column),
-      ), isset($this->config['fields'][$name]) ? $this->config['fields'][$name] : array());
+      ), $this->config['fields'][$name] ?? array());
     }
 
     foreach ($this->getManyToManyTables() as $tables)
@@ -161,7 +161,7 @@ class sfDoctrineGenerator extends sfModelGenerator
         'is_partial'   => false,
         'is_component' => false,
         'type'         => 'Text',
-      ), isset($this->config['fields'][$name]) ? $this->config['fields'][$name] : array());
+      ), $this->config['fields'][$name] ?? array());
     }
 
     if (isset($this->config['fields']))
@@ -203,14 +203,14 @@ class sfDoctrineGenerator extends sfModelGenerator
     foreach ($this->getColumns() as $name => $column)
     {
       $names[] = $name;
-      $fields[$name] = isset($this->config[$context]['fields'][$name]) ? $this->config[$context]['fields'][$name] : array();
+      $fields[$name] = $this->config[$context]['fields'][$name] ?? array();
     }
 
     foreach ($this->getManyToManyTables() as $tables)
     {
       $name = sfInflector::underscore($tables['alias']).'_list';
       $names[] = $name;
-      $fields[$name] = isset($this->config[$context]['fields'][$name]) ? $this->config[$context]['fields'][$name] : array();
+      $fields[$name] = $this->config[$context]['fields'][$name] ?? array();
     }
 
     if (isset($this->config[$context]['fields']))

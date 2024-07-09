@@ -118,8 +118,8 @@ abstract class sfWebDebugPanel
     $html .= '<div class="sfWebDebugDebugInfo" id="'.$element.'" style="display:none">';
     foreach ($debugStack as $j => $trace)
     {
-      $file = isset($trace['file']) ? $trace['file'] : null;
-      $line = isset($trace['line']) ? $trace['line'] : null;
+      $file = $trace['file'] ?? null;
+      $line = $trace['line'] ?? null;
 
       $isProjectFile = $file && str_starts_with($file, sfConfig::get('sf_root_dir')) && !preg_match('/(cache|plugins|vendor)/', $file);
 
@@ -128,8 +128,8 @@ abstract class sfWebDebugPanel
       if (isset($trace['function']))
       {
         $html .= sprintf('in <span class="sfWebDebugLogInfo">%s%s%s()</span> ',
-          isset($trace['class']) ? $trace['class'] : '',
-          isset($trace['type']) ? $trace['type'] : '',
+          $trace['class'] ?? '',
+          $trace['type'] ?? '',
           $trace['function']
         );
       }
@@ -175,7 +175,7 @@ abstract class sfWebDebugPanel
         '<a href="%s" class="sfWebDebugFileLink" title="%s">%s</a>',
         htmlspecialchars(strtr($linkFormat, array('%f' => $file, '%l' => $line)), ENT_QUOTES, sfConfig::get('sf_charset')),
         htmlspecialchars($shortFile, ENT_QUOTES, sfConfig::get('sf_charset')),
-        null === $text ? $shortFile : $text);
+        $text ?? $shortFile);
     }
     else if (null === $text)
     {

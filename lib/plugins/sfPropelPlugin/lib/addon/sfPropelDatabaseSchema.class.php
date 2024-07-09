@@ -790,8 +790,8 @@ class sfPropelDatabaseSchema
       {
         $attributes_string .= ' inheritance="single">'."\n";
 
-        $extended_package = isset($this->database[$tb_name]['_attributes']['package']) ? $this->database[$tb_name]['_attributes']['package'] : $this->database['_attributes']['package'];
-        $extended_class   = isset($this->database[$tb_name]['_attributes']['phpName']) ? $this->database[$tb_name]['_attributes']['phpName'] : sfInflector::camelize($tb_name);
+        $extended_package = $this->database[$tb_name]['_attributes']['package'] ?? $this->database['_attributes']['package'];
+        $extended_class   = $this->database[$tb_name]['_attributes']['phpName'] ?? sfInflector::camelize($tb_name);
 
         foreach ($column['inheritance'] as $key => $class)
         {
@@ -799,7 +799,7 @@ class sfPropelDatabaseSchema
           $package = null;
           if (is_array($class))
           {
-            $package = isset($class['package']) ? $class['package'] : null;
+            $package = $class['package'] ?? null;
             $class   = $class['phpName'];
           }
 
@@ -924,7 +924,7 @@ class sfPropelDatabaseSchema
     }
     else
     {
-      return null === $value ? 'null' : $value;
+      return $value ?? 'null';
     }
   }
 

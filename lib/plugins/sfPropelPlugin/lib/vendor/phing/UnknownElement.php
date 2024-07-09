@@ -130,7 +130,7 @@ class UnknownElement extends Task {
                 $realChild = $this->makeTask($child, $childWrapper, false);
                 $parent->addTask($realChild);
             } else {
-				$project = $this->project === null ? $parent->project : $this->project;
+				$project = $this->project ?? $parent->project;
 				$realChild = $ih->createElement($project, $parent, $child->getTag());
             }
 

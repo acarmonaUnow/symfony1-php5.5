@@ -130,7 +130,7 @@ class sfWidgetFormDateTime extends sfWidgetForm
    */
   protected function getAttributesFor($type, $attributes)
   {
-    $defaults = isset($this->attributes[$type]) ? $this->attributes[$type] : array();
+    $defaults = $this->attributes[$type] ?? array();
 
     return isset($attributes[$type]) ? array_merge($defaults, $attributes[$type]) : $defaults;
   }

@@ -632,8 +632,8 @@ class Doctrine_Core
     {
         $manager = Doctrine_Manager::getInstance();
 
-        $modelLoading = $modelLoading === null ? $manager->getAttribute(Doctrine_Core::ATTR_MODEL_LOADING) : $modelLoading;
-        $classPrefix = $classPrefix === null ? $manager->getAttribute(Doctrine_Core::ATTR_MODEL_CLASS_PREFIX) : $classPrefix;
+        $modelLoading = $modelLoading ?? $manager->getAttribute(Doctrine_Core::ATTR_MODEL_LOADING);
+        $classPrefix = $classPrefix ?? $manager->getAttribute(Doctrine_Core::ATTR_MODEL_CLASS_PREFIX);
 
         $loadedModels = array();
 
@@ -856,7 +856,7 @@ class Doctrine_Core
     {
         $directory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'tmp_doctrine_models';
 
-        $options['generateBaseClasses'] = isset($options['generateBaseClasses']) ? $options['generateBaseClasses']:false;
+        $options['generateBaseClasses'] = $options['generateBaseClasses'] ?? false;
         $result = Doctrine_Core::generateModelsFromDb($directory, $connections, $options);
 
         if ( empty($result) && ! is_dir($directory)) {

@@ -407,7 +407,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
 
         if (isset($definition['relations']) && is_array($definition['relations']) && ! empty($definition['relations'])) {
             foreach ($definition['relations'] as $name => $relation) {
-                $class = isset($relation['class']) ? $relation['class']:$name;
+                $class = $relation['class'] ?? $name;
                 $alias = (isset($relation['alias']) && $relation['alias'] !== $this->_classPrefix . $relation['class']) ? ' as ' . $relation['alias'] : '';
 
                 if ( ! isset($relation['type'])) {
@@ -542,10 +542,10 @@ class Doctrine_Import_Builder extends Doctrine_Builder
                 $column['name'] = $name . ' as ' . $column['alias'];
             }
 
-            $columnName = isset($column['name']) ? $column['name']:$name;
+            $columnName = $column['name'] ?? $name;
             if ($manager->getAttribute(Doctrine_Core::ATTR_AUTO_ACCESSOR_OVERRIDE)) {
                 $e = explode(' as ', $columnName);
-                $fieldName = isset($e[1]) ? $e[1] : $e[0];
+                $fieldName = $e[1] ?? $e[0];
                 $classified = Doctrine_Inflector::classify($fieldName);
                 $getter = 'get' . $classified;
                 $setter = 'set' . $classified;
@@ -651,7 +651,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
 
         if ((isset($definition['is_base_class']) && $definition['is_base_class']) || ! $this->generateBaseClasses()) {
             foreach ($definition['columns'] as $name => $column) {
-                $name = isset($column['name']) ? $column['name']:$name;
+                $name = $column['name'] ?? $name;
                 // extract column name & field name
                 if (stripos($name, ' as '))
                 {
@@ -978,7 +978,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
 
         $abstract = isset($definition['abstract']) && $definition['abstract'] === true ? 'abstract ':null;
         $className = $definition['className'];
-        $extends = isset($definition['inheritance']['extends']) ? $definition['inheritance']['extends']:$this->_baseClassName;
+        $extends = $definition['inheritance']['extends'] ?? $this->_baseClassName;
 
         if ( ! (isset($definition['no_definition']) && $definition['no_definition'] === true)) {
             $tableDefinitionCode = $this->buildTableDefinition($definition);
@@ -1097,7 +1097,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
 
     public function buildTableClassDefinition($className, $definition, $options = array())
     {
-        $extends = isset($options['extends']) ? $options['extends']:$this->_baseTableClassName;
+        $extends = $options['extends'] ?? $this->_baseTableClassName;
         if ($extends !== $this->_baseTableClassName) {
             $extends = $this->_classPrefix . $extends;
         }

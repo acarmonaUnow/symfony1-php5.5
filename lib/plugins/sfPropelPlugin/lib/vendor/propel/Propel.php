@@ -280,11 +280,11 @@ class Propel
 			if (isset(self::$configuration['log']) && is_array(self::$configuration['log']) && count(self::$configuration['log'])) {
 				include_once 'Log.php'; // PEAR Log class
 				$c = self::$configuration['log'];
-				$type = isset($c['type']) ? $c['type'] : 'file';
-				$name = isset($c['name']) ? $c['name'] : './propel.log';
-				$ident = isset($c['ident']) ? $c['ident'] : 'propel';
-				$conf = isset($c['conf']) ? $c['conf'] : array();
-				$level = isset($c['level']) ? $c['level'] : PEAR_LOG_DEBUG;
+				$type = $c['type'] ?? 'file';
+				$name = $c['name'] ?? './propel.log';
+				$ident = $c['ident'] ?? 'propel';
+				$conf = $c['conf'] ?? array();
+				$level = $c['level'] ?? PEAR_LOG_DEBUG;
 				self::$logger = Log::singleton($type, $name, $ident, $conf, $level);
 			} // if isset()
 		}
@@ -516,7 +516,7 @@ class Propel
 		if ($mode != Propel::CONNECTION_READ || self::$forceMasterConnection || (isset(self::$connectionMap[$name]['slave']) && self::$connectionMap[$name]['slave'] === false)) {
 			if (!isset(self::$connectionMap[$name]['master'])) {
 				// load connection parameter for master connection
-				$conparams = isset(self::$configuration['datasources'][$name]['connection']) ? self::$configuration['datasources'][$name]['connection'] : null;
+				$conparams = self::$configuration['datasources'][$name]['connection'] ?? null;
 				if (empty($conparams)) {
 					throw new PropelException('No connection information in your runtime configuration file for datasource ['.$name.']');
 				}
@@ -532,7 +532,7 @@ class Propel
 			if (!isset(self::$connectionMap[$name]['slave'])) {
 
 				// we've already ensured that the configuration exists, in previous if-statement
-				$slaveconfigs = isset(self::$configuration['datasources'][$name]['slaves']) ? self::$configuration['datasources'][$name]['slaves'] : null;
+				$slaveconfigs = self::$configuration['datasources'][$name]['slaves'] ?? null;
 
 				if (empty($slaveconfigs)) { // no slaves configured for this datasource
 					self::$connectionMap[$name]['slave'] = false;
@@ -590,8 +590,8 @@ class Propel
 			$classname = $defaultClass;
 		}
 
-		$user = isset($conparams['user']) ? $conparams['user'] : null;
-		$password = isset($conparams['password']) ? $conparams['password'] : null;
+		$user = $conparams['user'] ?? null;
+		$password = $conparams['password'] ?? null;
 
 		// load any driver options from the config file
 		// driver options are those PDO settings that have to be passed during the connection construction
@@ -717,7 +717,7 @@ class Propel
 	{
 		if (self::$defaultDBName === null) {
 			// Determine default database name.
-			self::$defaultDBName = isset(self::$configuration['datasources']['default']) ? self::$configuration['datasources']['default'] : self::DEFAULT_NAME;
+			self::$defaultDBName = self::$configuration['datasources']['default'] ?? self::DEFAULT_NAME;
 		}
 		return self::$defaultDBName;
 	}

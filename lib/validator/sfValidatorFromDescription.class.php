@@ -94,7 +94,7 @@ class sfValidatorFromDescription extends sfValidatorDecorator
         $i += strlen($match[0]);
         $rightField = $match[1];
 
-        $tokens[] = new sfValidatorFDToken('sfValidatorSchemaCompare', array($leftField, $operator, $rightField, $arguments[0], isset($arguments[1]) ? $arguments[1] : array()));
+        $tokens[] = new sfValidatorFDToken('sfValidatorSchemaCompare', array($leftField, $operator, $rightField, $arguments[0], $arguments[1] ?? array()));
       }
       else if (preg_match('/^(and|or)/i', substr($string, $i), $match))
       {
@@ -113,7 +113,7 @@ class sfValidatorFromDescription extends sfValidatorDecorator
 
         $class = 'sfValidator'.$match[2];
         $arguments = $this->parseArguments($string, $i);
-        $token = new sfValidatorFDToken($class, array($arguments[0], isset($arguments[1]) ? $arguments[1] : array()));
+        $token = new sfValidatorFDToken($class, array($arguments[0], $arguments[1] ?? array()));
         if ($match[1])
         {
           $token = new sfValidatorFDTokenFilter($match[1], $token);

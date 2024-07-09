@@ -39,7 +39,7 @@ class sfPropelRoute extends sfObjectRoute
 
     if (!isset($this->options['method']))
     {
-      $this->options['method'] = isset($this->options['method_for_criteria']) ? $this->options['method_for_criteria'] : 'doSelectOne';
+      $this->options['method'] = $this->options['method_for_criteria'] ?? 'doSelectOne';
 
       $className = $this->options['model'];
       $criteria = new Criteria();
@@ -74,7 +74,7 @@ class sfPropelRoute extends sfObjectRoute
 
     if (!isset($this->options['method']))
     {
-      $this->options['method'] = isset($this->options['method_for_criteria']) ? $this->options['method_for_criteria'] : 'doSelect';
+      $this->options['method'] = $this->options['method_for_criteria'] ?? 'doSelect';
       $parameters = new Criteria();
     }
 

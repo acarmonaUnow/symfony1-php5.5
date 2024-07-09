@@ -45,7 +45,7 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
      */
     protected function _getCustomIndexField($alias)
     {
-        return isset($this->_queryComponents[$alias]['map']) ? $this->_queryComponents[$alias]['map'] : null;
+        return $this->_queryComponents[$alias]['map'] ?? null;
     }
 
     public function hydrateResultSet($stmt)

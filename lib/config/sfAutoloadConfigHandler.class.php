@@ -88,7 +88,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
       else
       {
         // directory mapping
-        $ext  = isset($entry['ext']) ? $entry['ext'] : '.php';
+        $ext  = $entry['ext'] ?? '.php';
         $path = $entry['path'];
 
         // we automatically add our php classes
@@ -96,7 +96,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
         $finder = sfFinder::type('file')->name('*'.$ext)->follow_link();
 
         // recursive mapping?
-        $recursive = isset($entry['recursive']) ? $entry['recursive'] : false;
+        $recursive = $entry['recursive'] ?? false;
         if (!$recursive)
         {
           $finder->maxdepth(0);
@@ -112,7 +112,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
         {
           foreach ($finder->in($matches) as $file)
           {
-            $mapping = array_merge($mapping, static::parseFile($path, $file, isset($entry['prefix']) ? $entry['prefix'] : ''));
+            $mapping = array_merge($mapping, static::parseFile($path, $file, $entry['prefix'] ?? ''));
           }
         }
       }

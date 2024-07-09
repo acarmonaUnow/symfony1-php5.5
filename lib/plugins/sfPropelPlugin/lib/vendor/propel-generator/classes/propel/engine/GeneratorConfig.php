@@ -87,7 +87,7 @@ class GeneratorConfig {
    */
   public function getBuildProperty($name)
   {
-    return isset($this->buildProperties[$name]) ? $this->buildProperties[$name] : null;
+    return $this->buildProperties[$name] ?? null;
   }
 
   /**

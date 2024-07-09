@@ -172,6 +172,6 @@ EOF;
    */
   protected function renderValue($value)
   {
-    return null === $value ? 'NULL' : $value;
+    return $value ?? 'NULL';
   }
 }
