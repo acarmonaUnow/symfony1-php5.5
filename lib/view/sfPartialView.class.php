@@ -22,7 +22,7 @@ class sfPartialView extends sfPHPView
     $viewCache   = null,
     $checkCache  = false,
     $cacheKey    = null,
-    $partialVars = array();
+    $partialVars = [];
 
   /**
    * Constructor.

@@ -57,10 +57,10 @@ class ArticleTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Category', 'Category', RelationMap::MANY_TO_ONE, array('category_id' => 'id', ), null, null);
-    $this->addRelation('Book', 'Book', RelationMap::MANY_TO_ONE, array('book_id' => 'id', ), null, null);
-    $this->addRelation('AuthorArticle', 'AuthorArticle', RelationMap::ONE_TO_MANY, array('id' => 'article_id', ), null, null);
-    $this->addRelation('Attachment', 'Attachment', RelationMap::ONE_TO_MANY, array('id' => 'article_id', ), null, null);
+    $this->addRelation('Category', 'Category', RelationMap::MANY_TO_ONE, ['category_id' => 'id'], null, null);
+    $this->addRelation('Book', 'Book', RelationMap::MANY_TO_ONE, ['book_id' => 'id'], null, null);
+    $this->addRelation('AuthorArticle', 'AuthorArticle', RelationMap::ONE_TO_MANY, ['id' => 'article_id'], null, null);
+    $this->addRelation('Attachment', 'Attachment', RelationMap::ONE_TO_MANY, ['id' => 'article_id'], null, null);
 	} // buildRelations()
 
 	/**
@@ -71,11 +71,7 @@ class ArticleTableMap extends TableMap {
 	 */
 	public function getBehaviors()
 	{
-		return array(
-			'symfony' => array('form' => 'true', 'filter' => 'true', ),
-			'symfony_behaviors' => array(),
-			'symfony_timestampable' => array('create_column' => 'created_at', ),
-		);
+		return ['symfony' => ['form' => 'true', 'filter' => 'true'], 'symfony_behaviors' => [], 'symfony_timestampable' => ['create_column' => 'created_at']];
 	} // getBehaviors()
 
 } // ArticleTableMap

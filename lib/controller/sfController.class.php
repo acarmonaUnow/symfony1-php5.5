@@ -23,7 +23,7 @@ abstract class sfController
   protected
     $context           = null,
     $dispatcher        = null,
-    $controllerClasses = array(),
+    $controllerClasses = [],
     $renderMode        = sfView::RENDER_CLIENT,
     $maxForwards       = 5;
 
@@ -151,7 +151,7 @@ abstract class sfController
     // send an exception if debug
     if ($throwExceptions && sfConfig::get('sf_debug'))
     {
-      $dirs = array_map(array('sfDebug', 'shortenFilePath'), array_keys($dirs));
+      $dirs = array_map(['sfDebug', 'shortenFilePath'], array_keys($dirs));
 
       throw new sfControllerException(sprintf('Controller "%s/%s" does not exist in: %s.', $moduleName, $controllerName, implode(', ', $dirs)));
     }
@@ -190,7 +190,7 @@ abstract class sfController
       // the requested action doesn't exist
       if (sfConfig::get('sf_logging_enabled'))
       {
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Action "%s/%s" does not exist', $moduleName, $actionName))));
+        $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Action "%s/%s" does not exist', $moduleName, $actionName)]));
       }
 
       throw new sfError404Exception(sprintf('Action "%s/%s" does not exist.', $moduleName, $actionName));
@@ -224,14 +224,14 @@ abstract class sfController
       $filterChain = new sfFilterChain();
       $filterChain->loadConfiguration($actionInstance);
 
-      $this->context->getEventDispatcher()->notify(new sfEvent($this, 'controller.change_action', array('module' => $moduleName, 'action' => $actionName)));
+      $this->context->getEventDispatcher()->notify(new sfEvent($this, 'controller.change_action', ['module' => $moduleName, 'action' => $actionName]));
 
       if ($moduleName == sfConfig::get('sf_error_404_module') && $actionName == sfConfig::get('sf_error_404_action'))
       {
         $this->context->getResponse()->setStatusCode(404);
         $this->context->getResponse()->setHttpHeader('Status', '404 Not Found');
 
-        $this->dispatcher->notify(new sfEvent($this, 'controller.page_not_found', array('module' => $moduleName, 'action' => $actionName)));
+        $this->dispatcher->notify(new sfEvent($this, 'controller.page_not_found', ['module' => $moduleName, 'action' => $actionName]));
       }
 
       // process the filter chain
@@ -382,7 +382,7 @@ abstract class sfController
   {
     if (sfConfig::get('sf_logging_enabled'))
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Get presentation for action "%s/%s" (view class: "%s")', $module, $action, $viewName))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Get presentation for action "%s/%s" (view class: "%s")', $module, $action, $viewName)]));
     }
 
     // get original render mode
@@ -502,7 +502,7 @@ abstract class sfController
    */
   public function __call($method, $arguments)
   {
-    $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'controller.method_not_found', array('method' => $method, 'arguments' => $arguments)));
+    $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'controller.method_not_found', ['method' => $method, 'arguments' => $arguments]));
     if (!$event->isProcessed())
     {
       throw new sfException(sprintf('Call to undefined method %s::%s.', $this::class, $method));

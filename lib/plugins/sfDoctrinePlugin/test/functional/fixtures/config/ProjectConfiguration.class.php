@@ -7,7 +7,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
-    $this->enableAllPluginsExcept(array('sfPropelPlugin'));
+    $this->enableAllPluginsExcept(['sfPropelPlugin']);
   }
 
   public function initializeDoctrine()
@@ -16,13 +16,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 
     $task = new sfDoctrineBuildTask($this->dispatcher, new sfFormatter());
     $task->setConfiguration($this);
-    $task->run(array(), array(
-      'no-confirmation' => true,
-      'db'              => true,
-      'model'           => true,
-      'forms'           => true,
-      'filters'         => true,
-    ));
+    $task->run([], ['no-confirmation' => true, 'db'              => true, 'model'           => true, 'forms'           => true, 'filters'         => true]);
   }
 
   public function loadFixtures($fixtures)
@@ -34,14 +28,14 @@ class ProjectConfiguration extends sfProjectConfiguration
     chdir(sfConfig::get('sf_root_dir'));
     $task = new sfDoctrineDataLoadTask($this->dispatcher, new sfFormatter());
     $task->setConfiguration($this);
-    $task->run(array($path));
+    $task->run([$path]);
   }
 
   public function configureDoctrine(Doctrine_Manager $manager)
   {
     $manager->setAttribute(Doctrine_Core::ATTR_VALIDATE, true);
 
-    $options = array('baseClassName' => 'myDoctrineRecord');
+    $options = ['baseClassName' => 'myDoctrineRecord'];
     sfConfig::set('doctrine_model_builder_options', $options);
   }
 

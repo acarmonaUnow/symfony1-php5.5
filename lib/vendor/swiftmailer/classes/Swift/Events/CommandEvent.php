@@ -31,7 +31,7 @@ class Swift_Events_CommandEvent extends Swift_Events_EventObject
     private $_command, /**
      * An array of codes which a successful response will contain.
      */
-    private $_successCodes = array())
+    private $_successCodes = [])
   {
     parent::__construct($source);
   }

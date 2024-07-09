@@ -37,7 +37,7 @@ include_once 'phing/tasks/system/condition/Condition.php';
  */
 abstract class ConditionBase extends ProjectComponent implements IteratorAggregate {
         
-    public $conditions = array(); // needs to be public for "inner" class access
+    public $conditions = []; // needs to be public for "inner" class access
 
     function countConditions() {
         return count($this->conditions);

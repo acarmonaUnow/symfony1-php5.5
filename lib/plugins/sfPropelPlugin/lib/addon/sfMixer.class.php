@@ -19,9 +19,9 @@
 class sfMixer
 {
   static protected
-    $mixins          = array(),
-    $mixinParameters = array(),
-    $mixinInstances  = array();
+    $mixins          = [],
+    $mixinParameters = [],
+    $mixinInstances  = [];
 
   static public function register($name, $callable)
   {
@@ -82,21 +82,16 @@ class sfMixer
     // register mixin
     if (!isset(self::$mixins[$name]))
     {
-      self::$mixins[$name] = array();
+      self::$mixins[$name] = [];
     }
 
     if (!isset(self::$mixinParameters[$name]))
     {
-      self::$mixinParameters[$name] = array();
+      self::$mixinParameters[$name] = [];
     }
 
     self::$mixins[$name][] = $callable;
-    self::$mixinParameters[$name][] = array(
-      'lazy'     => $lazy,
-      'class'    => $class,
-      'method'   => $method,
-      'hook'     => $hook,
-    );
+    self::$mixinParameters[$name][] = ['lazy'     => $lazy, 'class'    => $class, 'method'   => $method, 'hook'     => $hook];
   }
 
   static public function getMixinInstance($name)
@@ -132,7 +127,7 @@ class sfMixer
   {
     self::getMixinInstance($name);
 
-    return self::$mixins[$name] ?? array();
+    return self::$mixins[$name] ?? [];
   }
 
   static public function getCallable($name)
@@ -142,7 +137,7 @@ class sfMixer
     return isset(self::$mixins[$name]) ? self::$mixins[$name][0] : null;
   }
 
-  static public function callMixins($hookName = null, $moreParams = array())
+  static public function callMixins($hookName = null, $moreParams = [])
   {
     $traces = debug_backtrace();
     $function = $traces[1]['function'];

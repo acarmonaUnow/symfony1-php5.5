@@ -25,10 +25,7 @@ class sfDebug
    */
   public static function symfonyInfoAsArray()
   {
-    return array(
-      'version' => SYMFONY_VERSION,
-      'path'    => sfConfig::get('sf_symfony_lib_dir'),
-    );
+    return ['version' => SYMFONY_VERSION, 'path'    => sfConfig::get('sf_symfony_lib_dir')];
   }
 
   /**
@@ -38,11 +35,7 @@ class sfDebug
    */
   public static function phpInfoAsArray()
   {
-    $values = array(
-      'php'        => phpversion(),
-      'os'         => php_uname(),
-      'extensions' => get_loaded_extensions(),
-    );
+    $values = ['php'        => phpversion(), 'os'         => php_uname(), 'extensions' => get_loaded_extensions()];
 
     natcasesort($values['extensions']);
 
@@ -65,15 +58,15 @@ class sfDebug
    */
   public static function globalsAsArray()
   {
-    $values = array();
-    foreach (array('cookie', 'server', 'get', 'post', 'files', 'env', 'session') as $name)
+    $values = [];
+    foreach (['cookie', 'server', 'get', 'post', 'files', 'env', 'session'] as $name)
     {
       if (!isset($GLOBALS['_'.strtoupper($name)]))
       {
         continue;
       }
 
-      $values[$name] = array();
+      $values[$name] = [];
       foreach ($GLOBALS['_'.strtoupper($name)] as $key => $value)
       {
         $values[$name][$key] = $value;
@@ -111,14 +104,10 @@ class sfDebug
   {
     if (!$request)
     {
-      return array();
+      return [];
     }
 
-    return array(
-      'options'         => $request->getOptions(),
-      'parameterHolder' => self::flattenParameterHolder($request->getParameterHolder(), true),
-      'attributeHolder' => self::flattenParameterHolder($request->getAttributeHolder(), true),
-    );
+    return ['options'         => $request->getOptions(), 'parameterHolder' => self::flattenParameterHolder($request->getParameterHolder(), true), 'attributeHolder' => self::flattenParameterHolder($request->getAttributeHolder(), true)];
   }
 
   /**
@@ -132,19 +121,10 @@ class sfDebug
   {
     if (!$response)
     {
-      return array();
+      return [];
     }
 
-    return array(
-      'status'      => array('code' => $response->getStatusCode(), 'text' => $response->getStatusText()),
-      'options'     => $response->getOptions(),
-      'cookies'     => method_exists($response, 'getCookies')     ? $response->getCookies() : array(),
-      'httpHeaders' => method_exists($response, 'getHttpHeaders') ? $response->getHttpHeaders() : array(),
-      'javascripts' => method_exists($response, 'getJavascripts') ? $response->getJavascripts('ALL') : array(),
-      'stylesheets' => method_exists($response, 'getStylesheets') ? $response->getStylesheets('ALL') : array(),
-      'metas'       => method_exists($response, 'getMetas')       ? $response->getMetas() : array(),
-      'httpMetas'   => method_exists($response, 'getHttpMetas')   ? $response->getHttpMetas() : array(),
-    );
+    return ['status'      => ['code' => $response->getStatusCode(), 'text' => $response->getStatusText()], 'options'     => $response->getOptions(), 'cookies'     => method_exists($response, 'getCookies')     ? $response->getCookies() : [], 'httpHeaders' => method_exists($response, 'getHttpHeaders') ? $response->getHttpHeaders() : [], 'javascripts' => method_exists($response, 'getJavascripts') ? $response->getJavascripts('ALL') : [], 'stylesheets' => method_exists($response, 'getStylesheets') ? $response->getStylesheets('ALL') : [], 'metas'       => method_exists($response, 'getMetas')       ? $response->getMetas() : [], 'httpMetas'   => method_exists($response, 'getHttpMetas')   ? $response->getHttpMetas() : []];
   }
 
   /**
@@ -158,22 +138,14 @@ class sfDebug
   {
     if (!$user)
     {
-      return array();
+      return [];
     }
 
-    $data = array(
-      'options'         => $user->getOptions(),
-      'attributeHolder' => self::flattenParameterHolder($user->getAttributeHolder(), true),
-      'culture'         => $user->getCulture(),
-    );
+    $data = ['options'         => $user->getOptions(), 'attributeHolder' => self::flattenParameterHolder($user->getAttributeHolder(), true), 'culture'         => $user->getCulture()];
 
     if ($user instanceof sfBasicSecurityUser)
     {
-      $data = array_merge($data, array(
-          'authenticated'   => $user->isAuthenticated(),
-          'credentials'     => $user->getCredentials(),
-          'lastRequest'     => $user->getLastRequestTime(),
-      ));
+      $data = array_merge($data, ['authenticated'   => $user->isAuthenticated(), 'credentials'     => $user->getCredentials(), 'lastRequest'     => $user->getLastRequestTime()]);
     }
 
     return $data;
@@ -189,12 +161,12 @@ class sfDebug
    */
   public static function flattenParameterHolder($parameterHolder, $removeObjects = false)
   {
-    $values = array();
+    $values = [];
     if ($parameterHolder instanceof sfNamespacedParameterHolder)
     {
       foreach ($parameterHolder->getNamespaces() as $ns)
       {
-        $values[$ns] = array();
+        $values[$ns] = [];
         foreach ($parameterHolder->getAll($ns) as $key => $value)
         {
           $values[$ns][$key] = $value;
@@ -229,7 +201,7 @@ class sfDebug
    */
   public static function removeObjects($values)
   {
-    $nvalues = array();
+    $nvalues = [];
     foreach ($values as $key => $value)
     {
       if (is_array($value))
@@ -258,7 +230,7 @@ class sfDebug
    */
   static public function shortenFilePath($file)
   {
-    foreach (array('sf_root_dir', 'sf_symfony_lib_dir') as $key)
+    foreach (['sf_root_dir', 'sf_symfony_lib_dir'] as $key)
     {
       if (str_starts_with($file, (string) ($value = sfConfig::get($key))))
       {

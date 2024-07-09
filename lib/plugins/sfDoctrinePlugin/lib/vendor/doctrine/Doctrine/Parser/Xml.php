@@ -137,7 +137,7 @@ class Doctrine_Parser_Xml extends Doctrine_Parser
                         $return[$element] = (string) $value;
                     } else {
                         if ( ! is_array($return[$element])) {
-                            $return[$element] = array($return[$element], (string) $value);
+                            $return[$element] = [$return[$element], (string) $value];
                         } else {
                             $return[$element][] = (string) $value;
                         }
@@ -149,7 +149,7 @@ class Doctrine_Parser_Xml extends Doctrine_Parser
         if (is_array($return)) {
             return $return;
         } else {
-            return array();
+            return [];
         }
     }
 }

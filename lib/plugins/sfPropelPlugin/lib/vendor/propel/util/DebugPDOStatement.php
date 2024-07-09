@@ -47,18 +47,12 @@ class DebugPDOStatement extends PDOStatement
 	 * @see        self::bindValue()
 	 * @var        array
 	 */
-	protected static $typeMap = array(
-		PDO::PARAM_BOOL => "PDO::PARAM_BOOL",
-		PDO::PARAM_INT => "PDO::PARAM_INT",
-		PDO::PARAM_STR => "PDO::PARAM_STR",
-		PDO::PARAM_LOB => "PDO::PARAM_LOB",
-		PDO::PARAM_NULL => "PDO::PARAM_NULL",
-	);
+	protected static $typeMap = [PDO::PARAM_BOOL => "PDO::PARAM_BOOL", PDO::PARAM_INT => "PDO::PARAM_INT", PDO::PARAM_STR => "PDO::PARAM_STR", PDO::PARAM_LOB => "PDO::PARAM_LOB", PDO::PARAM_NULL => "PDO::PARAM_NULL"];
 
   /**
    * @var array The values that have been bound
    */
-  protected $boundValues = array();
+  protected $boundValues = [];
 
 	/**
 	 * Construct a new statement class with reference to main DebugPDO object from
@@ -75,7 +69,7 @@ class DebugPDOStatement extends PDOStatement
 	{
 		$sql = $this->queryString;
 		
-		$matches = array();
+		$matches = [];
 		if (preg_match_all('/(:p[0-9]+\b)/', $sql, $matches)) {
 			$size = count($matches[1]);
 			for ($i = $size-1; $i >= 0; $i--) { 

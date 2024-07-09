@@ -72,7 +72,7 @@ class PropelDateTime extends DateTime
 		// PHP bug: http://bugs.php.net/bug.php?id=40743
 		$this->dateString = $this->format('Y-m-d H:i:s');
 		$this->tzString = $this->getTimeZone()->getName();
-		return array('dateString', 'tzString');
+		return ['dateString', 'tzString'];
 	}
 
 	/**

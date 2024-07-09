@@ -27,7 +27,7 @@ class CrudBrowser extends sfTestBrowser
     $options[] = 'singular='.$this->singularName;
     $options[] = 'plural='.$this->pluralName;
     $options[] = '--non-verbose-templates';
-    $task->run(array('crud', 'article', 'Article'), $options);
+    $task->run(['crud', 'article', 'Article'], $options);
 
     require_once($this->projectDir.'/config/ProjectConfiguration.class.php');
     sfContext::createInstance(ProjectConfiguration::getApplicationConfiguration('crud', 'test', true, $this->projectDir));
@@ -99,29 +99,13 @@ class CrudBrowser extends sfTestBrowser
         checkElement(sprintf('a[href*="/%s"]', $this->urlPrefix), 'Back to list')->
         checkElement(sprintf('a[href*="/%s/"]', $this->urlPrefix), false)->
       end()->
-      checkFormValues(array(
-        'title'               => '',
-        'body'                => '',
-        'Online'              => false,
-        'category_id'         => 0,
-        'end_date'            => array('year' => '', 'month' => '', 'day' => '', 'hour' => '', 'minute' => ''),
-        'book_id'             => 0,
-        'author_article_list' => array(),
-      ))
+      checkFormValues(['title'               => '', 'body'                => '', 'Online'              => false, 'category_id'         => 0, 'end_date'            => ['year' => '', 'month' => '', 'day' => '', 'hour' => '', 'minute' => ''], 'book_id'             => 0, 'author_article_list' => []])
     ;
 
     // save
     $this->
       info('save')->
-      saveValues($options, array(
-        'title'               => 'my real title',
-        'body'                => 'my real body',
-        'Online'              => true,
-        'category_id'         => 2,
-        'end_date'            => array('year' => '', 'month' => '', 'day' => '', 'hour' => '', 'minute' => ''),
-        'book_id'             => null,
-        'author_article_list' => array(1, 2),
-      ), 3, true)
+      saveValues($options, ['title'               => 'my real title', 'body'                => 'my real body', 'Online'              => true, 'category_id'         => 2, 'end_date'            => ['year' => '', 'month' => '', 'day' => '', 'hour' => '', 'minute' => ''], 'book_id'             => null, 'author_article_list' => [1, 2]], 3, true)
     ;
 
     // go back to the list
@@ -173,27 +157,16 @@ class CrudBrowser extends sfTestBrowser
     ;
 
     // save / validation
-    $values = array(
-      'id'                  => 1009299,
-      'title'               => '',
-      'body'                => 'my body',
-      'Online'              => true,
-      'excerpt'             => 'my excerpt',
-      'category_id'         => null,
-      'end_date'            => array('year' => 0, 'month' => 0, 'day' => 15, 'hour' => '10', 'minute' => '20'),
-      'book_id'             => 149999,
-      'author_article_list' => array(0, 5),
-    );
+    $values = ['id'                  => 1009299, 'title'               => '', 'body'                => 'my body', 'Online'              => true, 'excerpt'             => 'my excerpt', 'category_id'         => null, 'end_date'            => ['year' => 0, 'month' => 0, 'day' => 15, 'hour' => '10', 'minute' => '20'], 'book_id'             => 149999, 'author_article_list' => [0, 5]];
 
     $this->
       info('save / validation')->
-      click('Save', array('article' => $values))->
+      click('Save', ['article' => $values])->
       with('request')->begin()->
         isParameter('module', $this->urlPrefix)->
         isParameter('action', 'update')->
       end()->
-      checkFormValues(array_merge($values, array(
-        'end_date' => array('year' => null, 'month' => null, 'day' => 15, 'hour' => '10', 'minute' => '20')))
+      checkFormValues(array_merge($values, ['end_date' => ['year' => null, 'month' => null, 'day' => 15, 'hour' => '10', 'minute' => '20']])
       )->
       with('response')->begin()->
         isStatusCode(200)->
@@ -205,16 +178,7 @@ class CrudBrowser extends sfTestBrowser
     // save
     $this->
       info('save')->
-      saveValues($options, array(
-        'id'                  => 3,
-        'title'               => 'my title',
-        'body'                => 'my body',
-        'Online'              => false,
-        'category_id'         => 1,
-        'end_date'            => array('year' => date('Y'), 'month' => 10, 'day' => 15, 'hour' => '10', 'minute' => '20'),
-        'book_id'             => 1,
-        'author_article_list' => array(1, 3),
-      ), 3, false)
+      saveValues($options, ['id'                  => 3, 'title'               => 'my title', 'body'                => 'my body', 'Online'              => false, 'category_id'         => 1, 'end_date'            => ['year' => date('Y'), 'month' => 10, 'day' => 15, 'hour' => '10', 'minute' => '20'], 'book_id'             => 1, 'author_article_list' => [1, 3]], 3, false)
     ;
 
     // go back to the list
@@ -232,7 +196,7 @@ class CrudBrowser extends sfTestBrowser
     $this->
       info('delete')->
       get(sprintf('/%s/3/edit', $this->urlPrefix))->
-      click('Delete', array(), array('method' => 'delete', '_with_csrf' => true))->
+      click('Delete', [], ['method' => 'delete', '_with_csrf' => true])->
       with('request')->begin()->
         isParameter('module', $this->urlPrefix)->
         isParameter('action', 'delete')->
@@ -265,7 +229,7 @@ class CrudBrowser extends sfTestBrowser
         with('response')->begin()->
           isStatusCode(200)->
           checkElement(sprintf('a[href*="/%s/2%s"]', $this->urlPrefix, in_array('with-show', $options) ? '' : '/edit'), 'Edit')->
-          checkElement(sprintf('a[href*="/%s"]', $this->urlPrefix), 'List', array('position' => 1))->
+          checkElement(sprintf('a[href*="/%s"]', $this->urlPrefix), 'List', ['position' => 1])->
           checkElement('body table tbody tr:nth(0)', '/Id\:\s+2/')->
           checkElement('body table tbody tr:nth(1)', '/Title\:\s+foo foo title/')->
           checkElement('body table tbody tr:nth(2)', '/Body\:\s+bar bar body/')->
@@ -291,7 +255,7 @@ class CrudBrowser extends sfTestBrowser
   public function saveValues($options, $values, $id, $creation)
   {
     $this->
-      click('Save', array('article' => $values))->
+      click('Save', ['article' => $values])->
       with('request')->begin()->
         isParameter('module', $this->urlPrefix)->
         isParameter('action', $creation ? 'create' : 'update')->

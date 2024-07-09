@@ -18,15 +18,7 @@
  */
 class sfClassManipulator
 {
-  static protected $signatureTokens = array(
-    T_FINAL,
-    T_ABSTRACT,
-    T_STATIC,
-    T_PUBLIC,
-    T_PROTECTED,
-    T_PRIVATE,
-    T_FUNCTION,
-  );
+  static protected $signatureTokens = [T_FINAL, T_ABSTRACT, T_STATIC, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FUNCTION];
 
   protected $code = '', $file = false;
 
@@ -287,17 +279,17 @@ class sfClassManipulator
         {
           // clean up
           preg_match('/^\s*/', $setup, $match);
-          $before = implode('', array_map(array($this, 'getTokenValue'), $tokens)).$value.$match[0];
+          $before = implode('', array_map([$this, 'getTokenValue'], $tokens)).$value.$match[0];
           $setup = substr($setup, strlen($match[0]));
 
-          return array($before, $setup);
+          return [$before, $setup];
         }
 
         $setup = $value.$setup;
       }
     }
 
-    return array($before, $setup);
+    return [$before, $setup];
   }
 
   /**

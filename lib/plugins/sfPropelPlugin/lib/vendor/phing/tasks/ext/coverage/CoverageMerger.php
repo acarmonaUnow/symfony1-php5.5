@@ -33,7 +33,7 @@ class CoverageMerger
 {
 	private static function mergeCodeCoverage($left, $right)
 	{
-		$coverageMerged = array();
+		$coverageMerged = [];
 
 		reset($left);
 		reset($right);
@@ -112,7 +112,7 @@ class CoverageMerger
 					$left = $file['coverage'];
 					$right = $coverageFile;
 					if (!is_array($right)) {
-						$right = array_shift(PHPUnit_Util_CodeCoverage::bitStringToCodeCoverage(array($right), 1)); 
+						$right = array_shift(PHPUnit_Util_CodeCoverage::bitStringToCodeCoverage([$right], 1)); 
 					}
 						
 					$coverageMerged = CoverageMerger::mergeCodeCoverage($left, $right);

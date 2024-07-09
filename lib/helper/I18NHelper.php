@@ -17,7 +17,7 @@
  * @version    SVN: $Id: I18NHelper.php 31894 2011-01-24 18:12:37Z fabien $
  */
 
-function __($text, $args = array(), $catalogue = 'messages')
+function __($text, $args = [], $catalogue = 'messages')
 {
   if (sfConfig::get('sf_i18n'))
   {
@@ -27,7 +27,7 @@ function __($text, $args = array(), $catalogue = 'messages')
   {
     if (empty($args))
     {
-      $args = array();
+      $args = [];
     }
 
     // replace object with strings
@@ -60,7 +60,7 @@ function __($text, $args = array(), $catalogue = 'messages')
  *
  * @return string Result of the translation
  */
-function format_number_choice($text, $number, $args = array(), $catalogue = 'messages')
+function format_number_choice($text, $number, $args = [], $catalogue = 'messages')
 {
   $translated = __($text, $args, $catalogue);
 

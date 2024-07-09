@@ -25,15 +25,9 @@ class sfPluginUpgradeTask extends sfPluginBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The plugin name'),
-    ));
+    $this->addArguments([new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The plugin name')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('stability', 's', sfCommandOption::PARAMETER_REQUIRED, 'The preferred stability (stable, beta, alpha)', null),
-      new sfCommandOption('release', 'r', sfCommandOption::PARAMETER_REQUIRED, 'The preferred version', null),
-      new sfCommandOption('channel', 'c', sfCommandOption::PARAMETER_REQUIRED, 'The PEAR channel name', null),
-    ));
+    $this->addOptions([new sfCommandOption('stability', 's', sfCommandOption::PARAMETER_REQUIRED, 'The preferred stability (stable, beta, alpha)', null), new sfCommandOption('release', 'r', sfCommandOption::PARAMETER_REQUIRED, 'The preferred version', null), new sfCommandOption('channel', 'c', sfCommandOption::PARAMETER_REQUIRED, 'The PEAR channel name', null)]);
 
     $this->namespace = 'plugin';
     $this->name = 'upgrade';
@@ -57,7 +51,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $this->logSection('plugin', sprintf('upgrading plugin "%s"', $arguments['name']));
 

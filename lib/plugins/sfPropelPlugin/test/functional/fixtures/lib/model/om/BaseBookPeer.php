@@ -46,7 +46,7 @@ abstract class BaseBookPeer {
 	 * queries.
 	 * @var        array Book[]
 	 */
-	public static $instances = array();
+	public static $instances = [];
 
 
 	// symfony behavior
@@ -62,13 +62,7 @@ abstract class BaseBookPeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
-	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
-	);
+	private static $fieldNames = [BasePeer::TYPE_PHPNAME => ['Id', 'Name'], BasePeer::TYPE_STUDLYPHPNAME => ['id', 'name'], BasePeer::TYPE_COLNAME => [self::ID, self::NAME], BasePeer::TYPE_FIELDNAME => ['id', 'name'], BasePeer::TYPE_NUM => [0, 1]];
 
 	/**
 	 * holds an array of keys for quick access to the fieldnames array
@@ -76,13 +70,7 @@ abstract class BaseBookPeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
-	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
-	);
+	private static $fieldKeys = [BasePeer::TYPE_PHPNAME => ['Id' => 0, 'Name' => 1], BasePeer::TYPE_STUDLYPHPNAME => ['id' => 0, 'name' => 1], BasePeer::TYPE_COLNAME => [self::ID => 0, self::NAME => 1], BasePeer::TYPE_FIELDNAME => ['id' => 0, 'name' => 1], BasePeer::TYPE_NUM => [0, 1]];
 
 	/**
 	 * Translates a fieldname to another type
@@ -348,7 +336,7 @@ abstract class BaseBookPeer {
 	 */
 	public static function clearInstancePool()
 	{
-		self::$instances = array();
+		self::$instances = [];
 	}
 	
 	/**
@@ -387,7 +375,7 @@ abstract class BaseBookPeer {
 	 */
 	public static function populateObjects(PDOStatement $stmt)
 	{
-		$results = array();
+		$results = [];
 	
 		// set the class once to avoid overhead in the loop
 		$cls = BookPeer::getOMClass(false);
@@ -659,14 +647,14 @@ abstract class BaseBookPeer {
 	 */
 	public static function doValidate(Book $obj, mixed $cols = null)
 	{
-		$columns = array();
+		$columns = [];
 
 		if ($cols) {
 			$dbMap = Propel::getDatabaseMap(BookPeer::DATABASE_NAME);
 			$tableMap = $dbMap->getTable(BookPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
-				$cols = array($cols);
+				$cols = [$cols];
 			}
 
 			foreach ($cols as $colName) {
@@ -724,7 +712,7 @@ abstract class BaseBookPeer {
 
 		$objs = null;
 		if (empty($pks)) {
-			$objs = array();
+			$objs = [];
 		} else {
 			$criteria = new Criteria(BookPeer::DATABASE_NAME);
 			$criteria->add(BookPeer::ID, $pks, Criteria::IN);
@@ -742,7 +730,7 @@ abstract class BaseBookPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return [];
 	}
 
 	// symfony_behaviors behavior

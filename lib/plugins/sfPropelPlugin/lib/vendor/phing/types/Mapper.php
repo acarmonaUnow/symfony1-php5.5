@@ -176,7 +176,7 @@ class Mapper extends DataType {
     /** Performs the check for circular references and returns the referenced Mapper. */
     private function getRef() {
         if (!$this->checked) {
-            $stk = array();
+            $stk = [];
             $stk[] = $this;
             $this->dieOnCircularReference($stk, $this->project);            
         }

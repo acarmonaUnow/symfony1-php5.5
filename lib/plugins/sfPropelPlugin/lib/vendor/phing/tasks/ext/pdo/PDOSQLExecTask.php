@@ -79,13 +79,13 @@ class PDOSQLExecTask extends PDOTask {
      * Files to load
      * @var array FileSet[]
      */
-    private $filesets = array();
+    private $filesets = [];
 
     /**
      * Formatter elements.
      * @var array PDOSQLExecFormatterElement[]
      */
-    private $formatters = array();
+    private $formatters = [];
 
     /**
      * SQL statement
@@ -108,7 +108,7 @@ class PDOSQLExecTask extends PDOTask {
     /**
      * SQL transactions to perform
      */
-    private $transactions = array();
+    private $transactions = [];
 
     /**
      * SQL Statement delimiter (for parsing files)
@@ -267,7 +267,7 @@ class PDOSQLExecTask extends PDOTask {
     		$fe->prepare();
     	}
 
-    	$savedTransaction = array();
+    	$savedTransaction = [];
     	for($i=0,$size=count($this->transactions); $i < $size; $i++) {
     		$savedTransaction[] = clone $this->transactions[$i];
     	}
@@ -499,7 +499,7 @@ class PDOSQLExecTask extends PDOTask {
      */
     protected function getConfiguredFormatters()
     {
-    	$formatters = array();
+    	$formatters = [];
     	foreach ($this->formatters as $fe) {
     		$formatters[] = $fe->getFormatter();
     	}

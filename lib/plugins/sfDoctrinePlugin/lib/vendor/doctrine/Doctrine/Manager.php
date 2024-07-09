@@ -37,12 +37,12 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
     /**
      * @var array $connections          an array containing all the opened connections
      */
-    protected $_connections   = array();
+    protected $_connections   = [];
 
     /**
      * @var array $bound                an array containing all components that have a bound connection
      */
-    protected $_bound         = array();
+    protected $_bound         = [];
 
     /**
      * @var integer $index              the incremented index
@@ -62,39 +62,16 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
     /**
      * @var array                       Array of registered validators
      */
-    protected $_validators = array();
+    protected $_validators = [];
 
     /**
      * @var array                       Array of registered hydrators
      */
-    protected $_hydrators = array(
-        Doctrine_Core::HYDRATE_ARRAY            => 'Doctrine_Hydrator_ArrayDriver',
-        Doctrine_Core::HYDRATE_RECORD           => 'Doctrine_Hydrator_RecordDriver',
-        Doctrine_Core::HYDRATE_NONE             => 'Doctrine_Hydrator_NoneDriver',
-        Doctrine_Core::HYDRATE_SCALAR           => 'Doctrine_Hydrator_ScalarDriver',
-        Doctrine_Core::HYDRATE_SINGLE_SCALAR    => 'Doctrine_Hydrator_SingleScalarDriver',
-        Doctrine_Core::HYDRATE_ON_DEMAND        => 'Doctrine_Hydrator_RecordDriver',
-        Doctrine_Core::HYDRATE_ARRAY_HIERARCHY  => 'Doctrine_Hydrator_ArrayHierarchyDriver',
-        Doctrine_Core::HYDRATE_RECORD_HIERARCHY => 'Doctrine_Hydrator_RecordHierarchyDriver',
-        Doctrine_Core::HYDRATE_ARRAY_SHALLOW    => 'Doctrine_Hydrator_ArrayShallowDriver',
-    );
+    protected $_hydrators = [Doctrine_Core::HYDRATE_ARRAY            => 'Doctrine_Hydrator_ArrayDriver', Doctrine_Core::HYDRATE_RECORD           => 'Doctrine_Hydrator_RecordDriver', Doctrine_Core::HYDRATE_NONE             => 'Doctrine_Hydrator_NoneDriver', Doctrine_Core::HYDRATE_SCALAR           => 'Doctrine_Hydrator_ScalarDriver', Doctrine_Core::HYDRATE_SINGLE_SCALAR    => 'Doctrine_Hydrator_SingleScalarDriver', Doctrine_Core::HYDRATE_ON_DEMAND        => 'Doctrine_Hydrator_RecordDriver', Doctrine_Core::HYDRATE_ARRAY_HIERARCHY  => 'Doctrine_Hydrator_ArrayHierarchyDriver', Doctrine_Core::HYDRATE_RECORD_HIERARCHY => 'Doctrine_Hydrator_RecordHierarchyDriver', Doctrine_Core::HYDRATE_ARRAY_SHALLOW    => 'Doctrine_Hydrator_ArrayShallowDriver'];
 
-    protected $_connectionDrivers = array(
-        'db2'      => 'Doctrine_Connection_Db2',
-        'mysql'    => 'Doctrine_Connection_Mysql',
-        'mysqli'   => 'Doctrine_Connection_Mysql',
-        'sqlite'   => 'Doctrine_Connection_Sqlite',
-        'pgsql'    => 'Doctrine_Connection_Pgsql',
-        'oci'      => 'Doctrine_Connection_Oracle',
-        'oci8'     => 'Doctrine_Connection_Oracle',
-        'oracle'   => 'Doctrine_Connection_Oracle',
-        'mssql'    => 'Doctrine_Connection_Mssql',
-        'dblib'    => 'Doctrine_Connection_Mssql',
-        'odbc'     => 'Doctrine_Connection_Mssql', 
-        'mock'     => 'Doctrine_Connection_Mock'
-    );
+    protected $_connectionDrivers = ['db2'      => 'Doctrine_Connection_Db2', 'mysql'    => 'Doctrine_Connection_Mysql', 'mysqli'   => 'Doctrine_Connection_Mysql', 'sqlite'   => 'Doctrine_Connection_Sqlite', 'pgsql'    => 'Doctrine_Connection_Pgsql', 'oci'      => 'Doctrine_Connection_Oracle', 'oci8'     => 'Doctrine_Connection_Oracle', 'oracle'   => 'Doctrine_Connection_Oracle', 'mssql'    => 'Doctrine_Connection_Mssql', 'dblib'    => 'Doctrine_Connection_Mssql', 'odbc'     => 'Doctrine_Connection_Mssql', 'mock'     => 'Doctrine_Connection_Mock'];
 
-    protected $_extensions = array();
+    protected $_extensions = [];
 
     /**
      * @var boolean                     Whether or not the default validators have been loaded
@@ -130,39 +107,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
     {
         if ( ! $this->_initialized) {
             $this->_initialized = true;
-            $attributes = array(
-                        Doctrine_Core::ATTR_CACHE                        => null,
-                        Doctrine_Core::ATTR_RESULT_CACHE                 => null,
-                        Doctrine_Core::ATTR_QUERY_CACHE                  => null,
-                        Doctrine_Core::ATTR_LOAD_REFERENCES              => true,
-                        Doctrine_Core::ATTR_LISTENER                     => new Doctrine_EventListener(),
-                        Doctrine_Core::ATTR_RECORD_LISTENER              => new Doctrine_Record_Listener(),
-                        Doctrine_Core::ATTR_THROW_EXCEPTIONS             => true,
-                        Doctrine_Core::ATTR_VALIDATE                     => Doctrine_Core::VALIDATE_NONE,
-                        Doctrine_Core::ATTR_QUERY_LIMIT                  => Doctrine_Core::LIMIT_RECORDS,
-                        Doctrine_Core::ATTR_IDXNAME_FORMAT               => "%s_idx",
-                        Doctrine_Core::ATTR_SEQNAME_FORMAT               => "%s_seq",
-                        Doctrine_Core::ATTR_TBLNAME_FORMAT               => "%s",
-                        Doctrine_Core::ATTR_FKNAME_FORMAT                => "%s",
-                        Doctrine_Core::ATTR_QUOTE_IDENTIFIER             => false,
-                        Doctrine_Core::ATTR_SEQCOL_NAME                  => 'id',
-                        Doctrine_Core::ATTR_PORTABILITY                  => Doctrine_Core::PORTABILITY_NONE,
-                        Doctrine_Core::ATTR_EXPORT                       => Doctrine_Core::EXPORT_ALL,
-                        Doctrine_Core::ATTR_DECIMAL_PLACES               => 2,
-                        Doctrine_Core::ATTR_DEFAULT_PARAM_NAMESPACE      => 'doctrine',
-                        Doctrine_Core::ATTR_AUTOLOAD_TABLE_CLASSES       => false,
-                        Doctrine_Core::ATTR_USE_DQL_CALLBACKS            => false,
-                        Doctrine_Core::ATTR_AUTO_ACCESSOR_OVERRIDE       => false,
-                        Doctrine_Core::ATTR_AUTO_FREE_QUERY_OBJECTS      => false,
-                        Doctrine_Core::ATTR_DEFAULT_IDENTIFIER_OPTIONS   => array(),
-                        Doctrine_Core::ATTR_DEFAULT_COLUMN_OPTIONS       => array(),
-                        Doctrine_Core::ATTR_HYDRATE_OVERWRITE            => true,
-                        Doctrine_Core::ATTR_QUERY_CLASS                  => 'Doctrine_Query',
-                        Doctrine_Core::ATTR_COLLECTION_CLASS             => 'Doctrine_Collection',
-                        Doctrine_Core::ATTR_TABLE_CLASS                  => 'Doctrine_Table',
-                        Doctrine_Core::ATTR_CASCADE_SAVES                => true,
-                        Doctrine_Core::ATTR_TABLE_CLASS_FORMAT           => '%sTable'
-                        ); 
+            $attributes = [Doctrine_Core::ATTR_CACHE                        => null, Doctrine_Core::ATTR_RESULT_CACHE                 => null, Doctrine_Core::ATTR_QUERY_CACHE                  => null, Doctrine_Core::ATTR_LOAD_REFERENCES              => true, Doctrine_Core::ATTR_LISTENER                     => new Doctrine_EventListener(), Doctrine_Core::ATTR_RECORD_LISTENER              => new Doctrine_Record_Listener(), Doctrine_Core::ATTR_THROW_EXCEPTIONS             => true, Doctrine_Core::ATTR_VALIDATE                     => Doctrine_Core::VALIDATE_NONE, Doctrine_Core::ATTR_QUERY_LIMIT                  => Doctrine_Core::LIMIT_RECORDS, Doctrine_Core::ATTR_IDXNAME_FORMAT               => "%s_idx", Doctrine_Core::ATTR_SEQNAME_FORMAT               => "%s_seq", Doctrine_Core::ATTR_TBLNAME_FORMAT               => "%s", Doctrine_Core::ATTR_FKNAME_FORMAT                => "%s", Doctrine_Core::ATTR_QUOTE_IDENTIFIER             => false, Doctrine_Core::ATTR_SEQCOL_NAME                  => 'id', Doctrine_Core::ATTR_PORTABILITY                  => Doctrine_Core::PORTABILITY_NONE, Doctrine_Core::ATTR_EXPORT                       => Doctrine_Core::EXPORT_ALL, Doctrine_Core::ATTR_DECIMAL_PLACES               => 2, Doctrine_Core::ATTR_DEFAULT_PARAM_NAMESPACE      => 'doctrine', Doctrine_Core::ATTR_AUTOLOAD_TABLE_CLASSES       => false, Doctrine_Core::ATTR_USE_DQL_CALLBACKS            => false, Doctrine_Core::ATTR_AUTO_ACCESSOR_OVERRIDE       => false, Doctrine_Core::ATTR_AUTO_FREE_QUERY_OBJECTS      => false, Doctrine_Core::ATTR_DEFAULT_IDENTIFIER_OPTIONS   => [], Doctrine_Core::ATTR_DEFAULT_COLUMN_OPTIONS       => [], Doctrine_Core::ATTR_HYDRATE_OVERWRITE            => true, Doctrine_Core::ATTR_QUERY_CLASS                  => 'Doctrine_Query', Doctrine_Core::ATTR_COLLECTION_CLASS             => 'Doctrine_Collection', Doctrine_Core::ATTR_TABLE_CLASS                  => 'Doctrine_Table', Doctrine_Core::ATTR_CASCADE_SAVES                => true, Doctrine_Core::ATTR_TABLE_CLASS_FORMAT           => '%sTable']; 
             foreach ($attributes as $attribute => $value) {
                 $old = $this->getAttribute($attribute);
                 if ($old === null) {
@@ -211,11 +156,11 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
         foreach ($this->_connections as $conn) {
             $conn->close();
         }
-        $this->_connections = array();
+        $this->_connections = [];
         $this->_queryRegistry = null;
-        $this->_extensions = array();
-        $this->_bound = array();
-        $this->_validators = array();
+        $this->_extensions = [];
+        $this->_bound = [];
+        $this->_validators = [];
         $this->_loadedDefaultValidators = false;
         $this->_index = 0;
         $this->_currIndex = 0;
@@ -355,9 +300,9 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      */
     public function parsePdoDsn($dsn)
     {
-        $parts = array();
+        $parts = [];
 
-        $names = array('dsn', 'scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment', 'unix_socket');
+        $names = ['dsn', 'scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment', 'unix_socket'];
 
         foreach ($names as $name) {
             if ( ! isset($parts[$name])) {
@@ -408,7 +353,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
         // silence any warnings
         $parts = @parse_url((string) $dsn);
 
-        $names = array('dsn', 'scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment');
+        $names = ['dsn', 'scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment'];
 
         foreach ($names as $name) {
             if ( ! isset($parts[$name])) {
@@ -674,7 +619,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      * @return void
      * @todo package:dbal
      */
-    public function createDatabases($specifiedConnections = array())
+    public function createDatabases($specifiedConnections = [])
     {
         if ( ! is_array($specifiedConnections)) {
             $specifiedConnections = (array) $specifiedConnections;
@@ -696,7 +641,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      * @return void
      * @todo package:dbal
      */
-    public function dropDatabases($specifiedConnections = array())
+    public function dropDatabases($specifiedConnections = [])
     {
         if ( ! is_array($specifiedConnections)) {
             $specifiedConnections = (array) $specifiedConnections;
@@ -735,31 +680,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
         if ( ! $this->_loadedDefaultValidators) {
             $this->_loadedDefaultValidators = true;
 
-            $this->registerValidators(array(
-                'unique',
-                'past',
-                'range',
-                'ip',
-                'notblank',
-                'unsigned',
-                'errorstack',
-                'nospace',
-                'creditcard',
-                'regexp',
-                'exception',
-                'time',
-                'future',
-                'notnull',
-                'driver',
-                'readonly',
-                'htmlcolor',
-                'date',
-                'timestamp',
-                'minlength',
-                'usstate',
-                'email',
-                'country',
-            ));
+            $this->registerValidators(['unique', 'past', 'range', 'ip', 'notblank', 'unsigned', 'errorstack', 'nospace', 'creditcard', 'regexp', 'exception', 'time', 'future', 'notnull', 'driver', 'readonly', 'htmlcolor', 'date', 'timestamp', 'minlength', 'usstate', 'email', 'country']);
         }
 
         return $this->_validators;

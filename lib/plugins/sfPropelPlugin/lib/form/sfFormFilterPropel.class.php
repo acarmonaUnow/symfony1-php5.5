@@ -69,7 +69,7 @@ abstract class sfFormFilterPropel extends sfFormFilter
     {
       try
       {
-        $method = sprintf('convert%sValue', call_user_func(array(constant($this->getModelName().'::PEER'), 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
+        $method = sprintf('convert%sValue', call_user_func([constant($this->getModelName().'::PEER'), 'translateFieldName'], $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
       }
       catch (Exception)
       {
@@ -135,7 +135,7 @@ abstract class sfFormFilterPropel extends sfFormFilter
 
       try
       {
-        $method = sprintf('add%sColumnCriteria', call_user_func(array($peer, 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
+        $method = sprintf('add%sColumnCriteria', call_user_func([$peer, 'translateFieldName'], $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
       }
       catch (Exception)
       {
@@ -258,7 +258,7 @@ abstract class sfFormFilterPropel extends sfFormFilter
 
   protected function getColName($field)
   {
-    return call_user_func(array(constant($this->getModelName().'::PEER'), 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME);
+    return call_user_func([constant($this->getModelName().'::PEER'), 'translateFieldName'], $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME);
   }
 
   protected function camelize($text)

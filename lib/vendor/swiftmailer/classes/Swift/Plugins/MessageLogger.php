@@ -24,7 +24,7 @@ class Swift_Plugins_MessageLogger
   
   public function __construct()
   {
-    $this->messages = array();
+    $this->messages = [];
   }
   
   /**
@@ -53,7 +53,7 @@ class Swift_Plugins_MessageLogger
    */
   public function clear()
   {
-    $this->messages = array();
+    $this->messages = [];
   }
   
   /**

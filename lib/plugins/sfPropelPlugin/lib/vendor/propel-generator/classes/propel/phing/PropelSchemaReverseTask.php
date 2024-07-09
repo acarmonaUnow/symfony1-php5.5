@@ -153,43 +153,14 @@ class PropelSchemaReverseTask extends PDOTask {
 	 *
 	 * @var        array
 	 */
-	static protected $validatorBitMap = array (
-		'none' => PropelSchemaReverseTask::VALIDATORS_NONE,
-		'maxlength' => PropelSchemaReverseTask::VALIDATORS_MAXLENGTH,
-		'maxvalue' => PropelSchemaReverseTask::VALIDATORS_MAXVALUE,
-		'type' => PropelSchemaReverseTask::VALIDATORS_TYPE,
-		'required' => PropelSchemaReverseTask::VALIDATORS_REQUIRED,
-		'unique' => PropelSchemaReverseTask::VALIDATORS_UNIQUE,
-		'all' => PropelSchemaReverseTask::VALIDATORS_ALL,
-	);
+	static protected $validatorBitMap = ['none' => PropelSchemaReverseTask::VALIDATORS_NONE, 'maxlength' => PropelSchemaReverseTask::VALIDATORS_MAXLENGTH, 'maxvalue' => PropelSchemaReverseTask::VALIDATORS_MAXVALUE, 'type' => PropelSchemaReverseTask::VALIDATORS_TYPE, 'required' => PropelSchemaReverseTask::VALIDATORS_REQUIRED, 'unique' => PropelSchemaReverseTask::VALIDATORS_UNIQUE, 'all' => PropelSchemaReverseTask::VALIDATORS_ALL];
 
 	/**
 	 * Defines messages that are added to validators
 	 *
 	 * @var        array
 	 */
-	static protected $validatorMessages = array (
-		'maxlength' => array (
-			'msg' => 'The field %s must be not longer than %s characters.',
-			'var' => array('colName', 'value')
-	),
-		'maxvalue' => array (
-			'msg' => 'The field %s must be not greater than %s.',
-			'var' => array('colName', 'value')
-	),
-		'type' => array (
-			'msg' => 'The column %s must be an %s value.',
-			'var' => array('colName', 'value')
-	),
-		'required' => array (
-			'msg' => 'The field %s is required.',
-			'var' => array('colName')
-	),
-		'unique' => array (
-			'msg' => 'This %s already exists in table %s.',
-			'var' => array('colName', 'tableName')
-	),
-	);
+	static protected $validatorMessages = ['maxlength' => ['msg' => 'The field %s must be not longer than %s characters.', 'var' => ['colName', 'value']], 'maxvalue' => ['msg' => 'The field %s must be not greater than %s.', 'var' => ['colName', 'value']], 'type' => ['msg' => 'The column %s must be an %s value.', 'var' => ['colName', 'value']], 'required' => ['msg' => 'The field %s is required.', 'var' => ['colName']], 'unique' => ['msg' => 'This %s already exists in table %s.', 'var' => ['colName', 'tableName']]];
 
 	/**
 	 * Gets the (optional) schema name to use.
@@ -442,7 +413,7 @@ class PropelSchemaReverseTask extends PDOTask {
 					$validator->addRule($this->getValidatorRule($col, 'required'));
 				}
 
-				if (in_array($col->getType(), array(PropelTypes::CHAR, PropelTypes::VARCHAR, PropelTypes::LONGVARCHAR))
+				if (in_array($col->getType(), [PropelTypes::CHAR, PropelTypes::VARCHAR, PropelTypes::LONGVARCHAR])
 						&& $col->getSize() && $this->isValidatorRequired(self::VALIDATORS_MAXLENGTH)) {
 					$validator = $set->getValidator($col);
 					$validator->addRule($this->getValidatorRule($col, 'maxLength', $col->getSize()));
@@ -527,7 +498,7 @@ class PropelSchemaReverse_ValidatorSet {
 	 *
 	 * @var        array Validator[]
 	 */
-	private $validators = array();
+	private $validators = [];
 
 	/**
 	 * Gets a single validator for specified column name.

@@ -38,7 +38,7 @@ class PgsqlDDLBuilder extends DDLBuilder {
 	 *
 	 * @var        Array of schema names
 	 */
-	protected static $addedSchemas = array();
+	protected static $addedSchemas = [];
 
 	/**
 	 * Queue of constraint SQL that will be added to script at the end.
@@ -48,15 +48,15 @@ class PgsqlDDLBuilder extends DDLBuilder {
 	 *
 	 * @var        array
 	 */
-	protected static $queuedConstraints = array();
+	protected static $queuedConstraints = [];
 
 	/**
 	 * Reset static vars between db iterations.
 	 */
 	public static function reset()
 	{
-		self::$addedSchemas = array();
-		self::$queuedConstraints = array();
+		self::$addedSchemas = [];
+		self::$queuedConstraints = [];
 	}
 
 	/**
@@ -164,7 +164,7 @@ CREATE TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))
 (
 	";
 
-		$lines = array();
+		$lines = [];
 
 		foreach ($table->getColumns() as $col) {
 			/* @var $col Column */
@@ -231,7 +231,7 @@ COMMENT ON COLUMN ".$this->quoteIdentifier($this->prefixTablename($table->getNam
 	public function getSequenceName()
 	{
 		$table = $this->getTable();
-		static $longNamesMap = array();
+		static $longNamesMap = [];
 		$result = null;
 		if ($table->getIdMethod() == IDMethod::NATIVE) {
 			$idMethodParams = $table->getIdMethodParameters();

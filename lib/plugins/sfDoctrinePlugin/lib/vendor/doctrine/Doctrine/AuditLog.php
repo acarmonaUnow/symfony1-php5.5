@@ -37,22 +37,7 @@ class Doctrine_AuditLog extends Doctrine_Record_Generator
      *
      * @var array
      */
-    protected $_options = array('className'         => '%CLASS%Version',
-                                'version'           => array('name'   => 'version',
-                                                             'alias'  => null,
-                                                             'type'   => 'integer',
-                                                             'length' => 8,
-                                                             'options' => array('primary' => true)),
-                                'tableName'         => false,
-                                'generateFiles'     => false,
-                                'table'             => false,
-                                'pluginTable'       => false,
-                                'children'          => array(),
-                                'auditLog'          => true,
-                                'deleteVersions'    => true,
-                                'cascadeDelete'     => true,
-                                'excludeFields'     => array(),
-                                'appLevelDelete'    => false);
+    protected $_options = ['className'         => '%CLASS%Version', 'version'           => ['name'   => 'version', 'alias'  => null, 'type'   => 'integer', 'length' => 8, 'options' => ['primary' => true]], 'tableName'         => false, 'generateFiles'     => false, 'table'             => false, 'pluginTable'       => false, 'children'          => [], 'auditLog'          => true, 'deleteVersions'    => true, 'cascadeDelete'     => true, 'excludeFields'     => [], 'appLevelDelete'    => false];
 
     /**
      * Accepts array of options to configure the AuditLog
@@ -60,7 +45,7 @@ class Doctrine_AuditLog extends Doctrine_Record_Generator
      * @param   array $options An array of options
      * @return  void
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->_options = Doctrine_Lib::arrayDeepMerge($this->_options, $options);
     }
@@ -127,7 +112,7 @@ class Doctrine_AuditLog extends Doctrine_Record_Generator
         $q = Doctrine_Core::getTable($className)
             ->createQuery();
 
-        $values = array();
+        $values = [];
         foreach ((array) $this->_options['table']->getIdentifier() as $id) {
             $conditions[] = $className . '.' . $id . ' = ?';
             $values[] = $record->get($id);

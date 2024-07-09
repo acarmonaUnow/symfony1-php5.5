@@ -46,7 +46,7 @@ abstract class BaseAuthorArticlePeer {
 	 * queries.
 	 * @var        array AuthorArticle[]
 	 */
-	public static $instances = array();
+	public static $instances = [];
 
 
 	// symfony behavior
@@ -62,13 +62,7 @@ abstract class BaseAuthorArticlePeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
-	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('AuthorId', 'ArticleId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('authorId', 'articleId', ),
-		BasePeer::TYPE_COLNAME => array (self::AUTHOR_ID, self::ARTICLE_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('author_id', 'article_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
-	);
+	private static $fieldNames = [BasePeer::TYPE_PHPNAME => ['AuthorId', 'ArticleId'], BasePeer::TYPE_STUDLYPHPNAME => ['authorId', 'articleId'], BasePeer::TYPE_COLNAME => [self::AUTHOR_ID, self::ARTICLE_ID], BasePeer::TYPE_FIELDNAME => ['author_id', 'article_id'], BasePeer::TYPE_NUM => [0, 1]];
 
 	/**
 	 * holds an array of keys for quick access to the fieldnames array
@@ -76,13 +70,7 @@ abstract class BaseAuthorArticlePeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
-	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('AuthorId' => 0, 'ArticleId' => 1, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('authorId' => 0, 'articleId' => 1, ),
-		BasePeer::TYPE_COLNAME => array (self::AUTHOR_ID => 0, self::ARTICLE_ID => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('author_id' => 0, 'article_id' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
-	);
+	private static $fieldKeys = [BasePeer::TYPE_PHPNAME => ['AuthorId' => 0, 'ArticleId' => 1], BasePeer::TYPE_STUDLYPHPNAME => ['authorId' => 0, 'articleId' => 1], BasePeer::TYPE_COLNAME => [self::AUTHOR_ID => 0, self::ARTICLE_ID => 1], BasePeer::TYPE_FIELDNAME => ['author_id' => 0, 'article_id' => 1], BasePeer::TYPE_NUM => [0, 1]];
 
 	/**
 	 * Translates a fieldname to another type
@@ -288,7 +276,7 @@ abstract class BaseAuthorArticlePeer {
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
-				$key = serialize(array((string) $obj->getAuthorId(), (string) $obj->getArticleId()));
+				$key = serialize([(string) $obj->getAuthorId(), (string) $obj->getArticleId()]);
 			} // if key === null
 			self::$instances[$key] = $obj;
 		}
@@ -308,10 +296,10 @@ abstract class BaseAuthorArticlePeer {
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
 			if (is_object($value) && $value instanceof AuthorArticle) {
-				$key = serialize(array((string) $value->getAuthorId(), (string) $value->getArticleId()));
+				$key = serialize([(string) $value->getAuthorId(), (string) $value->getArticleId()]);
 			} elseif (is_array($value) && count($value) === 2) {
 				// assume we've been passed a primary key
-				$key = serialize(array((string) $value[0], (string) $value[1]));
+				$key = serialize([(string) $value[0], (string) $value[1]]);
 			} else {
 				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or AuthorArticle object; got " . (is_object($value) ? $value::class . ' object.' : var_export($value,true)));
 				throw $e;
@@ -348,7 +336,7 @@ abstract class BaseAuthorArticlePeer {
 	 */
 	public static function clearInstancePool()
 	{
-		self::$instances = array();
+		self::$instances = [];
 	}
 	
 	/**
@@ -375,7 +363,7 @@ abstract class BaseAuthorArticlePeer {
 		if ($row[$startcol] === null && $row[$startcol + 1] === null) {
 			return null;
 		}
-		return serialize(array((string) $row[$startcol], (string) $row[$startcol + 1]));
+		return serialize([(string) $row[$startcol], (string) $row[$startcol + 1]]);
 	}
 
 	/**
@@ -387,7 +375,7 @@ abstract class BaseAuthorArticlePeer {
 	 */
 	public static function populateObjects(PDOStatement $stmt)
 	{
-		$results = array();
+		$results = [];
 	
 		// set the class once to avoid overhead in the loop
 		$cls = AuthorArticlePeer::getOMClass(false);
@@ -553,7 +541,7 @@ abstract class BaseAuthorArticlePeer {
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = AuthorArticlePeer::getPrimaryKeyHashFromRow($row, 0);
@@ -625,7 +613,7 @@ abstract class BaseAuthorArticlePeer {
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = AuthorArticlePeer::getPrimaryKeyHashFromRow($row, 0);
@@ -762,7 +750,7 @@ abstract class BaseAuthorArticlePeer {
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = AuthorArticlePeer::getPrimaryKeyHashFromRow($row, 0);
@@ -970,7 +958,7 @@ abstract class BaseAuthorArticlePeer {
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = AuthorArticlePeer::getPrimaryKeyHashFromRow($row, 0);
@@ -1049,7 +1037,7 @@ abstract class BaseAuthorArticlePeer {
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = AuthorArticlePeer::getPrimaryKeyHashFromRow($row, 0);
@@ -1302,7 +1290,7 @@ abstract class BaseAuthorArticlePeer {
 			// the primary key passed to be an array of pkey values
 			if (count($values) == count($values, COUNT_RECURSIVE)) {
 				// array is not multi-dimensional
-				$values = array($values);
+				$values = [$values];
 			}
 			foreach ($values as $value) {
 				$criterion = $criteria->getNewCriterion(AuthorArticlePeer::AUTHOR_ID, $value[0]);
@@ -1347,14 +1335,14 @@ abstract class BaseAuthorArticlePeer {
 	 */
 	public static function doValidate(AuthorArticle $obj, mixed $cols = null)
 	{
-		$columns = array();
+		$columns = [];
 
 		if ($cols) {
 			$dbMap = Propel::getDatabaseMap(AuthorArticlePeer::DATABASE_NAME);
 			$tableMap = $dbMap->getTable(AuthorArticlePeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
-				$cols = array($cols);
+				$cols = [$cols];
 			}
 
 			foreach ($cols as $colName) {
@@ -1378,7 +1366,7 @@ abstract class BaseAuthorArticlePeer {
 	 * @return     AuthorArticle
 	 */
 	public static function retrieveByPK($author_id, $article_id, PropelPDO $con = null) {
-		$key = serialize(array((string) $author_id, (string) $article_id));
+		$key = serialize([(string) $author_id, (string) $article_id]);
  		if (null !== ($obj = AuthorArticlePeer::getInstanceFromPool($key))) {
  			return $obj;
 		}
@@ -1402,7 +1390,7 @@ abstract class BaseAuthorArticlePeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return [];
 	}
 
 	// symfony_behaviors behavior

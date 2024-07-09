@@ -41,7 +41,7 @@ class sfFileLogger extends sfLogger
    *
    * @return Boolean      true, if initialization completes successfully, otherwise false.
    */
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
     if (!isset($options['file']))
     {
@@ -93,13 +93,7 @@ class sfFileLogger extends sfLogger
   protected function doLog($message, $priority)
   {
     flock($this->fp, LOCK_EX);
-    fwrite($this->fp, strtr($this->format, array(
-      '%type%'     => $this->type,
-      '%message%'  => $message,
-      '%time%'     => strftime($this->timeFormat),
-      '%priority%' => $this->getPriority($priority),
-      '%EOL%'      => PHP_EOL,
-    )));
+    fwrite($this->fp, strtr($this->format, ['%type%'     => $this->type, '%message%'  => $message, '%time%'     => strftime($this->timeFormat), '%priority%' => $this->getPriority($priority), '%EOL%'      => PHP_EOL]));
     flock($this->fp, LOCK_UN);
   }
 

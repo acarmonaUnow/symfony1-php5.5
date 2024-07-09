@@ -145,7 +145,7 @@ class Doctrine_DataDict_Sqlite extends Doctrine_DataDict
         $length = $field['length'] ?? null;
         $unsigned = $field['unsigned'] ?? null;
         $fixed = null;
-        $type = array();
+        $type = [];
 
         if ( ! isset($field['name'])) {
             $field['name'] = '';
@@ -254,10 +254,7 @@ class Doctrine_DataDict_Sqlite extends Doctrine_DataDict
                 $length = $field['length'] ?? null;
         }
 
-        return array('type'     => $type,
-                     'length'   => $length,
-                     'unsigned' => $unsigned,
-                     'fixed'    => $fixed);
+        return ['type'     => $type, 'length'   => $length, 'unsigned' => $unsigned, 'fixed'    => $fixed];
     }
 
     /**

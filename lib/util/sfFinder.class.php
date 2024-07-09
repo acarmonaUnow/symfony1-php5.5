@@ -31,12 +31,12 @@
 class sfFinder
 {
   protected $type                   = 'file';
-  protected $names                  = array();
-  protected $prunes                 = array();
-  protected $discards               = array();
-  protected $execs                  = array();
+  protected $names                  = [];
+  protected $prunes                 = [];
+  protected $discards               = [];
+  protected $execs                  = [];
   protected $mindepth               = 0;
-  protected $sizes                  = array();
+  protected $sizes                  = [];
   protected $maxdepth               = 1000000;
   protected $relative               = false;
   protected $follow_link            = false;
@@ -132,7 +132,7 @@ class sfFinder
 
   protected function args_to_array($arg_list, $not = false)
   {
-    $list = array();
+    $list = [];
     $nbArgList = count($arg_list);
     for ($i = 0; $i < $nbArgList; $i++)
     {
@@ -140,12 +140,12 @@ class sfFinder
       {
         foreach ($arg_list[$i] as $arg)
         {
-          $list[] = array($not, $this->to_regex($arg));
+          $list[] = [$not, $this->to_regex($arg)];
         }
       }
       else
       {
-        $list[] = array($not, $this->to_regex($arg_list[$i]));
+        $list[] = [$not, $this->to_regex($arg_list[$i])];
       }
     }
 
@@ -340,14 +340,14 @@ class sfFinder
    */
   public function in()
   {
-    $files    = array();
+    $files    = [];
     $here_dir = getcwd();
 
     $finder = clone $this;
 
     if ($this->ignore_version_control)
     {
-      $ignores = array('.svn', '_svn', 'CVS', '_darcs', '.arch-params', '.monotone', '.bzr', '.git', '.hg');
+      $ignores = ['.svn', '_svn', 'CVS', '_darcs', '.arch-params', '.monotone', '.bzr', '.git', '.hg'];
 
       $finder->discard($ignores)->prune($ignores);
     }
@@ -400,19 +400,19 @@ class sfFinder
   {
     if ($depth > $this->maxdepth)
     {
-      return array();
+      return [];
     }
 
     $dir = realpath($dir);
 
     if ((!$this->follow_link) && is_link($dir))
     {
-      return array();
+      return [];
     }
 
-    $files = array();
-    $temp_files = array();
-    $temp_folders = array();
+    $files = [];
+    $temp_files = [];
+    $temp_folders = [];
     if (is_dir($dir) && is_readable($dir))
     {
       $current_dir = opendir($dir);
@@ -572,7 +572,7 @@ class sfFinder
 
     foreach ($this->execs as $exec)
     {
-      if (!call_user_func_array($exec, array($dir, $entry))) return false;
+      if (!call_user_func_array($exec, [$dir, $entry])) return false;
     }
 
     return true;

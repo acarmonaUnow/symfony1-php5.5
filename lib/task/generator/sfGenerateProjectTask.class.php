@@ -35,15 +35,9 @@ class sfGenerateProjectTask extends sfGeneratorBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The project name'),
-      new sfCommandArgument('author', sfCommandArgument::OPTIONAL, 'The project author', 'Your name here'),
-    ));
+    $this->addArguments([new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The project name'), new sfCommandArgument('author', sfCommandArgument::OPTIONAL, 'The project author', 'Your name here')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('orm', null, sfCommandOption::PARAMETER_REQUIRED, 'The ORM to use by default', 'Doctrine'),
-      new sfCommandOption('installer', null, sfCommandOption::PARAMETER_REQUIRED, 'An installer script to execute', null),
-    ));
+    $this->addOptions([new sfCommandOption('orm', null, sfCommandOption::PARAMETER_REQUIRED, 'The ORM to use by default', 'Doctrine'), new sfCommandOption('installer', null, sfCommandOption::PARAMETER_REQUIRED, 'An installer script to execute', null)]);
 
     $this->namespace = 'generate';
     $this->name = 'project';
@@ -83,14 +77,14 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     if (file_exists('symfony'))
     {
       throw new sfCommandException(sprintf('A symfony project already exists in this directory (%s).', getcwd()));
     }
 
-    if (!in_array(strtolower((string) $options['orm']), array('propel', 'doctrine', 'none')))
+    if (!in_array(strtolower((string) $options['orm']), ['propel', 'doctrine', 'none']))
     {
       throw new InvalidArgumentException(sprintf('Invalid ORM name "%s".', $options['orm']));
     }
@@ -114,19 +108,14 @@ EOF;
       sprintf('dirname(__FILE__).\'/..%s/autoload/sfCoreAutoload.class.php\'', str_replace(sfConfig::get('sf_root_dir'), '', sfConfig::get('sf_symfony_lib_dir'))) :
       var_export(sfConfig::get('sf_symfony_lib_dir').'/autoload/sfCoreAutoload.class.php', true);
 
-    $this->replaceTokens(array(sfConfig::get('sf_config_dir')), array('SYMFONY_CORE_AUTOLOAD' => str_replace('\\', '/', $symfonyCoreAutoload)));
+    $this->replaceTokens([sfConfig::get('sf_config_dir')], ['SYMFONY_CORE_AUTOLOAD' => str_replace('\\', '/', $symfonyCoreAutoload)]);
 
-    $this->tokens = array(
-      'ORM'          => $this->options['orm'],
-      'PROJECT_NAME' => $this->arguments['name'],
-      'AUTHOR_NAME'  => $this->arguments['author'],
-      'PROJECT_DIR'  => sfConfig::get('sf_root_dir'),
-    );
+    $this->tokens = ['ORM'          => $this->options['orm'], 'PROJECT_NAME' => $this->arguments['name'], 'AUTHOR_NAME'  => $this->arguments['author'], 'PROJECT_DIR'  => sfConfig::get('sf_root_dir')];
 
     $this->replaceTokens();
 
     // execute the choosen ORM installer script
-    if (in_array($options['orm'], array('Doctrine', 'Propel')))
+    if (in_array($options['orm'], ['Doctrine', 'Propel']))
     {
       include __DIR__.'/../../plugins/sf'.$options['orm'].'Plugin/config/installer.php';
     }

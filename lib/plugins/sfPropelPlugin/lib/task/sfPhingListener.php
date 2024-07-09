@@ -3,8 +3,8 @@
 class sfPhingListener implements BuildListener
 {
   static protected
-    $exceptions = array(),
-    $errors     = array();
+    $exceptions = [],
+    $errors     = [];
 
   static public function hasErrors()
   {
@@ -28,7 +28,7 @@ class sfPhingListener implements BuildListener
    */
   public function buildStarted(BuildEvent $event)
   {
-    self::$exceptions = array();
+    self::$exceptions = [];
   }
 
   /**

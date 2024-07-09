@@ -30,7 +30,7 @@ class attachmentActions extends sfActions
 
   public function executeEmbedded($request)
   {
-    $this->form = new ArticleForm(null, array('with_attachment' => true));
+    $this->form = new ArticleForm(null, ['with_attachment' => true]);
 
     if (
       $request->isMethod(sfRequest::POST)

@@ -40,10 +40,10 @@ class DatabaseMap
 {
 
   /** @var array TableMap[] Tables in the database, using table name as key */ 
-  protected $tables = array();
+  protected $tables = [];
   
   /** @var array TableMap[] Tables in the database, using table phpName as key */
-  protected $tablesByPhpName = array();
+  protected $tablesByPhpName = [];
 
   /**
    * Constructor.

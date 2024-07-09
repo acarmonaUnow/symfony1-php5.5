@@ -125,7 +125,7 @@ class sfMessageSource_SQLite extends sfMessageSource_Database
     $db = sqlite_open($this->source);
     $rs = sqlite_query($statement, $db);
 
-    $result = array();
+    $result = [];
 
     while($row = sqlite_fetch_array($rs, SQLITE_NUM))
     {
@@ -214,7 +214,7 @@ class sfMessageSource_SQLite extends sfMessageSource_Database
 
     sqlite_close($db);
 
-    return array($cat_id, $variant, $count);
+    return [$cat_id, $variant, $count];
   }
 
   /**
@@ -387,7 +387,7 @@ class sfMessageSource_SQLite extends sfMessageSource_Database
     $db = sqlite_open($this->source);
     $statement = 'SELECT name FROM catalogue ORDER BY name';
     $rs = sqlite_query($statement, $db);
-    $result = array();
+    $result = [];
     while ($row = sqlite_fetch_array($rs, SQLITE_NUM))
     {
       $details = explode('.', (string) $row[0]);

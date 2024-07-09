@@ -35,35 +35,35 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 	 * @var        array
 	 */
 	 /** Map MySQL native types to Creole (JDBC) types. */
-	private static $pgsqlTypeMap = array(
-				'bool' => PropelTypes::BOOLEAN,
-				'boolean' => PropelTypes::BOOLEAN,
-				'tinyint' => PropelTypes::TINYINT,
-				'smallint' => PropelTypes::SMALLINT,
-				'mediumint' => PropelTypes::SMALLINT,
-				'int' => PropelTypes::INTEGER,
-				'int4' => PropelTypes::INTEGER,
-				'integer' => PropelTypes::INTEGER,
-				'int8' => PropelTypes::BIGINT,
-				'bigint' => PropelTypes::BIGINT,
-				'int24' => PropelTypes::BIGINT,
-				'real' => PropelTypes::REAL,
-				'float' => PropelTypes::FLOAT,
-				'decimal' => PropelTypes::DECIMAL,
-				'numeric' => PropelTypes::NUMERIC,
-				'double' => PropelTypes::DOUBLE,
-				'char' => PropelTypes::CHAR,
-				'varchar' => PropelTypes::VARCHAR,
-				'date' => PropelTypes::DATE,
-				'time' => PropelTypes::TIME,
-				'timetz' => PropelTypes::TIME,
-				//'year' => PropelTypes::YEAR,  PropelTypes::YEAR does not exist... does this need to be mapped to a different propel type?
-				'datetime' => PropelTypes::TIMESTAMP,
-				'timestamp' => PropelTypes::TIMESTAMP,
-				'timestamptz' => PropelTypes::TIMESTAMP,
-				'bytea' => PropelTypes::BLOB,
-				'text' => PropelTypes::LONGVARCHAR,
-	);
+	private static $pgsqlTypeMap = [
+     'bool' => PropelTypes::BOOLEAN,
+     'boolean' => PropelTypes::BOOLEAN,
+     'tinyint' => PropelTypes::TINYINT,
+     'smallint' => PropelTypes::SMALLINT,
+     'mediumint' => PropelTypes::SMALLINT,
+     'int' => PropelTypes::INTEGER,
+     'int4' => PropelTypes::INTEGER,
+     'integer' => PropelTypes::INTEGER,
+     'int8' => PropelTypes::BIGINT,
+     'bigint' => PropelTypes::BIGINT,
+     'int24' => PropelTypes::BIGINT,
+     'real' => PropelTypes::REAL,
+     'float' => PropelTypes::FLOAT,
+     'decimal' => PropelTypes::DECIMAL,
+     'numeric' => PropelTypes::NUMERIC,
+     'double' => PropelTypes::DOUBLE,
+     'char' => PropelTypes::CHAR,
+     'varchar' => PropelTypes::VARCHAR,
+     'date' => PropelTypes::DATE,
+     'time' => PropelTypes::TIME,
+     'timetz' => PropelTypes::TIME,
+     //'year' => PropelTypes::YEAR,  PropelTypes::YEAR does not exist... does this need to be mapped to a different propel type?
+     'datetime' => PropelTypes::TIMESTAMP,
+     'timestamp' => PropelTypes::TIMESTAMP,
+     'timestamptz' => PropelTypes::TIMESTAMP,
+     'bytea' => PropelTypes::BLOB,
+     'text' => PropelTypes::LONGVARCHAR,
+ ];
 
 	/**
 	 * Gets a type mapping from native types to Propel types
@@ -102,7 +102,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 								      AND n.nspname NOT LIKE 'pg_toast%'
 								    ORDER BY relname");
 
-		$tableWraps = array();
+		$tableWraps = [];
 
 		// First load the tables (important that this happen before filling out details of tables)
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -251,7 +251,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 	private function processLengthScale($intTypmod, $strName)
 	{
 		// Define the return array
-		$arrRetVal = array ('length'=>null, 'scale'=>null);
+		$arrRetVal = ['length'=>null, 'scale'=>null];
 
 		// Some datatypes don't have a Typmod
 		if ($intTypmod == -1)
@@ -311,7 +311,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 			throw new EngineException ("Domain [" . $strDomain . "] not found.");
 		}
 
-		$arrDomain = array ();
+		$arrDomain = [];
 		$arrDomain['type'] = $row['basetype'];
 		$arrLengthPrecision = $this->processLengthScale($row['typtypmod'], $row['basetype']);
 		$arrDomain['length'] = $arrLengthPrecision['length'];
@@ -354,7 +354,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 		$stmt->bindValue(1, $oid);
 		$stmt->execute();
 
-		$foreignKeys = array(); // local store to avoid duplicates
+		$foreignKeys = []; // local store to avoid duplicates
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
@@ -437,7 +437,7 @@ class PgsqlSchemaParser extends BaseSchemaParser {
 										WHERE c.oid = ? AND a.attnum = ? AND NOT a.attisdropped
 										ORDER BY a.attnum");
 
-		$indexes = array();
+		$indexes = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$name = $row["idxname"];

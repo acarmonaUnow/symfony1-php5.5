@@ -26,13 +26,9 @@ class sfCacheClearTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addOptions(array(
-      new sfCommandOption('app', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_OPTIONAL, 'The environment', null),
-      new sfCommandOption('type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The type', 'all'),
-    ));
+    $this->addOptions([new sfCommandOption('app', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', null), new sfCommandOption('env', null, sfCommandOption::PARAMETER_OPTIONAL, 'The environment', null), new sfCommandOption('type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The type', 'all')]);
 
-    $this->aliases = array('cc');
+    $this->aliases = ['cc'];
     $this->namespace = 'cache';
     $this->name = 'clear';
     $this->briefDescription = 'Clears the cache';
@@ -70,7 +66,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     if (!sfConfig::get('sf_cache_dir') || !is_dir(sfConfig::get('sf_cache_dir')))
     {
@@ -81,7 +77,7 @@ EOF;
     $dirFinder = sfFinder::type('dir')->discard('.sf')->maxdepth(0)->relative();
 
     // iterate through applications
-    $apps = null === $options['app'] ? $dirFinder->in(sfConfig::get('sf_apps_dir')) : array($options['app']);
+    $apps = null === $options['app'] ? $dirFinder->in(sfConfig::get('sf_apps_dir')) : [$options['app']];
     foreach ($apps as $app)
     {
       $this->checkAppExists($app);
@@ -92,7 +88,7 @@ EOF;
       }
 
       // iterate through environments
-      $envs = null === $options['env'] ? $dirFinder->in(sfConfig::get('sf_cache_dir').'/'.$app) : array($options['env']);
+      $envs = null === $options['env'] ? $dirFinder->in(sfConfig::get('sf_cache_dir').'/'.$app) : [$options['env']];
       foreach ($envs as $env)
       {
         if (!is_dir(sfConfig::get('sf_cache_dir').'/'.$app.'/'.$env))
@@ -106,7 +102,7 @@ EOF;
 
         $this->lock($app, $env);
 
-        $event = $appConfiguration->getEventDispatcher()->notifyUntil(new sfEvent($this, 'task.cache.clear', array('app' => $appConfiguration, 'env' => $env, 'type' => $options['type'])));
+        $event = $appConfiguration->getEventDispatcher()->notifyUntil(new sfEvent($this, 'task.cache.clear', ['app' => $appConfiguration, 'env' => $env, 'type' => $options['type']]));
         if (!$event->isProcessed())
         {
           // default cleaning process
@@ -202,7 +198,7 @@ EOF;
 
     if (!isset($this->config[$app]))
     {
-      $this->config[$app] = array();
+      $this->config[$app] = [];
     }
 
     if (!isset($this->config[$app][$env]))
@@ -213,7 +209,7 @@ EOF;
     return $this->config[$app][$env] ;
   }
 
-  public function cleanCacheFromFactoryConfig($class, $parameters = array())
+  public function cleanCacheFromFactoryConfig($class, $parameters = [])
   {
     if ($class)
     {

@@ -37,7 +37,7 @@ class sfWebDebugLogger extends sfVarLogger
    *
    * @see sfVarLogger
    */
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
     $this->context = sfContext::getInstance();
 
@@ -75,7 +75,7 @@ class sfWebDebugLogger extends sfVarLogger
    * @param string $errline    The line number the error was raised at, as an integer.
    * @param array  $errcontext An array that points to the active symbol table at the point the error occurred.
    */
-  public function handlePhpError($errno, $errstr, $errfile, $errline, $errcontext = array())
+  public function handlePhpError($errno, $errstr, $errfile, $errline, $errcontext = [])
   {
     if (($errno & error_reporting()) == 0)
     {
@@ -84,10 +84,10 @@ class sfWebDebugLogger extends sfVarLogger
 
     $message = sprintf(' %%s at %s on line %s (%s)', $errfile, $errline, str_replace('%', '%%', $errstr));
     match ($errno) {
-        E_STRICT => $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::ERR, sprintf($message, 'Strict notice')))),
-        E_NOTICE => $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::NOTICE, sprintf($message, 'Notice')))),
-        E_WARNING => $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::WARNING, sprintf($message, 'Warning')))),
-        E_RECOVERABLE_ERROR => $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::ERR, sprintf($message, 'Error')))),
+        E_STRICT => $this->dispatcher->notify(new sfEvent($this, 'application.log', ['priority' => sfLogger::ERR, sprintf($message, 'Strict notice')])),
+        E_NOTICE => $this->dispatcher->notify(new sfEvent($this, 'application.log', ['priority' => sfLogger::NOTICE, sprintf($message, 'Notice')])),
+        E_WARNING => $this->dispatcher->notify(new sfEvent($this, 'application.log', ['priority' => sfLogger::WARNING, sprintf($message, 'Warning')])),
+        E_RECOVERABLE_ERROR => $this->dispatcher->notify(new sfEvent($this, 'application.log', ['priority' => sfLogger::ERR, sprintf($message, 'Error')])),
         default => false,
     };
 
@@ -104,10 +104,7 @@ class sfWebDebugLogger extends sfVarLogger
     $path = sprintf('%s/%s/images', $event->getSubject()->getRequest()->getRelativeUrlRoot(), sfConfig::get('sf_web_debug_web_dir'));
     $path = str_replace('//', '/', $path);
 
-    $this->webDebug = new $this->webDebugClass($this->dispatcher, $this, array(
-      'image_root_path'    => $path,
-      'request_parameters' => $event->getSubject()->getRequest()->getParameterHolder()->getAll(),
-    ));
+    $this->webDebug = new $this->webDebugClass($this->dispatcher, $this, ['image_root_path'    => $path, 'request_parameters' => $event->getSubject()->getRequest()->getParameterHolder()->getAll()]);
   }
 
   /**
@@ -126,7 +123,7 @@ class sfWebDebugLogger extends sfVarLogger
     }
 
     // log timers information
-    $messages = array();
+    $messages = [];
     foreach (sfTimerManager::getTimers() as $name => $timer)
     {
       $messages[] = sprintf('%s %.2f ms (%d)', $name, $timer->getElapsedTime() * 1000, $timer->getCalls());

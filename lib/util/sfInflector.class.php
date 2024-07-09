@@ -30,10 +30,7 @@ class sfInflector
     $tmp = $lower_case_and_underscored_word;
     $tmp = sfToolkit::pregtrcb(
                         $tmp,
-                        array(
-                          '#/(.?)#' => fn($matches) => '::'.strtoupper((string) $matches[1]),
-                          '/(^|_|-)+(.)/' => fn($matches) => strtoupper((string) $matches[2])
-                        )
+                        ['#/(.?)#' => fn($matches) => '::'.strtoupper((string) $matches[1]), '/(^|_|-)+(.)/' => fn($matches) => strtoupper((string) $matches[2])]
                       );
 
     return $tmp;
@@ -50,8 +47,7 @@ class sfInflector
   {
     $tmp = $camel_cased_word;
     $tmp = str_replace('::', '/', $tmp);
-    $tmp = sfToolkit::pregtr($tmp, array('/([A-Z]+)([A-Z][a-z])/' => '\\1_\\2',
-                                         '/([a-z\d])([A-Z])/'     => '\\1_\\2'));
+    $tmp = sfToolkit::pregtr($tmp, ['/([A-Z]+)([A-Z][a-z])/' => '\\1_\\2', '/([a-z\d])([A-Z])/'     => '\\1_\\2']);
 
     return strtolower((string) $tmp);
   }

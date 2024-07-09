@@ -16,11 +16,11 @@ require(SYMFONY_LIB_DIR.'/util/sfFinder.class.php');
 $h = new lime_harness();
 $h->base_dir = realpath(__DIR__.'/..');
 
-$h->register(sfFinder::type('file')->prune('fixtures')->name('*Test.php')->in(array(
-  // unit tests
-  $h->base_dir.'/unit',
-  // functional tests
-  $h->base_dir.'/functional'
-)));
+$h->register(sfFinder::type('file')->prune('fixtures')->name('*Test.php')->in([
+    // unit tests
+    $h->base_dir.'/unit',
+    // functional tests
+    $h->base_dir.'/functional',
+]));
 
 exit($h->run() ? 0 : 1);

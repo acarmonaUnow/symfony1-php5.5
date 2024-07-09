@@ -18,15 +18,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 
 $configuration = new ProjectConfiguration(__DIR__.'/../../lib', new sfEventDispatcher());
 
-$parameters = array(
-  'name'        => 'doctrine',
-  'dsn'         => 'sqlite::memory',
-  'attributes'  => array(
-    'use_native_enum'   => true,
-    'validate'          => 'all',
-    'tblname_format'    => 'test_%s',
-  ),
-);
+$parameters = ['name'        => 'doctrine', 'dsn'         => 'sqlite::memory', 'attributes'  => ['use_native_enum'   => true, 'validate'          => 'all', 'tblname_format'    => 'test_%s']];
 
 $p = new sfDoctrineDatabase($parameters);
 $t->is($p->getDoctrineConnection()->getName(), 'doctrine', 'initialize() - creates a valid doctrine configuration from parameters');

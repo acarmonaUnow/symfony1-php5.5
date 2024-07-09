@@ -119,7 +119,7 @@ class DBMSSQL extends DBAdapter {
     }
 
     //split the select and from clauses out of the original query
-    $selectSegment = array();
+    $selectSegment = [];
     preg_match('/\Aselect(.*)from(.*)/si',(string) $sql,$selectSegment);
     if (count($selectSegment)==3)
     {      
@@ -132,7 +132,7 @@ class DBMSSQL extends DBAdapter {
     }
 
     //handle the ORDER BY clause if present
-    $orderSegment = array();
+    $orderSegment = [];
     preg_match('/order by(.*)\Z/si',$fromStatement,$orderSegment);
     if (count($orderSegment)==2)
     {

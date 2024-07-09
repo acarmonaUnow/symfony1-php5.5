@@ -57,42 +57,42 @@ class Table extends XMLElement implements IDMethod {
    *
    * @var        array Column[]
    */
-  private $columnList = array();
+  private $columnList = [];
 
   /**
    * Validators for this table.
    *
    * @var        array Validator[]
    */
-  private $validatorList = array();
+  private $validatorList = [];
 
   /**
    * Foreign keys for this table.
    *
    * @var        array ForeignKey[]
    */
-  private $foreignKeys = array();
+  private $foreignKeys = [];
 
   /**
    * Indexes for this table.
    *
    * @var        array Index[]
    */
-  private $indices = array();
+  private $indices = [];
 
   /**
    * Unique indexes for this table.
    *
    * @var        array Unique[]
    */
-  private $unices = array();
+  private $unices = [];
 
   /**
    * Any parameters for the ID method (currently supports changing sequence name).
    *
    * @var        array
    */
-  private $idMethodParameters = array();
+  private $idMethodParameters = [];
 
   /**
    * Table description.
@@ -141,7 +141,7 @@ class Table extends XMLElement implements IDMethod {
    *
    * @var        array ForeignKey[]
    */
-  private $referrers = array();
+  private $referrers = [];
 
   /**
    * Names of foreign tables.
@@ -225,14 +225,14 @@ class Table extends XMLElement implements IDMethod {
    *
    * @var        array
    */
-  private $columnsByName = array();
+  private $columnsByName = [];
 
   /**
    * Map of columns by phpName.
    *
    * @var        array
    */
-  private $columnsByPhpName = array();
+  private $columnsByPhpName = [];
 
   /**
    * Whether this table needs to use transactions in Postgres.
@@ -282,7 +282,7 @@ class Table extends XMLElement implements IDMethod {
    * 
    * @var array
    */
-  protected $behaviors = array();
+  protected $behaviors = [];
 
   /**
    * Constructs a table object with a name
@@ -469,7 +469,7 @@ class Table extends XMLElement implements IDMethod {
    */
   private function acquireConstraintName($nameType, $nbr)
   {
-    $inputs = array();
+    $inputs = [];
     $inputs[] = $this->getDatabase();
     $inputs[] = $this->getName();
     $inputs[] = $nameType;
@@ -599,7 +599,7 @@ class Table extends XMLElement implements IDMethod {
       $this->foreignKeys[] = $fk;
 
       if ($this->foreignTableNames === null) {
-        $this->foreignTableNames = array();
+        $this->foreignTableNames = [];
       }
       if (!in_array($fk->getForeignTableName(), $this->foreignTableNames)) {
         $this->foreignTableNames[] = $fk->getForeignTableName();
@@ -633,7 +633,7 @@ class Table extends XMLElement implements IDMethod {
       return null;
     }
     $children = $this->inheritanceColumn->getChildren();
-    $names = array();
+    $names = [];
     for ($i = 0, $size=count($children); $i < $size; $i++) {
       $names[] = $children[$i]::class;
     }
@@ -646,7 +646,7 @@ class Table extends XMLElement implements IDMethod {
   public function addReferrer(ForeignKey $fk)
   {
     if ($this->referrers === null) {
-      $this->referrers = array();
+      $this->referrers = [];
     }
     $this->referrers[] = $fk;
   }
@@ -681,7 +681,7 @@ class Table extends XMLElement implements IDMethod {
   public function getForeignTableNames()
   {
     if ($this->foreignTableNames === null) {
-      $this->foreignTableNames = array();
+      $this->foreignTableNames = [];
     }
     return $this->foreignTableNames;
   }
@@ -704,7 +704,7 @@ class Table extends XMLElement implements IDMethod {
       $imp = $impdata;
       $imp->setTable($this);
       if ($this->idMethodParameters === null) {
-        $this->idMethodParameters = array();
+        $this->idMethodParameters = [];
       }
       $this->idMethodParameters[] = $imp;
       return $imp;
@@ -842,7 +842,7 @@ class Table extends XMLElement implements IDMethod {
   public function getPhpName()
   {
     if ($this->phpName === null) {
-      $inputs = array();
+      $inputs = [];
       $inputs[] = $this->name;
       $inputs[] = $this->phpNamingMethod;
       try {
@@ -1140,7 +1140,7 @@ class Table extends XMLElement implements IDMethod {
    */
   public function getForeignKeysReferencingTable($tablename)
   {
-    $matches = array();
+    $matches = [];
     $keys = $this->getForeignKeys();
     foreach ($keys as $fk) {
       if ($fk->getForeignTableName() === $tablename) {
@@ -1158,7 +1158,7 @@ class Table extends XMLElement implements IDMethod {
    */
   public function getColumnForeignKeys($colname)
   {
-    $matches = array();
+    $matches = [];
     foreach ($this->foreignKeys as $fk) {
       if (in_array($colname, $fk->getLocalColumns())) {
         $matches[] = $fk;
@@ -1340,7 +1340,7 @@ class Table extends XMLElement implements IDMethod {
    */
   public function getPrimaryKey()
   {
-    $pk = array();
+    $pk = [];
     foreach ($this->columnList as $col) {
       if ($col->isPrimaryKey()) {
         $pk[] = $col;

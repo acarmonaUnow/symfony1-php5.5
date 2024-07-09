@@ -21,34 +21,25 @@ class lime_test
 
   protected $test_nb = 0;
   protected $output  = null;
-  protected $results = array();
-  protected $options = array();
+  protected $results = [];
+  protected $options = [];
 
-  static protected $all_results = array();
+  static protected $all_results = [];
 
-  public function __construct($plan = null, $options = array())
+  public function __construct($plan = null, $options = [])
   {
     // for BC
     if (!is_array($options))
     {
-      $options = array('output' => $options);
+      $options = ['output' => $options];
     }
 
-    $this->options = array_merge(array(
-      'force_colors'    => false,
-      'output'          => null,
-      'verbose'         => false,
-      'error_reporting' => false,
-    ), $options);
+    $this->options = array_merge(['force_colors'    => false, 'output'          => null, 'verbose'         => false, 'error_reporting' => false], $options);
 
     $this->output = $this->options['output'] ?: new lime_output($this->options['force_colors']);
 
     $caller = $this->find_caller(debug_backtrace());
-    self::$all_results[] = array(
-      'file'  => $caller[0],
-      'tests' => array(),
-      'stats' => array('plan' => $plan, 'total' => 0, 'failed' => array(), 'passed' => array(), 'skipped' => array(), 'errors' => array()),
-    );
+    self::$all_results[] = ['file'  => $caller[0], 'tests' => [], 'stats' => ['plan' => $plan, 'total' => 0, 'failed' => [], 'passed' => [], 'skipped' => [], 'errors' => []]];
 
     $this->results = &self::$all_results[count(self::$all_results) - 1];
 
@@ -60,7 +51,7 @@ class lime_test
 
   static public function reset()
   {
-    self::$all_results = array();
+    self::$all_results = [];
   }
 
   static public function to_array()
@@ -216,7 +207,7 @@ class lime_test
 
     if (!$result = $this->ok($value, $message))
     {
-      $this->set_last_test_errors(array(sprintf("           got: %s", var_export($exp1, true)), sprintf("      expected: %s", var_export($exp2, true))));
+      $this->set_last_test_errors([sprintf("           got: %s", var_export($exp1, true)), sprintf("      expected: %s", var_export($exp2, true))]);
     }
 
     return $result;
@@ -235,7 +226,7 @@ class lime_test
   {
     if (!$result = $this->ok($exp1 != $exp2, $message))
     {
-      $this->set_last_test_errors(array(sprintf("      %s", var_export($exp2, true)), '          ne', sprintf("      %s", var_export($exp2, true))));
+      $this->set_last_test_errors([sprintf("      %s", var_export($exp2, true)), '          ne', sprintf("      %s", var_export($exp2, true))]);
     }
 
     return $result;
@@ -254,7 +245,7 @@ class lime_test
   {
     if (!$result = $this->ok(preg_match($regex, $exp), $message))
     {
-      $this->set_last_test_errors(array(sprintf("                    '%s'", $exp), sprintf("      doesn't match '%s'", $regex)));
+      $this->set_last_test_errors([sprintf("                    '%s'", $exp), sprintf("      doesn't match '%s'", $regex)]);
     }
 
     return $result;
@@ -273,7 +264,7 @@ class lime_test
   {
     if (!$result = $this->ok(!preg_match($regex, $exp), $message))
     {
-      $this->set_last_test_errors(array(sprintf("               '%s'", $exp), sprintf("      matches '%s'", $regex)));
+      $this->set_last_test_errors([sprintf("               '%s'", $exp), sprintf("      matches '%s'", $regex)]);
     }
 
     return $result;
@@ -298,7 +289,7 @@ class lime_test
 
     if (!$this->ok($result, $message))
     {
-      $this->set_last_test_errors(array(sprintf("      %s", str_replace("\n", '', var_export($exp1, true))), sprintf("          %s", $op), sprintf("      %s", str_replace("\n", '', var_export($exp2, true)))));
+      $this->set_last_test_errors([sprintf("      %s", str_replace("\n", '', var_export($exp1, true))), sprintf("          %s", $op), sprintf("      %s", str_replace("\n", '', var_export($exp2, true)))]);
     }
 
     return $result;
@@ -316,7 +307,7 @@ class lime_test
   public function can_ok(mixed $object, $methods, $message = '')
   {
     $result = true;
-    $failed_messages = array();
+    $failed_messages = [];
     foreach ((array) $methods as $method)
     {
       if (!method_exists($object, $method))
@@ -347,7 +338,7 @@ class lime_test
     $type = get_debug_type($var);
     if (!$result = $this->ok($type == $class, $message))
     {
-      $this->set_last_test_errors(array(sprintf("      variable isn't a '%s' it's a '%s'", $class, $type)));
+      $this->set_last_test_errors([sprintf("      variable isn't a '%s' it's a '%s'", $class, $type)]);
     }
 
     return $result;
@@ -366,7 +357,7 @@ class lime_test
   {
     if (!$result = $this->ok($this->test_is_deeply($exp1, $exp2), $message))
     {
-      $this->set_last_test_errors(array(sprintf("           got: %s", str_replace("\n", '', var_export($exp1, true))), sprintf("      expected: %s", str_replace("\n", '', var_export($exp2, true)))));
+      $this->set_last_test_errors([sprintf("           got: %s", str_replace("\n", '', var_export($exp1, true))), sprintf("      expected: %s", str_replace("\n", '', var_export($exp2, true)))]);
     }
 
     return $result;
@@ -452,7 +443,7 @@ class lime_test
   {
     if (!$result = $this->ok((@include($file)) == 1, $message))
     {
-      $this->set_last_test_errors(array(sprintf("      Tried to include '%s'", $file)));
+      $this->set_last_test_errors([sprintf("      Tried to include '%s'", $file)]);
     }
 
     return $result;
@@ -504,15 +495,11 @@ class lime_test
     $this->output->info($message);
   }
 
-  public function error($message, $file = null, $line = null, array $traces = array())
+  public function error($message, $file = null, $line = null, array $traces = [])
   {
     $this->output->error($message, $file, $line, $traces);
 
-  	$this->results['stats']['errors'][] = array(
-  	  'message' => $message,
-  	  'file' => $file,
-  	  'line' => $line,
-  	);
+  	$this->results['stats']['errors'][] = ['message' => $message, 'file' => $file, 'line' => $line];
   }
 
   protected function update_stats()
@@ -538,13 +525,13 @@ class lime_test
     {
       if (isset($trace['object']) && $trace['object'] instanceof lime_test)
       {
-        return array($trace['file'], $trace['line']);
+        return [$trace['file'], $trace['line']];
       }
     }
 
     // return the first call
     $last = count($traces) - 1;
-    return array($traces[$last]['file'], $traces[$last]['line']);
+    return [$traces[$last]['file'], $traces[$last]['line']];
   }
 
   public function handle_error($code, $message, $file, $line, $context)
@@ -604,7 +591,7 @@ class lime_output
     echo $this->colorizer->colorize(sprintf('> %s', $message), 'INFO_BAR')."\n";
   }
 
-  public function error($message, $file = null, $line = null, $traces = array())
+  public function error($message, $file = null, $line = null, $traces = [])
   {
     if ($file !== null)
     {
@@ -710,7 +697,7 @@ class lime_output_color extends lime_output
 
 class lime_colorizer
 {
-  static public $styles = array();
+  static public $styles = [];
 
   protected $colors_supported = false;
 
@@ -734,12 +721,12 @@ class lime_colorizer
     }
   }
 
-  public static function style($name, $options = array())
+  public static function style($name, $options = [])
   {
     self::$styles[$name] = $options;
   }
 
-  public function colorize($text = '', $parameters = array())
+  public function colorize($text = '', $parameters = [])
   {
 
     if (!$this->colors_supported)
@@ -747,13 +734,13 @@ class lime_colorizer
       return $text;
     }
 
-    static $options    = array('bold' => 1, 'underscore' => 4, 'blink' => 5, 'reverse' => 7, 'conceal' => 8);
-    static $foreground = array('black' => 30, 'red' => 31, 'green' => 32, 'yellow' => 33, 'blue' => 34, 'magenta' => 35, 'cyan' => 36, 'white' => 37);
-    static $background = array('black' => 40, 'red' => 41, 'green' => 42, 'yellow' => 43, 'blue' => 44, 'magenta' => 45, 'cyan' => 46, 'white' => 47);
+    static $options    = ['bold' => 1, 'underscore' => 4, 'blink' => 5, 'reverse' => 7, 'conceal' => 8];
+    static $foreground = ['black' => 30, 'red' => 31, 'green' => 32, 'yellow' => 33, 'blue' => 34, 'magenta' => 35, 'cyan' => 36, 'white' => 37];
+    static $background = ['black' => 40, 'red' => 41, 'green' => 42, 'yellow' => 43, 'blue' => 44, 'magenta' => 45, 'cyan' => 46, 'white' => 47];
 
     !is_array($parameters) && isset(self::$styles[$parameters]) and $parameters = self::$styles[$parameters];
 
-    $codes = array();
+    $codes = [];
     isset($parameters['fg']) and $codes[] = $foreground[$parameters['fg']];
     isset($parameters['bg']) and $codes[] = $background[$parameters['bg']];
     foreach ($options as $option => $value)
@@ -765,37 +752,32 @@ class lime_colorizer
   }
 }
 
-lime_colorizer::style('ERROR', array('bg' => 'red', 'fg' => 'white', 'bold' => true));
-lime_colorizer::style('INFO', array('fg' => 'green', 'bold' => true));
-lime_colorizer::style('TRACE', array('fg' => 'green', 'bold' => true));
-lime_colorizer::style('PARAMETER', array('fg' => 'cyan'));
-lime_colorizer::style('COMMENT', array('fg' => 'yellow'));
+lime_colorizer::style('ERROR', ['bg' => 'red', 'fg' => 'white', 'bold' => true]);
+lime_colorizer::style('INFO', ['fg' => 'green', 'bold' => true]);
+lime_colorizer::style('TRACE', ['fg' => 'green', 'bold' => true]);
+lime_colorizer::style('PARAMETER', ['fg' => 'cyan']);
+lime_colorizer::style('COMMENT', ['fg' => 'yellow']);
 
-lime_colorizer::style('GREEN_BAR', array('fg' => 'white', 'bg' => 'green', 'bold' => true));
-lime_colorizer::style('RED_BAR', array('fg' => 'white', 'bg' => 'red', 'bold' => true));
-lime_colorizer::style('INFO_BAR', array('fg' => 'cyan', 'bold' => true));
+lime_colorizer::style('GREEN_BAR', ['fg' => 'white', 'bg' => 'green', 'bold' => true]);
+lime_colorizer::style('RED_BAR', ['fg' => 'white', 'bg' => 'red', 'bold' => true]);
+lime_colorizer::style('INFO_BAR', ['fg' => 'cyan', 'bold' => true]);
 
 class lime_harness extends lime_registration
 {
-  public $options = array();
+  public $options = [];
   public $php_cli = null;
-  public $stats   = array();
+  public $stats   = [];
   public $output  = null;
 
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
     // for BC
     if (!is_array($options))
     {
-      $options = array('output' => $options);
+      $options = ['output' => $options];
     }
 
-    $this->options = array_merge(array(
-      'php_cli'      => null,
-      'force_colors' => false,
-      'output'       => null,
-      'verbose'      => false,
-    ), $options);
+    $this->options = array_merge(['php_cli'      => null, 'force_colors' => false, 'output'       => null, 'verbose'      => false], $options);
 
     $this->php_cli = $this->find_php_cli($this->options['php_cli']);
     $this->output = $this->options['output'] ?: new lime_output($this->options['force_colors']);
@@ -826,8 +808,8 @@ class lime_harness extends lime_registration
     }
 
     $path = getenv('PATH') ?: getenv('Path');
-    $exe_suffixes = DIRECTORY_SEPARATOR == '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : array('.exe', '.bat', '.cmd', '.com')) : array('');
-    foreach (array('php5', 'php') as $php_cli)
+    $exe_suffixes = DIRECTORY_SEPARATOR == '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : ['.exe', '.bat', '.cmd', '.com']) : [''];
+    foreach (['php5', 'php'] as $php_cli)
     {
       foreach ($exe_suffixes as $suffix)
       {
@@ -847,7 +829,7 @@ class lime_harness extends lime_registration
 
   public function to_array()
   {
-    $results = array();
+    $results = [];
     foreach ($this->stats['files'] as $file => $stat)
     {
       $results = array_merge($results, $stat['output']);
@@ -871,16 +853,11 @@ class lime_harness extends lime_registration
     // sort the files to be able to predict the order
     sort($this->files);
 
-    $this->stats = array(
-      'files'        => array(),
-      'failed_files' => array(),
-      'failed_tests' => 0,
-      'total'        => 0,
-    );
+    $this->stats = ['files'        => [], 'failed_files' => [], 'failed_tests' => 0, 'total'        => 0];
 
     foreach ($this->files as $file)
     {
-      $this->stats['files'][$file] = array();
+      $this->stats['files'][$file] = [];
       $stats = &$this->stats['files'][$file];
 
       $relative_file = $this->get_relative_file($file);
@@ -908,7 +885,7 @@ EOF
       $stats['output'] = $output ? unserialize($output) : '';
       if (!$stats['output'])
       {
-        $stats['output'] = array(array('file' => $file, 'tests' => array(), 'stats' => array('plan' => 1, 'total' => 1, 'failed' => array(0), 'passed' => array(), 'skipped' => array(), 'errors' => array())));
+        $stats['output'] = [['file' => $file, 'tests' => [], 'stats' => ['plan' => 1, 'total' => 1, 'failed' => [0], 'passed' => [], 'skipped' => [], 'errors' => []]]];
       }
       unlink($result_file);
 
@@ -1058,17 +1035,17 @@ EOF
 
   public function get_failed_files()
   {
-    return $this->stats['failed_files'] ?? array();
+    return $this->stats['failed_files'] ?? [];
   }
 }
 
 class lime_coverage extends lime_registration
 {
-  public $files = array();
+  public $files = [];
   public $extension = '.php';
   public $base_dir = '';
   public $verbose = false;
-  protected $coverage = array();
+  protected $coverage = [];
 
   public function __construct(public $harness)
   {
@@ -1095,7 +1072,7 @@ class lime_coverage extends lime_registration
       throw new Exception('You must register some files to cover!');
     }
 
-    $this->coverage = array();
+    $this->coverage = [];
 
     $this->process($this->harness->files);
 
@@ -1106,7 +1083,7 @@ class lime_coverage extends lime_registration
   {
     if (!is_array($files))
     {
-      $files = array($files);
+      $files = [$files];
     }
 
     $tmp_file = sys_get_temp_dir().DIRECTORY_SEPARATOR.'test.php';
@@ -1181,9 +1158,9 @@ EOF;
     {
       $file = realpath($file);
       $is_covered = isset($this->coverage[$file]);
-      $cov = $this->coverage[$file] ?? array();
-      $covered_lines = array();
-      $missing_lines = array();
+      $cov = $this->coverage[$file] ?? [];
+      $covered_lines = [];
+      $missing_lines = [];
 
       foreach ($cov as $line => $flag)
       {
@@ -1230,7 +1207,7 @@ EOF;
     }
 
     $tokens = token_get_all($content);
-    $php_lines = array();
+    $php_lines = [];
     $current_line = 1;
     $in_class = false;
     $in_function = false;
@@ -1388,7 +1365,7 @@ EOF;
       unset($cov[$line]);
     }
 
-    return array($cov, $php_lines);
+    return [$cov, $php_lines];
   }
 
   public function format_range($lines)
@@ -1424,7 +1401,7 @@ EOF;
 
 class lime_registration
 {
-  public $files = array();
+  public $files = [];
   public $extension = '.php';
   public $base_dir = '';
 
@@ -1465,7 +1442,7 @@ class lime_registration
       throw new Exception(sprintf('The directory "%s" does not exist.', $directory));
     }
 
-    $files = array();
+    $files = [];
 
     $current_dir = opendir($directory);
     while ($entry = readdir($current_dir))
@@ -1487,6 +1464,6 @@ class lime_registration
 
   protected function get_relative_file($file)
   {
-    return str_replace(DIRECTORY_SEPARATOR, '/', str_replace(array(realpath($this->base_dir).DIRECTORY_SEPARATOR, $this->extension), '', $file));
+    return str_replace(DIRECTORY_SEPARATOR, '/', str_replace([realpath($this->base_dir).DIRECTORY_SEPARATOR, $this->extension], '', $file));
   }
 }

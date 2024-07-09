@@ -20,10 +20,10 @@ abstract class sfModelGenerator extends sfGenerator
 {
   protected
     $configuration = null,
-    $primaryKey    = array(),
+    $primaryKey    = [],
     $modelClass    = '',
-    $params        = array(),
-    $config        = array(),
+    $params        = [],
+    $config        = [],
     $formObject    = null;
 
   /**
@@ -33,7 +33,7 @@ abstract class sfModelGenerator extends sfGenerator
    *
    * @return string The data to put in configuration cache
    */
-  public function generate($params = array())
+  public function generate($params = [])
   {
     $this->validateParameters($params);
 
@@ -141,7 +141,7 @@ abstract class sfModelGenerator extends sfGenerator
    */
   public function getRetrieveByPkParamsForAction($indent)
   {
-    $params = array();
+    $params = [];
     foreach ($this->getPrimaryKeys() as $pk)
     {
       $params[] = sprintf("\$request->getParameter('%s')", sfInflector::underscore($pk));
@@ -159,7 +159,7 @@ abstract class sfModelGenerator extends sfGenerator
    */
   public function getPrimaryKeyUrlParams($prefix = '', $full = false)
   {
-    $params = array();
+    $params = [];
     foreach ($this->getPrimaryKeys() as $pk)
     {
       $fieldName = sfInflector::underscore($pk);
@@ -227,7 +227,7 @@ abstract class sfModelGenerator extends sfGenerator
    *
    * @return string HTML code
    */
-  public function addCredentialCondition($content, $params = array())
+  public function addCredentialCondition($content, $params = [])
   {
     if (isset($params['credentials']))
     {
@@ -302,13 +302,13 @@ EOF;
 
     // find %%xx%% strings
     preg_match_all('/%%([^%]+)%%/', (string) $value, $matches, PREG_PATTERN_ORDER);
-    $fields = array();
+    $fields = [];
     foreach ($matches[1] as $name)
     {
       $fields[] = $name;
     }
 
-    $vars = array();
+    $vars = [];
     foreach ($this->configuration->getContextConfiguration($context, $fields) as $field)
     {
       $vars[] = '\'%%'.$field->getName().'%%\' => '.$this->renderField($field);
@@ -358,7 +358,7 @@ EOF;
    */
   protected function validateParameters($params)
   {
-    foreach (array('model_class', 'moduleName') as $key)
+    foreach (['model_class', 'moduleName'] as $key)
     {
       if (!isset($params[$key]))
       {
@@ -371,7 +371,7 @@ EOF;
       throw new sfInitializationException(sprintf('Unable to generate a module for non-existent model "%s".', $params['model_class']));
     }
 
-    $this->config = $params['config'] ?? array();
+    $this->config = $params['config'] ?? [];
 
     unset($params['config']);
     $this->params = $params;
@@ -448,7 +448,7 @@ EOF;
 
   public function asPhp($variable)
   {
-    return str_replace(array("\n", 'array ('), array('', 'array('), var_export($variable, true));
+    return str_replace(["\n", 'array ('], ['', 'array('], var_export($variable, true));
   }
 
   public function escapeString($string)

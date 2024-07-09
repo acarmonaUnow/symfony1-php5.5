@@ -43,7 +43,7 @@ class Swift_Encoder_Rfc2231Encoder implements Swift_Encoder
   public function encodeString($string, $firstLineOffset = 0,
     $maxLineLength = 0)
   {
-    $lines = array(); $lineCount = 0;
+    $lines = []; $lineCount = 0;
     $lines[] = '';
     $currentLine =& $lines[$lineCount++];
     

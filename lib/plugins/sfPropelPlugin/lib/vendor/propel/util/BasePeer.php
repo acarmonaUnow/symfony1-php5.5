@@ -42,10 +42,10 @@ class BasePeer
 {
 
 	/** Array (hash) that contains the cached mapBuilders. */
-	private static $mapBuilders = array();
+	private static $mapBuilders = [];
 
 	/** Array (hash) that contains cached validators */
-	private static $validatorMap = array();
+	private static $validatorMap = [];
 
 	/**
 	 * phpname type
@@ -82,8 +82,8 @@ class BasePeer
 		// TODO we should take care of including the peer class here
 
 		$peerclass = 'Base' . $classname . 'Peer'; // TODO is this always true?
-		$callable = array($peerclass, 'getFieldnames');
-		$args = array($type);
+		$callable = [$peerclass, 'getFieldnames'];
+		$args = [$type];
 
 		return call_user_func_array($callable, $args);
 	}
@@ -93,8 +93,8 @@ class BasePeer
 		// TODO we should take care of including the peer class here
 
 		$peerclass = 'Base' . $classname . 'Peer'; // TODO is this always true?
-		$callable = array($peerclass, 'translateFieldname');
-		$args = array($fieldname, $fromType, $toType);
+		$callable = [$peerclass, 'translateFieldname'];
+		$args = [$fieldname, $fromType, $toType];
 
 		return call_user_func_array($callable, $args);
 	}
@@ -120,7 +120,7 @@ class BasePeer
 		// Set up a list of required tables (one DELETE statement will
 		// be executed per table)
 
-		$tables_keys = array();
+		$tables_keys = [];
 		foreach ($criteria as $c) {
 			foreach ($c->getAllTables() as $tableName) {
 				$tableName2 = $criteria->getTableForAlias($tableName);
@@ -138,8 +138,8 @@ class BasePeer
 
 		foreach ($tables as $tableName) {
 
-			$whereClause = array();
-			$selectParams = array();
+			$whereClause = [];
+			$selectParams = [];
 			foreach ($dbMap->getTable($tableName)->getColumns() as $colMap) {
 				$key = $tableName . '.' . $colMap->getColumnName();
 				if ($criteria->containsKey($key)) {
@@ -270,7 +270,7 @@ class BasePeer
 			$adapter = Propel::getDB($criteria->getDBName());
 
 			$qualifiedCols = $criteria->keys(); // we need table.column cols when populating values
-			$columns = array(); // but just 'column' cols for the SQL
+			$columns = []; // but just 'column' cols for the SQL
 			foreach ($qualifiedCols as $qualifiedCol) {
 				$columns[] = substr((string) $qualifiedCol, strrpos((string) $qualifiedCol, '.') + 1);
 			}
@@ -347,9 +347,9 @@ class BasePeer
 
 		foreach ($tablesColumns as $tableName => $columns) {
 
-			$whereClause = array();
+			$whereClause = [];
 			
-			$params = array();
+			$params = [];
 
 			$stmt = null;
 			try {
@@ -449,7 +449,7 @@ class BasePeer
 
 		try {
 
-			$params = array();
+			$params = [];
 			$sql = self::createSelectSql($criteria, $params);
 
 			$stmt = $con->prepare($sql);
@@ -498,7 +498,7 @@ class BasePeer
 
 		try {
 
-			$params = array();
+			$params = [];
 
 			if ($needsComplexCount) {
 				if (self::needsSelectAliases($criteria)) {
@@ -611,7 +611,7 @@ class BasePeer
 	{
 		$dbMap = Propel::getDatabaseMap($dbName);
 		$tableMap = $dbMap->getTable($tableName);
-		$failureMap = array(); // map of ValidationFailed objects
+		$failureMap = []; // map of ValidationFailed objects
 		foreach ($columns as $colName => $colValue) {
 			if ($tableMap->containsColumn($colName)) {
 				$col = $tableMap->getColumn($colName);
@@ -676,7 +676,7 @@ class BasePeer
 	 */
 	public static function needsSelectAliases(Criteria $criteria)
 	{
-		$columnNames = array();
+		$columnNames = [];
 		foreach ($criteria->getSelectColumns() as $fullyQualifiedColumnName) {
 			if ($pos = strrpos((string) $fullyQualifiedColumnName, '.')) {
 				$columnName = substr((string) $fullyQualifiedColumnName, $pos);
@@ -748,12 +748,12 @@ class BasePeer
 		$dbMap = Propel::getDatabaseMap($criteria->getDbName());
 
 		// redundant definition $selectModifiers = array();
-		$selectClause = array();
-		$fromClause = array();
-		$joinClause = array();
-		$joinTables = array();
-		$whereClause = array();
-		$orderByClause = array();
+		$selectClause = [];
+		$fromClause = [];
+		$joinClause = [];
+		$joinTables = [];
+		$whereClause = [];
+		$orderByClause = [];
 		// redundant definition $groupByClause = array();
 
 		$orderBy = $criteria->getOrderByColumns();
@@ -905,7 +905,7 @@ class BasePeer
 
 		// Unique from clause elements
 		$fromClause = array_unique($fromClause);
-		$fromClause = array_diff($fromClause, array(''));
+		$fromClause = array_diff($fromClause, ['']);
 		
 		// tables should not exist in both the from and join clauses
 		if ($joinTables && $fromClause) {
@@ -1029,11 +1029,11 @@ class BasePeer
 	 */
 	private static function buildParams($columns, Criteria $values)
 	{
-		$params = array();
+		$params = [];
 		foreach ($columns as $key) {
 			if ($values->containsKey($key)) {
 				$crit = $values->getCriterion($key);
-				$params[] = array('column' => $crit->getColumn(), 'table' => $crit->getTable(), 'value' => $crit->getValue());
+				$params[] = ['column' => $crit->getColumn(), 'table' => $crit->getTable(), 'value' => $crit->getValue()];
 			}
 		}
 		return $params;

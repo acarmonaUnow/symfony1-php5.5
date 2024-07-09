@@ -44,7 +44,7 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
     // parse the yaml
     $config = self::getConfiguration($configFiles);
 
-    $values = array();
+    $values = [];
     foreach ($config as $category => $keys)
     {
       $values = array_merge($values, $this->getValues($prefix, $category, $keys));
@@ -84,10 +84,10 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
     {
       [$key, $value] = $this->fixCategoryValue($prefix.strtolower($category), '', $keys);
 
-      return array($key => $value);
+      return [$key => $value];
     }
 
-    $values = array();
+    $values = [];
 
     $category = $this->fixCategoryName($category, $prefix);
 
@@ -112,7 +112,7 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
    */
   protected function fixCategoryValue($category, $key, $value)
   {
-    return array($category.$key, $value);
+    return [$category.$key, $value];
   }
 
   /**

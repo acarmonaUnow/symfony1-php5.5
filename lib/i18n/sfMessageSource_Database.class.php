@@ -45,17 +45,7 @@ abstract class sfMessageSource_Database extends sfMessageSource
       return $dsn;
     }
 
-    $parsed = array(
-      'phptype'  => false,
-      'dbsyntax' => false,
-      'username' => false,
-      'password' => false,
-      'protocol' => false,
-      'hostspec' => false,
-      'port'     => false,
-      'socket'   => false,
-      'database' => false
-    );
+    $parsed = ['phptype'  => false, 'dbsyntax' => false, 'username' => false, 'password' => false, 'protocol' => false, 'hostspec' => false, 'port'     => false, 'socket'   => false, 'database' => false];
 
     // Find phptype and dbsyntax
     if (($pos = strpos($dsn, '://')) !== false)
@@ -170,7 +160,7 @@ abstract class sfMessageSource_Database extends sfMessageSource
         }
         else
         { // database?param1=value1
-          $opts = array($dsn);
+          $opts = [$dsn];
         }
         foreach ($opts as $opt)
         {
@@ -196,7 +186,7 @@ abstract class sfMessageSource_Database extends sfMessageSource
   {
     $variants = explode('_', $this->culture);
 
-    $catalogues = array($catalogue);
+    $catalogues = [$catalogue];
 
     $variant = null;
 

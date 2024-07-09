@@ -21,7 +21,7 @@ class sfPluginManager
   protected
    $dispatcher  = null,
    $environment = null,
-   $installing  = array();
+   $installing  = [];
 
   /**
    * Constructs a new sfPluginManager.
@@ -75,7 +75,7 @@ class sfPluginManager
    */
   public function getInstalledPlugins()
   {
-    $installed = array();
+    $installed = [];
     foreach ($this->environment->getRegistry()->packageInfo(null, null, null) as $channel => $packages)
     {
       foreach ($packages as $package)
@@ -105,9 +105,9 @@ class sfPluginManager
    *
    * @return Boolean|string true if the plugin is already installed, the name of the installed plugin otherwise
    */
-  public function installPlugin($plugin, $options = array())
+  public function installPlugin($plugin, $options = [])
   {
-    $this->installing = array();
+    $this->installing = [];
 
     return $this->doInstallPlugin($plugin, $options);
   }
@@ -117,7 +117,7 @@ class sfPluginManager
    *
    * @see installPlugin()
    */
-  protected function doInstallPlugin($plugin, $options = array())
+  protected function doInstallPlugin($plugin, $options = [])
   {
     $channel   = $options['channel'] ?? $this->environment->getConfig()->get('default_channel');
     $stability = $options['stability'] ?? $this->environment->getConfig()->get('preferred_state', null, $channel);
@@ -139,7 +139,7 @@ class sfPluginManager
       [$channel, $plugin] = explode('/', (string) $plugin);
     }
 
-    $this->dispatcher->notify(new sfEvent($this, 'plugin.pre_install', array('channel' => $channel, 'plugin' => $plugin, 'is_package' => $isPackage)));
+    $this->dispatcher->notify(new sfEvent($this, 'plugin.pre_install', ['channel' => $channel, 'plugin' => $plugin, 'is_package' => $isPackage]));
 
     if ($isPackage)
     {
@@ -170,7 +170,7 @@ class sfPluginManager
       $existing = $this->environment->getRegistry()->packageInfo($plugin, 'version', $channel);
       if (version_compare($existing, $version) === 0)
       {
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array('Plugin is already installed')));
+        $this->dispatcher->notify(new sfEvent($this, 'application.log', ['Plugin is already installed']));
 
         return true;
       }
@@ -191,20 +191,17 @@ class sfPluginManager
 
     // download the plugin and install
     $class = $this->environment->getOption('downloader_base_class');
-    $downloader = new $class($this, array('upgrade' => true), $this->environment->getConfig());
+    $downloader = new $class($this, ['upgrade' => true], $this->environment->getConfig());
 
     $this->installing[$channel.'/'.$plugin] = true;
 
     if ($isPackage)
     {
-      $this->checkPluginDependencies($plugin, $version, array(
-        'install_deps' => isset($options['install_deps']) ? (bool) $options['install_deps'] : false,
-        'stability'    => $stability,
-      ));
+      $this->checkPluginDependencies($plugin, $version, ['install_deps' => isset($options['install_deps']) ? (bool) $options['install_deps'] : false, 'stability'    => $stability]);
     }
 
     // download the actual URL to the plugin
-    $downloaded = $downloader->download(array($download));
+    $downloaded = $downloader->download([$download]);
     if (PEAR::isError($downloaded))
     {
       throw new sfPluginException(sprintf('Problem when downloading "%s": %s', $download, $downloaded->getMessage()));
@@ -212,7 +209,7 @@ class sfPluginManager
     $errors = $downloader->getErrorMsgs();
     if (count($errors))
     {
-      $err = array();
+      $err = [];
       foreach ($errors as $error)
       {
         $err[] = $error;
@@ -227,8 +224,8 @@ class sfPluginManager
     $pluginPackage = $downloaded[0];
 
     $installer = new PEAR_Installer($this);
-    $installer->setOptions(array('upgrade' => true));
-    $packages = array($pluginPackage);
+    $installer->setOptions(['upgrade' => true]);
+    $packages = [$pluginPackage];
     $installer->sortPackagesForInstall($packages);
     PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
     $err = $installer->setDownloadedPackages($packages);
@@ -238,7 +235,7 @@ class sfPluginManager
       throw new sfPluginException($err->getMessage());
     }
 
-    $info = $installer->install($pluginPackage, array('upgrade' => true));
+    $info = $installer->install($pluginPackage, ['upgrade' => true]);
     PEAR::staticPopErrorHandling();
     if (PEAR::isError($info))
     {
@@ -247,9 +244,9 @@ class sfPluginManager
 
     if (is_array($info))
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Installation successful for plugin "%s"', $plugin))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Installation successful for plugin "%s"', $plugin)]));
 
-      $this->dispatcher->notify(new sfEvent($this, 'plugin.post_install', array('channel' => $channel, 'plugin' => $pluginPackage->getPackage())));
+      $this->dispatcher->notify(new sfEvent($this, 'plugin.post_install', ['channel' => $channel, 'plugin' => $pluginPackage->getPackage()]));
 
       unset($this->installing[$channel.'/'.$plugin]);
 
@@ -279,17 +276,17 @@ class sfPluginManager
     $existing = $this->environment->getRegistry()->packageInfo($plugin, 'version', $channel);
     if (null === $existing)
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Plugin "%s" is not installed', $plugin))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Plugin "%s" is not installed', $plugin)]));
 
       return false;
     }
 
-    $this->dispatcher->notify(new sfEvent($this, 'plugin.pre_uninstall', array('channel' => $channel, 'plugin' => $plugin)));
+    $this->dispatcher->notify(new sfEvent($this, 'plugin.pre_uninstall', ['channel' => $channel, 'plugin' => $plugin]));
 
     $package = $this->environment->getRegistry()->parsePackageName($plugin, $channel);
 
     $installer = new PEAR_Installer($this);
-    $packages = array($this->environment->getRegistry()->getPackage($plugin, $channel));
+    $packages = [$this->environment->getRegistry()->getPackage($plugin, $channel)];
     $installer->setUninstallPackages($packages);
     $ret = $installer->uninstall($package);
     if (PEAR::isError($ret))
@@ -299,9 +296,9 @@ class sfPluginManager
 
     if ($ret)
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Uninstallation successful for plugin "%s"', $plugin))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Uninstallation successful for plugin "%s"', $plugin)]));
 
-      $this->dispatcher->notify(new sfEvent($this, 'plugin.post_uninstall', array('channel' => $channel, 'plugin' => $plugin)));
+      $this->dispatcher->notify(new sfEvent($this, 'plugin.post_uninstall', ['channel' => $channel, 'plugin' => $plugin]));
     }
     else
     {
@@ -335,7 +332,7 @@ class sfPluginManager
     $deps = $dependencies['required']['package'];
     if (!isset($deps[0]))
     {
-      $deps = array($deps);
+      $deps = [$deps];
     }
 
     foreach ($deps as $dependency)
@@ -348,7 +345,7 @@ class sfPluginManager
         {
           try
           {
-            $this->doInstallPlugin($dependency['name'], array_merge($options, array('channel' => $dependency['channel'])));
+            $this->doInstallPlugin($dependency['name'], array_merge($options, ['channel' => $dependency['channel']]));
           }
           catch (sfException $e)
           {
@@ -407,7 +404,7 @@ class sfPluginManager
     $deps = $dependencies['required']['package'];
     if (!isset($deps[0]))
     {
-      $deps = array($deps);
+      $deps = [$deps];
     }
 
     foreach ($deps as $dependency)
@@ -431,7 +428,7 @@ class sfPluginManager
    *
    * @see installPlugin() for available options
    */
-  public function getPluginLicense($plugin, $options = array())
+  public function getPluginLicense($plugin, $options = [])
   {
     $channel   = $options['channel'] ?? $this->environment->getConfig()->get('default_channel');
     $stability = $options['stability'] ?? $this->environment->getConfig()->get('preferred_state', null, $channel);
@@ -484,10 +481,10 @@ class sfPluginManager
    */
   protected function checkDependency($dependency)
   {
-    $dependencyChecker = new PEAR_Dependency2($this->environment->getConfig(), array(), array('package' => '', 'channel' => ''));
+    $dependencyChecker = new PEAR_Dependency2($this->environment->getConfig(), [], ['package' => '', 'channel' => '']);
 
     PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-    $e = $dependencyChecker->validatePackageDependency($dependency, true, array());
+    $e = $dependencyChecker->validatePackageDependency($dependency, true, []);
     PEAR::staticPopErrorHandling();
     if (PEAR::isError($e))
     {

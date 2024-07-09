@@ -16,7 +16,7 @@
  */
 class sfI18nYamlGeneratorExtractor extends sfI18nYamlExtractor
 {
-  protected $strings = array();
+  protected $strings = [];
 
   /**
    * Extract i18n strings for the given content.
@@ -27,19 +27,19 @@ class sfI18nYamlGeneratorExtractor extends sfI18nYamlExtractor
    */
   public function extract($content)
   {
-    $this->strings = array();
+    $this->strings = [];
 
     $config = sfYaml::load($content);
 
     if (!isset($config['generator']['param']['config']))
     {
-      return array();
+      return [];
     }
 
     $params = $config['generator']['param']['config'];
 
     // titles
-    foreach (array('list', 'edit', 'new') as $section)
+    foreach (['list', 'edit', 'new'] as $section)
     {
       if (isset($params[$section]['title']))
       {
@@ -69,7 +69,7 @@ class sfI18nYamlGeneratorExtractor extends sfI18nYamlExtractor
     }
 
     // form categories
-    foreach (array('edit', 'new') as $section)
+    foreach (['edit', 'new'] as $section)
     {
       if (isset($params[$section]['display']) && !isset($params[$section]['display'][0]))
       {

@@ -50,7 +50,7 @@ class MovieTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('MovieI18n', 'MovieI18n', RelationMap::ONE_TO_MANY, array('id' => 'id', ), 'CASCADE', null);
+    $this->addRelation('MovieI18n', 'MovieI18n', RelationMap::ONE_TO_MANY, ['id' => 'id'], 'CASCADE', null);
 	} // buildRelations()
 
 	/**
@@ -61,11 +61,7 @@ class MovieTableMap extends TableMap {
 	 */
 	public function getBehaviors()
 	{
-		return array(
-			'symfony' => array('form' => 'true', 'filter' => 'true', ),
-			'symfony_behaviors' => array(),
-			'symfony_i18n' => array('i18n_table' => 'movie_i18n', ),
-		);
+		return ['symfony' => ['form' => 'true', 'filter' => 'true'], 'symfony_behaviors' => [], 'symfony_i18n' => ['i18n_table' => 'movie_i18n']];
 	} // getBehaviors()
 
 } // MovieTableMap

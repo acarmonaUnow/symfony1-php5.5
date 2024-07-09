@@ -41,11 +41,11 @@ class PHPUnitTestRunner
 
 	private $test = NULL;
 	private $retCode = 0;
-	private $formatters = array();
+	private $formatters = [];
 	
 	private $codecoverage = false;
 
-	function __construct(private $suite, private Project $project, private $groups = array(), private $excludeGroups = array())
+	function __construct(private $suite, private Project $project, private $groups = [], private $excludeGroups = [])
 	{
 		$this->retCode = self::SUCCESS;
 	}
@@ -95,7 +95,7 @@ class PHPUnitTestRunner
 			{
 				foreach ($coverageInformation as $coverage_info)
 				{
-					CoverageMerger::merge($this->project, array($coverage_info['files']));
+					CoverageMerger::merge($this->project, [$coverage_info['files']]);
 				}
 			}
 			else

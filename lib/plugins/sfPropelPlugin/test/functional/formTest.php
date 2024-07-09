@@ -28,7 +28,7 @@ $b->
     isParameter('action', 'index')->
   end()->
   with('response')->isStatusCode(200)->
-  click('submit', array('attachment' => array('name' => $name, 'file' => $fileToUpload)))->
+  click('submit', ['attachment' => ['name' => $name, 'file' => $fileToUpload]])->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -97,7 +97,7 @@ $b->
     isParameter('action', 'category')->
   end()->
   with('response')->isStatusCode(200)->
-  click('submit', array('category' => array('name' => 'foo')))->
+  click('submit', ['category' => ['name' => 'foo']])->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -116,7 +116,7 @@ $b->
     isParameter('action', 'category')->
   end()->
   with('response')->isStatusCode(200)->
-  click('submit', array('category' => array('name' => 'foo')))->
+  click('submit', ['category' => ['name' => 'foo']])->
   with('form')->begin()->
     hasErrors(1)->
     hasGlobalError(false)->
@@ -137,7 +137,7 @@ $b->
     isParameter('action', 'category')->
   end()->
   with('response')->isStatusCode(200)->
-  click('submit', array('category' => array('name' => 'foo'), 'global' => 1))->
+  click('submit', ['category' => ['name' => 'foo'], 'global' => 1])->
   with('form')->begin()->
     hasErrors(1)->
     hasGlobalError('invalid')->
@@ -175,7 +175,7 @@ $b->
     isParameter('action', 'article')->
   end()->
   with('response')->isStatusCode(200)->
-  click('submit', array('article' => array('title' => 'foo', 'category_id' => 1)))->
+  click('submit', ['article' => ['title' => 'foo', 'category_id' => 1]])->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -193,7 +193,7 @@ $b->
     isParameter('action', 'article')->
   end()->
   with('response')->isStatusCode(200)->
-  click('submit', array('article' => array('title' => 'foo', 'category_id' => 2)))->
+  click('submit', ['article' => ['title' => 'foo', 'category_id' => 2]])->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -212,7 +212,7 @@ $b->
     isParameter('action', 'article')->
   end()->
   with('response')->isStatusCode(200)->
-  click('submit', array('article' => array('title' => 'foo', 'category_id' => 1)))->
+  click('submit', ['article' => ['title' => 'foo', 'category_id' => 1]])->
   with('response')->checkElement('.error_list li', 'An object with the same "title, category_id" already exist.')
 ;
 
@@ -229,7 +229,7 @@ $b->
     checkElement('#article_category_id option[selected="selected"]', 1)->
     checkElement('input[value="Category 1"]')->
   end()->
-  click('submit', array('article' => array('title' => 'foo bar', 'category' => array('name' => 'Category foo'))))->
+  click('submit', ['article' => ['title' => 'foo bar', 'category' => ['name' => 'Category foo']]])->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -253,7 +253,7 @@ $b->
   with('response')->begin()->
     isStatusCode(200)->
   end()->
-  click('submit', array('article' => array('title' => 'foobar', 'category_id' => 1, 'author_article_list' => array(1)), 'impossible_validator' => 1))->
+  click('submit', ['article' => ['title' => 'foobar', 'category_id' => 1, 'author_article_list' => [1]], 'impossible_validator' => 1])->
   with('form')->begin()->
     hasErrors(1)->
     isError('category_id', 'invalid')->
@@ -272,7 +272,7 @@ $b->
   with('response')->begin()->
     isStatusCode(200)->
   end()->
-  click('submit', array('article' => array('title' => 'foobar', 'category_id' => 1, 'author_article_list' => array(1)), 'impossible_validator_many' => 1))->
+  click('submit', ['article' => ['title' => 'foobar', 'category_id' => 1, 'author_article_list' => [1]], 'impossible_validator_many' => 1])->
   with('form')->begin()->
     hasErrors(1)->
     isError('author_article_list', 'invalid')->

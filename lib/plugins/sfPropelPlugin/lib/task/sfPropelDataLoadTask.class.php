@@ -25,16 +25,9 @@ class sfPropelDataLoadTask extends sfPropelBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('dir_or_file', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'Directory or file to load'),
-    ));
+    $this->addArguments([new sfCommandArgument('dir_or_file', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'Directory or file to load')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('append', null, sfCommandOption::PARAMETER_NONE, 'Don\'t delete current data in the database'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ));
+    $this->addOptions([new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'), new sfCommandOption('append', null, sfCommandOption::PARAMETER_NONE, 'Don\'t delete current data in the database'), new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel')]);
 
     $this->namespace = 'propel';
     $this->name = 'data-load';
@@ -72,7 +65,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 
@@ -82,13 +75,13 @@ EOF;
     }
     else
     {
-      $fixturesDirs = array_merge(array(sfConfig::get('sf_data_dir').'/fixtures'), $this->configuration->getPluginSubPaths('/data/fixtures'));
+      $fixturesDirs = array_merge([sfConfig::get('sf_data_dir').'/fixtures'], $this->configuration->getPluginSubPaths('/data/fixtures'));
     }
 
     $data = new sfPropelData();
     $data->setDeleteCurrentData(!$options['append']);
 
-    $dirs = array();
+    $dirs = [];
     foreach ($fixturesDirs as $fixturesDir)
     {
       if (!is_readable($fixturesDir))

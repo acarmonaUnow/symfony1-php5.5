@@ -19,9 +19,9 @@
 abstract class sfWidget
 {
   protected
-    $requiredOptions = array(),
-    $attributes      = array(),
-    $options         = array();
+    $requiredOptions = [],
+    $attributes      = [],
+    $options         = [];
 
   protected static
     $xhtml   = true,
@@ -36,7 +36,7 @@ abstract class sfWidget
    * @throws InvalidArgumentException when a option is not supported
    * @throws RuntimeException         when a required option is not given
    */
-  public function __construct($options = array(), $attributes = array())
+  public function __construct($options = [], $attributes = [])
   {
     $this->configure($options, $attributes);
 
@@ -74,7 +74,7 @@ abstract class sfWidget
    *
    * @see __construct()
    */
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
   }
 
@@ -90,7 +90,7 @@ abstract class sfWidget
    *
    * @return string A HTML representation of the widget
    */
-  abstract public function render($name, mixed $value = null, $attributes = array(), $errors = array());
+  abstract public function render($name, mixed $value = null, $attributes = [], $errors = []);
 
   /**
    * Adds a required option.
@@ -264,7 +264,7 @@ abstract class sfWidget
    */
   public function getStylesheets()
   {
-    return array();
+    return [];
   }
 
   /**
@@ -274,7 +274,7 @@ abstract class sfWidget
    */
   public function getJavaScripts()
   {
-    return array();
+    return [];
   }
 
   /**
@@ -325,7 +325,7 @@ abstract class sfWidget
    *
    * @param string An HTML tag string
    */
-  public function renderTag($tag, $attributes = array())
+  public function renderTag($tag, $attributes = [])
   {
     if (empty($tag))
     {
@@ -344,7 +344,7 @@ abstract class sfWidget
    *
    * @param string An HTML tag string
    */
-  public function renderContentTag($tag, $content = null, $attributes = array())
+  public function renderContentTag($tag, $content = null, $attributes = [])
   {
     if (empty($tag))
     {

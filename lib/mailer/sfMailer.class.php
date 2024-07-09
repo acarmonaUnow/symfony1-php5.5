@@ -56,15 +56,7 @@ class sfMailer extends Swift_Mailer
   public function __construct(sfEventDispatcher $dispatcher, $options)
   {
     // options
-    $options = array_merge(array(
-      'charset' => 'UTF-8',
-      'logging' => false,
-      'delivery_strategy' => self::REALTIME,
-      'transport' => array(
-        'class' => 'Swift_MailTransport',
-        'param' => array(),
-       ),
-    ), $options);
+    $options = array_merge(['charset' => 'UTF-8', 'logging' => false, 'delivery_strategy' => self::REALTIME, 'transport' => ['class' => 'Swift_MailTransport', 'param' => []]], $options);
 
     $constantName = 'sfMailer::'.strtoupper((string) $options['delivery_strategy']);
     $this->strategy = defined($constantName) ? constant($constantName) : false;
@@ -105,7 +97,7 @@ class sfMailer extends Swift_Mailer
       {
         throw new InvalidArgumentException('For the spool mail delivery strategy, you must also define a spool_class option');
       }
-      $arguments = $options['spool_arguments'] ?? array();
+      $arguments = $options['spool_arguments'] ?? [];
 
       if ($arguments)
       {

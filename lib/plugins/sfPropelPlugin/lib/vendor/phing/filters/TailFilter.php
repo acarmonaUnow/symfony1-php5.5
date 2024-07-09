@@ -61,7 +61,7 @@ class TailFilter extends BaseParamFilterReader implements ChainableReader {
      * Array to hold lines.
      * @var array
      */ 
-    private    $_lineBuffer = array();
+    private    $_lineBuffer = [];
                 
     /**
      * Returns the last n lines of a file.
@@ -95,7 +95,7 @@ class TailFilter extends BaseParamFilterReader implements ChainableReader {
             $ret = -1;
         else {
             $ret = implode("\n", $this->_lineBuffer);
-            $this->_lineBuffer = array();
+            $this->_lineBuffer = [];
         }
 
         return $ret;

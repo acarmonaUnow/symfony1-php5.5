@@ -25,31 +25,13 @@ class sfParameterHolderValidation extends sfValidation
 
   public function getExplanation()
   {
-    return array(
-          '',
-          '  The files above use the array notation with a parameter holder,',
-          '  which is not supported anymore in symfony 1.4.',
-          '  For instance, you need to change this construct:',
-          '',
-          '    $foo = $request->getParameter(\'foo[bar]\')',
-          '',
-          '  to this one:',
-          '',
-          '    $params = $request->getParameter(\'foo\')',
-          '    $foo = $params[\'bar\'])',
-          '',
-    );
+    return ['', '  The files above use the array notation with a parameter holder,', '  which is not supported anymore in symfony 1.4.', '  For instance, you need to change this construct:', '', '    $foo = $request->getParameter(\'foo[bar]\')', '', '  to this one:', '', '    $params = $request->getParameter(\'foo\')', '    $foo = $params[\'bar\'])', ''];
   }
 
   public function validate()
   {
-    $found = array();
-    $files = sfFinder::type('file')->name('*.php')->prune('vendor')->in(array(
-      sfConfig::get('sf_apps_dir'),
-      sfConfig::get('sf_lib_dir'),
-      sfConfig::get('sf_test_dir'),
-      sfConfig::get('sf_plugins_dir'),
-    ));
+    $found = [];
+    $files = sfFinder::type('file')->name('*.php')->prune('vendor')->in([sfConfig::get('sf_apps_dir'), sfConfig::get('sf_lib_dir'), sfConfig::get('sf_test_dir'), sfConfig::get('sf_plugins_dir')]);
     foreach ($files as $file)
     {
       $content = sfToolkit::stripComments(file_get_contents($file));

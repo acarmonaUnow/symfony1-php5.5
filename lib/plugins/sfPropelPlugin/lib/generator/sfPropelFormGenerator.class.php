@@ -42,7 +42,7 @@ class sfPropelFormGenerator extends sfGenerator
    *
    * @return string The data to put in configuration cache
    */
-  public function generate($params = array())
+  public function generate($params = [])
   {
     $this->params = $params;
 
@@ -118,7 +118,7 @@ class sfPropelFormGenerator extends sfGenerator
    */
   public function getManyToManyTables()
   {
-    $tables = array();
+    $tables = [];
 
     // go through all tables to find m2m relationships
     foreach ($this->dbMap->getTables() as $tableName => $table)
@@ -134,12 +134,7 @@ class sfPropelFormGenerator extends sfGenerator
             if ($relatedColumn->isForeignKey() && $relatedColumn->isPrimaryKey() && $this->table->getClassname() != $this->getForeignTable($relatedColumn)->getClassname())
             {
               // we have the related table
-              $tables[] = array(
-                'middleTable'   => $table,
-                'relatedTable'  => $this->getForeignTable($relatedColumn),
-                'column'        => $column,
-                'relatedColumn' => $relatedColumn,
-              );
+              $tables[] = ['middleTable'   => $table, 'relatedTable'  => $this->getForeignTable($relatedColumn), 'column'        => $column, 'relatedColumn' => $relatedColumn];
 
               break 2;
             }
@@ -164,18 +159,18 @@ class sfPropelFormGenerator extends sfGenerator
    */
   public function getForeignKeyNames()
   {
-    $names = array();
+    $names = [];
     foreach ($this->table->getColumns() as $column)
     {
       if (!$column->isPrimaryKey() && $column->isForeignKey())
       {
-        $names[] = array($this->getForeignTable($column)->getClassname(), $column->getPhpName(), $column->isNotNull(), false);
+        $names[] = [$this->getForeignTable($column)->getClassname(), $column->getPhpName(), $column->isNotNull(), false];
       }
     }
 
     foreach ($this->getManyToManyTables() as $tables)
     {
-      $names[] = array($tables['relatedTable']->getClassname(), $tables['middleTable']->getClassname(), false, true);
+      $names[] = [$tables['relatedTable']->getClassname(), $tables['middleTable']->getClassname(), false, true];
     }
 
     return $names;
@@ -248,7 +243,7 @@ class sfPropelFormGenerator extends sfGenerator
    */
   public function getWidgetOptionsForColumn(ColumnMap $column)
   {
-    $options = array();
+    $options = [];
 
     if (!$column->isPrimaryKey() && $column->isForeignKey())
     {
@@ -305,7 +300,7 @@ class sfPropelFormGenerator extends sfGenerator
    */
   public function getValidatorOptionsForColumn(ColumnMap $column)
   {
-    $options = array();
+    $options = [];
 
     if ($column->isForeignKey())
     {
@@ -389,7 +384,7 @@ class sfPropelFormGenerator extends sfGenerator
    */
   public function getPrimaryKeyColumNames()
   {
-    $pks = array();
+    $pks = [];
     foreach ($this->table->getColumns() as $column)
     {
       if ($column->isPrimaryKey())
@@ -430,21 +425,21 @@ class sfPropelFormGenerator extends sfGenerator
    */
   public function getI18nModel()
   {
-    return call_user_func(array(constant($this->table->getClassname().'::PEER'), 'getI18nModel'));
+    return call_user_func([constant($this->table->getClassname().'::PEER'), 'getI18nModel']);
   }
 
   public function underscore($name)
   {
-    return strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), '\\1_\\2', $name));
+    return strtolower(preg_replace(['/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'], '\\1_\\2', $name));
   }
 
   public function getUniqueColumnNames()
   {
-    $uniqueColumns = array();
+    $uniqueColumns = [];
 
-    foreach (call_user_func(array(constant($this->table->getClassname().'::PEER'), 'getUniqueColumnNames')) as $unique)
+    foreach (call_user_func([constant($this->table->getClassname().'::PEER'), 'getUniqueColumnNames']) as $unique)
     {
-      $uniqueColumn = array();
+      $uniqueColumn = [];
       foreach ($unique as $column)
       {
         $uniqueColumn[] = $this->translateColumnName($this->table->getColumn($column));
@@ -461,7 +456,7 @@ class sfPropelFormGenerator extends sfGenerator
     $peer = $related ? constant($column->getTable()->getDatabaseMap()->getTable($column->getRelatedTableName())->getPhpName().'::PEER') : constant($column->getTable()->getPhpName().'::PEER');
     $field = $related ? $column->getRelatedName() : $column->getFullyQualifiedName();
 
-    return call_user_func(array($peer, 'translateFieldName'), $field, BasePeer::TYPE_COLNAME, $to);
+    return call_user_func([$peer, 'translateFieldName'], $field, BasePeer::TYPE_COLNAME, $to);
   }
 
   /**

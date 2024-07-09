@@ -87,7 +87,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     /**
      * @var array  Table alias map. Keys are SQL aliases and values DQL aliases.
      */
-    protected $_tableAliasMap = array();
+    protected $_tableAliasMap = [];
 
     /**
      * @var Doctrine_View  The view object used by this query, if any.
@@ -102,16 +102,12 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     /**
      * @var array $_params  The parameters of this query.
      */
-    protected $_params = array('exec' => array(),
-                               'join' => array(),
-                               'where' => array(),
-                               'set' => array(),
-                               'having' => array());
+    protected $_params = ['exec' => [], 'join' => [], 'where' => [], 'set' => [], 'having' => []];
 
     /**
      * @var array $_execParams The parameters passed to connection statement
      */
-    protected $_execParams = array();
+    protected $_execParams = [];
 
     /* Caching properties */
     /**
@@ -152,37 +148,12 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     /**
      * @var array $_sqlParts  The SQL query string parts. Filled during the DQL parsing process.
      */
-    protected $_sqlParts = array(
-            'select'    => array(),
-            'distinct'  => false,
-            'forUpdate' => false,
-            'from'      => array(),
-            'set'       => array(),
-            'join'      => array(),
-            'where'     => array(),
-            'groupby'   => array(),
-            'having'    => array(),
-            'orderby'   => array(),
-            'limit'     => false,
-            'offset'    => false,
-            );
+    protected $_sqlParts = ['select'    => [], 'distinct'  => false, 'forUpdate' => false, 'from'      => [], 'set'       => [], 'join'      => [], 'where'     => [], 'groupby'   => [], 'having'    => [], 'orderby'   => [], 'limit'     => false, 'offset'    => false];
 
     /**
      * @var array $_dqlParts    an array containing all DQL query parts; @see Doctrine_Query::getDqlPart()
      */
-    protected $_dqlParts = array(
-                            'from'      => array(),
-                            'select'    => array(),
-                            'forUpdate' => false,
-                            'set'       => array(),
-                            'join'      => array(),
-                            'where'     => array(),
-                            'groupby'   => array(),
-                            'having'    => array(),
-                            'orderby'   => array(),
-                            'limit'     => array(),
-                            'offset'    => array(),
-                            );
+    protected $_dqlParts = ['from'      => [], 'select'    => [], 'forUpdate' => false, 'set'       => [], 'join'      => [], 'where'     => [], 'groupby'   => [], 'having'    => [], 'orderby'   => [], 'limit'     => [], 'offset'    => []];
 
 
     /**
@@ -203,7 +174,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      *          map                 the name of the column / aggregate value this
      *                              component is mapped to a collection
      */
-    protected $_queryComponents = array();
+    protected $_queryComponents = [];
 
     /**
      * Stores the root DQL alias
@@ -239,14 +210,12 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      *                                      table alias seeds. The seeds are used for generating short table
      *                                      aliases.
      */
-    protected $_tableAliasSeeds = array();
+    protected $_tableAliasSeeds = [];
 
     /**
      * @var array $_options                 an array of options
      */
-    protected $_options    = array(
-        'hydrationMode'      => Doctrine_Core::HYDRATE_RECORD
-    );
+    protected $_options    = ['hydrationMode'      => Doctrine_Core::HYDRATE_RECORD];
 
     /**
      * @var boolean
@@ -412,7 +381,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
             if (is_array($part)) {
                 $this->_sqlParts[$name] = $part;
             } else {
-                $this->_sqlParts[$name] = array($part);
+                $this->_sqlParts[$name] = [$part];
             }
         } else {
             $this->_sqlParts[$name] = $part;
@@ -460,7 +429,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
         if ($name == 'limit' || $name == 'offset' || $name == 'forUpdate') {
             $this->_sqlParts[$name] = false;
         } else {
-            $this->_sqlParts[$name] = array();
+            $this->_sqlParts[$name] = [];
         }
 
         return $this;
@@ -483,7 +452,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
         if ($name == 'limit' || $name == 'offset') {
             $this->_dqlParts[$name] = false;
         } else {
-            $this->_dqlParts[$name] = array();
+            $this->_dqlParts[$name] = [];
         }
 
         return $this;
@@ -506,7 +475,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param array $params
      * @return void
      */
-    public function getFlattenedParams($params = array())
+    public function getFlattenedParams($params = [])
     {
         return array_merge(
             (array) $params, (array) $this->_params['exec'],
@@ -520,7 +489,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      *
      * @return array
      */
-    public function getInternalParams($params = array())
+    public function getInternalParams($params = [])
     {
         return array_merge($params, $this->_execParams);
     }
@@ -530,7 +499,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      *
      * @param array $params
      */
-    public function setParams(array $params = array())
+    public function setParams(array $params = [])
     {
         $this->_params = $params;
     }
@@ -541,10 +510,10 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      *
      * @return array Parameters array
      */
-    public function getCountQueryParams($params = array())
+    public function getCountQueryParams($params = [])
     {
         if ( ! is_array($params)) {
-            $params = array($params);
+            $params = [$params];
         }
 
         $this->_params['exec'] = $params;
@@ -559,7 +528,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     /**
      * @nodoc
      */
-    public function fixArrayParameterValues($params = array())
+    public function fixArrayParameterValues($params = [])
     {
         $i = 0;
 
@@ -782,7 +751,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     public function getRootAlias()
     {
         if ( ! $this->_queryComponents) {
-            $this->getSqlQuery(array(), false);
+            $this->getSqlQuery([], false);
         }
 
         return $this->_rootAlias;
@@ -885,7 +854,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param array $params
      * @return string    the hash
      */
-    public function calculateResultCacheHash($params = array())
+    public function calculateResultCacheHash($params = [])
     {
         $dql = $this->getDql();
         $conn = $this->getConnection();
@@ -901,7 +870,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param array $params
      * @return string $hash
      */
-    public function getResultCacheHash($params = array())
+    public function getResultCacheHash($params = [])
     {
       if ($this->_resultCacheHash) {
           return $this->_resultCacheHash;
@@ -982,7 +951,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
 
         $stmt = $this->_conn->execute($query, $params);
 
-        $this->_params['exec'] = array();
+        $this->_params['exec'] = [];
 
         return $stmt;
     }
@@ -994,10 +963,10 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param array $params
      * @return Doctrine_Collection            the root collection
      */
-    public function execute($params = array(), $hydrationMode = null)
+    public function execute($params = [], $hydrationMode = null)
     {
         // Clean any possible processed params
-        $this->_execParams = array();
+        $this->_execParams = [];
 
         if (empty($this->_dqlParts['from']) && empty($this->_sqlParts['from'])) {
             throw new Doctrine_Query_Exception('You must have at least one component specified in your from.');
@@ -1069,22 +1038,13 @@ abstract class Doctrine_Query_Abstract implements \Stringable
         if ( ! empty($this->_dqlParts['from'])) {
             switch ($this->_type) {
                 case self::DELETE:
-                    $callback = array(
-                        'callback' => 'preDqlDelete',
-                        'const' => Doctrine_Event::RECORD_DQL_DELETE
-                    );
+                    $callback = ['callback' => 'preDqlDelete', 'const' => Doctrine_Event::RECORD_DQL_DELETE];
                 break;
                 case self::UPDATE:
-                    $callback = array(
-                        'callback' => 'preDqlUpdate',
-                        'const' => Doctrine_Event::RECORD_DQL_UPDATE
-                    );
+                    $callback = ['callback' => 'preDqlUpdate', 'const' => Doctrine_Event::RECORD_DQL_UPDATE];
                 break;
                 case self::SELECT:
-                    $callback = array(
-                        'callback' => 'preDqlSelect',
-                        'const' => Doctrine_Event::RECORD_DQL_SELECT
-                    );
+                    $callback = ['callback' => 'preDqlSelect', 'const' => Doctrine_Event::RECORD_DQL_SELECT];
                 break;
             }
         }
@@ -1098,7 +1058,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      *
      * @return void
      */
-    protected function _preQuery($params = array())
+    protected function _preQuery($params = [])
     {
         if ( ! $this->_preQueried && $this->getConnection()->getAttribute(Doctrine_Core::ATTR_USE_DQL_CALLBACKS)) {
             $this->_preQueried = true;
@@ -1115,7 +1075,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
                 $record = $table->getRecordInstance();
 
                 // Trigger preDql*() callback event
-                $params = array('component' => $component, 'alias' => $alias);
+                $params = ['component' => $component, 'alias' => $alias];
                 $event = new Doctrine_Event($record, $callback['const'], $this, $params);
 
                 $record->{$callback['callback']}($event);
@@ -1133,9 +1093,9 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param  array $params
      * @return array $components
      */
-    protected function _getDqlCallbackComponents($params = array())
+    protected function _getDqlCallbackComponents($params = [])
     {
-        $componentsBefore = array();
+        $componentsBefore = [];
         if ($this->isSubquery()) {
             $componentsBefore = $this->getQueryComponents();
         }
@@ -1178,7 +1138,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
         $this->_tableAliasMap = $cached[2];
         $customComponent = $cached[0];
 
-        $queryComponents = array();
+        $queryComponents = [];
         $cachedComponents = $cached[1];
         foreach ($cachedComponents as $alias => $components) {
             $e = explode('.', (string) $components['name']);
@@ -1214,7 +1174,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      */
     public function getCachedForm($customComponent = null)
     {
-        $componentInfo = array();
+        $componentInfo = [];
 
         foreach ($this->getQueryComponents() as $alias => $components) {
             if ( ! isset($components['parent'])) {
@@ -1236,7 +1196,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
             }
         }
 
-        return serialize(array($customComponent, $componentInfo, $this->getTableAliasMap()));
+        return serialize([$customComponent, $componentInfo, $this->getTableAliasMap()]);
     }
 
     /**
@@ -1285,7 +1245,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * Alias for @see andWhere().
      * @return Doctrine_Query   this object
      */
-    public function addWhere($where, $params = array())
+    public function addWhere($where, $params = [])
     {
         return $this->andWhere($where, $params);
     }
@@ -1300,7 +1260,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params An array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function andWhere($where, mixed $params = array())
+    public function andWhere($where, mixed $params = [])
     {
         if (is_array($params)) {
             $this->_params['where'] = array_merge($this->_params['where'], $params);
@@ -1325,7 +1285,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params An array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function orWhere($where, mixed $params = array())
+    public function orWhere($where, mixed $params = [])
     {
         if (is_array($params)) {
             $this->_params['where'] = array_merge($this->_params['where'], $params);
@@ -1348,7 +1308,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param boolean $not          whether or not to use NOT in front of IN
      * @return Doctrine_Query
      */
-    public function whereIn($expr, mixed $params = array(), $not = false)
+    public function whereIn($expr, mixed $params = [], $not = false)
     {
         return $this->andWhereIn($expr, $params, $not);
     }
@@ -1364,7 +1324,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param boolean $not      Whether or not to use NOT in front of IN. Defaults to false (simple IN clause)
      * @return Doctrine_Query   this object.
      */
-    public function andWhereIn($expr, mixed $params = array(), $not = false)
+    public function andWhereIn($expr, mixed $params = [], $not = false)
     {
         // if there's no params, return (else we'll get a WHERE IN (), invalid SQL)
         if (isset($params) and (count($params) == 0)) {
@@ -1391,7 +1351,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param boolean $not Whether or not to use NOT in front of IN
      * @return Doctrine_Query
      */
-    public function orWhereIn($expr, mixed $params = array(), $not = false)
+    public function orWhereIn($expr, mixed $params = [], $not = false)
     {
         // if there's no params, return (else we'll get a WHERE IN (), invalid SQL)
         if (isset($params) and (count($params) == 0)) {
@@ -1408,7 +1368,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     /**
      * @nodoc
      */
-    protected function _processWhereIn($expr, $params = array(), $not = false)
+    protected function _processWhereIn($expr, $params = [], $not = false)
     {
         $params = (array) $params;
 
@@ -1417,7 +1377,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
             throw new Doctrine_Query_Exception('You must pass at least one parameter when using an IN() condition.');
         }
 
-        $a = array();
+        $a = [];
         foreach ($params as $k => $value) {
             if ($value instanceof Doctrine_Expression) {
                 $value = $value->getSql();
@@ -1444,7 +1404,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params         an array of parameters or a simple scalar
      * @return Doctrine_Query       this object
      */
-    public function whereNotIn($expr, mixed $params = array())
+    public function whereNotIn($expr, mixed $params = [])
     {
         return $this->whereIn($expr, $params, true);
     }
@@ -1457,7 +1417,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params An array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function andWhereNotIn($expr, mixed $params = array())
+    public function andWhereNotIn($expr, mixed $params = [])
     {
         return $this->andWhereIn($expr, $params, true);
     }
@@ -1469,7 +1429,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params An array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function orWhereNotIn($expr, mixed $params = array())
+    public function orWhereNotIn($expr, mixed $params = [])
     {
         return $this->orWhereIn($expr, $params, true);
     }
@@ -1501,7 +1461,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params         an array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function addHaving($having, mixed $params = array())
+    public function addHaving($having, mixed $params = [])
     {
         if (is_array($params)) {
             $this->_params['having'] = array_merge($this->_params['having'], $params);
@@ -1611,7 +1571,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
     {
         if (is_array($key)) {
             foreach ($key as $k => $v) {
-                $this->set($k, '?', array($v));
+                $this->set($k, '?', [$v]);
             }
             return $this;
         } else {
@@ -1649,7 +1609,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param string $join         Query INNER JOIN
      * @return Doctrine_Query
      */
-    public function innerJoin($join, $params = array())
+    public function innerJoin($join, $params = [])
     {
         if (is_array($params)) {
             $this->_params['join'] = array_merge($this->_params['join'], $params);
@@ -1667,7 +1627,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param string $join         Query LEFT JOIN
      * @return Doctrine_Query
      */
-    public function leftJoin($join, $params = array())
+    public function leftJoin($join, $params = [])
     {
         if (is_array($params)) {
             $this->_params['join'] = array_merge($this->_params['join'], $params);
@@ -1698,9 +1658,9 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params        an array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function where($where, mixed $params = array())
+    public function where($where, mixed $params = [])
     {
-        $this->_params['where'] = array();
+        $this->_params['where'] = [];
 
         if (is_array($params)) {
             $this->_params['where'] = $params;
@@ -1719,9 +1679,9 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params        an array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function having($having, mixed $params = array())
+    public function having($having, mixed $params = [])
     {
-        $this->_params['having'] = array();
+        $this->_params['having'] = [];
         if (is_array($params)) {
             $this->_params['having'] = $params;
         } else {
@@ -1777,20 +1737,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      */
     protected function clear()
     {
-        $this->_sqlParts = array(
-                    'select'    => array(),
-                    'distinct'  => false,
-                    'forUpdate' => false,
-                    'from'      => array(),
-                    'set'       => array(),
-                    'join'      => array(),
-                    'where'     => array(),
-                    'groupby'   => array(),
-                    'having'    => array(),
-                    'orderby'   => array(),
-                    'limit'     => false,
-                    'offset'    => false,
-                    );
+        $this->_sqlParts = ['select'    => [], 'distinct'  => false, 'forUpdate' => false, 'from'      => [], 'set'       => [], 'join'      => [], 'where'     => [], 'groupby'   => [], 'having'    => [], 'orderby'   => [], 'limit'     => false, 'offset'    => false];
     }
 
     public function setHydrationMode($hydrationMode)
@@ -2057,7 +2004,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
         if ($append) {
             $this->_dqlParts[$queryPartName][] = $queryPart;
         } else {
-            $this->_dqlParts[$queryPartName] = array($queryPart);
+            $this->_dqlParts[$queryPartName] = [$queryPart];
         }
 
         $this->_state = Doctrine_Query::STATE_DIRTY;
@@ -2125,7 +2072,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      *
      * @param array $params
      */
-    abstract public function getSqlQuery($params = array());
+    abstract public function getSqlQuery($params = []);
 
     /**
      * parseDqlQuery

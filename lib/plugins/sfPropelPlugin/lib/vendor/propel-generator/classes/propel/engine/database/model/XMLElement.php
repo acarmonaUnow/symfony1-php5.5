@@ -35,14 +35,14 @@ abstract class XMLElement implements \Stringable {
 	 *
 	 * @var        array
 	 */
-	protected $attributes = array();
+	protected $attributes = [];
 
 	/**
 	 * Any associated vendor-specific information objects.
 	 *
 	 * @var        array VendorInfo[]
 	 */
-	protected $vendorInfos = array();
+	protected $vendorInfos = [];
 
 	/**
 	 * Replaces the old loadFromXML() so that we can use loadFromXML() to load the attribs into the class.
@@ -97,7 +97,7 @@ abstract class XMLElement implements \Stringable {
 		if (is_numeric($val)) {
 			return (bool) $val;
 		} else {
-			return (in_array(strtolower((string) $val), array('true', 't', 'y', 'yes'), true) ? true : false);
+			return (in_array(strtolower((string) $val), ['true', 't', 'y', 'yes'], true) ? true : false);
 		}
 	}
 

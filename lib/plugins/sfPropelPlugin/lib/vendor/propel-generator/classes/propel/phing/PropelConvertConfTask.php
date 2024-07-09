@@ -107,7 +107,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 		 * 'log' section and 'propel' sections. To maintain backward compatibility
 		 * we need to put 'log' back into the 'propel' section.
 		 */
-		$log = array();
+		$log = [];
 		if (isset($phpconf['log'])) {
 			$phpconf['propel']['log'] = $phpconf['log'];
 			unset($phpconf['log']);
@@ -148,7 +148,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 	 */
 	private static function simpleXmlToArray($xml)
 	{
-		$ar = array();
+		$ar = [];
 
 		foreach ( $xml->children() as $k => $v ) {
 
@@ -168,7 +168,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 
 				// if the child is not an array, transform it into one
 				if ( !is_array( $child ) ) {
-					$child = array( "value" => $child );
+					$child = ["value" => $child];
 				}
 
 				if ($ak == 'id') {
@@ -193,7 +193,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 				// array, that it has numeric keys.  this distinguishes it from simply having other
 				// nested element data.
 
-				if ( !is_array($ar[$k]) || !isset($ar[$k][0]) ) { $ar[$k] = array($ar[$k]); }
+				if ( !is_array($ar[$k]) || !isset($ar[$k][0]) ) { $ar[$k] = [$ar[$k]]; }
 				$ar[$k][] = $child;
 			}
 
@@ -227,7 +227,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 	 */
 	protected function getClassMap()
 	{
-		$phpconfClassmap = array();
+		$phpconfClassmap = [];
 
 		$generatorConfig = $this->getGeneratorConfig();
 
@@ -235,7 +235,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 
 			foreach ($dataModel->getDatabases() as $database) {
 
-				$classMap = array();
+				$classMap = [];
 
 				foreach ($database->getTables() as $table) {
 
@@ -251,7 +251,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 						// -----------------------------------------------------
 						// (this code is based on PropelOMTask)
 
-						foreach (array('tablemap', 'peerstub', 'objectstub') as $target) {
+						foreach (['tablemap', 'peerstub', 'objectstub'] as $target) {
 							$builder = $generatorConfig->getConfiguredBuilder($table, $target);
 							$this->log("Adding class mapping: " . $builder->getClassname() . ' => ' . $builder->getClassFilePath());
 							$classMap[$builder->getClassname()] = $builder->getClassFilePath();
@@ -293,7 +293,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 						// ------------------------
 
 						if ('MaterializedPath' == $table->treeMode()) {
-							foreach (array('nodepeerstub', 'nodestub') as $target) {
+							foreach (['nodepeerstub', 'nodestub'] as $target) {
 								$builder = $generatorConfig->getConfiguredBuilder($table, $target);
 								$this->log("Adding class mapping: " . $builder->getClassname() . ' => ' . $builder->getClassFilePath());
 								$classMap[$builder->getClassname()] = $builder->getClassFilePath();

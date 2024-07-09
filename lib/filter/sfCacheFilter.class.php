@@ -23,7 +23,7 @@ class sfCacheFilter extends sfFilter
     $request      = null,
     $response     = null,
     $routing      = null,
-    $cache        = array();
+    $cache        = [];
 
   /**
    * Initializes this Filter.
@@ -35,7 +35,7 @@ class sfCacheFilter extends sfFilter
    *
    * @throws <b>sfInitializationException</b> If an error occurs while initializing this Filter
    */
-  public function initialize($context, $parameters = array())
+  public function initialize($context, $parameters = [])
   {
     parent::initialize($context, $parameters);
 
@@ -202,7 +202,7 @@ class sfCacheFilter extends sfFilter
 
         if (sfConfig::get('sf_logging_enabled'))
         {
-          $this->context->getEventDispatcher()->notify(new sfEvent($this, 'application.log', array('ETag matches If-None-Match (send 304)')));
+          $this->context->getEventDispatcher()->notify(new sfEvent($this, 'application.log', ['ETag matches If-None-Match (send 304)']));
         }
       }
     }
@@ -219,7 +219,7 @@ class sfCacheFilter extends sfFilter
 
         if (sfConfig::get('sf_logging_enabled'))
         {
-          $this->context->getEventDispatcher()->notify(new sfEvent($this, 'application.log', array('Last-Modified matches If-Modified-Since (send 304)')));
+          $this->context->getEventDispatcher()->notify(new sfEvent($this, 'application.log', ['Last-Modified matches If-Modified-Since (send 304)']));
         }
       }
     }

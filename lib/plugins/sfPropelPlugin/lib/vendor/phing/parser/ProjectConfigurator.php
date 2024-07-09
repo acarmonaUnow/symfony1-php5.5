@@ -210,7 +210,7 @@ class ProjectConfigurator {
         // the old parsePropertyString() method, since it has more stringent
         // requirements.
         
-        $sb = preg_replace_callback('/\$\{([^}]+)\}/', array('ProjectConfigurator', 'replacePropertyCallback'), $value);
+        $sb = preg_replace_callback('/\$\{([^}]+)\}/', ['ProjectConfigurator', 'replacePropertyCallback'], $value);
         return $sb;        
     }
     

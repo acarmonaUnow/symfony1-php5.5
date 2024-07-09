@@ -37,7 +37,7 @@ abstract class Base<?php echo ucfirst((string) $this->getModuleName()) ?>Generat
    */
   public function getFilterFormClass()
   {
-    return '<?php echo isset($this->config['filter']['class']) && !in_array($this->config['filter']['class'], array(null, true, false), true) ? $this->config['filter']['class'] : $this->getModelClass().'FormFilter' ?>';
+    return '<?php echo isset($this->config['filter']['class']) && !in_array($this->config['filter']['class'], [null, true, false], true) ? $this->config['filter']['class'] : $this->getModelClass().'FormFilter' ?>';
 <?php unset($this->config['filter']['class']) ?>
   }
 

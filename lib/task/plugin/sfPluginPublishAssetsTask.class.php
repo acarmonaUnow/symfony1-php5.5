@@ -25,13 +25,9 @@ class sfPluginPublishAssetsTask extends sfPluginBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('plugins', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'Publish this plugin\'s assets'),
-    ));
+    $this->addArguments([new sfCommandArgument('plugins', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'Publish this plugin\'s assets')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('core-only', '', sfCommandOption::PARAMETER_NONE, 'If set only core plugins will publish their assets'),
-    ));
+    $this->addOptions([new sfCommandOption('core-only', '', sfCommandOption::PARAMETER_NONE, 'If set only core plugins will publish their assets')]);
 
     $this->namespace = 'plugin';
     $this->name = 'publish-assets';
@@ -55,7 +51,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $enabledPlugins = $this->configuration->getPlugins();
 

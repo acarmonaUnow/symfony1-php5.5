@@ -46,12 +46,12 @@ class PhpDocumentorTask extends Task
 	/**
 	 * @var array FileSet[] Filesets for files to parse.
 	 */
-	protected $filesets = array();
+	protected $filesets = [];
 	
 	/**
 	 * @var array FileSet[] Project documentation (README/INSTALL/CHANGELOG) files.
 	 */
-	protected $projDocFilesets = array();
+	protected $projDocFilesets = [];
 	
 	/**
 	 * @var string Package output format. 
@@ -426,7 +426,7 @@ class PhpDocumentorTask extends Task
 		}
 		
 		// append any files in filesets
-		$filesToParse = array();
+		$filesToParse = [];
 		foreach($this->filesets as $fs) {		    
 	        $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
 	        foreach($files as $filename) {
@@ -439,7 +439,7 @@ class PhpDocumentorTask extends Task
 		
 		
 		// append any files in filesets
-		$ricFiles = array();
+		$ricFiles = [];
 		foreach($this->projDocFilesets as $fs) {		    
 	        $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
 	        foreach($files as $filename) {

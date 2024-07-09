@@ -41,7 +41,7 @@ class sfPHPView extends sfView
 
     $coreHelpersLoaded = 1;
 
-    $helpers = array_unique(array_merge(array('Helper', 'Url', 'Asset', 'Tag', 'Escaping'), sfConfig::get('sf_standard_helpers')));
+    $helpers = array_unique(array_merge(['Helper', 'Url', 'Asset', 'Tag', 'Escaping'], sfConfig::get('sf_standard_helpers')));
 
     $this->context->getConfiguration()->loadHelpers($helpers);
   }
@@ -57,7 +57,7 @@ class sfPHPView extends sfView
   {
     if (sfConfig::get('sf_logging_enabled'))
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Render "%s"', $_sfFile))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Render "%s"', $_sfFile)]));
     }
 
     $this->loadCoreAndStandardHelpers();
@@ -127,13 +127,13 @@ class sfPHPView extends sfView
   {
     if (sfConfig::get('sf_logging_enabled'))
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Decorate content with "%s/%s"', $this->getDecoratorDirectory(), $this->getDecoratorTemplate()))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Decorate content with "%s/%s"', $this->getDecoratorDirectory(), $this->getDecoratorTemplate())]));
     }
 
     // set the decorator content as an attribute
     $attributeHolder = $this->attributeHolder;
 
-    $this->attributeHolder = $this->initializeAttributeHolder(array('sf_content' => new sfOutputEscaperSafe($content)));
+    $this->attributeHolder = $this->initializeAttributeHolder(['sf_content' => new sfOutputEscaperSafe($content)]);
     $this->attributeHolder->set('sf_type', 'layout');
 
     // check to see if the decorator template exists

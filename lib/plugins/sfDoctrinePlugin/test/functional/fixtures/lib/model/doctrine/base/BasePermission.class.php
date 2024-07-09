@@ -26,23 +26,14 @@ abstract class BasePermission extends myDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('permission');
-        $this->hasColumn('name', 'string', 255, array(
-             'type' => 'string',
-             'length' => 255,
-             ));
+        $this->hasColumn('name', 'string', 255, ['type' => 'string', 'length' => 255]);
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('User as Users', array(
-             'refClass' => 'UserPermission',
-             'local' => 'permission_id',
-             'foreign' => 'user_id'));
+        $this->hasMany('User as Users', ['refClass' => 'UserPermission', 'local' => 'permission_id', 'foreign' => 'user_id']);
 
-        $this->hasMany('Group as Groups', array(
-             'refClass' => 'GroupPermission',
-             'local' => 'permission_id',
-             'foreign' => 'group_id'));
+        $this->hasMany('Group as Groups', ['refClass' => 'GroupPermission', 'local' => 'permission_id', 'foreign' => 'group_id']);
     }
 }

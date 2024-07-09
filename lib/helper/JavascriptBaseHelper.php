@@ -33,7 +33,7 @@
  *   <?php echo link_to_function('Greeting', "alert('Hello world!')") ?>
  *   <?php echo link_to_function(image_tag('delete'), "do_delete()", array('confirm' => 'Really?')) ?>
  */
-function link_to_function($name, $function, $html_options = array())
+function link_to_function($name, $function, $html_options = [])
 {
   $html_options = _parse_attributes($html_options);
 
@@ -56,7 +56,7 @@ function link_to_function($name, $function, $html_options = array())
  * Examples:
  *   <?php echo button_to_function('Greeting', "alert('Hello world!')") ?>
  */
-function button_to_function($name, $function, $html_options = array())
+function button_to_function($name, $function, $html_options = [])
 {
   $html_options = _parse_attributes($html_options);
 
@@ -79,7 +79,7 @@ function javascript_tag($content = null)
 {
   if (null !== $content)
   {
-    return content_tag('script', javascript_cdata_section($content), array('type' => 'text/javascript'));
+    return content_tag('script', javascript_cdata_section($content), ['type' => 'text/javascript']);
   }
   else
   {
@@ -150,7 +150,7 @@ function array_or_string_for_javascript($option)
 */
 function options_for_javascript($options)
 {
-  $opts = array();
+  $opts = [];
   foreach ($options as $key => $value)
   {
     if (is_array($value))

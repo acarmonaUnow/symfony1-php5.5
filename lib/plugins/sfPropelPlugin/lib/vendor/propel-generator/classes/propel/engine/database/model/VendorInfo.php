@@ -36,7 +36,7 @@ class VendorInfo extends XMLElement {
 	 *
 	 * @var        array
 	 */
-	private $parameters = array();
+	private $parameters = [];
 
 	/**
 	 * Creates a new VendorInfo instance.
@@ -128,7 +128,7 @@ class VendorInfo extends XMLElement {
 	 *
 	 * @param      array $params Paramter data.
 	 */
-	public function setParameters(array $params = array())
+	public function setParameters(array $params = [])
 	{
 		$this->parameters = $params;
 	}

@@ -25,13 +25,7 @@ class sfPropelInsertSqlTask extends sfPropelBaseTask
    */
   protected function configure()
   {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', null),
-      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-      new sfCommandOption('phing-arg', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'Arbitrary phing argument'),
-    ));
+    $this->addOptions([new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'), new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', null), new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'), new sfCommandOption('phing-arg', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'Arbitrary phing argument')]);
 
     $this->namespace = 'propel';
     $this->name = 'insert-sql';
@@ -65,7 +59,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $this->schemaToXML(self::DO_NOT_CHECK_SCHEMA, 'generated-');
     $this->copyXmlSchemaFromPlugins('generated-');
@@ -73,7 +67,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
 
     $properties = $this->getProperties(sfConfig::get('sf_data_dir').'/sql/sqldb.map');
-    $sqls = array();
+    $sqls = [];
     foreach ($properties as $file => $connection)
     {
       if (null !== $options['connection'] && $options['connection'] != $connection)
@@ -83,7 +77,7 @@ EOF;
 
       if (!isset($sqls[$connection]))
       {
-        $sqls[$connection] = array();
+        $sqls[$connection] = [];
       }
 
       $sqls[$connection][] = $file;
@@ -92,12 +86,7 @@ EOF;
     if (
       !$options['no-confirmation']
       &&
-      !$this->askConfirmation(array(
-          'WARNING: The data in the database'.(count($sqls) > 1 ? 's' : '').' related to the connection name'.(count($sqls) > 1 ? 's' : ''),
-          sprintf('         %s will be removed.', implode(', ', array_keys($sqls))),
-          '',
-          'Are you sure you want to proceed? (y/N)',
-        ), 'QUESTION_LARGE', false)
+      !$this->askConfirmation(['WARNING: The data in the database'.(count($sqls) > 1 ? 's' : '').' related to the connection name'.(count($sqls) > 1 ? 's' : ''), sprintf('         %s will be removed.', implode(', ', array_keys($sqls))), '', 'Are you sure you want to proceed? (y/N)'], 'QUESTION_LARGE', false)
     )
     {
       $this->logSection('propel', 'Task aborted.');
@@ -106,7 +95,7 @@ EOF;
     }
 
     $this->tmpDir = sys_get_temp_dir().'/propel_insert_sql_'.random_int(11111, 99999);
-    register_shutdown_function(array($this, 'removeTmpDir'));
+    register_shutdown_function([$this, 'removeTmpDir']);
     mkdir($this->tmpDir, 0777, true);
     foreach ($sqls as $connection => $files)
     {

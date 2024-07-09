@@ -125,17 +125,17 @@ class Propel
 	/**
 	 * @var        array The global cache of database maps
 	 */
-	private static $dbMaps = array();
+	private static $dbMaps = [];
 
 	/**
 	 * @var        array The cache of DB adapter keys
 	 */
-	private static $adapterMap = array();
+	private static $adapterMap = [];
 
 	/**
 	 * @var        array Cache of established connections (to eliminate overhead).
 	 */
-	private static $connectionMap = array();
+	private static $connectionMap = [];
 
 	/**
 	 * @var        PropelConfiguration Propel-specific configuration.
@@ -170,65 +170,7 @@ class Propel
 	/**
 	 * @var        array A map of class names and their file paths for autoloading
 	 */
-	private static $autoloadMap = array(
-		'PropelException' => 'propel/PropelException.php',
-
-		'DBAdapter'       => 'propel/adapter/DBAdapter.php',
-		'DBMSSQL'         => 'propel/adapter/DBMSSQL.php',
-		'MssqlPropelPDO'  => 'propel/adapter/MSSQL/MssqlPropelPDO.php',
-		'MssqlDebugPDO'   => 'propel/adapter/MSSQL/MssqlDebugPDO.php',	
-		'MssqlDateTime'   => 'propel/adapter/MSSQL/MssqlDateTime.class.php',
-		'DBMySQL'         => 'propel/adapter/DBMySQL.php',
-		'DBMySQLi'        => 'propel/adapter/DBMySQLi.php',
-		'DBNone'          => 'propel/adapter/DBNone.php',
-		'DBOracle'        => 'propel/adapter/DBOracle.php',
-		'DBPostgres'      => 'propel/adapter/DBPostgres.php',
-		'DBSQLite'        => 'propel/adapter/DBSQLite.php',
-		'DBSybase'        => 'propel/adapter/DBSybase.php',
-
-		'BasicLogger'       => 'propel/logger/BasicLogger.php',
-		'MojaviLogAdapter'  => 'propel/logger/MojaviLogAdapter.php',
-
-		'ColumnMap'    => 'propel/map/ColumnMap.php',
-		'DatabaseMap'  => 'propel/map/DatabaseMap.php',
-		'TableMap'     => 'propel/map/TableMap.php',
-		'RelationMap'  => 'propel/map/RelationMap.php',
-		'ValidatorMap' => 'propel/map/ValidatorMap.php',
-
-		'BaseObject'                    => 'propel/om/BaseObject.php',
-		'NodeObject'                    => 'propel/om/NodeObject.php',
-		'Persistent'                    => 'propel/om/Persistent.php',
-		'PreOrderNodeIterator'          => 'propel/om/PreOrderNodeIterator.php',
-		'NestedSetPreOrderNodeIterator' => 'propel/om/NestedSetPreOrderNodeIterator.php',
-		'NestedSetRecursiveIterator'    => 'propel/om/NestedSetRecursiveIterator.php',
-
-		'BasePeer'            => 'propel/util/BasePeer.php',
-		'NodePeer'            => 'propel/util/NodePeer.php',
-		'Criteria'            => 'propel/util/Criteria.php',
-		'Join'                => 'propel/util/Join.php',
-		'PeerInfo'            => 'propel/util/PeerInfo.php',
-		'PropelColumnTypes'   => 'propel/util/PropelColumnTypes.php',
-		'PropelConfiguration' => 'propel/util/PropelConfiguration.php',
-		'PropelConfigurationIterator' => 'propel/util/PropelConfigurationIterator.php',
-		'PropelPDO'           => 'propel/util/PropelPDO.php',
-		'PropelPager'         => 'propel/util/PropelPager.php',
-		'PropelDateTime'      => 'propel/util/PropelDateTime.php',
-		'DebugPDO'            => 'propel/util/DebugPDO.php',
-		'DebugPDOStatement'   => 'propel/util/DebugPDOStatement.php',
-
-
-		'BasicValidator'      => 'propel/validator/BasicValidator.php',
-		'MatchValidator'      => 'propel/validator/MatchValidator.php',
-		'MaxLengthValidator'  => 'propel/validator/MaxLengthValidator.php',
-		'MaxValueValidator'   => 'propel/validator/MaxValueValidator.php',
-		'MinLengthValidator'  => 'propel/validator/MinLengthValidator.php',
-		'MinValueValidator'   => 'propel/validator/MinValueValidator.php',
-		'NotMatchValidator'   => 'propel/validator/NotMatchValidator.php',
-		'RequiredValidator'   => 'propel/validator/RequiredValidator.php',
-		'UniqueValidator'     => 'propel/validator/UniqueValidator.php',
-		'ValidValuesValidator' => 'propel/validator/ValidValuesValidator.php',
-		'ValidationFailed'    => 'propel/validator/ValidationFailed.php',
-	);
+	private static $autoloadMap = ['PropelException' => 'propel/PropelException.php', 'DBAdapter'       => 'propel/adapter/DBAdapter.php', 'DBMSSQL'         => 'propel/adapter/DBMSSQL.php', 'MssqlPropelPDO'  => 'propel/adapter/MSSQL/MssqlPropelPDO.php', 'MssqlDebugPDO'   => 'propel/adapter/MSSQL/MssqlDebugPDO.php', 'MssqlDateTime'   => 'propel/adapter/MSSQL/MssqlDateTime.class.php', 'DBMySQL'         => 'propel/adapter/DBMySQL.php', 'DBMySQLi'        => 'propel/adapter/DBMySQLi.php', 'DBNone'          => 'propel/adapter/DBNone.php', 'DBOracle'        => 'propel/adapter/DBOracle.php', 'DBPostgres'      => 'propel/adapter/DBPostgres.php', 'DBSQLite'        => 'propel/adapter/DBSQLite.php', 'DBSybase'        => 'propel/adapter/DBSybase.php', 'BasicLogger'       => 'propel/logger/BasicLogger.php', 'MojaviLogAdapter'  => 'propel/logger/MojaviLogAdapter.php', 'ColumnMap'    => 'propel/map/ColumnMap.php', 'DatabaseMap'  => 'propel/map/DatabaseMap.php', 'TableMap'     => 'propel/map/TableMap.php', 'RelationMap'  => 'propel/map/RelationMap.php', 'ValidatorMap' => 'propel/map/ValidatorMap.php', 'BaseObject'                    => 'propel/om/BaseObject.php', 'NodeObject'                    => 'propel/om/NodeObject.php', 'Persistent'                    => 'propel/om/Persistent.php', 'PreOrderNodeIterator'          => 'propel/om/PreOrderNodeIterator.php', 'NestedSetPreOrderNodeIterator' => 'propel/om/NestedSetPreOrderNodeIterator.php', 'NestedSetRecursiveIterator'    => 'propel/om/NestedSetRecursiveIterator.php', 'BasePeer'            => 'propel/util/BasePeer.php', 'NodePeer'            => 'propel/util/NodePeer.php', 'Criteria'            => 'propel/util/Criteria.php', 'Join'                => 'propel/util/Join.php', 'PeerInfo'            => 'propel/util/PeerInfo.php', 'PropelColumnTypes'   => 'propel/util/PropelColumnTypes.php', 'PropelConfiguration' => 'propel/util/PropelConfiguration.php', 'PropelConfigurationIterator' => 'propel/util/PropelConfigurationIterator.php', 'PropelPDO'           => 'propel/util/PropelPDO.php', 'PropelPager'         => 'propel/util/PropelPager.php', 'PropelDateTime'      => 'propel/util/PropelDateTime.php', 'DebugPDO'            => 'propel/util/DebugPDO.php', 'DebugPDOStatement'   => 'propel/util/DebugPDOStatement.php', 'BasicValidator'      => 'propel/validator/BasicValidator.php', 'MatchValidator'      => 'propel/validator/MatchValidator.php', 'MaxLengthValidator'  => 'propel/validator/MaxLengthValidator.php', 'MaxValueValidator'   => 'propel/validator/MaxValueValidator.php', 'MinLengthValidator'  => 'propel/validator/MinLengthValidator.php', 'MinValueValidator'   => 'propel/validator/MinValueValidator.php', 'NotMatchValidator'   => 'propel/validator/NotMatchValidator.php', 'RequiredValidator'   => 'propel/validator/RequiredValidator.php', 'UniqueValidator'     => 'propel/validator/UniqueValidator.php', 'ValidValuesValidator' => 'propel/validator/ValidValuesValidator.php', 'ValidationFailed'    => 'propel/validator/ValidationFailed.php'];
 
 	/**
 	 * Initializes Propel
@@ -245,7 +187,7 @@ class Propel
 		self::configureLogging();
 
 		// reset the connection map (this should enable runtime changes of connection params)
-		self::$connectionMap = array();
+		self::$connectionMap = [];
 		
 		if (isset(self::$configuration['classmap']) && is_array(self::$configuration['classmap'])) {
 		  self::$autoloadMap = array_merge(self::$configuration['classmap'], self::$autoloadMap);
@@ -283,7 +225,7 @@ class Propel
 				$type = $c['type'] ?? 'file';
 				$name = $c['name'] ?? './propel.log';
 				$ident = $c['ident'] ?? 'propel';
-				$conf = $c['conf'] ?? array();
+				$conf = $c['conf'] ?? [];
 				$level = $c['level'] ?? PEAR_LOG_DEBUG;
 				self::$logger = Log::singleton($type, $name, $ident, $conf, $level);
 			} // if isset()
@@ -595,7 +537,7 @@ class Propel
 
 		// load any driver options from the config file
 		// driver options are those PDO settings that have to be passed during the connection construction
-		$driver_options = array();
+		$driver_options = [];
 		if ( isset($conparams['options']) && is_array($conparams['options']) ) {
 			try {
 				self::processDriverOptions( $conparams['options'], $driver_options );
@@ -614,7 +556,7 @@ class Propel
 		// load any connection options from the config file
 		// connection attributes are those PDO flags that have to be set on the initialized connection
 		if (isset($conparams['attributes']) && is_array($conparams['attributes'])) {
-			$attributes = array();
+			$attributes = [];
 			try {
 				self::processDriverOptions( $conparams['attributes'], $attributes );
 			} catch (PropelException $e) {
@@ -627,7 +569,7 @@ class Propel
 
 		// initialize the connection using the settings provided in the config file. this could be a "SET NAMES <charset>" query for MySQL, for instance
 		$adapter = self::getDB($name);
-		$adapter->initConnection($con, isset($conparams['settings']) && is_array($conparams['settings']) ? $conparams['settings'] : array());
+		$adapter->initConnection($con, isset($conparams['settings']) && is_array($conparams['settings']) ? $conparams['settings'] : []);
 
 		return $con;
 	}
@@ -830,4 +772,4 @@ class Propel
 	}
 }
 
-spl_autoload_register(array('Propel', 'autoload'));
+spl_autoload_register(['Propel', 'autoload']);

@@ -31,10 +31,10 @@ class sfValidatorBoolean extends sfValidatorBase
    *
    * @see sfValidatorBase
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
-    $this->addOption('true_values', array('true', 't', 'yes', 'y', 'on', '1'));
-    $this->addOption('false_values', array('false', 'f', 'no', 'n', 'off', '0'));
+    $this->addOption('true_values', ['true', 't', 'yes', 'y', 'on', '1']);
+    $this->addOption('false_values', ['false', 'f', 'no', 'n', 'off', '0']);
 
     $this->setOption('required', false);
     $this->setOption('empty_value', false);
@@ -55,6 +55,6 @@ class sfValidatorBoolean extends sfValidatorBase
       return false;
     }
 
-    throw new sfValidatorError($this, 'invalid', array('value' => $value));
+    throw new sfValidatorError($this, 'invalid', ['value' => $value]);
   }
 }

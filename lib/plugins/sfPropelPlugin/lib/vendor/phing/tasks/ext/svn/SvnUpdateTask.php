@@ -43,7 +43,7 @@ class SvnUpdateTask extends SvnBaseTask
 
 		$this->log("Updating SVN repository at '" . $this->getToDir() . "'");
 
-		$this->run(array($this->getToDir()));
+		$this->run([$this->getToDir()]);
 	}
 }
 

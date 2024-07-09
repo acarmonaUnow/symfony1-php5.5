@@ -18,7 +18,7 @@
  */
 abstract class sfOutputEscaper
 {
-  static protected $safeClasses = array();
+  static protected $safeClasses = [];
 
   /**
    * Constructor stores the escaping method and value.
@@ -206,7 +206,7 @@ abstract class sfOutputEscaper
    */
   static public function markClassAsSafe($class)
   {
-    self::markClassesAsSafe(array($class));
+    self::markClassesAsSafe([$class]);
   }
 
   /**

@@ -201,23 +201,17 @@ class TGettext_MO extends TGettext
         // move to msgid hash table
         fseek($this->_handle, $offset_original);
         // read lengths and offsets of msgids
-        $original = array();
+        $original = [];
         for ($i = 0; $i < $count; $i++) {
-            $original[$i] = array(
-                'length' => $this->_readInt($be),
-                'offset' => $this->_readInt($be)
-            );
+            $original[$i] = ['length' => $this->_readInt($be), 'offset' => $this->_readInt($be)];
         }
 
         // move to msgstr hash table
         fseek($this->_handle, $offset_translat);
         // read lengths and offsets of msgstrs
-        $translat = array();
+        $translat = [];
         for ($i = 0; $i < $count; $i++) {
-            $translat[$i] = array(
-                'length' => $this->_readInt($be),
-                'offset' => $this->_readInt($be)
-            );
+            $translat[$i] = ['length' => $this->_readInt($be), 'offset' => $this->_readInt($be)];
         }
 
         // read all
@@ -298,7 +292,7 @@ class TGettext_MO extends TGettext
             foreach ($this->meta as $key => $val) {
                 $meta .= $key . ': ' . $val . "\n";
             }
-            $strings = array('' => $meta) + $this->strings;
+            $strings = ['' => $meta] + $this->strings;
         } else {
             $strings = $this->strings;
         }

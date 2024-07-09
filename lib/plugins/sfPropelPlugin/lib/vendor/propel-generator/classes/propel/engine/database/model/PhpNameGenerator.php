@@ -119,7 +119,7 @@ class PhpNameGenerator implements NameGenerator {
 	{
 		$name = "";
 		$regexp = '/([a-z0-9]+)/i';
-		$matches = array();
+		$matches = [];
 		if (preg_match_all($regexp, $schemaName, $matches)) {
 			foreach($matches[1] AS $tok) {
 				$name .= ucfirst(strtolower($tok));

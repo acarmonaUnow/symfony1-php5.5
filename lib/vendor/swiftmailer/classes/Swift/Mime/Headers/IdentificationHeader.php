@@ -25,7 +25,7 @@ class Swift_Mime_Headers_IdentificationHeader
    * @var string[]
    * @access private
    */
-  private $_ids = array();
+  private $_ids = [];
   
   /**
    * Creates a new IdentificationHeader with the given $name and $id.
@@ -77,7 +77,7 @@ class Swift_Mime_Headers_IdentificationHeader
    */
   public function setId($id)
   {
-    $this->setIds(is_array($id) ? $id : array($id));
+    $this->setIds(is_array($id) ? $id : [$id]);
   }
   
   /**
@@ -100,7 +100,7 @@ class Swift_Mime_Headers_IdentificationHeader
    */
   public function setIds(array $ids)
   {
-    $actualIds = array();
+    $actualIds = [];
     
     foreach ($ids as $id)
     {
@@ -133,7 +133,7 @@ class Swift_Mime_Headers_IdentificationHeader
   {
     if (!$this->getCachedValue())
     {
-      $angleAddrs = array();
+      $angleAddrs = [];
     
       foreach ($this->_ids as $id)
       {

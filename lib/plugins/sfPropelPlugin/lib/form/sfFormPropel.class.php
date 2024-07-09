@@ -29,7 +29,7 @@ abstract class sfFormPropel extends sfFormObject
    *
    * @see sfForm
    */
-  public function __construct($object = null, $options = array(), $CSRFSecret = null)
+  public function __construct($object = null, $options = [], $CSRFSecret = null)
   {
     $class = $this->getModelName();
     if (!$object)
@@ -47,7 +47,7 @@ abstract class sfFormPropel extends sfFormObject
       $this->isNew = $this->getObject()->isNew();
     }
 
-    parent::__construct(array(), $options, $CSRFSecret);
+    parent::__construct([], $options, $CSRFSecret);
 
     $this->updateDefaultsFromObject();
   }
@@ -118,7 +118,7 @@ abstract class sfFormPropel extends sfFormObject
     {
       try
       {
-        $method = sprintf('update%sColumn', call_user_func(array(constant($this->getObject()::class.'::PEER'), 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
+        $method = sprintf('update%sColumn', call_user_func([constant($this->getObject()::class.'::PEER'), 'translateFieldName'], $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
       }
       catch (Exception)
       {
@@ -229,7 +229,7 @@ abstract class sfFormPropel extends sfFormObject
 
     if (!$values[$field])
     {
-      $column = call_user_func(array(constant($this->getObject()::class.'::PEER'), 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
+      $column = call_user_func([constant($this->getObject()::class.'::PEER'), 'translateFieldName'], $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
       $getter = 'get'.$column;
 
       return $this->getObject()->$getter();
@@ -258,7 +258,7 @@ abstract class sfFormPropel extends sfFormObject
       throw new LogicException(sprintf('You cannot remove the current file for field "%s" as the field is not a file.', $field));
     }
 
-    $column = call_user_func(array(constant($this->getObject()::class.'::PEER'), 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
+    $column = call_user_func([constant($this->getObject()::class.'::PEER'), 'translateFieldName'], $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
     $getter = 'get'.$column;
 
     if (($directory = $this->validatorSchema[$field]->getOption('path')) && is_file($directory.DIRECTORY_SEPARATOR.$this->getObject()->$getter()))
@@ -288,7 +288,7 @@ abstract class sfFormPropel extends sfFormObject
       $file = $this->getValue($field);
     }
 
-    $column = call_user_func(array(constant($this->getObject()::class.'::PEER'), 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
+    $column = call_user_func([constant($this->getObject()::class.'::PEER'), 'translateFieldName'], $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
     $method = sprintf('generate%sFilename', $column);
 
     if (null !== $filename)

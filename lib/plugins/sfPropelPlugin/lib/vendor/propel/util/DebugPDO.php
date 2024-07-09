@@ -161,11 +161,7 @@ class DebugPDO extends PropelPDO
 	 *
 	 * @var        array
 	 */
-	protected static $defaultLogMethods = array(
-		'DebugPDO::exec',
-		'DebugPDO::query',
-		'DebugPDOStatement::execute',
-	);
+	protected static $defaultLogMethods = ['DebugPDO::exec', 'DebugPDO::query', 'DebugPDOStatement::execute'];
 	
 	/**
 	 * Creates a DebugPDO instance representing a connection to a database.
@@ -178,7 +174,7 @@ class DebugPDO extends PropelPDO
 	 * @param      array $driver_options (optional) A key=>value array of driver-specific connection options.
 	 * @throws     PDOException if there is an error during connection initialization.
 	 */
-	public function __construct($dsn, $username = null, $password = null, $driver_options = array())
+	public function __construct($dsn, $username = null, $password = null, $driver_options = [])
 	{
 		$debug = $this->getDebugSnapshot();
 		
@@ -198,7 +194,7 @@ class DebugPDO extends PropelPDO
 	{
 		// extending PDOStatement is not supported with persistent connections
 		if (!$this->getAttribute(PDO::ATTR_PERSISTENT)) {
-			$this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array($this->getStatementClass(), array($this)));
+			$this->setAttribute(PDO::ATTR_STATEMENT_CLASS, [$this->getStatementClass(), [$this]]);
 		} elseif (!$suppressError) {
 			throw new PropelException('Extending PDOStatement is not supported with persistent connections.');
 		}
@@ -289,7 +285,7 @@ class DebugPDO extends PropelPDO
 	 * @param      array One or more key=>value pairs to set attribute values for the PDOStatement object that this method returns.
 	 * @return     PDOStatement
 	 */
-	public function prepare($sql, $driver_options = array())
+	public function prepare($sql, $driver_options = [])
 	{
 		$debug	= $this->getDebugSnapshot();
 		$return	= parent::prepare($sql, $driver_options);
@@ -332,7 +328,7 @@ class DebugPDO extends PropelPDO
 		$debug	= $this->getDebugSnapshot();
 		$args	= func_get_args();
 		if (version_compare(PHP_VERSION, '5.3', '<')) {
-			$return	= call_user_func_array(array($this, 'parent::query'), $args);
+			$return	= call_user_func_array([$this, 'parent::query'], $args);
 		} else {
 			$return	= call_user_func_array(parent::query(...), $args);
 		}
@@ -421,11 +417,7 @@ class DebugPDO extends PropelPDO
 	 */
 	public function getDebugSnapshot()
 	{
-		return array(
-			'microtime'				=> microtime(true),
-			'memory_get_usage'		=> memory_get_usage($this->getLoggingConfig('realmemoryusage', false)),
-			'memory_get_peak_usage'	=> memory_get_peak_usage($this->getLoggingConfig('realmemoryusage', false)),
-			);
+		return ['microtime'				=> microtime(true), 'memory_get_usage'		=> memory_get_usage($this->getLoggingConfig('realmemoryusage', false)), 'memory_get_peak_usage'	=> memory_get_peak_usage($this->getLoggingConfig('realmemoryusage', false))];
 	}
 	
 	/**
@@ -459,7 +451,7 @@ class DebugPDO extends PropelPDO
 	{
 		$prefix		= '';
 		$now		= $this->getDebugSnapshot();
-		$logDetails	= array_keys($this->getLoggingConfig('details', array()));
+		$logDetails	= array_keys($this->getLoggingConfig('details', []));
 		$innerGlue	= $this->getLoggingConfig('innerglue', ': ');
 		$outerGlue	= $this->getLoggingConfig('outerglue', ' | ');
 		
@@ -528,7 +520,7 @@ class DebugPDO extends PropelPDO
 	 */
 	protected function getReadableBytes($bytes, $precision)
 	{
-		$suffix	= array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+		$suffix	= ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 	    $total	= count($suffix);
 	    
 	    for ($i = 0; $bytes > 1024 && $i < $total; $i++)

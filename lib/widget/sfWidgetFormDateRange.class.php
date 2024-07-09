@@ -33,7 +33,7 @@ class sfWidgetFormDateRange extends sfWidgetForm
    *
    * @see sfWidgetForm
    */
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     $this->addRequiredOption('from_date');
     $this->addRequiredOption('to_date');
@@ -53,14 +53,11 @@ class sfWidgetFormDateRange extends sfWidgetForm
    *
    * @see sfWidgetForm
    */
-  public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function render($name, $value = null, $attributes = [], $errors = [])
   {
-    $value = array_merge(array('from' => '', 'to' => ''), is_array($value) ? $value : array());
+    $value = array_merge(['from' => '', 'to' => ''], is_array($value) ? $value : []);
 
-    return strtr($this->translate($this->getOption('template')), array(
-      '%from_date%'      => $this->getOption('from_date')->render($name.'[from]', $value['from']),
-      '%to_date%'        => $this->getOption('to_date')->render($name.'[to]', $value['to']),
-    ));
+    return strtr($this->translate($this->getOption('template')), ['%from_date%'      => $this->getOption('from_date')->render($name.'[from]', $value['from']), '%to_date%'        => $this->getOption('to_date')->render($name.'[to]', $value['to'])]);
   }
 
   /**

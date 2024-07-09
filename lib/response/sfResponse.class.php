@@ -20,7 +20,7 @@
 abstract class sfResponse implements Serializable
 {
   protected
-    $options    = array(),
+    $options    = [],
     $dispatcher = null,
     $content    = '';
 
@@ -29,7 +29,7 @@ abstract class sfResponse implements Serializable
    *
    * @see initialize()
    */
-  public function __construct(sfEventDispatcher $dispatcher, $options = array())
+  public function __construct(sfEventDispatcher $dispatcher, $options = [])
   {
     $this->initialize($dispatcher, $options);
   }
@@ -48,7 +48,7 @@ abstract class sfResponse implements Serializable
    *
    * @throws <b>sfInitializationException</b> If an error occurs while initializing this sfResponse
    */
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
     $this->dispatcher = $dispatcher;
     $this->options = $options;
@@ -99,7 +99,7 @@ abstract class sfResponse implements Serializable
 
     if ($this->options['logging'])
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Send content (%s o)', strlen((string) $content)))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Send content (%s o)', strlen((string) $content))]));
     }
 
     echo $content;
@@ -135,7 +135,7 @@ abstract class sfResponse implements Serializable
    */
   public function __call($method, $arguments)
   {
-    $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'response.method_not_found', array('method' => $method, 'arguments' => $arguments)));
+    $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'response.method_not_found', ['method' => $method, 'arguments' => $arguments]));
     if (!$event->isProcessed())
     {
       throw new sfException(sprintf('Call to undefined method %s::%s.', $this::class, $method));

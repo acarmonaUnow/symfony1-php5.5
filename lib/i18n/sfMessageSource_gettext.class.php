@@ -57,7 +57,7 @@ class sfMessageSource_gettext extends sfMessageSource_File
     $mo->load();
     $result = $mo->toArray();
 
-    $results = array();
+    $results = [];
     $count = 0;
     foreach ($result['strings'] as $source => $target)
     {
@@ -91,7 +91,7 @@ class sfMessageSource_gettext extends sfMessageSource_File
       $po = $this->getPOFile($file);
       if (is_file($file) || is_file($po))
       {
-        return array($variant, $file, $po);
+        return [$variant, $file, $po];
       }
     }
 
@@ -141,7 +141,7 @@ class sfMessageSource_gettext extends sfMessageSource_File
     }
 
     // set the strings as untranslated.
-    $strings = array();
+    $strings = [];
     foreach ($messages as $message)
     {
       $strings[$message] = ''; 
@@ -335,13 +335,13 @@ class sfMessageSource_gettext extends sfMessageSource_File
 
     $po = TGettext::factory('PO', $po_file);
     $result['meta']['PO-Revision-Date'] = date('Y-m-d H:i:s');
-    $result['strings'] = array();
+    $result['strings'] = [];
 
     $po->fromArray($result);
     $mo = $po->toMO();
     if ($po->save() && $mo->save($mo_file))
     {
-      return array($variant, $mo_file, $po_file);
+      return [$variant, $mo_file, $po_file];
     }
     else
     {

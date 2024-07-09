@@ -108,7 +108,7 @@ CREATE TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))
 (
 	";
 
-		$lines = array();
+		$lines = [];
 
 		$databaseType = $this->getPlatform()->getDatabaseType();
 
@@ -194,7 +194,7 @@ CREATE TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))
 		$platform = $this->getPlatform();
 
 		$cols = $index->getColumns();
-		$list = array();
+		$list = [];
 		foreach ($cols as $col) {
 			$list[] = $this->quoteIdentifier($col) . ($index->hasColumnSize($col) ? '(' . $index->getColumnSize($col) . ')' : '');
 		}
@@ -239,7 +239,7 @@ CREATE TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))
 		 * implemented yet.
 		 * @var array
 		 */
-		$_indices = array();
+		$_indices = [];
 		
 		$this->collectIndexedColumns('PRIMARY', $table->getPrimaryKey(), $_indices, 'getName');
 		
@@ -308,7 +308,7 @@ CREATE TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))
 	  // DDLBuilder::getColumnList tests $col instanceof Column, and no callback - maybe we should too?
 	  $colnames = $columns;
 	  if ($callback) {
-	    $colnames = array();
+	    $colnames = [];
 	    foreach ($columns as $col) {
 	      $colnames[] = $col->$callback();
 	    }
@@ -321,12 +321,12 @@ CREATE TABLE ".$this->quoteIdentifier($this->prefixTablename($table->getName()))
 	   * capabilities on (col1), (col1, col2), and (col1, col2, col3)."
 	   * @link http://dev.mysql.com/doc/refman/5.5/en/mysql-indexes.html
 	   */
-	  $indexedColumns = array();
+	  $indexedColumns = [];
 	  foreach ($colnames as $colname) {
 	    $indexedColumns[] = $this->quoteIdentifier($colname);
 	    $indexedColumnsHash = implode(',', $indexedColumns);
 	    if (!array_key_exists($indexedColumnsHash, $collectedIndexes)) {
-	      $collectedIndexes[$indexedColumnsHash] = array();
+	      $collectedIndexes[$indexedColumnsHash] = [];
 	    }
 	    $collectedIndexes[$indexedColumnsHash][] = $indexName;
 	  }

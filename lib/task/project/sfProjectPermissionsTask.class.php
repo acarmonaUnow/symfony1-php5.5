@@ -20,7 +20,7 @@ class sfProjectPermissionsTask extends sfBaseTask
 {
   protected
     $current = null,
-    $failed  = array();
+    $failed  = [];
 
   /**
    * @see sfTask
@@ -41,7 +41,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     if (file_exists(sfConfig::get('sf_upload_dir')))
     {
@@ -52,11 +52,7 @@ EOF;
     $this->chmod(sfConfig::get('sf_log_dir'), 0777);
     $this->chmod(sfConfig::get('sf_root_dir').'/symfony', 0777);
 
-    $dirs = array(
-      sfConfig::get('sf_cache_dir'),
-      sfConfig::get('sf_log_dir'),
-      sfConfig::get('sf_upload_dir'),
-    );
+    $dirs = [sfConfig::get('sf_cache_dir'), sfConfig::get('sf_log_dir'), sfConfig::get('sf_upload_dir')];
 
     $dirFinder = sfFinder::type('dir');
     $fileFinder = sfFinder::type('file');
@@ -71,7 +67,7 @@ EOF;
     if (count($this->failed))
     {
       $this->logBlock(array_merge(
-        array('Permissions on the following file(s) could not be fixed:', ''),
+        ['Permissions on the following file(s) could not be fixed:', ''],
         array_map(fn($f) => ' - ' . sfDebug::shortenFilePath($f), $this->failed)
       ), 'ERROR_LARGE');
     }

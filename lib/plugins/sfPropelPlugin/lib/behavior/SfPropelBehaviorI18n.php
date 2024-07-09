@@ -20,9 +20,7 @@
  */
 class SfPropelBehaviorI18n extends SfPropelBehaviorBase
 {
-  protected $parameters = array(
-    'i18n_table' => null,
-  );
+  protected $parameters = ['i18n_table' => null];
 
   /**
    * Looks for tables marked as I18N and adds behaviors.
@@ -41,13 +39,13 @@ class SfPropelBehaviorI18n extends SfPropelBehaviorBase
 
         // add the current behavior to the translatable model
         $behavior = clone $this;
-        $behavior->setParameters(array('i18n_table' => $i18nTable->getName()));
+        $behavior->setParameters(['i18n_table' => $i18nTable->getName()]);
         $table->addBehavior($behavior);
 
         // add the translation behavior to the translation model
         $behavior = new $translationBehavior();
         $behavior->setName('symfony_i18n_translation');
-        $behavior->setParameters(array('culture_column' => $this->getCultureColumn($i18nTable)->getName()));
+        $behavior->setParameters(['culture_column' => $this->getCultureColumn($i18nTable)->getName()]);
         $i18nTable->addBehavior($behavior);
       }
     }
@@ -221,7 +219,7 @@ EOF;
   {
     $foreignKey = $this->getI18nTable()->getBehavior('symfony_i18n_translation')->getForeignKey();
     $refPhpName = $foreignKey->getRefPhpName() ?: $this->getI18nTable()->getPhpName();
-    $join = in_array($this->getBuildProperty('propel.useLeftJoinsInDoJoinMethods'), array(true, null), true) ? 'LEFT' : 'INNER';
+    $join = in_array($this->getBuildProperty('propel.useLeftJoinsInDoJoinMethods'), [true, null], true) ? 'LEFT' : 'INNER';
 
     $behaviors = $this->getTable()->getBehaviors();
     $mixerHook = !isset($behaviors['symfony_behaviors']) ? '' : <<<EOF

@@ -24,8 +24,8 @@ class sfConfigCache
 {
   protected
     $configuration = null,
-    $handlers      = array(),
-    $userHandlers  = array();
+    $handlers      = [],
+    $userHandlers  = [];
 
   /**
    * Constructor
@@ -83,8 +83,8 @@ class sfConfigCache
       foreach (array_keys($this->handlers) as $key)
       {
         // replace wildcard chars in the configuration
-        $pattern = strtr($key, array('.' => '\.', '*' => '(.*?)'));
-        $matches = array();
+        $pattern = strtr($key, ['.' => '\.', '*' => '(.*?)']);
+        $matches = [];
 
         // create pattern from config
         if (preg_match('#'.$pattern.'$#', $handler, $matches))
@@ -167,7 +167,7 @@ class sfConfigCache
     }
     else
     {
-      $files = is_readable($configPath) ? array($configPath) : array();
+      $files = is_readable($configPath) ? [$configPath] : [];
     }
 
     if (!isset($files[0]))
@@ -229,7 +229,7 @@ class sfConfigCache
     }
 
     // replace unfriendly filename characters with an underscore
-    $config  = str_replace(array('\\', '/', ' '), '_', $config);
+    $config  = str_replace(['\\', '/', ' '], '_', $config);
     $config .= '.php';
 
     return sfConfig::get('sf_config_cache_dir').'/'.$config;
@@ -287,7 +287,7 @@ class sfConfigCache
     }
 
     // ignore names
-    $ignore = array('.', '..', 'CVS', '.svn');
+    $ignore = ['.', '..', 'CVS', '.svn'];
 
     // create a file pointer to the module dir
     $fp = opendir($sf_app_module_dir);
@@ -305,7 +305,7 @@ class sfConfigCache
       if (is_readable($configPath))
       {
         // initialize the root configuration handler with this module name
-        $params = array('module_level' => true, 'module_name' => $directory);
+        $params = ['module_level' => true, 'module_name' => $directory];
 
         $this->handlers['config_handlers.yml']->initialize($params);
 
@@ -373,7 +373,7 @@ class sfConfigCache
    * @param class  $class   A configuration handler class
    * @param string $params  An array of options for the handler class initialization
    */
-  public function registerConfigHandler($handler, $class, $params = array())
+  public function registerConfigHandler($handler, $class, $params = [])
   {
     $this->userHandlers[$handler] = new $class($params);
   }
@@ -388,6 +388,6 @@ class sfConfigCache
     // user defined configuration handlers
     $this->handlers = array_merge($this->handlers, $this->userHandlers);
 
-    $this->userHandlers = array();
+    $this->userHandlers = [];
   }
 }

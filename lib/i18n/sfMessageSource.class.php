@@ -73,7 +73,7 @@ abstract class sfMessageSource implements sfIMessageSource
    * Array of translation messages.
    * @var array
    */
-  protected $messages = array();
+  protected $messages = [];
 
   /**
    * The source of message translations.
@@ -87,7 +87,7 @@ abstract class sfMessageSource implements sfIMessageSource
    */
   protected $cache;
 
-  protected $untranslated = array();
+  protected $untranslated = [];
 
   /**
    * Private constructor. sfMessageSource must be initialized using
@@ -158,7 +158,7 @@ abstract class sfMessageSource implements sfIMessageSource
   {
     $variants = $this->getCatalogueList($catalogue);
 
-    $this->messages = array();
+    $this->messages = [];
 
     foreach ($variants as $variant)
     {
@@ -291,7 +291,7 @@ abstract class sfMessageSource implements sfIMessageSource
    */
   public function &loadData($variant)
   {
-    return array();
+    return [];
   }
 
   /**
@@ -325,6 +325,6 @@ abstract class sfMessageSource implements sfIMessageSource
    */
   public function getCatalogueList($catalogue)
   {
-    return array();
+    return [];
   }
 }

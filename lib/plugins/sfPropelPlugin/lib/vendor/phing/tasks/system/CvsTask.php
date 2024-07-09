@@ -52,7 +52,7 @@ class CvsTask extends Task {
      * List of Commandline children 
      * @var array Commandline[]
      */
-    private $commandlines = array();
+    private $commandlines = [];
 
     /**
      * the CVSROOT variable.

@@ -23,13 +23,9 @@ class sfListTask extends sfCommandApplicationTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('namespace', sfCommandArgument::OPTIONAL, 'The namespace name'),
-    ));
+    $this->addArguments([new sfCommandArgument('namespace', sfCommandArgument::OPTIONAL, 'The namespace name')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('xml', null, sfCommandOption::PARAMETER_NONE, 'To output help as XML'),
-    ));
+    $this->addOptions([new sfCommandOption('xml', null, sfCommandOption::PARAMETER_NONE, 'To output help as XML')]);
 
     $this->briefDescription = 'Lists tasks';
 
@@ -51,9 +47,9 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
-    $tasks = array();
+    $tasks = [];
     foreach ($this->commandApplication->getTasks() as $name => $task)
     {
       if ($arguments['namespace'] && $arguments['namespace'] != $task->getNamespace())
@@ -97,7 +93,7 @@ EOF;
     }
     $width += strlen((string) $this->formatter->format('  ', 'INFO'));
 
-    $messages = array();
+    $messages = [];
     if ($namespace)
     {
       $messages[] = $this->formatter->format(sprintf("Available tasks for the \"%s\" namespace:", $namespace), 'COMMENT');
@@ -146,7 +142,7 @@ EOF;
     // display tasks
     ksort($tasks);
     $currentNamespace = 'foobar';
-    $namespaceArrayXML = array();
+    $namespaceArrayXML = [];
     foreach ($tasks as $name => $task)
     {
       if (!$namespace && $currentNamespace != $task->getNamespace())

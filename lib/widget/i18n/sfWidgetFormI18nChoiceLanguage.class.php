@@ -33,7 +33,7 @@ class sfWidgetFormI18nChoiceLanguage extends sfWidgetFormChoice
    *
    * @see sfWidgetFormChoice
    */
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);
 
@@ -49,7 +49,7 @@ class sfWidgetFormI18nChoiceLanguage extends sfWidgetFormChoice
     $addEmpty = $options['add_empty'] ?? false;
     if (false !== $addEmpty)
     {
-      $languages = array_merge(array('' => true === $addEmpty ? '' : $addEmpty), $languages);
+      $languages = array_merge(['' => true === $addEmpty ? '' : $addEmpty], $languages);
     }
 
     $this->setOption('choices', $languages);

@@ -38,7 +38,7 @@
 class TableMap {
 
   // The columns in the table
-  protected $columns = array();
+  protected $columns = [];
 
   // The database this table belongs to
   protected $dbMap;
@@ -59,13 +59,13 @@ class TableMap {
   protected $useIdGenerator;
   
   // The primary key columns in the table
-  protected $primaryKeys = array();
+  protected $primaryKeys = [];
   
   // The foreign key columns in the table
-  protected $foreignKeys = array();
+  protected $foreignKeys = [];
 
   // The relationships in the table
-  protected $relations = array();
+  protected $relations = [];
 
   // Relations are lazy loaded. This property tells if the relations are loaded or not
   protected $relationsBuilt = false;
@@ -440,7 +440,7 @@ class TableMap {
    * @param      array $columnMapping An associative array mapping column names (local => foreign)
    * @return     RelationMap the built RelationMap object
    */
-  public function addRelation($name, $tablePhpName, $type, $columnMapping = array(), $onDelete = null, $onUpdate = null)
+  public function addRelation($name, $tablePhpName, $type, $columnMapping = [], $onDelete = null, $onUpdate = null)
   {
     // note: using phpName for the second table allows the use of DatabaseMap::getTableByPhpName()
     // and this method autoloads the TableMap if the table isn't loaded yet
@@ -520,7 +520,7 @@ class TableMap {
    */
   public function getBehaviors()
   {
-    return array();
+    return [];
   }
 
   // Deprecated methods and attributres, to be removed

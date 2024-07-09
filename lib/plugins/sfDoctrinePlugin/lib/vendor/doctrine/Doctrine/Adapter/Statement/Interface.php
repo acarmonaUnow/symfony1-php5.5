@@ -84,7 +84,7 @@ interface Doctrine_Adapter_Statement_Interface
      *                              from a stored procedure, you must explicitly set the length.
      * @return boolean              Returns TRUE on success or FALSE on failure.
      */
-    public function bindParam($column, mixed &$variable, $type = null, $length = null, mixed $driverOptions = array());
+    public function bindParam($column, mixed &$variable, $type = null, $length = null, mixed $driverOptions = []);
 
     /**
      * Closes the cursor, enabling the statement to be executed again.
@@ -203,7 +203,7 @@ interface Doctrine_Adapter_Statement_Interface
      * @return mixed                        an instance of the required class with property names that correspond 
      *                                      to the column names or FALSE in case of an error.
      */
-    public function fetchObject($className = 'stdClass', $args = array());
+    public function fetchObject($className = 'stdClass', $args = []);
 
     /**
      * Retrieve a statement attribute 

@@ -34,7 +34,7 @@ include_once 'phing/system/io/FileWriter.php';
  */
 class Properties {
 
-    private $properties = array();
+    private $properties = [];
 
     /**
      * Load properties from a file.
@@ -71,7 +71,7 @@ class Properties {
             throw new IOException("Unable to parse contents of $filePath");
         }
 
-        $this->properties = array();
+        $this->properties = [];
         $sec_name = "";
 
         foreach($lines as $line) {

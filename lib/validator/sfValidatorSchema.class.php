@@ -21,7 +21,7 @@
 class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
 {
   protected
-    $fields        = array(),
+    $fields        = [],
     $preValidator  = null,
     $postValidator = null;
 
@@ -39,7 +39,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
    *
    * @see sfValidatorBase
    */
-  public function __construct($fields = null, $options = array(), $messages = array())
+  public function __construct($fields = null, $options = [], $messages = [])
   {
     if (is_array($fields))
     {
@@ -73,7 +73,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
    *
    * @see sfValidatorBase
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     $this->addOption('allow_extra_fields', false);
     $this->addOption('filter_extra_fields', true);
@@ -97,7 +97,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
   {
     if (null === $values)
     {
-      $values = array();
+      $values = [];
     }
 
     if (!is_array($values))
@@ -105,7 +105,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
       throw new InvalidArgumentException('You must pass an array parameter to the clean() method');
     }
 
-    $clean  = array();
+    $clean  = [];
     $unused = array_keys($this->fields);
     $errorSchema = new sfValidatorErrorSchema($this);
 
@@ -139,7 +139,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
       {
         if (!$this->options['allow_extra_fields'])
         {
-          $errorSchema->addError(new sfValidatorError($this, 'extra_fields', array('field' => $name)));
+          $errorSchema->addError(new sfValidatorError($this, 'extra_fields', ['field' => $name]));
         }
         else if (!$this->options['filter_extra_fields'])
         {
@@ -389,11 +389,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
     $value = trim((string) $value);
     $number = (float) $value;
     $modifier = strtolower($value[strlen($value) - 1]);
-    $exp_by_modifier = array(
-      'k' => 1,
-      'm' => 2,
-      'g' => 3,
-    );
+    $exp_by_modifier = ['k' => 1, 'm' => 2, 'g' => 3];
     if (array_key_exists($modifier, $exp_by_modifier)) {
       $exp = $exp_by_modifier[$modifier];
       $number = $number * 1024 ** $exp;

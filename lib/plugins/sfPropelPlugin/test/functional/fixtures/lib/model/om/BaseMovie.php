@@ -72,7 +72,7 @@ abstract class BaseMovie extends BaseObject  implements Persistent, \Stringable 
 	/**
 	 * @var array Current I18N objects
 	 */
-	protected $current_i18n = array();
+	protected $current_i18n = [];
 
 	/**
 	 * Get the [id] column value.
@@ -424,7 +424,7 @@ abstract class BaseMovie extends BaseObject  implements Persistent, \Stringable 
 	 * Array of ValidationFailed objects.
 	 * @var        array ValidationFailed[]
 	 */
-	protected $validationFailures = array();
+	protected $validationFailures = [];
 
 	/**
 	 * Gets any ValidationFailed objects that resulted from last call to validate().
@@ -453,7 +453,7 @@ abstract class BaseMovie extends BaseObject  implements Persistent, \Stringable 
 	{
 		$res = $this->doValidate($columns);
 		if ($res === true) {
-			$this->validationFailures = array();
+			$this->validationFailures = [];
 			return true;
 		} else {
 			$this->validationFailures = $res;
@@ -477,7 +477,7 @@ abstract class BaseMovie extends BaseObject  implements Persistent, \Stringable 
 			$this->alreadyInValidation = true;
 			$retval = null;
 
-			$failureMap = array();
+			$failureMap = [];
 
 
 			if (($retval = MoviePeer::doValidate($this, $columns)) !== true) {
@@ -546,10 +546,7 @@ abstract class BaseMovie extends BaseObject  implements Persistent, \Stringable 
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
 		$keys = MoviePeer::getFieldNames($keyType);
-		$result = array(
-			$keys[0] => $this->getId(),
-			$keys[1] => $this->getDirector(),
-		);
+		$result = [$keys[0] => $this->getId(), $keys[1] => $this->getDirector()];
 		return $result;
 	}
 
@@ -765,7 +762,7 @@ abstract class BaseMovie extends BaseObject  implements Persistent, \Stringable 
 	 */
 	public function initMovieI18ns()
 	{
-		$this->collMovieI18ns = array();
+		$this->collMovieI18ns = [];
 	}
 
 	/**
@@ -793,7 +790,7 @@ abstract class BaseMovie extends BaseObject  implements Persistent, \Stringable 
 
 		if ($this->collMovieI18ns === null) {
 			if ($this->isNew()) {
-			   $this->collMovieI18ns = array();
+			   $this->collMovieI18ns = [];
 			} else {
 
 				$criteria->add(MovieI18nPeer::ID, $this->id);

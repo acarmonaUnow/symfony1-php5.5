@@ -43,12 +43,12 @@ abstract class AbstractPropelDataModelTask extends Task {
 	 * Fileset of XML schemas which represent our data models.
 	 * @var        array Fileset[]
 	 */
-	protected $schemaFilesets = array();
+	protected $schemaFilesets = [];
 
 	/**
 	 * Data models that we collect. One from each XML schema file.
 	 */
-	protected $dataModels = array();
+	protected $dataModels = [];
 
 	/**
 	 * Have datamodels been initialized?
@@ -408,7 +408,7 @@ abstract class AbstractPropelDataModelTask extends Task {
 	 */
 	protected function loadDataModels()
 	{
-		$ads = array();
+		$ads = [];
 
 		// Get all matched files from schemaFilesets
 		foreach ($this->schemaFilesets as $fs) {
@@ -475,8 +475,8 @@ abstract class AbstractPropelDataModelTask extends Task {
 		if (!$this->packageObjectModel) {
 
 			$this->dataModels = $ads;
-			$this->databaseNames = array(); // doesn't seem to be used anywhere
-			$this->dataModelDbMap = array();
+			$this->databaseNames = []; // doesn't seem to be used anywhere
+			$this->dataModelDbMap = [];
 
 			// Different datamodels may state the same database
 			// names, we just want the unique names of databases.

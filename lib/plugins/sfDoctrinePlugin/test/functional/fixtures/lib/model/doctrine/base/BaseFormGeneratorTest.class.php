@@ -20,15 +20,9 @@ abstract class BaseFormGeneratorTest extends myDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('form_generator_test');
-        $this->hasColumn('name', 'string', 255, array(
-             'type' => 'string',
-             'length' => 255,
-             ));
+        $this->hasColumn('name', 'string', 255, ['type' => 'string', 'length' => 255]);
 
-        $this->option('symfony', array(
-             'form' => true,
-             'filter' => false,
-             ));
+        $this->option('symfony', ['form' => true, 'filter' => false]);
     }
 
     public function setUp()

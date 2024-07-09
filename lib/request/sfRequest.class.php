@@ -32,7 +32,7 @@ abstract class sfRequest implements ArrayAccess
     $dispatcher      = null,
     $content         = null,
     $method          = null,
-    $options         = array(),
+    $options         = [],
     $parameterHolder = null,
     $attributeHolder = null;
 
@@ -41,7 +41,7 @@ abstract class sfRequest implements ArrayAccess
    *
    * @see initialize()
    */
-  public function __construct(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array(), $options = array())
+  public function __construct(sfEventDispatcher $dispatcher, $parameters = [], $attributes = [], $options = [])
   {
     $this->initialize($dispatcher, $parameters, $attributes, $options);
   }
@@ -62,7 +62,7 @@ abstract class sfRequest implements ArrayAccess
    *
    * @throws <b>sfInitializationException</b> If an error occurs while initializing this sfRequest
    */
-  public function initialize(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array(), $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $parameters = [], $attributes = [], $options = [])
   {
     $this->dispatcher = $dispatcher;
 
@@ -102,7 +102,7 @@ abstract class sfRequest implements ArrayAccess
    */
   public function extractParameters($names)
   {
-    $array = array();
+    $array = [];
 
     $parameters = $this->parameterHolder->getAll();
     foreach ($parameters as $key => $value)
@@ -135,7 +135,7 @@ abstract class sfRequest implements ArrayAccess
    */
   public function setMethod($method)
   {
-    if (!in_array(strtoupper($method), array(self::GET, self::POST, self::PUT, self::DELETE, self::HEAD)))
+    if (!in_array(strtoupper($method), [self::GET, self::POST, self::PUT, self::DELETE, self::HEAD]))
     {
       throw new sfException(sprintf('Invalid request method: %s.', $method));
     }
@@ -315,7 +315,7 @@ abstract class sfRequest implements ArrayAccess
    */
   public function __call($method, $arguments)
   {
-    $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'request.method_not_found', array('method' => $method, 'arguments' => $arguments)));
+    $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'request.method_not_found', ['method' => $method, 'arguments' => $arguments]));
     if (!$event->isProcessed())
     {
       throw new sfException(sprintf('Call to undefined method %s::%s.', $this::class, $method));

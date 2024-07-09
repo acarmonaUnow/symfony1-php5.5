@@ -79,7 +79,7 @@ class sfWebDebugPanelPropel extends sfWebDebugPanel
     $flagSlow  = $config->getParameter('debugpdo.logging.details.slow.enabled', false);
     $threshold = $config->getParameter('debugpdo.logging.details.slow.threshold', DebugPDO::DEFAULT_SLOW_THRESHOLD);
 
-    $html = array();
+    $html = [];
     foreach ($this->webDebug->getLogger()->getLogs() as $log)
     {
       if ('sfPropelLogger' != $log['type'])
@@ -87,7 +87,7 @@ class sfWebDebugPanelPropel extends sfWebDebugPanel
         continue;
       }
 
-      $details = array();
+      $details = [];
       $slowQuery = false;
 
       $parts = explode($outerGlue, (string) $log['message']);

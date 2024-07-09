@@ -55,25 +55,25 @@ class sfMessageFormat
    * A list of loaded message catalogues.
    * @var array
    */
-  protected $catalogues = array();
+  protected $catalogues = [];
 
   /**
    * The translation messages.
    * @var array
    */
-  protected $messages = array();
+  protected $messages = [];
 
   /**
    * A list of untranslated messages.
    * @var array
    */
-  protected $untranslated = array();
+  protected $untranslated = [];
 
   /**
    * The prefix and suffix to append to untranslated messages.
    * @var array
    */
-  protected $postscript = array('', '');
+  protected $postscript = ['', ''];
 
   /**
    * Set the default catalogue.
@@ -156,7 +156,7 @@ class sfMessageFormat
    * @param string  $charset    charset, the input AND output charset catalogue.
    * @return string translated string.
    */
-  public function format($string, $args = array(), $catalogue = null, $charset = null)
+  public function format($string, $args = [], $catalogue = null, $charset = null)
   {
     // make sure that objects with __toString() are converted to strings
     $string = (string) $string;
@@ -178,11 +178,11 @@ class sfMessageFormat
    * @param string  $catalogue  get the translation from a particular message catalogue.
    * @return string translated string.
    */
-  protected function formatString($string, $args = array(), $catalogue = null)
+  protected function formatString($string, $args = [], $catalogue = null)
   {
     if (empty($args))
     {
-      $args = array();
+      $args = [];
     }
 
     if (empty($catalogue))

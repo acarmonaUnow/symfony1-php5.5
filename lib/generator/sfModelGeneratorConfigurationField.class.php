@@ -182,12 +182,12 @@ class sfModelGeneratorConfigurationField
    */
   public function getRendererArguments()
   {
-    return $this->config['renderer_arguments'] ?? array();
+    return $this->config['renderer_arguments'] ?? [];
   }
 
   static public function splitFieldWithFlag($field)
   {
-    if (in_array($flag = $field[0], array('=', '_', '~')))
+    if (in_array($flag = $field[0], ['=', '_', '~']))
     {
       $field = substr((string) $field, 1);
     }
@@ -196,7 +196,7 @@ class sfModelGeneratorConfigurationField
       $flag = null;
     }
 
-    return array($field, $flag);
+    return [$field, $flag];
   }
 
   /**

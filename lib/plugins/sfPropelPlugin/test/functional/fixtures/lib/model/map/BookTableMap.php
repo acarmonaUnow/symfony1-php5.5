@@ -50,7 +50,7 @@ class BookTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Article', 'Article', RelationMap::ONE_TO_MANY, array('id' => 'book_id', ), null, null);
+    $this->addRelation('Article', 'Article', RelationMap::ONE_TO_MANY, ['id' => 'book_id'], null, null);
 	} // buildRelations()
 
 	/**
@@ -61,10 +61,7 @@ class BookTableMap extends TableMap {
 	 */
 	public function getBehaviors()
 	{
-		return array(
-			'symfony' => array('form' => 'true', 'filter' => 'true', ),
-			'symfony_behaviors' => array(),
-		);
+		return ['symfony' => ['form' => 'true', 'filter' => 'true'], 'symfony_behaviors' => []];
 	} // getBehaviors()
 
 } // BookTableMap

@@ -35,7 +35,7 @@ class UnzipTask extends ExtractBaseTask {
     
     protected function extractArchive(PhingFile $zipfile)
     {
-        $extractParams = array('add_path' => $this->todir->getAbsolutePath());
+        $extractParams = ['add_path' => $this->todir->getAbsolutePath()];
         if(!empty($this->removepath))
         {
             $extractParams['remove_path'] = $this->removepath;

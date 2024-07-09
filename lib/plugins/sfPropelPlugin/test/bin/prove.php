@@ -23,9 +23,6 @@ if ($files = glob(sfToolkit::getTmpDir().DIRECTORY_SEPARATOR.'/sf_autoload_unit_
 $h = new lime_harness(new lime_output_color);
 $h->base_dir = realpath(__DIR__.'/..');
 
-$h->register(sfFinder::type('file')->prune('fixtures')->name('*Test.php')->in(array(
-  $h->base_dir.'/unit',
-  $h->base_dir.'/functional',
-)));
+$h->register(sfFinder::type('file')->prune('fixtures')->name('*Test.php')->in([$h->base_dir.'/unit', $h->base_dir.'/functional']));
 
 exit($h->run() ? 0 : 1);

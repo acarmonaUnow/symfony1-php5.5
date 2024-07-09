@@ -23,7 +23,7 @@ require_once __DIR__.'/sfEvent.php';
 class sfEventDispatcher
 {
   protected
-    $listeners = array();
+    $listeners = [];
 
   /**
    * Connects a listener to a given event name.
@@ -35,7 +35,7 @@ class sfEventDispatcher
   {
     if (!isset($this->listeners[$name]))
     {
-      $this->listeners[$name] = array();
+      $this->listeners[$name] = [];
     }
 
     $this->listeners[$name][] = $listener;
@@ -115,7 +115,7 @@ class sfEventDispatcher
   {
     foreach ($this->getListeners($event->getName()) as $listener)
     {
-      $value = call_user_func_array($listener, array($event, $value));
+      $value = call_user_func_array($listener, [$event, $value]);
     }
 
     $event->setReturnValue($value);
@@ -134,7 +134,7 @@ class sfEventDispatcher
   {
     if (!isset($this->listeners[$name]))
     {
-      $this->listeners[$name] = array();
+      $this->listeners[$name] = [];
     }
 
     return (boolean) count($this->listeners[$name]);
@@ -151,7 +151,7 @@ class sfEventDispatcher
   {
     if (!isset($this->listeners[$name]))
     {
-      return array();
+      return [];
     }
 
     return $this->listeners[$name];

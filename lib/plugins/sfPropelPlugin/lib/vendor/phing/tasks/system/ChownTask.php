@@ -35,7 +35,7 @@ class ChownTask extends Task {
 
     private $user;
 
-    private $filesets = array();
+    private $filesets = [];
 
     private $filesystem;
 

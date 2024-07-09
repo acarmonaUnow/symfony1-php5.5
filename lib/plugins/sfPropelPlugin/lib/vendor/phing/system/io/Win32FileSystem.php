@@ -30,7 +30,7 @@ class Win32FileSystem extends FileSystem {
     protected $altSlash;
     protected $semicolon;
 
-    private static $driveDirCache = array();
+    private static $driveDirCache = [];
 
     function __construct() {
         $this->slash = self::getSeparator();
@@ -432,7 +432,7 @@ class Win32FileSystem extends FileSystem {
                 }
             }
         }
-        $fs = array();
+        $fs = [];
         $j = (int) 0;
         $slash = (string) $this->slash;
         for ($i = 0; $i < 26; $i++) {
@@ -461,7 +461,7 @@ class Win32FileSystem extends FileSystem {
         if (!$dir) {
             throw new Exception("Can't open directory " . $f->__toString());
         }
-        $vv = array();
+        $vv = [];
         while (($file = @readdir($dir)) !== false) {
             if ($file == "." || $file == "..") {
                 continue;

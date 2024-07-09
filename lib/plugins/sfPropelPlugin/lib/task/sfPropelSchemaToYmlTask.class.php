@@ -39,7 +39,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $this->schemaToYML(self::CHECK_SCHEMA);
   }

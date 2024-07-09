@@ -126,7 +126,7 @@ class Doctrine_Export_Pgsql extends Doctrine_Export
             return true;
         }
         
-        $sql = array();
+        $sql = [];
 
         if (isset($changes['add']) && is_array($changes['add'])) {
             foreach ($changes['add'] as $fieldName => $field) {
@@ -294,7 +294,7 @@ class Doctrine_Export_Pgsql extends Doctrine_Export
      *                          );
      * @return string
      */
-    public function createSequenceSql($sequenceName, $start = 1, array $options = array())
+    public function createSequenceSql($sequenceName, $start = 1, array $options = [])
     {
         $sequenceName = $this->conn->quoteIdentifier($this->conn->formatter->getSequenceName($sequenceName), true);
         return 'CREATE SEQUENCE ' . $sequenceName . ' INCREMENT 1' .
@@ -320,7 +320,7 @@ class Doctrine_Export_Pgsql extends Doctrine_Export
      * @param array $options
      * @return unknown
      */
-    public function createTableSql($name, array $fields, array $options = array())
+    public function createTableSql($name, array $fields, array $options = [])
     {
         if ( ! $name) {
             throw new Doctrine_Export_Exception('no valid table name specified');

@@ -28,7 +28,7 @@ class sfFormSymfony extends sfForm
    *
    * @see sfForm
    */
-  public function __construct($defaults = array(), $options = array(), $CSRFSecret = null)
+  public function __construct($defaults = [], $options = [], $CSRFSecret = null)
   {
     parent::__construct($defaults, $options, $CSRFSecret);
 
@@ -78,7 +78,7 @@ class sfFormSymfony extends sfForm
     {
       if (self::$dispatcher)
       {
-        self::$dispatcher->notify(new sfEvent($this, 'form.validation_error', array('error' => $error)));
+        self::$dispatcher->notify(new sfEvent($this, 'form.validation_error', ['error' => $error]));
       }
 
       throw $error;
@@ -97,7 +97,7 @@ class sfFormSymfony extends sfForm
   {
     if (self::$dispatcher)
     {
-      $event = self::$dispatcher->notifyUntil(new sfEvent($this, 'form.method_not_found', array('method' => $method, 'arguments' => $arguments)));
+      $event = self::$dispatcher->notifyUntil(new sfEvent($this, 'form.method_not_found', ['method' => $method, 'arguments' => $arguments]));
       if ($event->isProcessed())
       {
         return $event->getReturnValue();

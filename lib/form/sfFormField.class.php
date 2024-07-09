@@ -112,7 +112,7 @@ class sfFormField implements \Stringable
    *
    * @return string The rendered widget
    */
-  function render($attributes = array())
+  function render($attributes = [])
   {
     if ($this->parent)
     {
@@ -137,20 +137,20 @@ class sfFormField implements \Stringable
    *
    * @return string The formatted row
    */
-  public function renderRow($attributes = array(), $label = null, $help = null)
+  public function renderRow($attributes = [], $label = null, $help = null)
   {
     if (null === $this->parent)
     {
       throw new LogicException(sprintf('Unable to render the row for "%s".', $this->name));
     }
 
-    $field = $this->parent->getWidget()->renderField($this->name, $this->value, !is_array($attributes) ? array() : $attributes, $this->error);
+    $field = $this->parent->getWidget()->renderField($this->name, $this->value, !is_array($attributes) ? [] : $attributes, $this->error);
 
     $error = $this->error instanceof sfValidatorErrorSchema ? $this->error->getGlobalErrors() : $this->error;
 
     $help = $help ?? $this->parent->getWidget()->getHelp($this->name);
 
-    return strtr($this->parent->getWidget()->getFormFormatter()->formatRow($this->renderLabel($label), $field, $error, $help), array('%hidden_fields%' => ''));
+    return strtr($this->parent->getWidget()->getFormFormatter()->formatRow($this->renderLabel($label), $field, $error, $help), ['%hidden_fields%' => '']);
   }
 
   /**
@@ -195,7 +195,7 @@ class sfFormField implements \Stringable
    *
    * @return string The label tag
    */
-  public function renderLabel($label = null, $attributes = array())
+  public function renderLabel($label = null, $attributes = [])
   {
     if (null === $this->parent)
     {

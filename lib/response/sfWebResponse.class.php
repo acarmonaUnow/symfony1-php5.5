@@ -28,61 +28,19 @@ class sfWebResponse extends sfResponse
     RAW    = 'RAW';
 
   protected
-    $cookies     = array(),
+    $cookies     = [],
     $statusCode  = 200,
     $statusText  = 'OK',
     $headerOnly  = false,
-    $headers     = array(),
-    $metas       = array(),
-    $httpMetas   = array(),
-    $positions   = array('first', '', 'last'),
-    $stylesheets = array(),
-    $javascripts = array(),
-    $slots       = array();
+    $headers     = [],
+    $metas       = [],
+    $httpMetas   = [],
+    $positions   = ['first', '', 'last'],
+    $stylesheets = [],
+    $javascripts = [],
+    $slots       = [];
 
-  static protected $statusTexts = array(
-    '100' => 'Continue',
-    '101' => 'Switching Protocols',
-    '200' => 'OK',
-    '201' => 'Created',
-    '202' => 'Accepted',
-    '203' => 'Non-Authoritative Information',
-    '204' => 'No Content',
-    '205' => 'Reset Content',
-    '206' => 'Partial Content',
-    '300' => 'Multiple Choices',
-    '301' => 'Moved Permanently',
-    '302' => 'Found',
-    '303' => 'See Other',
-    '304' => 'Not Modified',
-    '305' => 'Use Proxy',
-    '306' => '(Unused)',
-    '307' => 'Temporary Redirect',
-    '400' => 'Bad Request',
-    '401' => 'Unauthorized',
-    '402' => 'Payment Required',
-    '403' => 'Forbidden',
-    '404' => 'Not Found',
-    '405' => 'Method Not Allowed',
-    '406' => 'Not Acceptable',
-    '407' => 'Proxy Authentication Required',
-    '408' => 'Request Timeout',
-    '409' => 'Conflict',
-    '410' => 'Gone',
-    '411' => 'Length Required',
-    '412' => 'Precondition Failed',
-    '413' => 'Request Entity Too Large',
-    '414' => 'Request-URI Too Long',
-    '415' => 'Unsupported Media Type',
-    '416' => 'Requested Range Not Satisfiable',
-    '417' => 'Expectation Failed',
-    '500' => 'Internal Server Error',
-    '501' => 'Not Implemented',
-    '502' => 'Bad Gateway',
-    '503' => 'Service Unavailable',
-    '504' => 'Gateway Timeout',
-    '505' => 'HTTP Version Not Supported',
-  );
+  static protected $statusTexts = ['100' => 'Continue', '101' => 'Switching Protocols', '200' => 'OK', '201' => 'Created', '202' => 'Accepted', '203' => 'Non-Authoritative Information', '204' => 'No Content', '205' => 'Reset Content', '206' => 'Partial Content', '300' => 'Multiple Choices', '301' => 'Moved Permanently', '302' => 'Found', '303' => 'See Other', '304' => 'Not Modified', '305' => 'Use Proxy', '306' => '(Unused)', '307' => 'Temporary Redirect', '400' => 'Bad Request', '401' => 'Unauthorized', '402' => 'Payment Required', '403' => 'Forbidden', '404' => 'Not Found', '405' => 'Method Not Allowed', '406' => 'Not Acceptable', '407' => 'Proxy Authentication Required', '408' => 'Request Timeout', '409' => 'Conflict', '410' => 'Gone', '411' => 'Length Required', '412' => 'Precondition Failed', '413' => 'Request Entity Too Large', '414' => 'Request-URI Too Long', '415' => 'Unsupported Media Type', '416' => 'Requested Range Not Satisfiable', '417' => 'Expectation Failed', '500' => 'Internal Server Error', '501' => 'Not Implemented', '502' => 'Bad Gateway', '503' => 'Service Unavailable', '504' => 'Gateway Timeout', '505' => 'HTTP Version Not Supported'];
 
   /**
      * @see sfResponse
@@ -123,12 +81,12 @@ class sfWebResponse extends sfResponse
    *
    * @see sfResponse
    */
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
     parent::initialize($dispatcher, $options);
 
-    $this->javascripts = array_combine($this->positions, array_fill(0, count($this->positions), array()));
-    $this->stylesheets = array_combine($this->positions, array_fill(0, count($this->positions), array()));
+    $this->javascripts = array_combine($this->positions, array_fill(0, count($this->positions), []));
+    $this->stylesheets = array_combine($this->positions, array_fill(0, count($this->positions), []));
 
     if (!isset($this->options['charset']))
     {
@@ -199,15 +157,7 @@ class sfWebResponse extends sfResponse
       }
     }
 
-    $this->cookies[$name] = array(
-      'name'     => $name,
-      'value'    => $value,
-      'expire'   => $expire,
-      'path'     => $path,
-      'domain'   => $domain,
-      'secure'   => $secure ? true : false,
-      'httpOnly' => $httpOnly,
-    );
+    $this->cookies[$name] = ['name'     => $name, 'value'    => $value, 'expire'   => $expire, 'path'     => $path, 'domain'   => $domain, 'secure'   => $secure ? true : false, 'httpOnly' => $httpOnly];
   }
 
   /**
@@ -364,7 +314,7 @@ class sfWebResponse extends sfResponse
 
     if ($this->options['logging'])
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Send status "%s"', $status))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Send status "%s"', $status)]));
     }
 
     // headers
@@ -378,7 +328,7 @@ class sfWebResponse extends sfResponse
 
       if ($value != '' && $this->options['logging'])
       {
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Send header "%s: %s"', $name, $value))));
+        $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Send header "%s: %s"', $name, $value)]));
       }
     }
 
@@ -389,7 +339,7 @@ class sfWebResponse extends sfResponse
 
       if ($this->options['logging'])
       {
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Send cookie "%s": "%s"', $cookie['name'], $cookie['value']))));
+        $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Send cookie "%s": "%s"', $cookie['name'], $cookie['value'])]));
       }
     }
     // prevent resending the headers
@@ -431,7 +381,7 @@ class sfWebResponse extends sfResponse
    */
   protected function normalizeHeaderName($name)
   {
-    return strtr(ucwords(strtr(strtolower($name), array('_' => ' ', '-' => ' '))), array(' ' => '-'));
+    return strtr(ucwords(strtr(strtolower($name), ['_' => ' ', '-' => ' '])), [' ' => '-']);
   }
 
   /**
@@ -472,7 +422,7 @@ class sfWebResponse extends sfResponse
   public function addVaryHttpHeader($header)
   {
     $vary = $this->getHttpHeader('Vary');
-    $currentHeaders = array();
+    $currentHeaders = [];
     if ($vary)
     {
       $currentHeaders = preg_split('/\s*,\s*/', $vary);
@@ -495,7 +445,7 @@ class sfWebResponse extends sfResponse
   public function addCacheControlHttpHeader($name, $value = null)
   {
     $cacheControl = $this->getHttpHeader('Cache-Control');
-    $currentHeaders = array();
+    $currentHeaders = [];
     if ($cacheControl)
     {
       foreach (preg_split('/\s*,\s*/', $cacheControl) as $tmp)
@@ -506,7 +456,7 @@ class sfWebResponse extends sfResponse
     }
     $currentHeaders[str_replace('_', '-', strtolower($name))] = $value;
 
-    $headers = array();
+    $headers = [];
     foreach ($currentHeaders as $key => $value)
     {
       $headers[] = $key.(null !== $value ? '='.$value : '');
@@ -647,7 +597,7 @@ class sfWebResponse extends sfResponse
   {
     if (self::ALL === $position)
     {
-      $stylesheets = array();
+      $stylesheets = [];
       foreach ($this->getPositions() as $position)
       {
         foreach ($this->stylesheets[$position] as $file => $options)
@@ -675,7 +625,7 @@ class sfWebResponse extends sfResponse
    * @param string $position  Position
    * @param array  $options   Stylesheet options
    */
-  public function addStylesheet($file, $position = '', $options = array())
+  public function addStylesheet($file, $position = '', $options = [])
   {
     $this->validatePosition($position);
 
@@ -709,7 +659,7 @@ class sfWebResponse extends sfResponse
   {
     if (self::ALL === $position)
     {
-      $javascripts = array();
+      $javascripts = [];
       foreach ($this->getPositions() as $position)
       {
         foreach ($this->javascripts[$position] as $file => $options)
@@ -737,7 +687,7 @@ class sfWebResponse extends sfResponse
    * @param string $position  Position
    * @param array  $options   Javascript options
    */
-  public function addJavascript($file, $position = '', $options = array())
+  public function addJavascript($file, $position = '', $options = [])
   {
     $this->validatePosition($position);
 
@@ -803,7 +753,7 @@ class sfWebResponse extends sfResponse
    */
   public function clearHttpHeaders()
   {
-    $this->headers = array();
+    $this->headers = [];
   }
 
   /**
@@ -847,7 +797,7 @@ class sfWebResponse extends sfResponse
    */
   public function serialize()
   {
-    return serialize(array($this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots));
+    return serialize([$this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots]);
   }
 
   /**

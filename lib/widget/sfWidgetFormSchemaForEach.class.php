@@ -29,7 +29,7 @@ class sfWidgetFormSchemaForEach extends sfWidgetFormSchema
    *
    * @see sfWidgetFormSchema
    */
-  public function __construct(sfWidgetFormSchema $widget, $count, $options = array(), $attributes = array(), $labels = array())
+  public function __construct(sfWidgetFormSchema $widget, $count, $options = [], $attributes = [], $labels = [])
   {
     parent::__construct(array_fill(0, $count, $widget), $options, $attributes, $labels);
   }

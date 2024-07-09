@@ -32,10 +32,7 @@
 class SoftDeleteBehavior extends Behavior
 {
 	// default parameters value
-  protected $parameters = array(
-    'add_columns'    => 'true',
-    'deleted_column' => 'deleted_at',
-  );
+  protected $parameters = ['add_columns'    => 'true', 'deleted_column' => 'deleted_at'];
   
   /**
    * Add the deleted_column to the current table
@@ -44,10 +41,7 @@ class SoftDeleteBehavior extends Behavior
   {
     if ($this->getParameter('add_columns') == 'true')
     {
-      $this->getTable()->addColumn(array(
-        'name' => $this->getParameter('deleted_column'),
-        'type' => 'TIMESTAMP'
-      ));
+      $this->getTable()->addColumn(['name' => $this->getParameter('deleted_column'), 'type' => 'TIMESTAMP']);
     }
   }
   
@@ -244,16 +238,6 @@ public static function doDeleteAll2(PropelPDO \$con = null)
   
   public function peerFilter(&$script)
   {
-  	$script = str_replace(array(
-  		'public static function doDelete(', 
-  		'public static function doDelete2(',
-  		'public static function doDeleteAll(', 
-  		'public static function doDeleteAll2('
-  	), array(
-  		'public static function doForceDelete(',
-  		'public static function doDelete(',
-  		'public static function doForceDeleteAll(',
-  		'public static function doDeleteAll('
-  	), $script);
+  	$script = str_replace(['public static function doDelete(', 'public static function doDelete2(', 'public static function doDeleteAll(', 'public static function doDeleteAll2('], ['public static function doForceDelete(', 'public static function doDelete(', 'public static function doForceDeleteAll(', 'public static function doDeleteAll('], $script);
   }
 }

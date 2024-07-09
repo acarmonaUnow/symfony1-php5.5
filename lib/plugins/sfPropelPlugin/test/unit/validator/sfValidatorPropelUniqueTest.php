@@ -17,7 +17,7 @@ $t = new lime_test(2);
 // ->clean()
 $t->diag('->clean()');
 
-$validator = new sfValidatorPropelUnique(array('model' => 'Author', 'column' => 'name'));
+$validator = new sfValidatorPropelUnique(['model' => 'Author', 'column' => 'name']);
 
 $author = new Author();
 $author->setName('==NAME==');
@@ -25,7 +25,7 @@ $author->save();
 
 try
 {
-  $validator->clean(array('name' => '==NAME=='));
+  $validator->clean(['name' => '==NAME==']);
   $t->fail('->clean() throws an error on the column');
 }
 catch (sfValidatorErrorSchema $errors)
@@ -42,7 +42,7 @@ $validator->setOption('field', 'author_name');
 
 try
 {
-  $validator->clean(array('author_name' => '==NAME=='));
+  $validator->clean(['author_name' => '==NAME==']);
   $t->fail('->clean() throws an error on the field');
 }
 catch (sfValidatorErrorSchema $errors)

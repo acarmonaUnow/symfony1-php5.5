@@ -53,7 +53,7 @@ class sfPropelRoute extends sfObjectRoute
       {
         try
         {
-          $constant = call_user_func(array($className, 'translateFieldName'), $variable, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME);
+          $constant = call_user_func([$className, 'translateFieldName'], $variable, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME);
           $criteria->add($constant, $parameters[$variable]);
         }
         catch (Exception)
@@ -97,12 +97,12 @@ class sfPropelRoute extends sfObjectRoute
 
     $className = $this->options['model'];
 
-    $parameters = array();
+    $parameters = [];
     foreach ($this->getRealVariables() as $variable)
     {
       try
       {
-        $method = 'get'.call_user_func(array($className, 'translateFieldName'), $variable, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
+        $method = 'get'.call_user_func([$className, 'translateFieldName'], $variable, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
       }
       catch (Exception)
       {

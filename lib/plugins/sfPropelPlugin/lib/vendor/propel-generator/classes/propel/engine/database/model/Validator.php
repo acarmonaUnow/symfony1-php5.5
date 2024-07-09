@@ -48,7 +48,7 @@ class Validator extends XMLElement {
 	 *
 	 * @var        array Rule[]
 	 */
-	private $ruleList = array();
+	private $ruleList = [];
 
 	/**
 	 * The translation mode.

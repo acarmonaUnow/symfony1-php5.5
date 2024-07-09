@@ -31,7 +31,7 @@ abstract class sfFormDoctrine extends sfFormObject
    *
    * @see sfForm
    */
-  public function __construct($object = null, $options = array(), $CSRFSecret = null)
+  public function __construct($object = null, $options = [], $CSRFSecret = null)
   {
     $class = $this->getModelName();
     if (!$object)
@@ -49,7 +49,7 @@ abstract class sfFormDoctrine extends sfFormObject
       $this->isNew = !$this->getObject()->exists();
     }
 
-    parent::__construct(array(), $options, $CSRFSecret);
+    parent::__construct([], $options, $CSRFSecret);
 
     $this->updateDefaultsFromObject();
   }
@@ -106,7 +106,7 @@ abstract class sfFormDoctrine extends sfFormObject
    *
    * @throws InvalidArgumentException If the relationship is not a collection
    */
-  public function embedRelation($relationName, $formClass = null, $formArgs = array(), $innerDecorator = null, $decorator = null)
+  public function embedRelation($relationName, $formClass = null, $formArgs = [], $innerDecorator = null, $decorator = null)
   {
     if (false !== $pos = stripos($relationName, ' as '))
     {
@@ -124,7 +124,7 @@ abstract class sfFormDoctrine extends sfFormObject
 
     if (Doctrine_Relation::ONE == $relation->getType())
     {
-      $this->embedForm($fieldName, $r->newInstanceArgs(array_merge(array($this->getObject()->$relationName), $formArgs)), $decorator);
+      $this->embedForm($fieldName, $r->newInstanceArgs(array_merge([$this->getObject()->$relationName], $formArgs)), $decorator);
     }
     else
     {
@@ -132,7 +132,7 @@ abstract class sfFormDoctrine extends sfFormObject
 
       foreach ($this->getObject()->$relationName as $index => $childObject)
       {
-        $form = $r->newInstanceArgs(array_merge(array($childObject), $formArgs));
+        $form = $r->newInstanceArgs(array_merge([$childObject], $formArgs));
 
         $subForm->embedForm($index, $form, $innerDecorator);
         $subForm->getWidgetSchema()->setLabel($index, (string) $childObject);

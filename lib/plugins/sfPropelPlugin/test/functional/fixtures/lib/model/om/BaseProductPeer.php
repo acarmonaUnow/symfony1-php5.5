@@ -49,7 +49,7 @@ abstract class BaseProductPeer {
 	 * queries.
 	 * @var        array Product[]
 	 */
-	public static $instances = array();
+	public static $instances = [];
 
 
 	// symfony behavior
@@ -65,13 +65,7 @@ abstract class BaseProductPeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
-	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Price', 'APrimaryString', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'price', 'aPrimaryString', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::PRICE, self::A_PRIMARY_STRING, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'price', 'a_primary_string', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
-	);
+	private static $fieldNames = [BasePeer::TYPE_PHPNAME => ['Id', 'Price', 'APrimaryString'], BasePeer::TYPE_STUDLYPHPNAME => ['id', 'price', 'aPrimaryString'], BasePeer::TYPE_COLNAME => [self::ID, self::PRICE, self::A_PRIMARY_STRING], BasePeer::TYPE_FIELDNAME => ['id', 'price', 'a_primary_string'], BasePeer::TYPE_NUM => [0, 1, 2]];
 
 	/**
 	 * holds an array of keys for quick access to the fieldnames array
@@ -79,13 +73,7 @@ abstract class BaseProductPeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
-	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Price' => 1, 'APrimaryString' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'price' => 1, 'aPrimaryString' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PRICE => 1, self::A_PRIMARY_STRING => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'price' => 1, 'a_primary_string' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
-	);
+	private static $fieldKeys = [BasePeer::TYPE_PHPNAME => ['Id' => 0, 'Price' => 1, 'APrimaryString' => 2], BasePeer::TYPE_STUDLYPHPNAME => ['id' => 0, 'price' => 1, 'aPrimaryString' => 2], BasePeer::TYPE_COLNAME => [self::ID => 0, self::PRICE => 1, self::A_PRIMARY_STRING => 2], BasePeer::TYPE_FIELDNAME => ['id' => 0, 'price' => 1, 'a_primary_string' => 2], BasePeer::TYPE_NUM => [0, 1, 2]];
 
 	/**
 	 * Translates a fieldname to another type
@@ -352,7 +340,7 @@ abstract class BaseProductPeer {
 	 */
 	public static function clearInstancePool()
 	{
-		self::$instances = array();
+		self::$instances = [];
 	}
 	
 	/**
@@ -391,7 +379,7 @@ abstract class BaseProductPeer {
 	 */
 	public static function populateObjects(PDOStatement $stmt)
 	{
-		$results = array();
+		$results = [];
 	
 		// set the class once to avoid overhead in the loop
 		$cls = ProductPeer::getOMClass(false);
@@ -663,14 +651,14 @@ abstract class BaseProductPeer {
 	 */
 	public static function doValidate(Product $obj, mixed $cols = null)
 	{
-		$columns = array();
+		$columns = [];
 
 		if ($cols) {
 			$dbMap = Propel::getDatabaseMap(ProductPeer::DATABASE_NAME);
 			$tableMap = $dbMap->getTable(ProductPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
-				$cols = array($cols);
+				$cols = [$cols];
 			}
 
 			foreach ($cols as $colName) {
@@ -728,7 +716,7 @@ abstract class BaseProductPeer {
 
 		$objs = null;
 		if (empty($pks)) {
-			$objs = array();
+			$objs = [];
 		} else {
 			$criteria = new Criteria(ProductPeer::DATABASE_NAME);
 			$criteria->add(ProductPeer::ID, $pks, Criteria::IN);
@@ -746,7 +734,7 @@ abstract class BaseProductPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return [];
 	}
 
 	// symfony_behaviors behavior
@@ -818,7 +806,7 @@ abstract class BaseProductPeer {
 	  }
 	
 	  $stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 	
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = ProductPeer::getPrimaryKeyHashFromRow($row, 0);

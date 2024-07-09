@@ -35,24 +35,17 @@ class Doctrine_Connection_Profiler implements Doctrine_Overloadable, IteratorAgg
     /**
      * @param array $listeners      an array containing all availible listeners
      */
-    private $listeners  = array('query',
-                                'prepare',
-                                'commit',
-                                'rollback',
-                                'connect',
-                                'begintransaction',
-                                'exec',
-                                'execute');
+    private $listeners  = ['query', 'prepare', 'commit', 'rollback', 'connect', 'begintransaction', 'exec', 'execute'];
 
     /**
      * @param array $events         an array containing all listened events
      */
-    private $events     = array();
+    private $events     = [];
 
     /**
      * @param array $eventSequences         an array containing sequences of all listened events as keys
      */
-    private $eventSequences = array();
+    private $eventSequences = [];
 
     /**
      * constructor

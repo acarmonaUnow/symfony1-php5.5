@@ -27,11 +27,11 @@ class sfRequestRoute extends sfRoute
    *
    * @see sfRoute
    */
-  public function __construct($pattern, $defaults = array(), $requirements = array(), $options = array())
+  public function __construct($pattern, $defaults = [], $requirements = [], $options = [])
   {
     if (!isset($requirements['sf_method']))
     {
-      $requirements['sf_method'] = array('get', 'head');
+      $requirements['sf_method'] = ['get', 'head'];
     }
     else
     {
@@ -49,7 +49,7 @@ class sfRequestRoute extends sfRoute
    *
    * @return array   An array of parameters
    */
-  public function matchesUrl($url, $context = array())
+  public function matchesUrl($url, $context = [])
   {
     if (false === $parameters = parent::matchesUrl($url, $context))
     {
@@ -73,7 +73,7 @@ class sfRequestRoute extends sfRoute
    *
    * @return Boolean true if the parameters match this route, false otherwise.
    */
-  public function matchesParameters($params, $context = array())
+  public function matchesParameters($params, $context = [])
   {
     if (isset($params['sf_method']))
     {
@@ -98,7 +98,7 @@ class sfRequestRoute extends sfRoute
    *
    * @return string The generated URL
    */
-  public function generate($params, $context = array(), $absolute = false)
+  public function generate($params, $context = [], $absolute = false)
   {
     unset($params['sf_method']);
 

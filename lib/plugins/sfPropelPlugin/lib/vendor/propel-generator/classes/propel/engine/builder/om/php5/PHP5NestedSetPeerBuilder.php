@@ -193,7 +193,7 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 		$table = $this->getTable();
 		$tableName = $table->getName();
 
-		$colname = array();
+		$colname = [];
 
 		foreach ($table->getColumns() as $col) {
 			if ($col->isNestedSetLeftKey()) {
@@ -1515,7 +1515,7 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 				\$criteria->add(".$this->getColumnConstant($col).", \$keys, Criteria::IN);
 ";
 		} else {
-			$fields = array();
+			$fields = [];
 			foreach ($table->getPrimaryKey() as $k => $col) {
 				$fields[] = $this->getColumnConstant($col);
 			};

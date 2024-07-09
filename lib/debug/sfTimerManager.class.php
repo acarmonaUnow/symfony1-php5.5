@@ -19,7 +19,7 @@
 class sfTimerManager
 {
   /** @var sfTimer[] */
-  static public $timers = array();
+  static public $timers = [];
 
   /**
    * Gets a sfTimer instance.
@@ -62,6 +62,6 @@ class sfTimerManager
    */
   public static function clearTimers()
   {
-    self::$timers = array();
+    self::$timers = [];
   }
 }

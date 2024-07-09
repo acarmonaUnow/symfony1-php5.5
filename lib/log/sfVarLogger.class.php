@@ -19,7 +19,7 @@
 class sfVarLogger extends sfLogger
 {
   protected
-    $logs          = array(),
+    $logs          = [],
     $xdebugLogging = false;
 
   /**
@@ -34,7 +34,7 @@ class sfVarLogger extends sfLogger
    *
    * @return Boolean           true, if initialization completes successfully, otherwise false.
    */
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
     $this->xdebugLogging = $options['xdebug_logging'] ?? false;
 
@@ -72,7 +72,7 @@ class sfVarLogger extends sfLogger
    */
   public function getTypes()
   {
-    $types = array();
+    $types = [];
     foreach ($this->logs as $log)
     {
       if (!in_array($log['type'], $types))
@@ -93,7 +93,7 @@ class sfVarLogger extends sfLogger
    */
   public function getPriorities()
   {
-    $priorities = array();
+    $priorities = [];
     foreach ($this->logs as $log)
     {
       if (!in_array($log['priority'], $priorities))
@@ -142,14 +142,7 @@ class sfVarLogger extends sfLogger
       $message = $matches[2];
     }
 
-    $this->logs[] = array(
-      'priority'        => $priority,
-      'priority_name'   => $this->getPriorityName($priority),
-      'time'            => time(),
-      'message'         => $message,
-      'type'            => $type,
-      'debug_backtrace' => $this->getDebugBacktrace(),
-    );
+    $this->logs[] = ['priority'        => $priority, 'priority_name'   => $this->getPriorityName($priority), 'time'            => time(), 'message'         => $message, 'type'            => $type, 'debug_backtrace' => $this->getDebugBacktrace()];
   }
 
   /**
@@ -164,7 +157,7 @@ class sfVarLogger extends sfLogger
     // if we have xdebug and dev has not disabled the feature, add some stack information
     if (!$this->xdebugLogging || !function_exists('debug_backtrace'))
     {
-      return array();
+      return [];
     }
 
     $traces = debug_backtrace();
@@ -177,7 +170,7 @@ class sfVarLogger extends sfLogger
       if (
         !class_exists($class)
         ||
-        (!in_array($class, array('sfLogger', 'sfEventDispatcher')) && !is_subclass_of($class, 'sfLogger') && !is_subclass_of($class, 'sfEventDispatcher'))
+        (!in_array($class, ['sfLogger', 'sfEventDispatcher']) && !is_subclass_of($class, 'sfLogger') && !is_subclass_of($class, 'sfEventDispatcher'))
       )
       {
         $traces = array_slice($traces, $i);

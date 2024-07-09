@@ -18,7 +18,7 @@
  */
 class sfSymfonyCommandApplication extends sfCommandApplication
 {
-  protected $taskFiles = array();
+  protected $taskFiles = [];
   
   /**
    * Configures the current symfony command application.
@@ -90,7 +90,7 @@ class sfSymfonyCommandApplication extends sfCommandApplication
   public function loadTasks(sfProjectConfiguration $configuration)
   {
     // Symfony core tasks
-    $dirs = array(sfConfig::get('sf_symfony_lib_dir').'/task');
+    $dirs = [sfConfig::get('sf_symfony_lib_dir').'/task'];
 
     // Plugin tasks
     foreach ($configuration->getPluginPaths() as $path)

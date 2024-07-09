@@ -40,17 +40,17 @@ class Swift_Transport_Esmtp_Auth_CramMd5Authenticator
   {
     try
     {
-      $challenge = $agent->executeCommand("AUTH CRAM-MD5\r\n", array(334));
+      $challenge = $agent->executeCommand("AUTH CRAM-MD5\r\n", [334]);
       $challenge = base64_decode(substr((string) $challenge, 4));
       $message = base64_encode(
         $username . ' ' . $this->_getResponse($password, $challenge)
         );
-      $agent->executeCommand(sprintf("%s\r\n", $message), array(235));
+      $agent->executeCommand(sprintf("%s\r\n", $message), [235]);
       return true;
     }
     catch (Swift_TransportException)
     {
-      $agent->executeCommand("RSET\r\n", array(250));
+      $agent->executeCommand("RSET\r\n", [250]);
       return false;
     }
   }

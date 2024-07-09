@@ -61,7 +61,7 @@ class sfWebDebugPanelTimer extends sfWebDebugPanel
 
   public function filterLogs(sfEvent $event, $logs)
   {
-    $newLogs = array();
+    $newLogs = [];
     foreach ($logs as $log)
     {
       if ('sfWebDebugLogger' != $log['type'])

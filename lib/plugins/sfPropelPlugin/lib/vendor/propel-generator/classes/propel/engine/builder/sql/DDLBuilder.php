@@ -60,7 +60,7 @@ abstract class DDLBuilder extends DataModelBuilder {
 	public function getSequenceName()
 	{
 		$table = $this->getTable();
-		static $longNamesMap = array();
+		static $longNamesMap = [];
 		$result = null;
 		if ($table->getIdMethod() == IDMethod::NATIVE) {
 			$idMethodParams = $table->getIdMethodParameters();
@@ -113,7 +113,7 @@ abstract class DDLBuilder extends DataModelBuilder {
 	 */
 	public function getColumnList($columns, $delim=',')
 	{
-		$list = array();
+		$list = [];
 		foreach ($columns as $col) {
 			if ($col instanceof Column) {
 				$col = $col->getName();

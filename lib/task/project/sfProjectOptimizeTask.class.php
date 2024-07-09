@@ -23,10 +23,7 @@ class sfProjectOptimizeTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
-      new sfCommandArgument('env', sfCommandArgument::OPTIONAL, 'The environment name', 'prod'),
-    ));
+    $this->addArguments([new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'), new sfCommandArgument('env', sfCommandArgument::OPTIONAL, 'The environment name', 'prod')]);
 
     $this->namespace = 'project';
     $this->name = 'optimize';
@@ -45,9 +42,9 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
-    $data = array();
+    $data = [];
     $modules = $this->findModules();
     $target = sfConfig::get('sf_cache_dir').'/'.$arguments['application'].'/'.$arguments['env'].'/config/configuration.php';
 
@@ -87,7 +84,7 @@ EOF;
 
   protected function optimizeGetControllerDirs($modules)
   {
-    $data = array();
+    $data = [];
     foreach ($modules as $module)
     {
       $data[$module] = $this->configuration->getControllerDirs($module);
@@ -98,10 +95,10 @@ EOF;
 
   protected function optimizeGetTemplateDir($modules, $templates)
   {
-    $data = array();
+    $data = [];
     foreach ($modules as $module)
     {
-      $data[$module] = array();
+      $data[$module] = [];
       foreach ($templates[$module] as $template)
       {
         if (null !== $dir = $this->configuration->getTemplateDir($module, $template))
@@ -116,14 +113,14 @@ EOF;
 
   protected function optimizeLoadHelpers($modules)
   {
-    $data = array();
+    $data = [];
 
     $finder = sfFinder::type('file')->name('*Helper.php');
 
     // module helpers
     foreach ($modules as $module)
     {
-      $helpers = array();
+      $helpers = [];
 
       $dirs = $this->configuration->getHelperDirs($module);
       foreach ($finder->in($dirs[0]) as $file)
@@ -155,7 +152,7 @@ EOF;
 
   protected function findTemplates($modules)
   {
-    $files = array();
+    $files = [];
 
     foreach ($modules as $module)
     {
@@ -168,11 +165,11 @@ EOF;
   protected function findModules()
   {
     // application
-    $dirs = array(sfConfig::get('sf_app_module_dir'));
+    $dirs = [sfConfig::get('sf_app_module_dir')];
 
     // plugins
     $pluginSubPaths = $this->configuration->getPluginSubPaths(DIRECTORY_SEPARATOR.'modules');
-    $modules = array();
+    $modules = [];
     foreach (sfFinder::type('dir')->maxdepth(0)->follow_link()->relative()->in($pluginSubPaths) as $module)
     {
         if (in_array($module, sfConfig::get('sf_enabled_modules')))

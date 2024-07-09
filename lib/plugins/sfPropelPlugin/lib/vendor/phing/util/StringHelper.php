@@ -12,8 +12,8 @@
  */
 class StringHelper {
 
-    private static $TRUE_VALUES = array("on", "true", "t", "yes");
-    private static $FALSE_VALUES = array("off", "false", "f", "no");
+    private static $TRUE_VALUES = ["on", "true", "t", "yes"];
+    private static $FALSE_VALUES = ["off", "false", "f", "no"];
     
     /**
      * Replaces identifier tokens with corresponding text values in passed string.
@@ -25,7 +25,7 @@ class StringHelper {
      */
     public static function multiply($strings, $tokens, $replacements) {
         $strings = (array) $strings;
-        $results = array();
+        $results = [];
         foreach ($strings as $string) {
             $results[] = str_replace($tokens, $replacements, $string);
         }        
@@ -57,7 +57,7 @@ class StringHelper {
      * @deprecated
      */
     public static function toCharArray($str) {
-        $ret=array();
+        $ret=[];
         $len=strlen((string) $str);
         for ($i=0; $i < $len; $i++) {
             $ret[] = $str[$i];
@@ -86,7 +86,7 @@ class StringHelper {
      */ 
     public static function prefix( $columns, $prefix) {
         if ($prefix == null) return $columns;
-        $qualified = array();
+        $qualified = [];
         foreach($columns as $key => $column) {
             $qualified[$key] = $prefix . $column;
         }        

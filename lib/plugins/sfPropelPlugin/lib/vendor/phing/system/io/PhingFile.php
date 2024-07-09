@@ -584,7 +584,7 @@ class PhingFile implements \Stringable {
             return null;
         }
         $n = count($ss);
-        $fs = array();
+        $fs = [];
         for ($i = 0; $i < $n; $i++) {
             $fs[$i] = new PhingFile((string)$this->path, (string)$ss[$i]);
         }

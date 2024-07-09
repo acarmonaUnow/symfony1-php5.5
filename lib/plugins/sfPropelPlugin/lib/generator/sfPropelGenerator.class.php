@@ -65,7 +65,7 @@ class sfPropelGenerator extends sfModelGenerator
    */
   public function getManyToManyTables()
   {
-    $tables = array();
+    $tables = [];
 
     // go through all tables to find m2m relationships
     foreach ($this->dbMap->getTables() as $tableName => $table)
@@ -84,12 +84,7 @@ class sfPropelGenerator extends sfModelGenerator
             if ($relatedColumn->isForeignKey() && $relatedColumn->isPrimaryKey() && $this->getTableMap()->getClassname() != $this->dbMap->getTable($relatedColumn->getRelatedTableName())->getClassname())
             {
               // we have the related table
-              $tables[] = array(
-                'middleTable'   => $table,
-                'relatedTable'  => $this->dbMap->getTable($relatedColumn->getRelatedTableName()),
-                'column'        => $column,
-                'relatedColumn' => $relatedColumn,
-              );
+              $tables[] = ['middleTable'   => $table, 'relatedTable'  => $this->dbMap->getTable($relatedColumn->getRelatedTableName()), 'column'        => $column, 'relatedColumn' => $relatedColumn];
 
               break 2;
             }
@@ -108,7 +103,7 @@ class sfPropelGenerator extends sfModelGenerator
    */
   protected function loadPrimaryKeys()
   {
-    $this->primaryKey = array();
+    $this->primaryKey = [];
     foreach ($this->tableMap->getColumns() as $column)
     {
       if ($column->isPrimaryKey())
@@ -131,7 +126,7 @@ class sfPropelGenerator extends sfModelGenerator
   protected function loadMapBuilderClasses()
   {
     $this->dbMap = Propel::getDatabaseMap();
-    $this->tableMap = call_user_func(array($this->modelClass . 'Peer', 'getTableMap'));
+    $this->tableMap = call_user_func([$this->modelClass . 'Peer', 'getTableMap']);
     // load all related table maps, 
     // and all tables related to the related table maps (for m2m relations)
     foreach ($this->tableMap->getRelations() as $relation)
@@ -153,7 +148,7 @@ class sfPropelGenerator extends sfModelGenerator
   {
     try
     {
-      $getter = 'get'.call_user_func(array(constant($this->getModelClass().'::PEER'), 'translateFieldName'), $column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
+      $getter = 'get'.call_user_func([constant($this->getModelClass().'::PEER'), 'translateFieldName'], $column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
     }
     catch (PropelException)
     {
@@ -198,33 +193,21 @@ class sfPropelGenerator extends sfModelGenerator
    */
   public function getDefaultFieldsConfiguration()
   {
-    $fields = array();
+    $fields = [];
 
-    $names = array();
+    $names = [];
     foreach ($this->getTableMap()->getColumns() as $column)
     {
       $name = $this->translateColumnName($column);
       $names[] = $name;
-      $fields[$name] = array_merge(array(
-        'is_link'      => (Boolean) $column->isPrimaryKey(),
-        'is_real'      => true,
-        'is_partial'   => false,
-        'is_component' => false,
-        'type'         => $this->getType($column),
-      ), $this->config['fields'][$name] ?? array());
+      $fields[$name] = array_merge(['is_link'      => (Boolean) $column->isPrimaryKey(), 'is_real'      => true, 'is_partial'   => false, 'is_component' => false, 'type'         => $this->getType($column)], $this->config['fields'][$name] ?? []);
     }
 
     foreach ($this->getManyToManyTables() as $tables)
     {
       $name = sfInflector::underscore($tables['middleTable']->getClassname()).'_list';
       $names[] = $name;
-      $fields[$name] = array_merge(array(
-        'is_link'      => false,
-        'is_real'      => false,
-        'is_partial'   => false,
-        'is_component' => false,
-        'type'         => 'Text',
-      ), $this->config['fields'][$name] ?? array());
+      $fields[$name] = array_merge(['is_link'      => false, 'is_real'      => false, 'is_partial'   => false, 'is_component' => false, 'type'         => 'Text'], $this->config['fields'][$name] ?? []);
     }
 
     if (isset($this->config['fields']))
@@ -236,13 +219,7 @@ class sfPropelGenerator extends sfModelGenerator
           continue;
         }
 
-        $fields[$name] = array_merge(array(
-          'is_link'      => false,
-          'is_real'      => false,
-          'is_partial'   => false,
-          'is_component' => false,
-          'type'         => 'Text',
-        ), is_array($params) ? $params : array());
+        $fields[$name] = array_merge(['is_link'      => false, 'is_real'      => false, 'is_partial'   => false, 'is_component' => false, 'type'         => 'Text'], is_array($params) ? $params : []);
       }
     }
 
@@ -260,21 +237,21 @@ class sfPropelGenerator extends sfModelGenerator
    */
   public function getFieldsConfiguration($context)
   {
-    $fields = array();
+    $fields = [];
 
-    $names = array();
+    $names = [];
     foreach ($this->getTableMap()->getColumns() as $column)
     {
       $name = $this->translateColumnName($column);
       $names[] = $name;
-      $fields[$name] = $this->config[$context]['fields'][$name] ?? array();
+      $fields[$name] = $this->config[$context]['fields'][$name] ?? [];
     }
 
     foreach ($this->getManyToManyTables() as $tables)
     {
       $name = sfInflector::underscore($tables['middleTable']->getClassname()).'_list';
       $names[] = $name;
-      $fields[$name] = $this->config[$context]['fields'][$name] ?? array();
+      $fields[$name] = $this->config[$context]['fields'][$name] ?? [];
     }
 
     if (isset($this->config[$context]['fields']))
@@ -286,7 +263,7 @@ class sfPropelGenerator extends sfModelGenerator
           continue;
         }
 
-        $fields[$name] = is_array($params) ? $params : array();
+        $fields[$name] = is_array($params) ? $params : [];
       }
     }
 
@@ -304,7 +281,7 @@ class sfPropelGenerator extends sfModelGenerator
    */
   public function getAllFieldNames($withM2M = true)
   {
-    $names = array();
+    $names = [];
     foreach ($this->getTableMap()->getColumns() as $column)
     {
       $names[] = $this->translateColumnName($column);
@@ -326,6 +303,6 @@ class sfPropelGenerator extends sfModelGenerator
     $peer = $related ? constant($column->getTable()->getDatabaseMap()->getTable($column->getRelatedTableName())->getPhpName().'::PEER') : constant($column->getTable()->getPhpName().'::PEER');
     $field = $related ? $column->getRelatedName() : $column->getFullyQualifiedName();
 
-    return call_user_func(array($peer, 'translateFieldName'), $field, BasePeer::TYPE_COLNAME, $to);
+    return call_user_func([$peer, 'translateFieldName'], $field, BasePeer::TYPE_COLNAME, $to);
   }
 }

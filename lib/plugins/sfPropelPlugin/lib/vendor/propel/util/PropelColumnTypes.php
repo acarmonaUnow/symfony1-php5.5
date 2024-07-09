@@ -56,31 +56,7 @@ class PropelColumnTypes {
 
 	public const BOOLEAN = "BOOLEAN";
 
-	private static $propelToPdoMap = array(
-		self::CHAR 			=> PDO::PARAM_STR,
-		self::VARCHAR 		=> PDO::PARAM_STR,
-		self::LONGVARCHAR 	=> PDO::PARAM_STR,
-		self::CLOB 			=> PDO::PARAM_LOB,
-		self::NUMERIC 		=> PDO::PARAM_STR,
-		self::DECIMAL 		=> PDO::PARAM_STR,
-		self::TINYINT 		=> PDO::PARAM_INT,
-		self::SMALLINT 		=> PDO::PARAM_INT,
-		self::INTEGER 		=> PDO::PARAM_INT,
-		self::BIGINT 		=> PDO::PARAM_STR,
-		self::REAL 			=> PDO::PARAM_STR,
-		self::FLOAT 		=> PDO::PARAM_STR,
-		self::DOUBLE 		=> PDO::PARAM_STR,
-		self::BINARY 		=> PDO::PARAM_STR,
-		self::VARBINARY 	=> PDO::PARAM_STR,
-		self::LONGVARBINARY => PDO::PARAM_STR,
-		self::BLOB 			=> PDO::PARAM_LOB,
-		self::DATE 			=> PDO::PARAM_STR,
-		self::TIME 			=> PDO::PARAM_STR,
-		self::TIMESTAMP 	=> PDO::PARAM_STR,
-		self::BU_DATE 		=> PDO::PARAM_STR,
-		self::BU_TIMESTAMP 	=> PDO::PARAM_STR,
-		self::BOOLEAN 		=> PDO::PARAM_BOOL,
-	);
+	private static $propelToPdoMap = [self::CHAR 			=> PDO::PARAM_STR, self::VARCHAR 		=> PDO::PARAM_STR, self::LONGVARCHAR 	=> PDO::PARAM_STR, self::CLOB 			=> PDO::PARAM_LOB, self::NUMERIC 		=> PDO::PARAM_STR, self::DECIMAL 		=> PDO::PARAM_STR, self::TINYINT 		=> PDO::PARAM_INT, self::SMALLINT 		=> PDO::PARAM_INT, self::INTEGER 		=> PDO::PARAM_INT, self::BIGINT 		=> PDO::PARAM_STR, self::REAL 			=> PDO::PARAM_STR, self::FLOAT 		=> PDO::PARAM_STR, self::DOUBLE 		=> PDO::PARAM_STR, self::BINARY 		=> PDO::PARAM_STR, self::VARBINARY 	=> PDO::PARAM_STR, self::LONGVARBINARY => PDO::PARAM_STR, self::BLOB 			=> PDO::PARAM_LOB, self::DATE 			=> PDO::PARAM_STR, self::TIME 			=> PDO::PARAM_STR, self::TIMESTAMP 	=> PDO::PARAM_STR, self::BU_DATE 		=> PDO::PARAM_STR, self::BU_TIMESTAMP 	=> PDO::PARAM_STR, self::BOOLEAN 		=> PDO::PARAM_BOOL];
 
 	/**
 	 * Resturns the PDO type (PDO::PARAM_* constant) value for the Propel type provided.

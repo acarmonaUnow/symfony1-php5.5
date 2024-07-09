@@ -59,7 +59,7 @@ class PathTokenizer {
 
      */
 
-    private $tokens = array();
+    private $tokens = [];
 
     
 

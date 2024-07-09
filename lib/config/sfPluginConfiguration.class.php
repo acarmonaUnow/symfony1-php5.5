@@ -113,7 +113,7 @@ abstract class sfPluginConfiguration
     if (is_readable($file = $this->rootDir.'/config/autoload.yml'))
     {
       $this->configuration->getEventDispatcher()->connect('autoload.filter_config', $this->filterAutoloadConfig(...));
-      $autoload->loadConfiguration(array($file));
+      $autoload->loadConfiguration([$file]);
       $this->configuration->getEventDispatcher()->disconnect('autoload.filter_config', $this->filterAutoloadConfig(...));
     }
     else
@@ -137,23 +137,12 @@ abstract class sfPluginConfiguration
     // use array_merge so config is added to the front of the autoload array
     if (!isset($config['autoload'][$this->name.'_lib']))
     {
-      $config['autoload'] = array_merge(array(
-        $this->name.'_lib' => array(
-          'path'      => $this->rootDir.'/lib',
-          'recursive' => true,
-        ),
-      ), $config['autoload']);
+      $config['autoload'] = array_merge([$this->name.'_lib' => ['path'      => $this->rootDir.'/lib', 'recursive' => true]], $config['autoload']);
     }
 
     if (!isset($config['autoload'][$this->name.'_module_libs']))
     {
-      $config['autoload'] = array_merge(array(
-        $this->name.'_module_libs' => array(
-          'path'      => $this->rootDir.'/modules/*/lib',
-          'recursive' => true,
-          'prefix'    => 1,
-        ),
-      ), $config['autoload']);
+      $config['autoload'] = array_merge([$this->name.'_module_libs' => ['path'      => $this->rootDir.'/modules/*/lib', 'recursive' => true, 'prefix'    => 1]], $config['autoload']);
     }
 
     return $config;
@@ -182,7 +171,7 @@ abstract class sfPluginConfiguration
     if ($task instanceof sfTestAllTask)
     {
       $directory = $this->rootDir.'/test';
-      $names = array();
+      $names = [];
     }
     else if ($task instanceof sfTestFunctionalTask)
     {
@@ -197,7 +186,7 @@ abstract class sfPluginConfiguration
 
     if (!count($names))
     {
-      $names = array('*');
+      $names = ['*'];
     }
 
     foreach ($names as $name)

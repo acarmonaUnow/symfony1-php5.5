@@ -52,7 +52,7 @@ abstract class BaseAttachmentPeer {
 	 * queries.
 	 * @var        array Attachment[]
 	 */
-	public static $instances = array();
+	public static $instances = [];
 
 
 	// symfony behavior
@@ -68,13 +68,7 @@ abstract class BaseAttachmentPeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
-	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ArticleId', 'Name', 'File', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'articleId', 'name', 'file', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::ARTICLE_ID, self::NAME, self::FILE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'article_id', 'name', 'file', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
-	);
+	private static $fieldNames = [BasePeer::TYPE_PHPNAME => ['Id', 'ArticleId', 'Name', 'File'], BasePeer::TYPE_STUDLYPHPNAME => ['id', 'articleId', 'name', 'file'], BasePeer::TYPE_COLNAME => [self::ID, self::ARTICLE_ID, self::NAME, self::FILE], BasePeer::TYPE_FIELDNAME => ['id', 'article_id', 'name', 'file'], BasePeer::TYPE_NUM => [0, 1, 2, 3]];
 
 	/**
 	 * holds an array of keys for quick access to the fieldnames array
@@ -82,13 +76,7 @@ abstract class BaseAttachmentPeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
-	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ArticleId' => 1, 'Name' => 2, 'File' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'articleId' => 1, 'name' => 2, 'file' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::ARTICLE_ID => 1, self::NAME => 2, self::FILE => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'article_id' => 1, 'name' => 2, 'file' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
-	);
+	private static $fieldKeys = [BasePeer::TYPE_PHPNAME => ['Id' => 0, 'ArticleId' => 1, 'Name' => 2, 'File' => 3], BasePeer::TYPE_STUDLYPHPNAME => ['id' => 0, 'articleId' => 1, 'name' => 2, 'file' => 3], BasePeer::TYPE_COLNAME => [self::ID => 0, self::ARTICLE_ID => 1, self::NAME => 2, self::FILE => 3], BasePeer::TYPE_FIELDNAME => ['id' => 0, 'article_id' => 1, 'name' => 2, 'file' => 3], BasePeer::TYPE_NUM => [0, 1, 2, 3]];
 
 	/**
 	 * Translates a fieldname to another type
@@ -356,7 +344,7 @@ abstract class BaseAttachmentPeer {
 	 */
 	public static function clearInstancePool()
 	{
-		self::$instances = array();
+		self::$instances = [];
 	}
 	
 	/**
@@ -395,7 +383,7 @@ abstract class BaseAttachmentPeer {
 	 */
 	public static function populateObjects(PDOStatement $stmt)
 	{
-		$results = array();
+		$results = [];
 	
 		// set the class once to avoid overhead in the loop
 		$cls = AttachmentPeer::getOMClass(false);
@@ -505,7 +493,7 @@ abstract class BaseAttachmentPeer {
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = AttachmentPeer::getPrimaryKeyHashFromRow($row, 0);
@@ -635,7 +623,7 @@ abstract class BaseAttachmentPeer {
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = AttachmentPeer::getPrimaryKeyHashFromRow($row, 0);
@@ -925,14 +913,14 @@ abstract class BaseAttachmentPeer {
 	 */
 	public static function doValidate(Attachment $obj, mixed $cols = null)
 	{
-		$columns = array();
+		$columns = [];
 
 		if ($cols) {
 			$dbMap = Propel::getDatabaseMap(AttachmentPeer::DATABASE_NAME);
 			$tableMap = $dbMap->getTable(AttachmentPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
-				$cols = array($cols);
+				$cols = [$cols];
 			}
 
 			foreach ($cols as $colName) {
@@ -990,7 +978,7 @@ abstract class BaseAttachmentPeer {
 
 		$objs = null;
 		if (empty($pks)) {
-			$objs = array();
+			$objs = [];
 		} else {
 			$criteria = new Criteria(AttachmentPeer::DATABASE_NAME);
 			$criteria->add(AttachmentPeer::ID, $pks, Criteria::IN);
@@ -1008,7 +996,7 @@ abstract class BaseAttachmentPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return [];
 	}
 
 	// symfony_behaviors behavior

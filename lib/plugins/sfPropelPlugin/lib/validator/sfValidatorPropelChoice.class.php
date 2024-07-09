@@ -34,7 +34,7 @@ class sfValidatorPropelChoice extends sfValidatorBase
    *
    * @see sfValidatorBase
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     $this->addRequiredOption('model');
     $this->addOption('criteria', null);
@@ -59,39 +59,39 @@ class sfValidatorPropelChoice extends sfValidatorBase
     {
       if (!is_array($value))
       {
-        $value = array($value);
+        $value = [$value];
       }
 
       $count = count($value);
 
       if ($this->hasOption('min') && $count < $this->getOption('min'))
       {
-        throw new sfValidatorError($this, 'min', array('count' => $count, 'min' => $this->getOption('min')));
+        throw new sfValidatorError($this, 'min', ['count' => $count, 'min' => $this->getOption('min')]);
       }
 
       if ($this->hasOption('max') && $count > $this->getOption('max'))
       {
-        throw new sfValidatorError($this, 'max', array('count' => $count, 'max' => $this->getOption('max')));
+        throw new sfValidatorError($this, 'max', ['count' => $count, 'max' => $this->getOption('max')]);
       }
 
       $criteria->addAnd($this->getColumn(), $value, Criteria::IN);
 
-      $dbcount = call_user_func(array(constant($this->getOption('model').'::PEER'), 'doCount'), $criteria, false, $this->getOption('connection'));
+      $dbcount = call_user_func([constant($this->getOption('model').'::PEER'), 'doCount'], $criteria, false, $this->getOption('connection'));
 
       if ($dbcount != $count)
       {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+        throw new sfValidatorError($this, 'invalid', ['value' => $value]);
       }
     }
     else
     {
       $criteria->addAnd($this->getColumn(), $value);
 
-      $dbcount = call_user_func(array(constant($this->getOption('model').'::PEER'), 'doCount'), $criteria, false, $this->getOption('connection'));
+      $dbcount = call_user_func([constant($this->getOption('model').'::PEER'), 'doCount'], $criteria, false, $this->getOption('connection'));
 
       if (0 === $dbcount)
       {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+        throw new sfValidatorError($this, 'invalid', ['value' => $value]);
       }
     }
 
@@ -114,7 +114,7 @@ class sfValidatorPropelChoice extends sfValidatorBase
     }
     else
     {
-      $map = call_user_func(array(constant($this->getOption('model').'::PEER'), 'getTableMap'));
+      $map = call_user_func([constant($this->getOption('model').'::PEER'), 'getTableMap']);
       foreach ($map->getColumns() as $column)
       {
         if ($column->isPrimaryKey())
@@ -126,6 +126,6 @@ class sfValidatorPropelChoice extends sfValidatorBase
       $from = BasePeer::TYPE_PHPNAME;
     }
 
-    return call_user_func(array(constant($this->getOption('model').'::PEER'), 'translateFieldName'), $columnName, $from, BasePeer::TYPE_COLNAME);
+    return call_user_func([constant($this->getOption('model').'::PEER'), 'translateFieldName'], $columnName, $from, BasePeer::TYPE_COLNAME);
   }
 }

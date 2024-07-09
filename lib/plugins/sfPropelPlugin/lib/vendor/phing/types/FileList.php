@@ -49,7 +49,7 @@ class FileList extends DataType {
     // public for "cloning" purposes
     
     /** Array containing all filenames. */
-    public $filenames = array();
+    public $filenames = [];
     
     /** Base directory for this file list. */
     public $dir;
@@ -181,7 +181,7 @@ class FileList extends DataType {
       */
     function getRef(Project $p) {
         if (!$this->checked) {
-            $stk = array();
+            $stk = [];
             array_push($stk, $this);
             $this->dieOnCircularReference($stk, $p);            
         }

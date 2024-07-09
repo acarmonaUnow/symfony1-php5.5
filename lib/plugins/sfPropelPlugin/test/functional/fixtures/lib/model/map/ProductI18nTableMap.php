@@ -51,7 +51,7 @@ class ProductI18nTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Product', 'Product', RelationMap::MANY_TO_ONE, array('id' => 'id', ), null, null);
+    $this->addRelation('Product', 'Product', RelationMap::MANY_TO_ONE, ['id' => 'id'], null, null);
 	} // buildRelations()
 
 	/**
@@ -62,11 +62,7 @@ class ProductI18nTableMap extends TableMap {
 	 */
 	public function getBehaviors()
 	{
-		return array(
-			'symfony' => array('form' => 'true', 'filter' => 'true', ),
-			'symfony_behaviors' => array(),
-			'symfony_i18n_translation' => array('culture_column' => 'culture', ),
-		);
+		return ['symfony' => ['form' => 'true', 'filter' => 'true'], 'symfony_behaviors' => [], 'symfony_i18n_translation' => ['culture_column' => 'culture']];
 	} // getBehaviors()
 
 } // ProductI18nTableMap

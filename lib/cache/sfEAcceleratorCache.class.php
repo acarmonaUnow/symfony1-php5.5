@@ -27,7 +27,7 @@ class sfEAcceleratorCache extends sfCache
    *
    * @see sfCache
    */
-  public function initialize($options = array())
+  public function initialize($options = [])
   {
     parent::initialize($options);
 

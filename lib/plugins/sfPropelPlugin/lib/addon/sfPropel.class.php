@@ -31,7 +31,7 @@ class sfPropel
    */
   static public function initialize(sfEventDispatcher $dispatcher, $culture = null)
   {
-    $dispatcher->notify(new sfEvent(self::class, 'application.log', array(__METHOD__.'() has been deprecated. Please call sfPropel::setDefaultCulture() to set the culture.', 'priority' => sfLogger::NOTICE)));
+    $dispatcher->notify(new sfEvent(self::class, 'application.log', [__METHOD__.'() has been deprecated. Please call sfPropel::setDefaultCulture() to set the culture.', 'priority' => sfLogger::NOTICE]));
 
     if (null !== $culture)
     {

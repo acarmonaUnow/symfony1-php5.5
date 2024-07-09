@@ -27,10 +27,10 @@ class sfYamlParser
 {
   protected
     $offset        = 0,
-    $lines         = array(),
+    $lines         = [],
     $currentLineNb = -1,
     $currentLine   = '',
-    $refs          = array();
+    $refs          = [];
 
   /**
    * Constructor
@@ -63,7 +63,7 @@ class sfYamlParser
       mb_internal_encoding('UTF-8');
     }
 
-    $data = array();
+    $data = [];
     while ($this->moveToNextLine())
     {
       if ($this->isCurrentLineEmpty())
@@ -98,7 +98,7 @@ class sfYamlParser
         {
           if (preg_match('/^([^ ]+)\: +({.*?)$/u', $values['value'], $matches))
           {
-            $data[] = array($matches[1] => sfYamlInline::load($matches[2]));
+            $data[] = [$matches[1] => sfYamlInline::load($matches[2])];
           }
           else
           {
@@ -135,7 +135,7 @@ class sfYamlParser
             $parser->refs =& $this->refs;
             $parsed = $parser->parse($value);
 
-            $merged = array();
+            $merged = [];
             if (!is_array($parsed))
             {
               throw new InvalidArgumentException(sprintf("YAML merge keys used with a scalar value instead of an array at line %s (%s)", $this->getRealCurrentLineNb() + 1, $this->currentLine));
@@ -211,7 +211,7 @@ class sfYamlParser
             $first = reset($value);
             if (str_starts_with((string) $first, '*'))
             {
-              $data = array();
+              $data = [];
               foreach ($value as $alias)
               {
                 $data[] = $this->refs[substr((string) $alias, 1)];
@@ -290,7 +290,7 @@ class sfYamlParser
       throw new InvalidArgumentException(sprintf('Indentation problem at line %d (%s)', $this->getRealCurrentLineNb() + 1, $this->currentLine));
     }
 
-    $data = array(substr((string) $this->currentLine, $newIndent));
+    $data = [substr((string) $this->currentLine, $newIndent)];
 
     while ($this->moveToNextLine())
     {
@@ -550,7 +550,7 @@ class sfYamlParser
    */
   protected function cleanup($value)
   {
-    $value = str_replace(array("\r\n", "\r"), "\n", $value);
+    $value = str_replace(["\r\n", "\r"], "\n", $value);
 
     if (!preg_match("#\n$#", $value))
     {

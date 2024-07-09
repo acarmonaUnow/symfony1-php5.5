@@ -118,7 +118,7 @@ class DefaultPlatform implements Platform {
 	 */
 	protected function initialize()
 	{
-		$this->schemaDomainMap = array();
+		$this->schemaDomainMap = [];
 		foreach (PropelTypes::getPropelTypes() as $type) {
 			$this->schemaDomainMap[$type] = new Domain($type);
 		}

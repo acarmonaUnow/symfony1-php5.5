@@ -20,8 +20,8 @@ class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Co
 {
   protected
     $count      = 0,
-    $fieldNames = array(),
-    $fields     = array();
+    $fieldNames = [],
+    $fields     = [];
 
   /**
    * Constructor.
@@ -67,7 +67,7 @@ class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Co
    */
   public function getHiddenFields($recursive = true)
   {
-    $fields = array();
+    $fields = [];
 
     foreach ($this as $name => $field)
     {
@@ -122,7 +122,7 @@ class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Co
 
         if ($error && !$error instanceof sfValidatorErrorSchema)
         {
-          $error = new sfValidatorErrorSchema($error->getValidator(), array($error));
+          $error = new sfValidatorErrorSchema($error->getValidator(), [$error]);
         }
       }
       else

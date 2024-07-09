@@ -38,7 +38,7 @@ class AppData {
 	 * The list of databases for this application.
 	 * @var        array Database[]
 	 */
-	private $dbList = array();
+	private $dbList = [];
 
 	/**
 	 * Name of the database. Only one database definition

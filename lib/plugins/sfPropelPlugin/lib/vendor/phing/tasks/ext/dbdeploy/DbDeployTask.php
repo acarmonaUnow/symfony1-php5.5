@@ -78,7 +78,7 @@ class DbDeployTask extends Task {
     function getAppliedChangeNumbers(){
     	if(count($this->appliedChangeNumbers) == 0){
 	        $this->log('Getting applied changed numbers from DB: ' . $this->url );
-	    	$appliedChangeNumbers = array();
+	    	$appliedChangeNumbers = [];
     		$dbh = new PDO($this->url, $this->userid, $this->password);
     		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	    	$sql = "SELECT * FROM " . DbDeployTask::$TABLE_NAME . " WHERE delta_set = '$this->deltaSet' ORDER BY change_number";

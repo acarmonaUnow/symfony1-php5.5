@@ -160,7 +160,7 @@ class ExecTask extends Task {
 
 		$this->log("Executing command: " . $this->command);
 
-		$output = array();
+		$output = [];
 		$return = null;
 		exec($this->command, $output, $return);
 

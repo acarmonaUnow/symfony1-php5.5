@@ -27,7 +27,7 @@ class sfPropelDatabase extends sfPDODatabase
    */
   static public function getConfiguration()
   {
-    return array('propel' => Propel::getConfiguration(PropelConfiguration::TYPE_ARRAY));
+    return ['propel' => Propel::getConfiguration(PropelConfiguration::TYPE_ARRAY)];
   }
 
   /**
@@ -97,7 +97,7 @@ class sfPropelDatabase extends sfPDODatabase
     {
       $params = $this->parseDsn($dsn);
 
-      $options = array('dsn', 'phptype', 'hostspec', 'database', 'username', 'password', 'port', 'protocol', 'encoding', 'persistent', 'socket', 'compat_assoc_lower', 'compat_rtrim_string');
+      $options = ['dsn', 'phptype', 'hostspec', 'database', 'username', 'password', 'port', 'protocol', 'encoding', 'persistent', 'socket', 'compat_assoc_lower', 'compat_rtrim_string'];
       foreach ($options as $option)
       {
         if (!$this->getParameter($option) && isset($params[$option]))
@@ -111,8 +111,8 @@ class sfPropelDatabase extends sfPDODatabase
     {
       // for BC
       $this->setParameter('options', array_merge(
-        $this->getParameter('options', array()),
-        array('ATTR_PERSISTENT' => $this->getParameter('persistent'))
+        $this->getParameter('options', []),
+        ['ATTR_PERSISTENT' => $this->getParameter('persistent')]
       ));
     }
 
@@ -121,26 +121,13 @@ class sfPropelDatabase extends sfPDODatabase
     if ($this->hasParameter('debug'))
     {
       $propelConfiguration->setParameter('debugpdo.logging', sfToolkit::arrayDeepMerge(
-        $propelConfiguration->getParameter('debugpdo.logging', array()),
+        $propelConfiguration->getParameter('debugpdo.logging', []),
         $this->getParameter('debug')
       ));
     }
 
-    $event = new sfEvent($propelConfiguration, 'propel.filter_connection_config', array('name' => $this->getParameter('datasource'), 'database' => $this));
-    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->filter($event, array(
-      'adapter'    => $this->getParameter('phptype'),
-      'connection' => array(
-        'dsn'       => $this->getParameter('dsn'),
-        'user'      => $this->getParameter('username'),
-        'password'  => $this->getParameter('password'),
-        'classname' => $this->getParameter('classname', 'PropelPDO'),
-        'options'   => $this->getParameter('options', array()),
-        'settings'  => array(
-          'charset' => array('value' => $this->getParameter('encoding', sfConfig::get('sf_charset'))),
-          'queries' => $this->getParameter('queries', array()),
-        ),
-      ),
-    ));
+    $event = new sfEvent($propelConfiguration, 'propel.filter_connection_config', ['name' => $this->getParameter('datasource'), 'database' => $this]);
+    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->filter($event, ['adapter'    => $this->getParameter('phptype'), 'connection' => ['dsn'       => $this->getParameter('dsn'), 'user'      => $this->getParameter('username'), 'password'  => $this->getParameter('password'), 'classname' => $this->getParameter('classname', 'PropelPDO'), 'options'   => $this->getParameter('options', []), 'settings'  => ['charset' => ['value' => $this->getParameter('encoding', sfConfig::get('sf_charset'))], 'queries' => $this->getParameter('queries', [])]]]);
 
     $propelConfiguration->setParameter('datasources.'.$this->getParameter('datasource'), $event->getReturnValue());
   }
@@ -183,6 +170,6 @@ class sfPropelDatabase extends sfPDODatabase
    */
   protected function parseDsn($dsn)
   {
-    return array('phptype' => substr($dsn, 0, strpos($dsn, ':')));
+    return ['phptype' => substr($dsn, 0, strpos($dsn, ':'))];
   }
 }

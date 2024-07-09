@@ -126,7 +126,7 @@ class Doctrine_DataDict_Mssql extends Doctrine_DataDict
         $db_type = preg_replace('/[\d\(\)]/','', strtolower((string) $field['type']) );
         $length  = (isset($field['length']) && $field['length'] > 0) ? $field['length'] : null;
 
-        $type = array();
+        $type = [];
         // todo: unsigned handling seems to be missing
         $unsigned = $fixed = null;
 
@@ -204,10 +204,7 @@ class Doctrine_DataDict_Mssql extends Doctrine_DataDict
                 $length = $field['length'] ?? null;
         }
 
-        return array('type'     => $type,
-                     'length'   => $length,
-                     'unsigned' => $unsigned,
-                     'fixed'    => $fixed);
+        return ['type'     => $type, 'length'   => $length, 'unsigned' => $unsigned, 'fixed'    => $fixed];
     }
 
     /**

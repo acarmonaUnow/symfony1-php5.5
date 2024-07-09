@@ -30,7 +30,7 @@ class sfValidatorI18nChoiceLanguage extends sfValidatorChoice
    *
    * @see sfValidatorChoice
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     parent::configure($options, $messages);
 

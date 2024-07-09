@@ -25,10 +25,7 @@ class sfGenerateModuleTask extends sfGeneratorBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
-      new sfCommandArgument('module', sfCommandArgument::REQUIRED, 'The module name'),
-    ));
+    $this->addArguments([new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'), new sfCommandArgument('module', sfCommandArgument::REQUIRED, 'The module name')]);
 
     $this->namespace = 'generate';
     $this->name = 'module';
@@ -63,7 +60,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $app    = $arguments['application'];
     $module = $arguments['module'];
@@ -83,12 +80,7 @@ EOF;
 
     $properties = parse_ini_file(sfConfig::get('sf_config_dir').'/properties.ini', true);
 
-    $constants = array(
-      'PROJECT_NAME' => $properties['symfony']['name'] ?? 'symfony',
-      'APP_NAME'     => $app,
-      'MODULE_NAME'  => $module,
-      'AUTHOR_NAME'  => $properties['symfony']['author'] ?? 'Your name here',
-    );
+    $constants = ['PROJECT_NAME' => $properties['symfony']['name'] ?? 'symfony', 'APP_NAME'     => $app, 'MODULE_NAME'  => $module, 'AUTHOR_NAME'  => $properties['symfony']['author'] ?? 'Your name here'];
 
     if (is_readable(sfConfig::get('sf_data_dir').'/skeleton/module'))
     {

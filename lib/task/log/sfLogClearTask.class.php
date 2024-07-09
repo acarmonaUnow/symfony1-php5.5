@@ -37,7 +37,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $logs = sfFinder::type('file')->in(sfConfig::get('sf_log_dir'));
     $this->getFilesystem()->remove($logs);

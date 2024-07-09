@@ -68,8 +68,8 @@ class PHP5ObjectBuilder extends ObjectBuilder {
 		// Check to see whether any generated foreign key names
 		// will conflict with column names.
 
-		$colPhpNames = array();
-		$fkPhpNames = array();
+		$colPhpNames = [];
+		$fkPhpNames = [];
 
 		foreach ($table->getColumns() as $col) {
 			$colPhpNames[] = $col->getPhpName();
@@ -579,7 +579,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		// FIXME - Apply support for PHP default expressions here
 		// see: http://propel.phpdb.org/trac/ticket/378
 
-		$colsWithDefaults = array();
+		$colsWithDefaults = [];
 		foreach ($table->getColumns() as $col) {
 			$def = $col->getDefaultValue();
 			if ($def !== null && !$def->isExpression()) {
@@ -587,7 +587,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 			}
 		}
 
-		$colconsts = array();
+		$colconsts = [];
 		foreach ($colsWithDefaults as $col) {
 			$clo = strtolower((string) $col->getName());
 			$script .= "
@@ -1371,7 +1371,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	 **/
 	protected function addHasOnlyDefaultValuesBody(&$script) {
 		$table = $this->getTable();
-		$colsWithDefaults = array();
+		$colsWithDefaults = [];
 		foreach ($table->getColumns() as $col) {
 			$def = $col->getDefaultValue();
 			if ($def !== null && !$def->isExpression()) {
@@ -2574,7 +2574,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		$and = "";
 		$comma = "";
 		$conditional = "";
-		$argmap = array(); // foreign -> local mapping
+		$argmap = []; // foreign -> local mapping
 		$argsize = 0;
 		foreach ($fk->getLocalColumns() as $columnName) {
 
@@ -2595,7 +2595,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 				$conditional .= $and . "\$this->" . $clo ." !== null";
 			}
 
-			$argmap[] = array('foreign' => $foreignColumn, 'local' => $localColumn);
+			$argmap[] = ['foreign' => $foreignColumn, 'local' => $localColumn];
 			$and = " && ";
 			$comma = ", ";
 			$argsize = $argsize + 1;
@@ -3215,7 +3215,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 		// we know that at least every column in the primary key of the foreign table
 		// is represented in this foreign key
 
-		$params = array();
+		$params = [];
 		foreach ($tblFK->getPrimaryKey() as $col) {
 			$localColumn = $table->getColumn($lfmap[$col->getName()]);
 			$clo = strtolower((string) $localColumn->getName());
@@ -3904,7 +3904,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	{
 ";
 
-		$autoIncCols = array();
+		$autoIncCols = [];
 		foreach ($table->getColumns() as $col) {
 			/* @var        $col Column */
 			if ($col->isAutoIncrement()) {
@@ -4003,7 +4003,7 @@ abstract class ".$this->getClassname()." extends ".ClassTools::classname($this->
 	public function clearAllReferences(\$deep = false)
 	{
 		if (\$deep) {";
-		$vars = array();
+		$vars = [];
 		foreach ($this->getTable()->getReferrers() as $refFK) {
 			if ($refFK->isLocalPrimaryKey()) {
 				$varName = $this->getPKRefFKVarName($refFK);

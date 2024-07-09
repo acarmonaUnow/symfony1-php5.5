@@ -25,15 +25,7 @@ class sfPropelBuildAllTask extends sfPropelBaseTask
    */
   protected function configure()
   {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-      new sfCommandOption('skip-forms', 'F', sfCommandOption::PARAMETER_NONE, 'Skip generating forms'),
-      new sfCommandOption('classes-only', 'C', sfCommandOption::PARAMETER_NONE, 'Do not initialize the database'),
-      new sfCommandOption('phing-arg', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'Arbitrary phing argument'),
-    ));
+    $this->addOptions([new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'), new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'), new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'), new sfCommandOption('skip-forms', 'F', sfCommandOption::PARAMETER_NONE, 'Skip generating forms'), new sfCommandOption('classes-only', 'C', sfCommandOption::PARAMETER_NONE, 'Do not initialize the database'), new sfCommandOption('phing-arg', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'Arbitrary phing argument')]);
 
     $this->namespace = 'propel';
     $this->name = 'build-all';
@@ -68,9 +60,9 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
-    $basePhingOptions = array();
+    $basePhingOptions = [];
     foreach ($options['phing-arg'] as $arg)
     {
       $basePhingOptions[] = '--phing-arg='.escapeshellarg((string) $arg);
@@ -79,9 +71,7 @@ EOF;
     $buildModel = new sfPropelBuildModelTask($this->dispatcher, $this->formatter);
     $buildModel->setCommandApplication($this->commandApplication);
     $buildModel->setConfiguration($this->configuration);
-    $ret = $buildModel->run(array(), array(
-      'phing-arg' => $options['phing-arg'],
-    ));
+    $ret = $buildModel->run([], ['phing-arg' => $options['phing-arg']]);
 
     if ($ret)
     {
@@ -90,12 +80,7 @@ EOF;
 
     if (!$options['skip-forms'])
     {
-      $this->logBlock(array(
-        'Phing was run before and used many custom classes that might conflict with',
-        'your model classes. In case of errors try running "propel:build-forms" and',
-        '"propel:build-filters" alone. This is due to a PHP limitation that cannot be',
-        'fixed in symfony.',
-      ), 'INFO');
+      $this->logBlock(['Phing was run before and used many custom classes that might conflict with', 'your model classes. In case of errors try running "propel:build-forms" and', '"propel:build-filters" alone. This is due to a PHP limitation that cannot be', 'fixed in symfony.'], 'INFO');
 
       $buildForms = new sfPropelBuildFormsTask($this->dispatcher, $this->formatter);
       $buildForms->setCommandApplication($this->commandApplication);
@@ -123,9 +108,7 @@ EOF;
       $buildSql = new sfPropelBuildSqlTask($this->dispatcher, $this->formatter);
       $buildSql->setCommandApplication($this->commandApplication);
       $buildSql->setConfiguration($this->configuration);
-      $ret = $buildSql->run(array(), array(
-        'phing-arg' => $options['phing-arg'],
-      ));
+      $ret = $buildSql->run([], ['phing-arg' => $options['phing-arg']]);
 
       if ($ret)
       {
@@ -135,11 +118,7 @@ EOF;
       $insertSql = new sfPropelInsertSqlTask($this->dispatcher, $this->formatter);
       $insertSql->setCommandApplication($this->commandApplication);
       $insertSql->setConfiguration($this->configuration);
-      $ret = $insertSql->run(array(), array(
-        'phing-arg'       => $options['phing-arg'],
-        'connection'      => $options['connection'],
-        'no-confirmation' => $options['no-confirmation'],
-      ));
+      $ret = $insertSql->run([], ['phing-arg'       => $options['phing-arg'], 'connection'      => $options['connection'], 'no-confirmation' => $options['no-confirmation']]);
 
       if ($ret)
       {

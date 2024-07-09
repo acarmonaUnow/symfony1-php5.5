@@ -18,4 +18,4 @@ if (!include(__DIR__.'/../../bootstrap/functional.php'))
 require_once(__DIR__.'/restBrowser.class.php');
 
 $b = new RestBrowser();
-$b->browse(array());
+$b->browse([]);

@@ -12,17 +12,9 @@ abstract class BaseGroupFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
-    $this->setWidgets(array(
-      'name'             => new sfWidgetFormFilterInput(),
-      'permissions_list' => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'Permission')),
-      'users_list'       => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'User')),
-    ));
+    $this->setWidgets(['name'             => new sfWidgetFormFilterInput(), 'permissions_list' => new sfWidgetFormDoctrineChoice(['multiple' => true, 'model' => 'Permission']), 'users_list'       => new sfWidgetFormDoctrineChoice(['multiple' => true, 'model' => 'User'])]);
 
-    $this->setValidators(array(
-      'name'             => new sfValidatorPass(array('required' => false)),
-      'permissions_list' => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'Permission', 'required' => false)),
-      'users_list'       => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'User', 'required' => false)),
-    ));
+    $this->setValidators(['name'             => new sfValidatorPass(['required' => false]), 'permissions_list' => new sfValidatorDoctrineChoice(['multiple' => true, 'model' => 'Permission', 'required' => false]), 'users_list'       => new sfValidatorDoctrineChoice(['multiple' => true, 'model' => 'User', 'required' => false])]);
 
     $this->widgetSchema->setNameFormat('group_filters[%s]');
 
@@ -37,7 +29,7 @@ abstract class BaseGroupFormFilter extends BaseFormFilterDoctrine
   {
     if (!is_array($values))
     {
-      $values = array($values);
+      $values = [$values];
     }
 
     if (!count($values))
@@ -55,7 +47,7 @@ abstract class BaseGroupFormFilter extends BaseFormFilterDoctrine
   {
     if (!is_array($values))
     {
-      $values = array($values);
+      $values = [$values];
     }
 
     if (!count($values))
@@ -76,11 +68,6 @@ abstract class BaseGroupFormFilter extends BaseFormFilterDoctrine
 
   public function getFields()
   {
-    return array(
-      'id'               => 'Number',
-      'name'             => 'Text',
-      'permissions_list' => 'ManyKey',
-      'users_list'       => 'ManyKey',
-    );
+    return ['id'               => 'Number', 'name'             => 'Text', 'permissions_list' => 'ManyKey', 'users_list'       => 'ManyKey'];
   }
 }

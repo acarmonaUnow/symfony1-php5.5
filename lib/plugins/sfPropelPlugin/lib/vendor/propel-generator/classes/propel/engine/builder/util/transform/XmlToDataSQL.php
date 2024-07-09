@@ -147,8 +147,8 @@ class XmlToDataSQL extends AbstractHandler {
 		try {
 			if ($name == "dataset") {
 				// Clear any start/end DLL
-				call_user_func(array($this->builderClazz, 'reset'));
-				$this->sqlWriter->write(call_user_func(array($this->builderClazz, 'getDatabaseStartSql')));
+				call_user_func([$this->builderClazz, 'reset']);
+				$this->sqlWriter->write(call_user_func([$this->builderClazz, 'getDatabaseStartSql']));
 			} else {
 
 				// we're processing a row of data
@@ -156,7 +156,7 @@ class XmlToDataSQL extends AbstractHandler {
 
 				$table = $this->database->getTableByPhpName($name);
 
-				$columnValues = array();
+				$columnValues = [];
 				foreach ($attributes as $name => $value) {
 					$col = $table->getColumnByPhpName($name);
 					$columnValues[] = new ColumnValue($col, iconv('utf-8',$this->encoding, (string) $value));
@@ -206,7 +206,7 @@ class XmlToDataSQL extends AbstractHandler {
 			if ($this->currBuilder !== null) {
 				$this->sqlWriter->write($this->currBuilder->getTableEndSql());
 			}
-			$this->sqlWriter->write(call_user_func(array($this->builderClazz, 'getDatabaseEndSql')));
+			$this->sqlWriter->write(call_user_func([$this->builderClazz, 'getDatabaseEndSql']));
 		}
 	}
 

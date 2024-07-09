@@ -32,21 +32,7 @@
  */
 class Doctrine_I18n extends Doctrine_Record_Generator
 {
-    protected $_options = array(
-                            'className'     => '%CLASS%Translation',
-                            'tableName'     => '%TABLE%_translation',
-                            'fields'        => array(),
-                            'generateFiles' => false,
-                            'table'         => false,
-                            'pluginTable'   => false,
-                            'children'      => array(),
-                            'i18nField'     => 'lang',
-                            'type'          => 'string',
-                            'length'        => 2,
-                            'options'       => array(),
-                            'cascadeDelete' => true,
-                            'appLevelDelete'=> false
-                            );
+    protected $_options = ['className'     => '%CLASS%Translation', 'tableName'     => '%TABLE%_translation', 'fields'        => [], 'generateFiles' => false, 'table'         => false, 'pluginTable'   => false, 'children'      => [], 'i18nField'     => 'lang', 'type'          => 'string', 'length'        => 2, 'options'       => [], 'cascadeDelete' => true, 'appLevelDelete'=> false];
 
     /**
      * __construct
@@ -77,11 +63,11 @@ class Doctrine_I18n extends Doctrine_Record_Generator
       	    throw new Doctrine_I18n_Exception('Fields not set.');
       	}
 
-        $options = array('className' => $this->_options['className']);
+        $options = ['className' => $this->_options['className']];
 
         $cols = $this->_options['table']->getColumns();
 
-        $columns = array();
+        $columns = [];
         foreach ($cols as $column => $definition) {
             $fieldName = $this->_options['table']->getFieldName($column);
             if (in_array($fieldName, $this->_options['fields'])) {
@@ -95,15 +81,12 @@ class Doctrine_I18n extends Doctrine_Record_Generator
 
         $this->hasColumns($columns);
 
-        $defaultOptions = array(
-            'fixed' => true,
-            'primary' => true
-        );
+        $defaultOptions = ['fixed' => true, 'primary' => true];
         $options = array_merge($defaultOptions, $this->_options['options']);
 
         $this->hasColumn($this->_options['i18nField'], $this->_options['type'], $this->_options['length'], $options);
 
-        $this->bindQueryParts(array('indexBy' => $this->_options['i18nField']));
+        $this->bindQueryParts(['indexBy' => $this->_options['i18nField']]);
  
         // Rewrite any relations to our original table
         $originalName = $this->_options['table']->getClassnameToReturn();

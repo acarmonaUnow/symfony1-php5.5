@@ -35,7 +35,7 @@ class sfWebRequest extends sfRequest
     $getParameters          = null,
     $postParameters         = null,
     $requestParameters      = null,
-    $formats                = array(),
+    $formats                = [],
     $format                 = null,
     $fixedFileArray         = false;
 
@@ -62,15 +62,9 @@ class sfWebRequest extends sfRequest
    *
    * @see sfRequest
    */
-  public function initialize(sfEventDispatcher $dispatcher, $parameters = array(), $attributes = array(), $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $parameters = [], $attributes = [], $options = [])
   {
-    $options = array_merge(array(
-      'path_info_key'   => 'PATH_INFO',
-      'path_info_array' => 'SERVER',
-      'http_port'       => null,
-      'https_port'      => null,
-      'default_format'  => null, // to maintain bc
-    ), $options);
+    $options = array_merge(['path_info_key'   => 'PATH_INFO', 'path_info_array' => 'SERVER', 'http_port'       => null, 'https_port'      => null, 'default_format'  => null], $options);
     parent::initialize($dispatcher, $parameters, $attributes, $options);
 
     // GET parameters
@@ -454,7 +448,7 @@ class sfWebRequest extends sfRequest
 
     if (!isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
     {
-      return array();
+      return [];
     }
 
     $languages = $this->splitHttpAcceptHeader($_SERVER['HTTP_ACCEPT_LANGUAGE']);
@@ -509,7 +503,7 @@ class sfWebRequest extends sfRequest
 
     if (!isset($_SERVER['HTTP_ACCEPT_CHARSET']))
     {
-      return array();
+      return [];
     }
 
     $this->charsets = $this->splitHttpAcceptHeader($_SERVER['HTTP_ACCEPT_CHARSET']);
@@ -531,7 +525,7 @@ class sfWebRequest extends sfRequest
 
     if (!isset($_SERVER['HTTP_ACCEPT']))
     {
-      return array();
+      return [];
     }
 
     $this->acceptableContentTypes = $this->splitHttpAcceptHeader($_SERVER['HTTP_ACCEPT']);
@@ -662,8 +656,8 @@ class sfWebRequest extends sfRequest
    */
   public function splitHttpAcceptHeader($header)
   {
-    $values = array();
-    $groups = array();
+    $values = [];
+    $groups = [];
     foreach (array_filter(explode(',', $header)) as $value)
     {
       // Cut off any q-value that might come after a semi-colon
@@ -754,7 +748,7 @@ class sfWebRequest extends sfRequest
    */
   public function setFormat($format, $mimeTypes)
   {
-    $this->formats[$format] = is_array($mimeTypes) ? $mimeTypes : array($mimeTypes);
+    $this->formats[$format] = is_array($mimeTypes) ? $mimeTypes : [$mimeTypes];
   }
 
   /**
@@ -801,7 +795,7 @@ class sfWebRequest extends sfRequest
       $this->fixedFileArray = self::convertFileInformation($_FILES);
     }
 
-    return null === $key ? $this->fixedFileArray : ($this->fixedFileArray[$key] ?? array());
+    return null === $key ? $this->fixedFileArray : ($this->fixedFileArray[$key] ?? []);
   }
 
   /**
@@ -815,7 +809,7 @@ class sfWebRequest extends sfRequest
    */
   static public function convertFileInformation(array $taintedFiles)
   {
-    $files = array();
+    $files = [];
     foreach ($taintedFiles as $key => $data)
     {
       $files[$key] = self::fixPhpFilesArray($data);
@@ -833,7 +827,7 @@ class sfWebRequest extends sfRequest
    */
   static protected function fixPhpFilesArray(array $data)
   {
-    $fileKeys = array('error', 'name', 'size', 'tmp_name', 'type');
+    $fileKeys = ['error', 'name', 'size', 'tmp_name', 'type'];
     $keys = array_keys($data);
     sort($keys);
 
@@ -849,13 +843,7 @@ class sfWebRequest extends sfRequest
     }
     foreach (array_keys($data['name']) as $key)
     {
-      $files[$key] = self::fixPhpFilesArray(array(
-        'error'    => $data['error'][$key],
-        'name'     => $data['name'][$key],
-        'type'     => $data['type'][$key],
-        'tmp_name' => $data['tmp_name'][$key],
-        'size'     => $data['size'][$key],
-      ));
+      $files[$key] = self::fixPhpFilesArray(['error'    => $data['error'][$key], 'name'     => $data['name'][$key], 'type'     => $data['type'][$key], 'tmp_name' => $data['tmp_name'][$key], 'size'     => $data['size'][$key]]);
     }
 
     return $files;
@@ -964,7 +952,7 @@ class sfWebRequest extends sfRequest
   public function checkCSRFProtection()
   {
     $form = new BaseForm();
-    $form->bind($form->isCSRFProtected() ? array($form->getCSRFFieldName() => $this->getParameter($form->getCSRFFieldName())) : array());
+    $form->bind($form->isCSRFProtected() ? [$form->getCSRFFieldName() => $this->getParameter($form->getCSRFFieldName())] : []);
 
     if (!$form->isValid())
     {
@@ -981,7 +969,7 @@ class sfWebRequest extends sfRequest
    */
   protected function parseRequestParameters()
   {
-    return $this->dispatcher->filter(new sfEvent($this, 'request.filter_parameters', $this->getRequestContext()), array())->getReturnValue();
+    return $this->dispatcher->filter(new sfEvent($this, 'request.filter_parameters', $this->getRequestContext()), [])->getReturnValue();
   }
 
   /**
@@ -991,15 +979,7 @@ class sfWebRequest extends sfRequest
    */
   public function getRequestContext()
   {
-    return array(
-      'path_info'   => $this->getPathInfo(),
-      'prefix'      => $this->getPathInfoPrefix(),
-      'method'      => $this->getMethod(),
-      'format'      => $this->getRequestFormat(),
-      'host'        => $this->getHost(),
-      'is_secure'   => $this->isSecure(),
-      'request_uri' => $this->getUri(),
-    );
+    return ['path_info'   => $this->getPathInfo(), 'prefix'      => $this->getPathInfoPrefix(), 'method'      => $this->getMethod(), 'format'      => $this->getRequestFormat(), 'host'        => $this->getHost(), 'is_secure'   => $this->isSecure(), 'request_uri' => $this->getUri()];
   }
 
   /**

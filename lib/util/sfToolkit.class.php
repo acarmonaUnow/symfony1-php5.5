@@ -62,7 +62,7 @@ class sfToolkit
     $fp = opendir($directory);
 
     // ignore names
-    $ignore = array('.', '..', 'CVS', '.svn');
+    $ignore = ['.', '..', 'CVS', '.svn'];
 
     while (($file = readdir($fp)) !== false)
     {
@@ -159,7 +159,7 @@ class sfToolkit
       return $source;
     }
 
-    $ignore = array(T_COMMENT => true, T_DOC_COMMENT => true);
+    $ignore = [T_COMMENT => true, T_DOC_COMMENT => true];
     $output = '';
 
     foreach (token_get_all($source) as $token)
@@ -193,7 +193,7 @@ class sfToolkit
    */
   public static function stripslashesDeep($value)
   {
-    return is_array($value) ? array_map(array('sfToolkit', 'stripslashesDeep'), $value) : stripslashes($value);
+    return is_array($value) ? array_map(['sfToolkit', 'stripslashesDeep'], $value) : stripslashes($value);
   }
 
   // code from php at moechofe dot com (array_merge comment on php.net)
@@ -225,7 +225,7 @@ class sfToolkit
         return func_get_arg(0);
       case 2:
         $args = func_get_args();
-        $args[2] = array();
+        $args[2] = [];
         if (is_array($args[0]) && is_array($args[1]))
         {
           foreach (array_unique(array_merge(array_keys($args[0]),array_keys($args[1]))) as $key)
@@ -259,7 +259,7 @@ class sfToolkit
         $args = func_get_args();
         $args[1] = sfToolkit::arrayDeepMerge($args[0], $args[1]);
         array_shift($args);
-        return call_user_func_array(array('sfToolkit', 'arrayDeepMerge'), $args);
+        return call_user_func_array(['sfToolkit', 'arrayDeepMerge'], $args);
         break;
     }
   }
@@ -284,7 +284,7 @@ class sfToolkit
       )
     /x', $string, $matches, PREG_SET_ORDER);
 
-    $attributes = array();
+    $attributes = [];
     foreach ($matches as $val)
     {
       $attributes[$val[1]] = self::literalize($val[3]);
@@ -307,15 +307,15 @@ class sfToolkit
     $value  = trim($value);
     $lvalue = strtolower($value);
 
-    if (in_array($lvalue, array('null', '~', '')))
+    if (in_array($lvalue, ['null', '~', '']))
     {
       $value = null;
     }
-    else if (in_array($lvalue, array('true', 'on', '+', 'yes')))
+    else if (in_array($lvalue, ['true', 'on', '+', 'yes']))
     {
       $value = true;
     }
-    else if (in_array($lvalue, array('false', 'off', '-', 'no')))
+    else if (in_array($lvalue, ['false', 'off', '-', 'no']))
     {
       $value = false;
     }
@@ -528,8 +528,8 @@ class sfToolkit
   public static function getPhpCli()
   {
     $path = getenv('PATH') ?: getenv('Path');
-    $suffixes = DIRECTORY_SEPARATOR == '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : array('.exe', '.bat', '.cmd', '.com')) : array('');
-    foreach (array('php5', 'php') as $phpCli)
+    $suffixes = DIRECTORY_SEPARATOR == '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : ['.exe', '.bat', '.cmd', '.com']) : [''];
+    foreach (['php5', 'php'] as $phpCli)
     {
       foreach ($suffixes as $suffix)
       {

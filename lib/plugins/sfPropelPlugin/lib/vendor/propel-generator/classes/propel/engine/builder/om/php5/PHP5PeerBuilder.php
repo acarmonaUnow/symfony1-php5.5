@@ -48,7 +48,7 @@ class PHP5PeerBuilder extends PeerBuilder {
 		$table = $this->getTable();
 
 		// Check to see if any of the column constants are PHP reserved words.
-		$colConstants = array();
+		$colConstants = [];
 
 		foreach ($table->getColumns() as $col) {
 			$colConstants[] = $this->getColumnName($col);
@@ -692,7 +692,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 		$pks = $this->getTable()->getPrimaryKey();
 
-		$php = array();
+		$php = [];
 		foreach ($pks as $pk) {
 			$php[] = '$obj->get' . $pk->getPhpName() . '()';
 		}
@@ -733,7 +733,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		$script .= "
 			if (is_object(\$value) && \$value instanceof ".$this->getObjectClassname().") {";
 
-			$php = array();
+			$php = [];
 			foreach ($pks as $pk) {
 				$php[] = '$value->get' . $pk->getPhpName() . '()';
 			}
@@ -745,7 +745,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 				// assume we've been passed a primary key";
 
 		if (count($pks) > 1) {
-			$php = array();
+			$php = [];
 			for ($i=0; $i < count($pks); $i++) {
 				$php[] = "\$value[$i]";
 			}
@@ -884,8 +884,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		// We have to iterate through all the columns so that we know the offset of the primary
 		// key columns.
 		$n = 0;
-		$pk = array();
-		$cond = array();
+		$pk = [];
+		$cond = [];
 		foreach ($this->getTable()->getColumns() as $col) {
 			if (!$col->isLazyLoad()) {
 				if ($col->isPrimaryKey()) {
@@ -1735,7 +1735,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	 */
 	public static function ".$this->getRetrieveMethodName()."(";
 
-		$php = array();
+		$php = [];
 		foreach ($table->getPrimaryKey() as $col) {
 			$clo = strtolower((string) $col->getName());
 			$php[] = '$' . $clo;
@@ -1833,7 +1833,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	 */
 	protected function getPrimaryKeyColOffsets(Table $tbl)
 	{
-		$offsets = array();
+		$offsets = [];
 		$idx = 0;
 		foreach ($tbl->getColumns() as $col) {
 			if ($col->isPrimaryKey()) {

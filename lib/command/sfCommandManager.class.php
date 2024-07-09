@@ -20,12 +20,12 @@ class sfCommandManager
 {
   protected
     $arguments            = '',
-    $errors               = array(),
+    $errors               = [],
     $optionSet            = null,
-    $argumentSet          = array(),
-    $optionValues         = array(),
-    $argumentValues       = array(),
-    $parsedArgumentValues = array();
+    $argumentSet          = [],
+    $optionValues         = [],
+    $argumentValues       = [],
+    $parsedArgumentValues = [];
 
   /**
    * Constructor.
@@ -118,10 +118,10 @@ class sfCommandManager
     $this->arguments            = $arguments;
     $this->optionValues         = $this->optionSet->getDefaults();
     $this->argumentValues       = $this->argumentSet->getDefaults();
-    $this->parsedArgumentValues = array();
-    $this->errors               = array();
+    $this->parsedArgumentValues = [];
+    $this->errors               = [];
 
-    while (!in_array($argument = array_shift($this->arguments), array('', null)))
+    while (!in_array($argument = array_shift($this->arguments), ['', null]))
     {
       if ('--' == $argument)
       {

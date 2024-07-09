@@ -116,7 +116,7 @@ class PhpDocumentorExternalTask extends PhpDocumentorTask
 	 */
 	protected function constructArguments()
 	{
-        $aArgs = array();
+        $aArgs = [];
 		if ($this->title)
 		{
 			$aArgs[] = '--title "' . $this->title . '"';
@@ -148,7 +148,7 @@ class PhpDocumentorExternalTask extends PhpDocumentorTask
 		}
 
 		// append any files in filesets
-		$filesToParse = array();
+		$filesToParse = [];
 		foreach($this->filesets as $fs) {		    
 	        $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
 	        foreach($files as $filename) {
@@ -161,7 +161,7 @@ class PhpDocumentorExternalTask extends PhpDocumentorTask
         }
 
 		// append any files in filesets
-		$ricFiles = array();
+		$ricFiles = [];
 		foreach($this->projDocFilesets as $fs) {		    
 	        $files = $fs->getDirectoryScanner($this->project)->getIncludedFiles();
 	        foreach($files as $filename) {

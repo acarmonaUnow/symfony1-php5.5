@@ -31,12 +31,12 @@ require_once 'phing/Task.php';
   class JslLintTask extends Task
   {
     protected $file;  // the source file (from xml attribute)
-    protected $filesets = array(); // all fileset objects assigned to this task
+    protected $filesets = []; // all fileset objects assigned to this task
 
     protected $showWarnings = true;
     protected $haltOnFailure = false;
     protected $hasErrors = false;
-    private $badFiles = array();
+    private $badFiles = [];
 
     /**
      * Sets the flag if warnings should be shown
@@ -114,7 +114,7 @@ require_once 'phing/Task.php';
       {
         if(is_readable($file))
         {
-          $messages = array();
+          $messages = [];
           exec($command.'"'.$file.'"', $messages);
 
           $summary = $messages[sizeof($messages) - 1];
@@ -125,12 +125,12 @@ require_once 'phing/Task.php';
           preg_match('/(\d+)\swarning/', $summary, $matches);
           $warningCount = $matches[1];
 
-          $errors = array();
-          $warnings = array();
+          $errors = [];
+          $warnings = [];
           if ($errorCount > 0 || $warningCount > 0) {
             $last = false;
             foreach ($messages as $message) {
-              $matches = array();
+              $matches = [];
               if (preg_match('/^(\.*)\^$/', $message)) {
                 $column = strlen($message);
                 if ($last == 'error') {
@@ -142,7 +142,7 @@ require_once 'phing/Task.php';
               }
               if (!preg_match('/^file:(.+);line:(\d+);message:(.+)$/', $message, $matches)) continue;
               $msg = $matches[3];
-              $data = array('filename' => $matches[1], 'line' => $matches[2], 'message' => $msg);
+              $data = ['filename' => $matches[1], 'line' => $matches[2], 'message' => $msg];
               if (preg_match('/^.*error:.+$/i', $msg)) {
                 $errors[] = $data;
                 $last = 'error';

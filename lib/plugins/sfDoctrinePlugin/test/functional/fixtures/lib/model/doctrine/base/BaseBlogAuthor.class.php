@@ -20,8 +20,6 @@ abstract class BaseBlogAuthor extends Author
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('BlogArticle as Articles', array(
-             'local' => 'id',
-             'foreign' => 'blog_author_id'));
+        $this->hasMany('BlogArticle as Articles', ['local' => 'id', 'foreign' => 'blog_author_id']);
     }
 }

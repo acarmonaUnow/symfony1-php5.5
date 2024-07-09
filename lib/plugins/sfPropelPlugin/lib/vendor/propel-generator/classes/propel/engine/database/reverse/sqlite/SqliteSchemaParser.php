@@ -38,37 +38,7 @@ class SqliteSchemaParser extends BaseSchemaParser {
 	 *
 	 * @var        array
 	 */
-	private static $sqliteTypeMap = array(
-		'tinyint' => PropelTypes::TINYINT,
-		'smallint' => PropelTypes::SMALLINT,
-		'mediumint' => PropelTypes::SMALLINT,
-		'int' => PropelTypes::INTEGER,
-		'integer' => PropelTypes::INTEGER,
-		'bigint' => PropelTypes::BIGINT,
-		'int24' => PropelTypes::BIGINT,
-		'real' => PropelTypes::REAL,
-		'float' => PropelTypes::FLOAT,
-		'decimal' => PropelTypes::DECIMAL,
-		'numeric' => PropelTypes::NUMERIC,
-		'double' => PropelTypes::DOUBLE,
-		'char' => PropelTypes::CHAR,
-		'varchar' => PropelTypes::VARCHAR,
-		'date' => PropelTypes::DATE,
-		'time' => PropelTypes::TIME,
-		'year' => PropelTypes::INTEGER,
-		'datetime' => PropelTypes::TIMESTAMP,
-		'timestamp' => PropelTypes::TIMESTAMP,
-		'tinyblob' => PropelTypes::BINARY,
-		'blob' => PropelTypes::BLOB,
-		'mediumblob' => PropelTypes::BLOB,
-		'longblob' => PropelTypes::BLOB,
-		'longtext' => PropelTypes::CLOB,
-		'tinytext' => PropelTypes::VARCHAR,
-		'mediumtext' => PropelTypes::LONGVARCHAR,
-		'text' => PropelTypes::LONGVARCHAR,
-		'enum' => PropelTypes::CHAR,
-		'set' => PropelTypes::CHAR,
-	);
+	private static $sqliteTypeMap = ['tinyint' => PropelTypes::TINYINT, 'smallint' => PropelTypes::SMALLINT, 'mediumint' => PropelTypes::SMALLINT, 'int' => PropelTypes::INTEGER, 'integer' => PropelTypes::INTEGER, 'bigint' => PropelTypes::BIGINT, 'int24' => PropelTypes::BIGINT, 'real' => PropelTypes::REAL, 'float' => PropelTypes::FLOAT, 'decimal' => PropelTypes::DECIMAL, 'numeric' => PropelTypes::NUMERIC, 'double' => PropelTypes::DOUBLE, 'char' => PropelTypes::CHAR, 'varchar' => PropelTypes::VARCHAR, 'date' => PropelTypes::DATE, 'time' => PropelTypes::TIME, 'year' => PropelTypes::INTEGER, 'datetime' => PropelTypes::TIMESTAMP, 'timestamp' => PropelTypes::TIMESTAMP, 'tinyblob' => PropelTypes::BINARY, 'blob' => PropelTypes::BLOB, 'mediumblob' => PropelTypes::BLOB, 'longblob' => PropelTypes::BLOB, 'longtext' => PropelTypes::CLOB, 'tinytext' => PropelTypes::VARCHAR, 'mediumtext' => PropelTypes::LONGVARCHAR, 'text' => PropelTypes::LONGVARCHAR, 'enum' => PropelTypes::CHAR, 'set' => PropelTypes::CHAR];
 
 	/**
 	 * Gets a type mapping from native types to Propel types
@@ -88,7 +58,7 @@ class SqliteSchemaParser extends BaseSchemaParser {
 		$stmt = $this->dbh->query("SELECT name FROM sqlite_master WHERE type='table' UNION ALL SELECT name FROM sqlite_temp_master WHERE type='table' ORDER BY name;");
 
 		// First load the tables (important that this happen before filling out details of tables)
-		$tables = array();
+		$tables = [];
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$name = $row[0];
 			$table = new Table($name);

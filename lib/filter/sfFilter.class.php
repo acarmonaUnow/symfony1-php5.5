@@ -25,14 +25,14 @@ abstract class sfFilter
     $context         = null;
 
   public static
-    $filterCalled    = array();
+    $filterCalled    = [];
 
   /**
    * Class constructor.
    *
    * @see initialize()
    */
-  public function __construct($context, $parameters = array())
+  public function __construct($context, $parameters = [])
   {
     $this->initialize($context, $parameters);
   }
@@ -45,7 +45,7 @@ abstract class sfFilter
    *
    * @return boolean true
    */
-  public function initialize($context, $parameters = array())
+  public function initialize($context, $parameters = [])
   {
     $this->context = $context;
 

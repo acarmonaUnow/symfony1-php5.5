@@ -33,7 +33,7 @@ class sfWidgetFormI18nChoiceCurrency extends sfWidgetFormChoice
    *
    * @see sfWidgetFormChoice
    */
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);
 
@@ -49,7 +49,7 @@ class sfWidgetFormI18nChoiceCurrency extends sfWidgetFormChoice
     $addEmpty = $options['add_empty'] ?? false;
     if (false !== $addEmpty)
     {
-      $currencies = array_merge(array('' => true === $addEmpty ? '' : $addEmpty), $currencies);
+      $currencies = array_merge(['' => true === $addEmpty ? '' : $addEmpty], $currencies);
     }
 
     $this->setOption('choices', $currencies);

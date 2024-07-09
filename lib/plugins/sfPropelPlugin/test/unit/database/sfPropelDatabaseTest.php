@@ -14,46 +14,16 @@ $t = new lime_test(1);
 
 class ProjectConfiguration extends sfProjectConfiguration
 {
-  protected $plugins = array('sfPropelPlugin');
+  protected $plugins = ['sfPropelPlugin'];
 }
 new ProjectConfiguration();
 
 // ->__construct()
 $t->diag('->__construct()');
 
-$configuration = array(
-  'propel' => array(
-    'datasources' => array(
-      'propel' => array(
-        'adapter' => 'mysql',
-        'connection' => array(
-          'dsn' => 'mysql:dbname=testdb;host=localhost',
-          'user' => 'foo',
-          'password' => 'bar',
-          'classname' => 'PropelPDO',
-          'options' => array(
-            'ATTR_PERSISTENT' => true,
-            'ATTR_AUTOCOMMIT' => false,
-          ),
-          'settings' => array(
-            'charset' => array('value' => 'utf8'),
-            'queries' => array(),
-          ),
-        ),
-      ),
-      'default' => 'propel',
-    ),
-  ),
-);
+$configuration = ['propel' => ['datasources' => ['propel' => ['adapter' => 'mysql', 'connection' => ['dsn' => 'mysql:dbname=testdb;host=localhost', 'user' => 'foo', 'password' => 'bar', 'classname' => 'PropelPDO', 'options' => ['ATTR_PERSISTENT' => true, 'ATTR_AUTOCOMMIT' => false], 'settings' => ['charset' => ['value' => 'utf8'], 'queries' => []]]], 'default' => 'propel']]];
 
-$parametersTests = array(
-  'dsn'        => 'mysql:dbname=testdb;host=localhost',
-  'username'   => 'foo',
-  'password'   => 'bar',
-  'encoding'   => 'utf8',
-  'persistent' => true,
-  'options'    => array('ATTR_AUTOCOMMIT' => false)
-);
+$parametersTests = ['dsn'        => 'mysql:dbname=testdb;host=localhost', 'username'   => 'foo', 'password'   => 'bar', 'encoding'   => 'utf8', 'persistent' => true, 'options'    => ['ATTR_AUTOCOMMIT' => false]];
 
 $p = new sfPropelDatabase($parametersTests);
 $t->is_deeply($p->getConfiguration(), $configuration, '->__construct() creates a valid propel configuration from parameters');

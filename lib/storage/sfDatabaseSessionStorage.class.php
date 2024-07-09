@@ -37,13 +37,9 @@ abstract class sfDatabaseSessionStorage extends sfSessionStorage
    *
    * @see sfSessionStorage
    */
-  public function initialize($options = array())
+  public function initialize($options = [])
   {
-    $options = array_merge(array(
-      'db_id_col'   => 'sess_id',
-      'db_data_col' => 'sess_data',
-      'db_time_col' => 'sess_time',
-    ), $options);
+    $options = array_merge(['db_id_col'   => 'sess_id', 'db_data_col' => 'sess_data', 'db_time_col' => 'sess_time'], $options);
 
     // disable auto_start
     $options['auto_start'] = false;

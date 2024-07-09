@@ -19,7 +19,7 @@
 class sfValidatorOr extends sfValidatorBase
 {
   protected
-    $validators = array();
+    $validators = [];
 
   /**
    * Constructor.
@@ -36,7 +36,7 @@ class sfValidatorOr extends sfValidatorBase
    *
    * @see sfValidatorBase
    */
-  public function __construct($validators = null, $options = array(), $messages = array())
+  public function __construct($validators = null, $options = [], $messages = [])
   {
     if ($validators instanceof sfValidatorBase)
     {
@@ -60,7 +60,7 @@ class sfValidatorOr extends sfValidatorBase
   /**
    * @see sfValidatorBase
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     $this->setMessage('invalid', null);
   }
@@ -90,7 +90,7 @@ class sfValidatorOr extends sfValidatorBase
    */
   protected function doClean($value)
   {
-    $errors = array();
+    $errors = [];
     foreach ($this->validators as $validator)
     {
       try
@@ -105,7 +105,7 @@ class sfValidatorOr extends sfValidatorBase
 
     if ($this->getMessage('invalid'))
     {
-      throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      throw new sfValidatorError($this, 'invalid', ['value' => $value]);
     }
 
     throw new sfValidatorErrorSchema($this, $errors);

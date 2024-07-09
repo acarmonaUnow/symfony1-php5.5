@@ -36,7 +36,7 @@ require_once 'phing/tasks/ext/coverage/CoverageMerger.php';
 class CoverageSetupTask extends Task
 {
 	/** the list of filesets containing the .php filename rules */
-	private $filesets = array();
+	private $filesets = [];
 
 	/** the filename of the coverage database */
 	private $database = "coverage.db";
@@ -89,7 +89,7 @@ class CoverageSetupTask extends Task
 	 */
 	private function getFilenames()
 	{
-		$files = array();
+		$files = [];
 
 		foreach ($this->filesets as $fileset)
 		{
@@ -102,7 +102,7 @@ class CoverageSetupTask extends Task
 			{
 				$fs = new PhingFile(realpath($ds->getBaseDir()), $file);
 					
-				$files[] = array('key' => strtolower($fs->getAbsolutePath()), 'fullname' => $fs->getAbsolutePath());
+				$files[] = ['key' => strtolower($fs->getAbsolutePath()), 'fullname' => $fs->getAbsolutePath()];
 			}
 		}
 
@@ -130,7 +130,7 @@ class CoverageSetupTask extends Task
 			$fullname = $file['fullname'];
 			$filename = $file['key'];
 			
-			$props->setProperty($filename, serialize(array('fullname' => $fullname, 'coverage' => array())));
+			$props->setProperty($filename, serialize(['fullname' => $fullname, 'coverage' => []]));
 		}
 
 		$dbfile = new PhingFile($this->database);
@@ -151,7 +151,7 @@ class CoverageSetupTask extends Task
 			
 			xdebug_stop_code_coverage();
 			
-			CoverageMerger::merge($this->project, array($coverage));
+			CoverageMerger::merge($this->project, [$coverage]);
 		}
 	}
 }

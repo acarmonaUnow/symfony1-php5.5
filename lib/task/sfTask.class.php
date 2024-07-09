@@ -21,11 +21,11 @@ abstract class sfTask
   protected
     $namespace           = '',
     $name                = null,
-    $aliases             = array(),
+    $aliases             = [],
     $briefDescription    = '',
     $detailedDescription = '',
-    $arguments           = array(),
-    $options             = array(),
+    $arguments           = [],
+    $options             = [],
     $dispatcher          = null,
     $formatter           = null;
 
@@ -105,14 +105,14 @@ abstract class sfTask
    *
    * @return integer 0 if everything went fine, or an error code
    */
-  public function run($arguments = array(), $options = array())
+  public function run($arguments = [], $options = [])
   {
     $commandManager = new sfCommandManager(new sfCommandArgumentSet($this->getArguments()), new sfCommandOptionSet($this->getOptions()));
 
     if (is_array($arguments) && is_string(key($arguments)))
     {
       // index arguments by name for ordering and reference
-      $indexArguments = array();
+      $indexArguments = [];
       foreach ($this->arguments as $argument)
       {
         $indexArguments[$argument->getName()] = $argument;
@@ -140,7 +140,7 @@ abstract class sfTask
     }
 
     // index options by name for reference
-    $indexedOptions = array();
+    $indexedOptions = [];
     foreach ($this->options as $option)
     {
       $indexedOptions[$option->getName()] = $option;
@@ -325,14 +325,14 @@ abstract class sfTask
    */
   public function getSynopsis()
   {
-    $options = array();
+    $options = [];
     foreach ($this->getOptions() as $option)
     {
       $shortcut = $option->getShortcut() ? sprintf('-%s|', $option->getShortcut()) : '';
       $options[] = sprintf('['.($option->isParameterRequired() ? '%s--%s="..."' : ($option->isParameterOptional() ? '%s--%s[="..."]' : '%s--%s')).']', $shortcut, $option->getName());
     }
 
-    $arguments = array();
+    $arguments = [];
     foreach ($this->getArguments() as $argument)
     {
       $arguments[] = sprintf($argument->isRequired() ? '%s' : '[%s]', $argument->getName().($argument->isArray() ? '1' : ''));
@@ -357,12 +357,12 @@ abstract class sfTask
 
   protected function doRun(sfCommandManager $commandManager, $options)
   {
-    $event = $this->dispatcher->filter(new sfEvent($this, 'command.filter_options', array('command_manager' => $commandManager)), $options);
+    $event = $this->dispatcher->filter(new sfEvent($this, 'command.filter_options', ['command_manager' => $commandManager]), $options);
     $options = $event->getReturnValue();
 
     $this->process($commandManager, $options);
 
-    $event = new sfEvent($this, 'command.pre_command', array('arguments' => $commandManager->getArgumentValues(), 'options' => $commandManager->getOptionValues()));
+    $event = new sfEvent($this, 'command.pre_command', ['arguments' => $commandManager->getArgumentValues(), 'options' => $commandManager->getOptionValues()]);
     $this->dispatcher->notifyUntil($event);
     if ($event->isProcessed())
     {
@@ -385,7 +385,7 @@ abstract class sfTask
   {
     if (!is_array($messages))
     {
-      $messages = array($messages);
+      $messages = [$messages];
     }
 
     $this->dispatcher->notify(new sfEvent($this, 'command.log', $messages));
@@ -401,7 +401,7 @@ abstract class sfTask
    */
   public function logSection($section, $message, $size = null, $style = 'INFO')
   {
-    $this->dispatcher->notify(new sfEvent($this, 'command.log', array($this->formatter->formatSection($section, $message, $size, $style))));
+    $this->dispatcher->notify(new sfEvent($this, 'command.log', [$this->formatter->formatSection($section, $message, $size, $style)]));
   }
 
   /**
@@ -414,21 +414,21 @@ abstract class sfTask
   {
     if (!is_array($messages))
     {
-      $messages = array($messages);
+      $messages = [$messages];
     }
 
     $style = str_replace('_LARGE', '', $style, $count);
     $large = (Boolean) $count;
 
     $len = 0;
-    $lines = array();
+    $lines = [];
     foreach ($messages as $message)
     {
       $lines[] = sprintf($large ? '  %s  ' : ' %s ', $message);
       $len = max($this->strlen($message) + ($large ? 4 : 2), $len);
     }
 
-    $messages = $large ? array(str_repeat(' ', $len)) : array();
+    $messages = $large ? [str_repeat(' ', $len)] : [];
     foreach ($lines as $line)
     {
       $messages[] = $line.str_repeat(' ', $len - $this->strlen($line));
@@ -483,7 +483,7 @@ abstract class sfTask
   public function askConfirmation($question, $style = 'QUESTION', $default = true)
   {
     $answer = 'z';
-    while ($answer && !in_array(strtolower((string) $answer[0]), array('y', 'n')))
+    while ($answer && !in_array(strtolower((string) $answer[0]), ['y', 'n']))
     {
       $answer = $this->ask($question, $style);
     }
@@ -513,18 +513,14 @@ abstract class sfTask
    *
    * @return  mixed
    */
-  public function askAndValidate($question, sfValidatorBase $validator, array $options = array())
+  public function askAndValidate($question, sfValidatorBase $validator, array $options = [])
   {
     if (!is_array($question))
     {
-      $question = array($question);
+      $question = [$question];
     }
 
-    $options = array_merge(array(
-      'value'    => null,
-      'attempts' => false,
-      'style'    => 'QUESTION',
-    ), $options);
+    $options = array_merge(['value'    => null, 'attempts' => false, 'style'    => 'QUESTION'], $options);
 
     // does the provided value passes the validator?
     if ($options['value'])
@@ -583,7 +579,7 @@ abstract class sfTask
 
     $taskXML->appendChild($helpXML = $dom->createElement('help'));
     $help = $this->detailedDescription;
-    $help = str_replace(array('|COMMENT', '|INFO'), array('|strong', '|em'), $help);
+    $help = str_replace(['|COMMENT', '|INFO'], ['|strong', '|em'], $help);
     $help = preg_replace('/\[(.+?)\|(\w+)\]/s', '<$2>$1</$2>', $help);
     $helpXML->appendChild($dom->createTextNode(implode("\n ", explode("\n", $help))));
 
@@ -605,7 +601,7 @@ abstract class sfTask
       $helpXML->appendChild($dom->createTextNode($argument->getHelp()));
 
       $argumentXML->appendChild($defaultsXML = $dom->createElement('defaults'));
-      $defaults = is_array($argument->getDefault()) ? $argument->getDefault() : ($argument->getDefault() ? array($argument->getDefault()) : array());
+      $defaults = is_array($argument->getDefault()) ? $argument->getDefault() : ($argument->getDefault() ? [$argument->getDefault()] : []);
       foreach ($defaults as $default)
       {
         $defaultsXML->appendChild($defaultXML = $dom->createElement('default'));
@@ -628,7 +624,7 @@ abstract class sfTask
       if ($option->acceptParameter())
       {
         $optionXML->appendChild($defaultsXML = $dom->createElement('defaults'));
-        $defaults = is_array($option->getDefault()) ? $option->getDefault() : ($option->getDefault() ? array($option->getDefault()) : array());
+        $defaults = is_array($option->getDefault()) ? $option->getDefault() : ($option->getDefault() ? [$option->getDefault()] : []);
         foreach ($defaults as $default)
         {
           $defaultsXML->appendChild($defaultXML = $dom->createElement('default'));
@@ -648,7 +644,7 @@ abstract class sfTask
    *
    * @return integer 0 if everything went fine, or an error code
    */
-   abstract protected function execute($arguments = array(), $options = array());
+   abstract protected function execute($arguments = [], $options = []);
 
    protected function strlen($string)
    {

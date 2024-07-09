@@ -44,7 +44,7 @@ class PropelConfigurationIterator extends RecursiveIteratorIterator
 	 *
 	 * @var        array
 	 */
-	protected $namespaceStack = array();
+	protected $namespaceStack = [];
 
 	/**
 	 * Current node type. Possible values: null (undefined), self::NODE_PARENT or self::NODE_ITEM

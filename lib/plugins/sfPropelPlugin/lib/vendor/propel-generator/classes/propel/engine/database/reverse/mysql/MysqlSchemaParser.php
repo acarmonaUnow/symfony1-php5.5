@@ -39,37 +39,7 @@ class MysqlSchemaParser extends BaseSchemaParser {
 	 * Map MySQL native types to Propel types.
 	 * @var        array
 	 */
-	private static $mysqlTypeMap = array(
-		'tinyint' => PropelTypes::TINYINT,
-		'smallint' => PropelTypes::SMALLINT,
-		'mediumint' => PropelTypes::SMALLINT,
-		'int' => PropelTypes::INTEGER,
-		'integer' => PropelTypes::INTEGER,
-		'bigint' => PropelTypes::BIGINT,
-		'int24' => PropelTypes::BIGINT,
-		'real' => PropelTypes::REAL,
-		'float' => PropelTypes::FLOAT,
-		'decimal' => PropelTypes::DECIMAL,
-		'numeric' => PropelTypes::NUMERIC,
-		'double' => PropelTypes::DOUBLE,
-		'char' => PropelTypes::CHAR,
-		'varchar' => PropelTypes::VARCHAR,
-		'date' => PropelTypes::DATE,
-		'time' => PropelTypes::TIME,
-		'year' => PropelTypes::INTEGER,
-		'datetime' => PropelTypes::TIMESTAMP,
-		'timestamp' => PropelTypes::TIMESTAMP,
-		'tinyblob' => PropelTypes::BINARY,
-		'blob' => PropelTypes::BLOB,
-		'mediumblob' => PropelTypes::BLOB,
-		'longblob' => PropelTypes::BLOB,
-		'longtext' => PropelTypes::CLOB,
-		'tinytext' => PropelTypes::VARCHAR,
-		'mediumtext' => PropelTypes::LONGVARCHAR,
-		'text' => PropelTypes::LONGVARCHAR,
-		'enum' => PropelTypes::CHAR,
-		'set' => PropelTypes::CHAR,
-	);
+	private static $mysqlTypeMap = ['tinyint' => PropelTypes::TINYINT, 'smallint' => PropelTypes::SMALLINT, 'mediumint' => PropelTypes::SMALLINT, 'int' => PropelTypes::INTEGER, 'integer' => PropelTypes::INTEGER, 'bigint' => PropelTypes::BIGINT, 'int24' => PropelTypes::BIGINT, 'real' => PropelTypes::REAL, 'float' => PropelTypes::FLOAT, 'decimal' => PropelTypes::DECIMAL, 'numeric' => PropelTypes::NUMERIC, 'double' => PropelTypes::DOUBLE, 'char' => PropelTypes::CHAR, 'varchar' => PropelTypes::VARCHAR, 'date' => PropelTypes::DATE, 'time' => PropelTypes::TIME, 'year' => PropelTypes::INTEGER, 'datetime' => PropelTypes::TIMESTAMP, 'timestamp' => PropelTypes::TIMESTAMP, 'tinyblob' => PropelTypes::BINARY, 'blob' => PropelTypes::BLOB, 'mediumblob' => PropelTypes::BLOB, 'longblob' => PropelTypes::BLOB, 'longtext' => PropelTypes::CLOB, 'tinytext' => PropelTypes::VARCHAR, 'mediumtext' => PropelTypes::LONGVARCHAR, 'text' => PropelTypes::LONGVARCHAR, 'enum' => PropelTypes::CHAR, 'set' => PropelTypes::CHAR];
 
 	/**
 	 * Gets a type mapping from native types to Propel types
@@ -91,7 +61,7 @@ class MysqlSchemaParser extends BaseSchemaParser {
 		$stmt = $this->dbh->query("SHOW TABLES");
 
 		// First load the tables (important that this happen before filling out details of tables)
-		$tables = array();
+		$tables = [];
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$name = $row[0];
 			$table = new Table($name);
@@ -195,7 +165,7 @@ class MysqlSchemaParser extends BaseSchemaParser {
 		$stmt = $this->dbh->query("SHOW CREATE TABLE `" . $table->getName(). "`");
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 
-		$foreignKeys = array(); // local store to avoid duplicates
+		$foreignKeys = []; // local store to avoid duplicates
 
 		// Get the information on all the foreign keys
 		$regEx = '/CONSTRAINT `([^`]+)` FOREIGN KEY \((.+)\) REFERENCES `([^`]*)` \((.+)\)(.*)/';
@@ -208,21 +178,18 @@ class MysqlSchemaParser extends BaseSchemaParser {
 				$rawfcol = $matches[4][$curKey];
 				$fkey = $matches[5][$curKey];
 				
-				$lcols = array();
+				$lcols = [];
 				foreach(preg_split('/`, `/', $rawlcol) as $piece) {
 					$lcols[] = trim($piece, '` ');
 				}
 				
-				$fcols = array();
+				$fcols = [];
 				foreach(preg_split('/`, `/', $rawfcol) as $piece) {
 					$fcols[] = trim($piece, '` ');
 				}
 				
 				//typical for mysql is RESTRICT
-				$fkactions = array(
-					'ON DELETE'	=> ForeignKey::RESTRICT,
-					'ON UPDATE'	=> ForeignKey::RESTRICT,
-				);
+				$fkactions = ['ON DELETE'	=> ForeignKey::RESTRICT, 'ON UPDATE'	=> ForeignKey::RESTRICT];
 
 				if ($fkey) {
 					//split foreign key information -> search for ON DELETE and afterwords for ON UPDATE action
@@ -235,8 +202,8 @@ class MysqlSchemaParser extends BaseSchemaParser {
 					}
 				}
 				
-				$localColumns = array();
-				$foreignColumns = array();
+				$localColumns = [];
+				$foreignColumns = [];
 				
 				$foreignTable = $database->getTable($ftbl);
 				
@@ -276,7 +243,7 @@ class MysqlSchemaParser extends BaseSchemaParser {
 		// Loop through the returned results, grouping the same key_name together
 		// adding each column for that key.
 
-		$indexes = array();
+		$indexes = [];
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$colName = $row["Column_name"];
 			$name = $row["Key_name"];

@@ -41,7 +41,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
     /**
      * @var array $fields
      */
-    private $fields = array();
+    private $fields = [];
 
     /**
      * Constructor.
@@ -60,7 +60,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
     protected function clear()
     {
         $this->_preQuery = false;
-        $this->_pendingJoinConditions = array();
+        $this->_pendingJoinConditions = [];
     }
 
     /**
@@ -85,11 +85,11 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
      	    return $this;
      	}
      	if ( ! isset($this->_sqlParts[$queryPartName])) {
-     	    $this->_sqlParts[$queryPartName] = array();
+     	    $this->_sqlParts[$queryPartName] = [];
      	}
      	
      	if ( ! $append) {
-     	    $this->_sqlParts[$queryPartName] = array($queryPart);
+     	    $this->_sqlParts[$queryPartName] = [$queryPart];
      	} else {
      	    $this->_sqlParts[$queryPartName][] = $queryPart;
      	}
@@ -114,7 +114,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
     {
         preg_match_all('/{([^}{]*)}/U', (string) $queryPart, $m);
         $this->fields = $m[1];
-        $this->_sqlParts['select'] = array();
+        $this->_sqlParts['select'] = [];
     }
     
     /**
@@ -134,7 +134,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
 
         $tokens = $this->_tokenizer->sqlExplode($query, ' ');
 
-        $parts = array();
+        $parts = [];
         $type = '';
         foreach ($tokens as $key => $part) {
             $partLowerCase = strtolower((string) $part);
@@ -147,7 +147,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
                 case 'having':
                     $type = $partLowerCase;
                     if ( ! isset($parts[$partLowerCase])) {
-                        $parts[$partLowerCase] = array();
+                        $parts[$partLowerCase] = [];
                     }
                     break;
                 case 'order':
@@ -155,7 +155,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
                     $i = $key + 1;
                     if (isset($tokens[$i]) && strtolower((string) $tokens[$i]) === 'by') {
                         $type = $partLowerCase . 'by';
-                        $parts[$type] = array();
+                        $parts[$type] = [];
                     } else {
                         //not a keyword so we add it to the previous type
                         $parts[$type][] = $part;
@@ -177,7 +177,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
         }
 
         $this->_sqlParts = $parts;
-        $this->_sqlParts['select'] = array();
+        $this->_sqlParts['select'] = [];
 
         return $this;
     }
@@ -188,7 +188,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
      *
      * @return string       the built sql query
      */
-    public function getSqlQuery($params = array())
+    public function getSqlQuery($params = [])
     {        
         // Assign building/execution specific params
         $this->_params['exec'] = $params;
@@ -199,7 +199,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
         // Initialize prepared parameters array
         $this->fixArrayParameterValues($this->_execParams);
 
-        $select = array();
+        $select = [];
         
         $formatter = $this->getConnection()->formatter;
 
@@ -290,14 +290,14 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
      *
      * @return string       the built sql query
      */
-	public function getCountSqlQuery($params = array())
+	public function getCountSqlQuery($params = [])
     {
         $componentAlias = array_key_first($this->_queryComponents);
 
         $this->_rootAlias = $componentAlias;
 
         $tableAlias = $this->getSqlTableAlias($componentAlias);
-        $fields = array();
+        $fields = [];
 
         foreach ((array) $this->_queryComponents[$componentAlias]['table']->getIdentifierColumnNames() as $key) {
         	$fields[] = $tableAlias . '.' . $key;
@@ -337,7 +337,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
      * @param array $params        an array of prepared statement parameters
      * @return integer             the count of this query
      */
-    public function count($params = array())
+    public function count($params = [])
     {
         $sql = $this->getCountSqlQuery();
         $params = $this->getCountQueryParams($params);
@@ -415,13 +415,11 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
                         ->getConnectionForComponent($component);
                         
                 $table = $conn->getTable($component);
-                $this->_queryComponents[$componentAlias] = array('table' => $table);
+                $this->_queryComponents[$componentAlias] = ['table' => $table];
             } else {
                 $relation = $table->getRelation($component);
 
-                $this->_queryComponents[$componentAlias] = array('table'    => $relation->getTable(),
-                                                          'parent'   => $parent,
-                                                          'relation' => $relation);
+                $this->_queryComponents[$componentAlias] = ['table'    => $relation->getTable(), 'parent'   => $parent, 'relation' => $relation];
             }
             $this->addSqlTableAlias($tableAlias, $componentAlias);
 
@@ -438,7 +436,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
      * @param array $params
      * @return string    the hash
      */
-    public function calculateResultCacheHash($params = array())
+    public function calculateResultCacheHash($params = [])
     {
         $sql = $this->getSqlQuery();
         $conn = $this->getConnection();

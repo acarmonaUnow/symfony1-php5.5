@@ -23,19 +23,10 @@ abstract class BaseUserGroup extends myDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('user_group');
-        $this->hasColumn('user_id', 'integer', null, array(
-             'type' => 'integer',
-             'primary' => true,
-             ));
-        $this->hasColumn('group_id', 'integer', null, array(
-             'type' => 'integer',
-             'primary' => true,
-             ));
+        $this->hasColumn('user_id', 'integer', null, ['type' => 'integer', 'primary' => true]);
+        $this->hasColumn('group_id', 'integer', null, ['type' => 'integer', 'primary' => true]);
 
-        $this->option('symfony', array(
-             'form' => false,
-             'filter' => false,
-             ));
+        $this->option('symfony', ['form' => false, 'filter' => false]);
     }
 
     public function setUp()

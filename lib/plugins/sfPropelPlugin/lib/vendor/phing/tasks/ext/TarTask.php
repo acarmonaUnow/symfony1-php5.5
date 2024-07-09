@@ -48,8 +48,8 @@ class TarTask extends MatchingTask {
 	
     private $longFileMode = "warn";
 
-    private $filesets = array();
-    private $fileSetFiles = array();
+    private $filesets = [];
+    private $fileSetFiles = [];
 
     /**
      * Indicates whether the user has been warned about long files already.
@@ -238,7 +238,7 @@ class TarTask extends MatchingTask {
                                                  . "single file.");
                     }
                     $fsBasedir = $fs->getDir($this->project);
-                    $filesToTar = array();
+                    $filesToTar = [];
                     for ($i=0, $fcount=count($files); $i < $fcount; $i++) {
                         $f = new PhingFile($fsBasedir, $files[$i]);
                         $filesToTar[] = $f->getAbsolutePath();
@@ -306,7 +306,7 @@ class TarFileSet extends FileSet {
             if ($includeEmpty) {
 
 	            // first any empty directories that will not be implicitly added by any of the files
-				$implicitDirs = array();
+				$implicitDirs = [];
 				foreach($this->files as $file) {
 					$implicitDirs[] = dirname((string) $file);
 				} 

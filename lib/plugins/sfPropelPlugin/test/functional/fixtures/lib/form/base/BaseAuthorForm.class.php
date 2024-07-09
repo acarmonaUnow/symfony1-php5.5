@@ -13,17 +13,9 @@ abstract class BaseAuthorForm extends BaseFormPropel
 {
   public function setup()
   {
-    $this->setWidgets(array(
-      'id'                  => new sfWidgetFormInputHidden(),
-      'name'                => new sfWidgetFormInputText(),
-      'author_article_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Article')),
-    ));
+    $this->setWidgets(['id'                  => new sfWidgetFormInputHidden(), 'name'                => new sfWidgetFormInputText(), 'author_article_list' => new sfWidgetFormPropelChoice(['multiple' => true, 'model' => 'Article'])]);
 
-    $this->setValidators(array(
-      'id'                  => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'name'                => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'author_article_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Article', 'required' => false)),
-    ));
+    $this->setValidators(['id'                  => new sfValidatorChoice(['choices' => [$this->getObject()->getId()], 'empty_value' => $this->getObject()->getId(), 'required' => false]), 'name'                => new sfValidatorString(['max_length' => 255, 'required' => false]), 'author_article_list' => new sfValidatorPropelChoice(['multiple' => true, 'model' => 'Article', 'required' => false])]);
 
     $this->widgetSchema->setNameFormat('author[%s]');
 
@@ -44,7 +36,7 @@ abstract class BaseAuthorForm extends BaseFormPropel
 
     if (isset($this->widgetSchema['author_article_list']))
     {
-      $values = array();
+      $values = [];
       foreach ($this->object->getAuthorArticles() as $obj)
       {
         $values[] = $obj->getArticleId();

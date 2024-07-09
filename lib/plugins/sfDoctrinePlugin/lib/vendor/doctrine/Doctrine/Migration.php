@@ -37,13 +37,13 @@ class Doctrine_Migration
     protected $_migrationTableName = 'migration_version',
               $_migrationTableCreated = false,
               $_connection,
-              $_migrationClassesDirectory = array(),
-              $_migrationClasses = array(),
+              $_migrationClassesDirectory = [],
+              $_migrationClasses = [],
               $_reflectionClass,
-              $_errors = array(),
+              $_errors = [],
               $_process;
 
-    protected static $_migrationClassesForDirectories = array();
+    protected static $_migrationClassesForDirectories = [];
 
     /**
      * Specify the path to the directory with the migration classes.
@@ -400,7 +400,7 @@ class Doctrine_Migration
      */
     public function clearErrors()
     {
-        $this->_errors = array();
+        $this->_errors = [];
     }
 
     /**
@@ -448,7 +448,7 @@ class Doctrine_Migration
      */
     protected function _throwErrorsException()
     {
-        $messages = array();
+        $messages = [];
         $num = 0;
         foreach ($this->getErrors() as $error) {
             $num++;
@@ -558,7 +558,7 @@ class Doctrine_Migration
         $this->_migrationTableCreated = true;
 
         try {
-            $this->_connection->export->createTable($this->_migrationTableName, array('version' => array('type' => 'integer', 'size' => 11)));
+            $this->_connection->export->createTable($this->_migrationTableName, ['version' => ['type' => 'integer', 'size' => 11]]);
 
             return true;
         } catch(Exception) {

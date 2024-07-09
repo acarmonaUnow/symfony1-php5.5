@@ -153,7 +153,7 @@ class sfCommandOption
     {
       if (null === $default)
       {
-        $default = array();
+        $default = [];
       }
       else if (!is_array($default))
       {

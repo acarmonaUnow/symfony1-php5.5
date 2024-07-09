@@ -31,7 +31,7 @@ class sfWidgetFormSelect extends sfWidgetFormChoiceBase
    *
    * @see sfWidgetFormChoiceBase
    */
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);
 
@@ -50,7 +50,7 @@ class sfWidgetFormSelect extends sfWidgetFormChoiceBase
    *
    * @see sfWidgetForm
    */
-  public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function render($name, $value = null, $attributes = [], $errors = [])
   {
     if ($this->getOption('multiple'))
     {
@@ -64,7 +64,7 @@ class sfWidgetFormSelect extends sfWidgetFormChoiceBase
 
     $choices = $this->getChoices();
 
-    return $this->renderContentTag('select', "\n".implode("\n", $this->getOptionsForSelect($value, $choices))."\n", array_merge(array('name' => $name), $attributes));
+    return $this->renderContentTag('select', "\n".implode("\n", $this->getOptionsForSelect($value, $choices))."\n", array_merge(['name' => $name], $attributes));
   }
 
   /**
@@ -78,29 +78,29 @@ class sfWidgetFormSelect extends sfWidgetFormChoiceBase
   protected function getOptionsForSelect($value, $choices)
   {
     $mainAttributes = $this->attributes;
-    $this->attributes = array();
+    $this->attributes = [];
 
     if (!is_array($value))
     {
-      $value = array($value);
+      $value = [$value];
     }
 
-    $value_set = array();
+    $value_set = [];
     foreach ($value as $v)
     {
       $value_set[strval($v)] = true;
     }
 
-    $options = array();
+    $options = [];
     foreach ($choices as $key => $option)
     {
       if (is_array($option))
       {
-        $options[] = $this->renderContentTag('optgroup', implode("\n", $this->getOptionsForSelect($value, $option)), array('label' => self::escapeOnce($key)));
+        $options[] = $this->renderContentTag('optgroup', implode("\n", $this->getOptionsForSelect($value, $option)), ['label' => self::escapeOnce($key)]);
       }
       else
       {
-        $attributes = array('value' => self::escapeOnce($key));
+        $attributes = ['value' => self::escapeOnce($key)];
         if (isset($value_set[strval($key)]))
         {
           $attributes['selected'] = 'selected';

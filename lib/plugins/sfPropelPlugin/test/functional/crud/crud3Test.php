@@ -18,4 +18,4 @@ if (!include(__DIR__.'/../../bootstrap/functional.php'))
 require_once(__DIR__.'/crudBrowser.class.php');
 
 $b = new CrudBrowser();
-$b->browse(array('generate-in-cache', 'non-verbose-templates'));
+$b->browse(['generate-in-cache', 'non-verbose-templates']);

@@ -27,7 +27,7 @@ class sfXCacheCache extends sfCache
    *
    * @see sfCache
    */
-  public function initialize($options = array())
+  public function initialize($options = [])
   {
     parent::initialize($options);
 
@@ -74,11 +74,7 @@ class sfXCacheCache extends sfCache
   {
     $lifetime = $this->getLifetime($lifetime);
 
-    $set = array(
-      'timeout' => time() + $lifetime,
-      'data'    => $data,
-      'ctime'   => time()
-    );
+    $set = ['timeout' => time() + $lifetime, 'data'    => $data, 'ctime'   => time()];
     
     return xcache_set($this->getOption('prefix').$key, $set, $lifetime);
   }

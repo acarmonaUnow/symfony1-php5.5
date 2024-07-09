@@ -30,18 +30,18 @@ require_once 'phing/Task.php';
 class PhpCodeSnifferTask extends Task {
 
 	protected $file;	// the source file (from xml attribute)
-	protected $filesets = array(); // all fileset objects assigned to this task
+	protected $filesets = []; // all fileset objects assigned to this task
 
 	// parameters for php code sniffer
 	protected $standard = 'Generic';
-	protected $sniffs = array();
+	protected $sniffs = [];
 	protected $showWarnings = true;
 	protected $verbosity = 0;
 	protected $tabWidth = 0;
-	protected $allowedFileExtensions = array('php');
+	protected $allowedFileExtensions = ['php'];
 	protected $ignorePatterns = false;
 	protected $noSubdirectories = false;
-	protected $configData = array();
+	protected $configData = [];
 
 	// parameters to customize output
 	protected $showSniffs = false;
@@ -122,7 +122,7 @@ class PhpCodeSnifferTask extends Task {
 	 */
 	public function setAllowedFileExtensions($extensions)
 	{
-		$this->allowedFileExtensions = array();
+		$this->allowedFileExtensions = [];
 		$token = ' ,;';
 		$ext = strtok($extensions, $token);
 		while ($ext !== false) {
@@ -137,7 +137,7 @@ class PhpCodeSnifferTask extends Task {
 	 */
 	public function setIgnorePatterns($patterns)
 	{
-		$this->ignorePatterns = array();
+		$this->ignorePatterns = [];
 		$token = ' ,;';
 		$pattern = strtok($patterns, $token);
 		while ($pattern !== false) {
@@ -203,7 +203,7 @@ class PhpCodeSnifferTask extends Task {
 			$codeSniffer->process($this->file->getPath(), $this->standard, $this->sniffs, $this->noSubdirectories);
 
 		} else {
-			$fileList = array();
+			$fileList = [];
 			$project = $this->getProject();
 			foreach ($this->filesets as $fs) {
 				$ds = $fs->getDirectoryScanner($project);

@@ -37,17 +37,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      *
      * @var array $_options     an array of plugin specific options
      */
-    protected $_options = array(
-        'generateFiles'  => false,
-        'generatePath'   => false,
-        'builderOptions' => array(),
-        'identifier'     => false,
-        'table'          => false,
-        'pluginTable'    => false,
-        'children'       => array(),
-        'cascadeDelete'  => true,
-        'appLevelDelete' => false
-    );
+    protected $_options = ['generateFiles'  => false, 'generatePath'   => false, 'builderOptions' => [], 'identifier'     => false, 'table'          => false, 'pluginTable'    => false, 'children'       => [], 'cascadeDelete'  => true, 'appLevelDelete' => false];
 
     /**
      * Whether or not the generator has been initialized
@@ -211,8 +201,8 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
         // Maintain some options from the parent table
         $options = $this->_options['table']->getOptions();
 
-        $newOptions = array();
-        $maintain = array('type', 'collate', 'charset'); // This list may need updating
+        $newOptions = [];
+        $maintain = ['type', 'collate', 'charset']; // This list may need updating
         foreach ($maintain as $key) {
             if (isset($options[$key])) {
                 $newOptions[$key] = $options[$key];
@@ -275,7 +265,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      */
     public function buildForeignKeys(Doctrine_Table $table)
     {
-        $fk = array();
+        $fk = [];
 
         foreach ((array) $table->getIdentifier() as $field) {
             $def = $table->getDefinitionOf($field);
@@ -301,11 +291,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      */
     public function buildLocalRelation($alias = null)
     {
-        $options = array(
-            'local'      => $this->getRelationLocalKey(),
-            'foreign'    => $this->getRelationForeignKey(),
-            'owningSide' => true
-        );
+        $options = ['local'      => $this->getRelationLocalKey(), 'foreign'    => $this->getRelationForeignKey(), 'owningSide' => true];
 
         if (isset($this->_options['cascadeDelete']) && $this->_options['cascadeDelete'] && ! $this->_options['appLevelDelete']) {
             $options['onDelete'] = 'CASCADE';
@@ -354,14 +340,10 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      */
     public function buildForeignRelation($alias = null)
     {
-        $options = array(
-            'local'    => $this->getRelationForeignKey(),
-            'foreign'  => $this->getRelationLocalKey(),
-            'localKey' => false
-        );
+        $options = ['local'    => $this->getRelationForeignKey(), 'foreign'  => $this->getRelationLocalKey(), 'localKey' => false];
 
         if (isset($this->_options['cascadeDelete']) && $this->_options['cascadeDelete'] && $this->_options['appLevelDelete']) {
-            $options['cascade'] = array('delete');
+            $options['cascade'] = ['delete'];
         }
 
         $aliasStr = '';
@@ -424,7 +406,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      */
     public function generateClassFromTable(Doctrine_Table $table)
     {
-        $definition = array();
+        $definition = [];
         $definition['columns'] = $table->getColumns();
         $definition['tableName'] = $table->getTableName();
         $definition['actAs'] = $table->getTemplates();
@@ -439,7 +421,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      *                           for the model
      * @return void
      */
-    public function generateClass(array $definition = array())
+    public function generateClass(array $definition = [])
     {
         $definition['className'] = $this->_options['className'];
         $definition['toString'] = $this->_options['toString'] ?? false;
@@ -448,7 +430,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
         }
 
         $builder = new Doctrine_Import_Builder();
-        $builderOptions = isset($this->_options['builderOptions']) ? (array) $this->_options['builderOptions']:array();
+        $builderOptions = isset($this->_options['builderOptions']) ? (array) $this->_options['builderOptions']:[];
         $builder->setOptions($builderOptions);
 
         if ($this->_options['generateFiles']) {

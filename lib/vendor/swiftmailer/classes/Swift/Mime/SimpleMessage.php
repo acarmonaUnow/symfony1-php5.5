@@ -31,23 +31,9 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
     Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache, Swift_Mime_Grammar $grammar, $charset = null)
   {
     parent::__construct($headers, $encoder, $cache, $grammar, $charset);
-    $this->getHeaders()->defineOrdering(array(
-      'Return-Path',
-      'Sender',
-      'Message-ID',
-      'Date',
-      'Subject',
-      'From',
-      'Reply-To',
-      'To',
-      'Cc',
-      'Bcc',
-      'MIME-Version',
-      'Content-Type',
-      'Content-Transfer-Encoding'
-      ));
+    $this->getHeaders()->defineOrdering(['Return-Path', 'Sender', 'Message-ID', 'Date', 'Subject', 'From', 'Reply-To', 'To', 'Cc', 'Bcc', 'MIME-Version', 'Content-Type', 'Content-Transfer-Encoding']);
     $this->getHeaders()->setAlwaysDisplayed(
-      array('Date', 'Message-ID', 'From')
+      ['Date', 'Message-ID', 'From']
       );
     $this->getHeaders()->addTextHeader('MIME-Version', '1.0');
     $this->setDate(time());
@@ -144,7 +130,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
   {
     if (!is_array($address) && isset($name))
     {
-      $address = array($address => $name);
+      $address = [$address => $name];
     }
     
     if (!$this->_setHeaderFieldModel('Sender', (array) $address))
@@ -194,7 +180,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
   {
     if (!is_array($addresses) && isset($name))
     {
-      $addresses = array($addresses => $name);
+      $addresses = [$addresses => $name];
     }
     
     if (!$this->_setHeaderFieldModel('From', (array) $addresses))
@@ -246,7 +232,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
   {
     if (!is_array($addresses) && isset($name))
     {
-      $addresses = array($addresses => $name);
+      $addresses = [$addresses => $name];
     }
     
     if (!$this->_setHeaderFieldModel('Reply-To', (array) $addresses))
@@ -298,7 +284,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
   {
     if (!is_array($addresses) && isset($name))
     {
-      $addresses = array($addresses => $name);
+      $addresses = [$addresses => $name];
     }
     
     if (!$this->_setHeaderFieldModel('To', (array) $addresses))
@@ -348,7 +334,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
   {
     if (!is_array($addresses) && isset($name))
     {
-      $addresses = array($addresses => $name);
+      $addresses = [$addresses => $name];
     }
     
     if (!$this->_setHeaderFieldModel('Cc', (array) $addresses))
@@ -398,7 +384,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
   {
     if (!is_array($addresses) && isset($name))
     {
-      $addresses = array($addresses => $name);
+      $addresses = [$addresses => $name];
     }
     
     if (!$this->_setHeaderFieldModel('Bcc', (array) $addresses))
@@ -426,13 +412,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
    */
   public function setPriority($priority)
   {
-    $priorityMap = array(
-      1 => 'Highest',
-      2 => 'High',
-      3 => 'Normal',
-      4 => 'Low',
-      5 => 'Lowest'
-      );
+    $priorityMap = [1 => 'Highest', 2 => 'High', 3 => 'Normal', 4 => 'Low', 5 => 'Lowest'];
     $pMapKeys = array_keys($priorityMap);
     if ($priority > max($pMapKeys))
     {
@@ -496,7 +476,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
    */
   public function attach(Swift_Mime_MimeEntity $entity)
   {
-    $this->setChildren(array_merge($this->getChildren(), array($entity)));
+    $this->setChildren(array_merge($this->getChildren(), [$entity]));
     return $this;
   }
   
@@ -507,7 +487,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
    */
   public function detach(Swift_Mime_MimeEntity $entity)
   {
-    $newChildren = array();
+    $newChildren = [];
     foreach ($this->getChildren() as $child)
     {
       if ($entity !== $child)
@@ -539,7 +519,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
   {
     if (count($children = $this->getChildren()) > 0 && $this->getBody() != '')
     {
-      $this->setChildren(array_merge(array($this->_becomeMimePart()), $children));
+      $this->setChildren(array_merge([$this->_becomeMimePart()], $children));
       $string = parent::toString();
       $this->setChildren($children);
     }
@@ -570,7 +550,7 @@ class Swift_Mime_SimpleMessage extends Swift_Mime_MimePart
   {
     if (count($children = $this->getChildren()) > 0 && $this->getBody() != '')
     {
-      $this->setChildren(array_merge(array($this->_becomeMimePart()), $children));
+      $this->setChildren(array_merge([$this->_becomeMimePart()], $children));
       parent::toByteStream($is);
       $this->setChildren($children);
     }

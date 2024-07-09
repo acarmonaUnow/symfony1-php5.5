@@ -38,10 +38,10 @@ class sfWidgetFormDateTime extends sfWidgetForm
    *
    * @see sfWidgetForm
    */
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
-    $this->addOption('date', array());
-    $this->addOption('time', array());
+    $this->addOption('date', []);
+    $this->addOption('time', []);
     $this->addOption('with_time', true);
     $this->addOption('format', '%date% %time%');
   }
@@ -58,7 +58,7 @@ class sfWidgetFormDateTime extends sfWidgetForm
    *
    * @see sfWidgetForm
    */
-  public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function render($name, $value = null, $attributes = [], $errors = [])
   {
     $date = $this->getDateWidget($attributes)->render($name, $value);
 
@@ -67,10 +67,7 @@ class sfWidgetFormDateTime extends sfWidgetForm
       return $date;
     }
 
-    return strtr($this->getOption('format'), array(
-      '%date%' => $date,
-      '%time%' => $this->getTimeWidget($attributes)->render($name, $value),
-    ));
+    return strtr($this->getOption('format'), ['%date%' => $date, '%time%' => $this->getTimeWidget($attributes)->render($name, $value)]);
   }
 
   /**
@@ -80,7 +77,7 @@ class sfWidgetFormDateTime extends sfWidgetForm
    *
    * @return sfWidgetForm A Widget representing the date
    */
-  protected function getDateWidget($attributes = array())
+  protected function getDateWidget($attributes = [])
   {
     return new sfWidgetFormDate($this->getOptionsFor('date'), $this->getAttributesFor('date', $attributes));
   }
@@ -92,7 +89,7 @@ class sfWidgetFormDateTime extends sfWidgetForm
    *
    * @return sfWidgetForm A Widget representing the time
    */
-  protected function getTimeWidget($attributes = array())
+  protected function getTimeWidget($attributes = [])
   {
     return new sfWidgetFormTime($this->getOptionsFor('time'), $this->getAttributesFor('time', $attributes));
   }
@@ -115,7 +112,7 @@ class sfWidgetFormDateTime extends sfWidgetForm
     }
 
     // add id_format if it's not there already
-    $options += array('id_format' => $this->getOption('id_format'));
+    $options += ['id_format' => $this->getOption('id_format')];
 
     return $options;
   }
@@ -130,7 +127,7 @@ class sfWidgetFormDateTime extends sfWidgetForm
    */
   protected function getAttributesFor($type, $attributes)
   {
-    $defaults = $this->attributes[$type] ?? array();
+    $defaults = $this->attributes[$type] ?? [];
 
     return isset($attributes[$type]) ? array_merge($defaults, $attributes[$type]) : $defaults;
   }

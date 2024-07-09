@@ -39,21 +39,7 @@ class Doctrine_Template_Sluggable extends Doctrine_Template
      *
      * @var string
      */
-    protected $_options = array(
-        'name'          =>  'slug',
-        'alias'         =>  null,
-        'type'          =>  'string',
-        'length'        =>  255,
-        'unique'        =>  true,
-        'options'       =>  array(),
-        'fields'        =>  array(),
-        'uniqueBy'      =>  array(),
-        'uniqueIndex'   =>  true,
-        'canUpdate'     =>  false,
-        'builder'       =>  array('Doctrine_Inflector', 'urlize'),
-        'provider'      =>  null,
-        'indexName'     =>  null
-    );
+    protected $_options = ['name'          =>  'slug', 'alias'         =>  null, 'type'          =>  'string', 'length'        =>  255, 'unique'        =>  true, 'options'       =>  [], 'fields'        =>  [], 'uniqueBy'      =>  [], 'uniqueIndex'   =>  true, 'canUpdate'     =>  false, 'builder'       =>  ['Doctrine_Inflector', 'urlize'], 'provider'      =>  null, 'indexName'     =>  null];
 
     /**
      * Set table definition for Sluggable behavior
@@ -72,10 +58,9 @@ class Doctrine_Template_Sluggable extends Doctrine_Template
         $this->hasColumn($name, $this->_options['type'], $this->_options['length'], $this->_options['options']);
         
         if ($this->_options['unique'] == true && $this->_options['uniqueIndex'] == true) {
-            $indexFields = array($this->_options['name']);
+            $indexFields = [$this->_options['name']];
             $indexFields = array_merge($indexFields, $this->_options['uniqueBy']);
-            $this->index($this->_options['indexName'], array('fields' => $indexFields,
-                                                             'type' => 'unique'));
+            $this->index($this->_options['indexName'], ['fields' => $indexFields, 'type' => 'unique']);
         }
 
         $this->addListener(new Doctrine_Template_Listener_Sluggable($this->_options));

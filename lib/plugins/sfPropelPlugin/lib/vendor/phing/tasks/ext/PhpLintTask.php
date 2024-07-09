@@ -31,12 +31,12 @@ require_once 'phing/Task.php';
 class PhpLintTask extends Task {
 
 	protected $file;	// the source file (from xml attribute)
-	protected $filesets = array(); // all fileset objects assigned to this task
+	protected $filesets = []; // all fileset objects assigned to this task
 
 	protected $errorProperty;
 	protected $haltOnFailure = false;
 	protected $hasErrors = false;
-	private $badFiles = array();
+	private $badFiles = [];
 	protected $interpreter = ''; // php interpreter to use for linting
 
     /**
@@ -129,7 +129,7 @@ class PhpLintTask extends Task {
         $command .= ' -l ';
 		if(file_exists($file)) {
 			if(is_readable($file)) {
-				$messages = array();
+				$messages = [];
 				exec($command.'"'.$file.'"', $messages);
 				if(!preg_match('/^No syntax errors detected/', $messages[0])) {
 					if (count($messages) > 1) {

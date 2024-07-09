@@ -65,7 +65,7 @@ class ColumnMap {
   protected $phpName;
 
   // The validators for this column
-  protected $validators = array();
+  protected $validators = [];
 
   /**
    * Constructor.

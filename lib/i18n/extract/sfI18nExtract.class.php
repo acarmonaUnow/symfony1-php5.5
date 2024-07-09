@@ -17,11 +17,11 @@
 abstract class sfI18nExtract
 {
   protected
-    $currentMessages = array(),
-    $newMessages     = array(),
-    $allSeenMessages = array(),
+    $currentMessages = [],
+    $newMessages     = [],
+    $allSeenMessages = [],
     $culture         = null,
-    $parameters      = array(),
+    $parameters      = [],
     $i18n            = null;
 
   /**
@@ -29,7 +29,7 @@ abstract class sfI18nExtract
    *
    * @see initialize()
    */
-  public function __construct(sfI18N $i18n, $culture, $parameters = array())
+  public function __construct(sfI18N $i18n, $culture, $parameters = [])
   {
     $this->initialize($i18n, $culture, $parameters);
   }
@@ -41,11 +41,11 @@ abstract class sfI18nExtract
    * @param string $culture     The culture
    * @param array  $parameters  An array of parameters
    */
-  function initialize(sfI18N $i18n, $culture, $parameters = array())
+  function initialize(sfI18N $i18n, $culture, $parameters = [])
   {
-    $this->allSeenMessages = array();
-    $this->newMessages = array();
-    $this->currentMessages = array();
+    $this->allSeenMessages = [];
+    $this->newMessages = [];
+    $this->currentMessages = [];
 
     $this->culture = $culture;
     $this->parameters = $parameters;
@@ -161,7 +161,7 @@ abstract class sfI18nExtract
    */
   protected function loadCurrentMessages()
   {
-    $this->currentMessages = array();
+    $this->currentMessages = [];
     foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations)
     {
       foreach ($translations as $key => $values)
@@ -181,7 +181,7 @@ abstract class sfI18nExtract
     $phpExtractor = new sfI18nPhpExtractor();
 
     $files = sfFinder::type('file')->name('*.php');
-    $messages = array();
+    $messages = [];
     foreach ($files->in($dir) as $file)
     {
       $messages = array_merge($messages, $phpExtractor->extract(file_get_contents($file)));

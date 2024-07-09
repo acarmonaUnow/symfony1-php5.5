@@ -39,10 +39,10 @@ class Target implements TaskContainer {
     private $name;
     
     /** dependencies */
-    private $dependencies = array();
+    private $dependencies = [];
     
     /** holds objects of children of this target */
-    private $children = array();
+    private $children = [];
     
     /** the if cond. from xml */
     private $ifCondition = "";
@@ -161,7 +161,7 @@ class Target implements TaskContainer {
      *  @return  array  Task[]
      */
     public function getTasks() {
-        $tasks = array();
+        $tasks = [];
         for ($i=0,$size=count($this->children); $i < $size; $i++) {
             $tsk = $this->children[$i];
             if ($tsk instanceof Task) {

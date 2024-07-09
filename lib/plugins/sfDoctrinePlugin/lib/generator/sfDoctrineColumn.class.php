@@ -23,22 +23,7 @@ class sfDoctrineColumn implements ArrayAccess
   /**
    * Array mapping Doctrine column types to the native symfony type
    */
-  static $doctrineToSymfony = array(
-    'boolean'   => 'BOOLEAN',
-    'string'    => 'LONGVARCHAR',
-    'integer'   => 'INTEGER',
-    'date'      => 'DATE',
-    'timestamp' => 'TIMESTAMP',
-    'time'      => 'TIME',
-    'enum'      => 'LONGVARCHAR',
-    'float'     => 'FLOAT',
-    'double'    => 'DOUBLE',
-    'clob'      => 'CLOB',
-    'blob'      => 'BLOB',
-    'object'    => 'LONGVARCHAR',
-    'array'     => 'LONGVARCHAR',
-    'decimal'   => 'DECIMAL',
-  );
+  static $doctrineToSymfony = ['boolean'   => 'BOOLEAN', 'string'    => 'LONGVARCHAR', 'integer'   => 'INTEGER', 'date'      => 'DATE', 'timestamp' => 'TIMESTAMP', 'time'      => 'TIME', 'enum'      => 'LONGVARCHAR', 'float'     => 'FLOAT', 'double'    => 'DOUBLE', 'clob'      => 'CLOB', 'blob'      => 'BLOB', 'object'    => 'LONGVARCHAR', 'array'     => 'LONGVARCHAR', 'decimal'   => 'DECIMAL'];
 
   /**
    * Store the name of the related class for this column if it is
@@ -60,7 +45,7 @@ class sfDoctrineColumn implements ArrayAccess
    *
    * @var array $definition
    */
-  protected $definition = array();
+  protected $definition = [];
 
   /**
    * @param string $name

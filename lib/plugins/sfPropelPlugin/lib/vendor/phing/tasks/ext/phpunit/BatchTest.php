@@ -33,13 +33,13 @@ require_once 'phing/types/FileSet.php';
 class BatchTest
 {
 	/** the list of filesets containing the testcase filename rules */
-	private $filesets = array();
+	private $filesets = [];
 
 	/** the classpath to use with Phing::__import() calls */
 	private $classpath = NULL;
 	
 	/** names of classes to exclude */
-	private $excludeClasses = array();
+	private $excludeClasses = [];
 	
 	/**
 	 * Create a new batchtest instance
@@ -110,7 +110,7 @@ class BatchTest
 	 */
 	private function getFilenames()
 	{
-		$filenames = array();
+		$filenames = [];
 
 		foreach ($this->filesets as $fileset)
 		{
@@ -161,7 +161,7 @@ class BatchTest
 	{
 		$filenames = $this->getFilenames();
 		
-		$declaredClasses = array();		
+		$declaredClasses = [];		
 
 		foreach ($filenames as $filename)
 		{
@@ -174,7 +174,7 @@ class BatchTest
 			$declaredClasses = array_merge($declaredClasses, $definedClasses);
 		}
 		
-		$elements = array_filter($declaredClasses, array($this, "filterTests"));
+		$elements = array_filter($declaredClasses, [$this, "filterTests"]);
 
 		return $elements;
 	}

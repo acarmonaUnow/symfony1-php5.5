@@ -33,8 +33,8 @@
  */
 class RuntimeConfigurable {
 
-    private $children = array();
-    private $attributes = array();
+    private $children = [];
+    private $attributes = [];
     private $characters = "";
 
 

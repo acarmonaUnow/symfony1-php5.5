@@ -54,7 +54,7 @@ class sfWebDebugPanelMailer extends sfWebDebugPanel
       return false;
     }
 
-    $html = array();
+    $html = [];
 
     // configuration information
     $strategy = $this->mailer->getDeliveryStrategy();
@@ -84,7 +84,7 @@ class sfWebDebugPanelMailer extends sfWebDebugPanel
 
     $to = null === $message->getTo() ? '' : implode(', ', array_keys($message->getTo()));
 
-    $html = array();
+    $html = [];
     $html[] = sprintf('<h3>%s (to: %s) %s</h3>', $message->getSubject(), $to, $this->getToggler('sfWebDebugMailTemplate'.$i));
     $html[] = '<div id="sfWebDebugMailTemplate'.$i.'" style="display:'.(1 == $i ? 'block' : 'none').'">';
     $html[] = '<pre>'.htmlentities($message->toString(), ENT_QUOTES, $message->getCharset()).'</pre>';

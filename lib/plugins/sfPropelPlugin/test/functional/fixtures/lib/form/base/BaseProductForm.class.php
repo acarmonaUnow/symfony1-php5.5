@@ -13,17 +13,9 @@ abstract class BaseProductForm extends BaseFormPropel
 {
   public function setup()
   {
-    $this->setWidgets(array(
-      'id'               => new sfWidgetFormInputHidden(),
-      'price'            => new sfWidgetFormInputText(),
-      'a_primary_string' => new sfWidgetFormInputText(),
-    ));
+    $this->setWidgets(['id'               => new sfWidgetFormInputHidden(), 'price'            => new sfWidgetFormInputText(), 'a_primary_string' => new sfWidgetFormInputText()]);
 
-    $this->setValidators(array(
-      'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'price'            => new sfValidatorNumber(array('required' => false)),
-      'a_primary_string' => new sfValidatorString(array('max_length' => 64, 'required' => false)),
-    ));
+    $this->setValidators(['id'               => new sfValidatorChoice(['choices' => [$this->getObject()->getId()], 'empty_value' => $this->getObject()->getId(), 'required' => false]), 'price'            => new sfValidatorNumber(['required' => false]), 'a_primary_string' => new sfValidatorString(['max_length' => 64, 'required' => false])]);
 
     $this->widgetSchema->setNameFormat('product[%s]');
 

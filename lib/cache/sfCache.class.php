@@ -23,14 +23,14 @@ abstract class sfCache
   public const SEPARATOR = ':';
 
   protected
-    $options = array();
+    $options = [];
 
   /**
    * Class constructor.
    *
    * @see initialize()
    */
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
     $this->initialize($options);
   }
@@ -52,13 +52,9 @@ abstract class sfCache
    *
    * @throws <b>sfInitializationException</b> If an error occurs while initializing this sfCache instance.
    */
-  public function initialize($options = array())
+  public function initialize($options = [])
   {
-    $this->options = array_merge(array(
-      'automatic_cleaning_factor' => 1000,
-      'lifetime'                  => 86400,
-      'prefix'                    => md5(__DIR__),
-    ), $options);
+    $this->options = array_merge(['automatic_cleaning_factor' => 1000, 'lifetime'                  => 86400, 'prefix'                    => md5(__DIR__)], $options);
 
     $this->options['prefix'] .= self::SEPARATOR;
   }
@@ -151,7 +147,7 @@ abstract class sfCache
    */
   public function getMany($keys)
   {
-    $data = array();
+    $data = [];
     foreach ($keys as $key)
     {
       $data[$key] = $this->get($key);
@@ -221,8 +217,8 @@ abstract class sfCache
   protected function patternToRegexp($pattern)
   {
     $regexp = str_replace(
-      array('\\*\\*', '\\*'),
-      array('.+?',    '[^'.preg_quote(sfCache::SEPARATOR, '#').']+'),
+      ['\\*\\*', '\\*'],
+      ['.+?', '[^'.preg_quote(sfCache::SEPARATOR, '#').']+'],
       preg_quote($pattern, '#')
     );
 

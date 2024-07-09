@@ -48,7 +48,7 @@ class NestedSetRecursiveIterator implements RecursiveIterator
 	}
 
 	public function key() {
-		$key = array();
+		$key = [];
 		foreach ($this->curNode->getPath() as $node) {
 			$key[] = $node->getPrimaryKey();
 		}

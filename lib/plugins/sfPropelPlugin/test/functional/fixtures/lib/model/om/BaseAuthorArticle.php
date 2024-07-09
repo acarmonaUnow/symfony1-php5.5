@@ -431,7 +431,7 @@ abstract class BaseAuthorArticle extends BaseObject  implements Persistent {
 	 * Array of ValidationFailed objects.
 	 * @var        array ValidationFailed[]
 	 */
-	protected $validationFailures = array();
+	protected $validationFailures = [];
 
 	/**
 	 * Gets any ValidationFailed objects that resulted from last call to validate().
@@ -460,7 +460,7 @@ abstract class BaseAuthorArticle extends BaseObject  implements Persistent {
 	{
 		$res = $this->doValidate($columns);
 		if ($res === true) {
-			$this->validationFailures = array();
+			$this->validationFailures = [];
 			return true;
 		} else {
 			$this->validationFailures = $res;
@@ -484,7 +484,7 @@ abstract class BaseAuthorArticle extends BaseObject  implements Persistent {
 			$this->alreadyInValidation = true;
 			$retval = null;
 
-			$failureMap = array();
+			$failureMap = [];
 
 
 			// We call the validate method on the following object(s) if they
@@ -563,10 +563,7 @@ abstract class BaseAuthorArticle extends BaseObject  implements Persistent {
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
 		$keys = AuthorArticlePeer::getFieldNames($keyType);
-		$result = array(
-			$keys[0] => $this->getAuthorId(),
-			$keys[1] => $this->getArticleId(),
-		);
+		$result = [$keys[0] => $this->getAuthorId(), $keys[1] => $this->getArticleId()];
 		return $result;
 	}
 
@@ -671,7 +668,7 @@ abstract class BaseAuthorArticle extends BaseObject  implements Persistent {
 	 */
 	public function getPrimaryKey()
 	{
-		$pks = array();
+		$pks = [];
 
 		$pks[0] = $this->getAuthorId();
 

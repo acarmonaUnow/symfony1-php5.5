@@ -19,7 +19,7 @@
 class sfCacheConfigHandler extends sfYamlConfigHandler
 {
   protected
-    $cacheConfig = array();
+    $cacheConfig = [];
 
   /**
    * Executes this configuration handler.
@@ -38,7 +38,7 @@ class sfCacheConfigHandler extends sfYamlConfigHandler
     $this->yamlConfig = self::getConfiguration($configFiles);
 
     // iterate through all action names
-    $data  = array();
+    $data  = [];
     $first = true;
     foreach ($this->yamlConfig as $actionName => $values)
     {
@@ -73,7 +73,7 @@ class sfCacheConfigHandler extends sfYamlConfigHandler
    */
   protected function addCache($actionName = '')
   {
-    $data = array();
+    $data = [];
 
     // enabled?
     $enabled = $this->getConfigValue('enabled', $actionName);
@@ -91,10 +91,10 @@ class sfCacheConfigHandler extends sfYamlConfigHandler
     $contextual = $this->getConfigValue('contextual', $actionName) ? 'true' : 'false';
 
     // vary
-    $vary = $this->getConfigValue('vary', $actionName, array());
+    $vary = $this->getConfigValue('vary', $actionName, []);
     if (!is_array($vary))
     {
-      $vary = array($vary);
+      $vary = [$vary];
     }
 
     // add cache information to cache manager

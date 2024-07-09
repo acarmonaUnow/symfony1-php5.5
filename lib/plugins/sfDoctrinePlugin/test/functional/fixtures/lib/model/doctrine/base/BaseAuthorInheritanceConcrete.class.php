@@ -21,10 +21,7 @@ abstract class BaseAuthorInheritanceConcrete extends Author
     {
         parent::setTableDefinition();
         $this->setTableName('author_inheritance_concrete');
-        $this->hasColumn('additional', 'string', 255, array(
-             'type' => 'string',
-             'length' => 255,
-             ));
+        $this->hasColumn('additional', 'string', 255, ['type' => 'string', 'length' => 255]);
     }
 
     public function setUp()

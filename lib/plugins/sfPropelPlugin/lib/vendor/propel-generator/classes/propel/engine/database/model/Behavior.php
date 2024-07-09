@@ -33,7 +33,7 @@ class Behavior extends XMLElement {
   protected $table;
   protected $database;
   protected $name;
-  protected $parameters = array();
+  protected $parameters = [];
   
   public function setName($name)
   {

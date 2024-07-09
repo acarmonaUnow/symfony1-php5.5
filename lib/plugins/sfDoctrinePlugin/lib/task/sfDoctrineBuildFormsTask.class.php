@@ -25,13 +25,7 @@ class sfDoctrineBuildFormsTask extends sfDoctrineBaseTask
    */
   protected function configure()
   {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('model-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The model dir name', 'model'),
-      new sfCommandOption('form-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The form dir name', 'form'),
-      new sfCommandOption('generator-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The generator class', 'sfDoctrineFormGenerator'),
-    ));
+    $this->addOptions([new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'), new sfCommandOption('model-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The model dir name', 'model'), new sfCommandOption('form-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The form dir name', 'form'), new sfCommandOption('generator-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The generator class', 'sfDoctrineFormGenerator')]);
 
     $this->namespace = 'doctrine';
     $this->name = 'build-forms';
@@ -53,22 +47,16 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $this->logSection('doctrine', 'generating form classes');
     $databaseManager = new sfDatabaseManager($this->configuration);
     $generatorManager = new sfGeneratorManager($this->configuration);
-    $generatorManager->generate($options['generator-class'], array(
-      'model_dir_name' => $options['model-dir-name'],
-      'form_dir_name'  => $options['form-dir-name'],
-    ));
+    $generatorManager->generate($options['generator-class'], ['model_dir_name' => $options['model-dir-name'], 'form_dir_name'  => $options['form-dir-name']]);
 
     $properties = parse_ini_file(sfConfig::get('sf_config_dir').DIRECTORY_SEPARATOR.'properties.ini', true);
 
-    $constants = array(
-      'PROJECT_NAME' => $properties['symfony']['name'] ?? 'symfony',
-      'AUTHOR_NAME'  => $properties['symfony']['author'] ?? 'Your name here'
-    );
+    $constants = ['PROJECT_NAME' => $properties['symfony']['name'] ?? 'symfony', 'AUTHOR_NAME'  => $properties['symfony']['author'] ?? 'Your name here'];
 
     // customize php and yml files
     $finder = sfFinder::type('file')->name('*.php');

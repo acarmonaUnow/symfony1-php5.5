@@ -33,7 +33,7 @@ class sfSQLiteCache extends sfCache
    *
    * @see sfCache
    */
-  public function initialize($options = array())
+  public function initialize($options = [])
   {
     if (!extension_loaded('SQLite') && !extension_loaded('pdo_SQLite'))
     {
@@ -191,7 +191,7 @@ class sfSQLiteCache extends sfCache
   {
     $rows = $this->dbh->arrayQuery(sprintf("SELECT key, data FROM cache WHERE key IN ('%s') AND timeout > %d", implode('\', \'', array_map(sqlite_escape_string(...), $keys)), time()));
 
-    $data = array();
+    $data = [];
     foreach ($rows as $row)
     {
       $data[$row['key']] = $row['data'];
@@ -207,15 +207,12 @@ class sfSQLiteCache extends sfCache
    */
   protected function createSchema()
   {
-    $statements = array(
-      'CREATE TABLE [cache] (
+    $statements = ['CREATE TABLE [cache] (
         [key] VARCHAR(255),
         [data] LONGVARCHAR,
         [timeout] TIMESTAMP,
         [last_modified] TIMESTAMP
-      )',
-      'CREATE UNIQUE INDEX [cache_unique] ON [cache] ([key])',
-    );
+      )', 'CREATE UNIQUE INDEX [cache_unique] ON [cache] ([key])'];
 
     foreach ($statements as $statement)
     {

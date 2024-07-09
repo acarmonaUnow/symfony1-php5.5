@@ -37,7 +37,7 @@ abstract class sfWidgetForm extends sfWidget
    *
    * @see sfWidget
    */
-  public function __construct($options = array(), $attributes = array())
+  public function __construct($options = [], $attributes = [])
   {
     $this->addOption('id_format', '%s');
     $this->addOption('is_hidden', false);
@@ -165,7 +165,7 @@ abstract class sfWidgetForm extends sfWidget
    *
    * @return string An HTML tag string
    */
-  public function renderTag($tag, $attributes = array())
+  public function renderTag($tag, $attributes = [])
   {
     if (empty($tag))
     {
@@ -189,7 +189,7 @@ abstract class sfWidgetForm extends sfWidget
    *
    * @return string An HTML tag string
    */
-  public function renderContentTag($tag, $content = null, $attributes = array())
+  public function renderContentTag($tag, $content = null, $attributes = [])
   {
     return parent::renderContentTag($tag, $content, $this->fixFormId($attributes));
   }
@@ -244,7 +244,7 @@ abstract class sfWidgetForm extends sfWidget
     // check to see if we have an array variable for a field name
     if (str_contains($name, '['))
     {
-      $name = str_replace(array('[]', '][', '[', ']'), array((null !== $value && !is_array($value) ? '_'.$value : ''), '_', '_', ''), $name);
+      $name = str_replace(['[]', '][', '[', ']'], [(null !== $value && !is_array($value) ? '_'.$value : ''), '_', '_', ''], $name);
     }
 
     if (str_contains((string) $this->getOption('id_format'), '%s'))
@@ -253,7 +253,7 @@ abstract class sfWidgetForm extends sfWidget
     }
 
     // remove illegal characters
-    $name = preg_replace(array('/^[^A-Za-z]+/', '/[^A-Za-z0-9\:_\.\-]/'), array('', '_'), $name);
+    $name = preg_replace(['/^[^A-Za-z]+/', '/[^A-Za-z0-9\:_\.\-]/'], ['', '_'], $name);
 
     return $name;
   }
@@ -267,7 +267,7 @@ abstract class sfWidgetForm extends sfWidget
    */
   static protected function generateTwoCharsRange($start, $stop)
   {
-    $results = array();
+    $results = [];
     for ($i = $start; $i <= $stop; $i++)
     {
       $results[$i] = sprintf('%02d', $i);
@@ -311,7 +311,7 @@ abstract class sfWidgetForm extends sfWidget
    *
    * @see sfWidgetFormSchemaFormatter::translate()
    */
-  protected function translate($text, array $parameters = array())
+  protected function translate($text, array $parameters = [])
   {
     if (null === $this->parent)
     {
@@ -333,7 +333,7 @@ abstract class sfWidgetForm extends sfWidget
    *
    * @see sfWidgetFormSchemaFormatter::translate()
    */
-  protected function translateAll(array $texts, array $parameters = array())
+  protected function translateAll(array $texts, array $parameters = [])
   {
     if (null === $this->parent)
     {
@@ -341,7 +341,7 @@ abstract class sfWidgetForm extends sfWidget
     }
     else
     {
-      $result = array();
+      $result = [];
 
       foreach ($texts as $key => $text)
       {

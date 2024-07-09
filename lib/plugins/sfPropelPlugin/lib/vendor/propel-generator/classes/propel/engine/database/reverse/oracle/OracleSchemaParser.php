@@ -48,22 +48,7 @@ class OracleSchemaParser extends BaseSchemaParser {
 	 *
 	 * @var        array
 	 */
-	private static $oracleTypeMap = array(
-		'BLOB'		=> PropelTypes::BLOB,
-		'CHAR'		=> PropelTypes::CHAR,
-		'CLOB'		=> PropelTypes::CLOB,
-		'DATE'		=> PropelTypes::DATE,
-		'DECIMAL'	=> PropelTypes::DECIMAL,
-		'DOUBLE'	=> PropelTypes::DOUBLE,
-		'FLOAT'		=> PropelTypes::FLOAT,
-		'LONG'		=> PropelTypes::LONGVARCHAR,
-		'NCHAR'		=> PropelTypes::CHAR,
-		'NCLOB'		=> PropelTypes::CLOB,
-		'NUMBER'	=> PropelTypes::BIGINT,
-		'NVARCHAR2'	=> PropelTypes::VARCHAR,
-		'TIMESTAMP'	=> PropelTypes::TIMESTAMP,
-		'VARCHAR2'	=> PropelTypes::VARCHAR,
-	);
+	private static $oracleTypeMap = ['BLOB'		=> PropelTypes::BLOB, 'CHAR'		=> PropelTypes::CHAR, 'CLOB'		=> PropelTypes::CLOB, 'DATE'		=> PropelTypes::DATE, 'DECIMAL'	=> PropelTypes::DECIMAL, 'DOUBLE'	=> PropelTypes::DOUBLE, 'FLOAT'		=> PropelTypes::FLOAT, 'LONG'		=> PropelTypes::LONGVARCHAR, 'NCHAR'		=> PropelTypes::CHAR, 'NCLOB'		=> PropelTypes::CLOB, 'NUMBER'	=> PropelTypes::BIGINT, 'NVARCHAR2'	=> PropelTypes::VARCHAR, 'TIMESTAMP'	=> PropelTypes::TIMESTAMP, 'VARCHAR2'	=> PropelTypes::VARCHAR];
 
 	/**
 	 * Gets a type mapping from native types to Propel types
@@ -81,7 +66,7 @@ class OracleSchemaParser extends BaseSchemaParser {
 	 */
 	public function parse(Database $database)
 	{
-		$tables = array();
+		$tables = [];
 		$stmt = $this->dbh->query("SELECT OBJECT_NAME FROM USER_OBJECTS WHERE OBJECT_TYPE = 'TABLE'");
 		/* @var stmt PDOStatement */
 		// First load the tables (important that this happen before filling out details of tables)
@@ -181,7 +166,7 @@ class OracleSchemaParser extends BaseSchemaParser {
 	protected function addForeignKeys(Table $table)
 	{	
 		// local store to avoid duplicates
-		$foreignKeys = array(); 
+		$foreignKeys = []; 
 		
 		$stmt = $this->dbh->query("SELECT CONSTRAINT_NAME, DELETE_RULE, R_CONSTRAINT_NAME FROM USER_CONSTRAINTS WHERE CONSTRAINT_TYPE = 'R' AND TABLE_NAME = '" . $table->getName(). "'");
 		/* @var stmt PDOStatement */
@@ -200,7 +185,7 @@ class OracleSchemaParser extends BaseSchemaParser {
 				$fk->setForeignTableName($foreignReferenceInfo['TABLE_NAME']);
 				$fk->setOnDelete($row["DELETE_RULE"]);
 				$fk->setOnUpdate($row["DELETE_RULE"]);
-				$fk->addReference(array("local" => $localReferenceInfo['COLUMN_NAME'], "foreign" => $foreignReferenceInfo['COLUMN_NAME']));
+				$fk->addReference(["local" => $localReferenceInfo['COLUMN_NAME'], "foreign" => $foreignReferenceInfo['COLUMN_NAME']]);
 				$table->addForeignKey($fk);
 				$foreignKeys[$row["CONSTRAINT_NAME"]] = $fk;
 			}

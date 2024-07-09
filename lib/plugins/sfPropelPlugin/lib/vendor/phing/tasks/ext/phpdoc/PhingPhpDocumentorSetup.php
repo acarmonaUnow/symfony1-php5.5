@@ -102,9 +102,9 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup {
 		global $_phpDocumentor_setting; 
 		$ignoretags = explode(',', $tags);
 		$ignoretags = array_map(trim(...), $ignoretags);
-		$tags = array();
+		$tags = [];
 		foreach($ignoretags as $tag) {
-		    if (!in_array($tag,array('@global', '@access', '@package', '@ignore', '@name', '@param', '@return', '@staticvar', '@var')))
+		    if (!in_array($tag,['@global', '@access', '@package', '@ignore', '@name', '@param', '@return', '@staticvar', '@var']))
 		        $tags[] = $tag;
 		}
 		$_phpDocumentor_setting['ignoretags'] = $tags;

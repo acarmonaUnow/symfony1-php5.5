@@ -62,7 +62,7 @@ class XmlToAppData extends AbstractHandler {
 	/** two-dimensional array,
 		first dimension is for schemas(key is the path to the schema file),
 		second is for tags within the schema */
-	private $schemasTagsStack = array();
+	private $schemasTagsStack = [];
 
 	public $parser;
 
@@ -98,7 +98,7 @@ class XmlToAppData extends AbstractHandler {
 		$domDocument->load($xmlFile);
 
 		// store current schema file path
-		$this->schemasTagsStack[$xmlFile] = array();
+		$this->schemasTagsStack[$xmlFile] = [];
 
 		$this->currentXmlFile = $xmlFile;
 

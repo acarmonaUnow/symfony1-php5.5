@@ -23,7 +23,7 @@ class sfCommandLogger extends sfConsoleLogger
    * @param sfEventDispatcher $dispatcher A sfEventDispatcher instance
    * @param array             $options    An array of options.
    */
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
     $dispatcher->connect('command.log', $this->listenToLogEvent(...));
 

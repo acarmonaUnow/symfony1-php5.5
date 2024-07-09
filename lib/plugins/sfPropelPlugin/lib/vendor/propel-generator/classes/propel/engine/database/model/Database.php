@@ -42,7 +42,7 @@ include_once 'propel/engine/database/model/Behavior.php';
 class Database extends XMLElement {
 
 	private $platform;
-	private $tableList = array();
+	private $tableList = [];
 	private $curColumn;
 	private $pkg;
 	private $baseClass;
@@ -51,18 +51,18 @@ class Database extends XMLElement {
 	private $defaultPhpNamingMethod;
 	private $defaultTranslateMethod;
 	private $dbParent;
-	private $tablesByName = array();
-	private $tablesByPhpName = array();
+	private $tablesByName = [];
+	private $tablesByPhpName = [];
 	private $heavyIndexing;
 
-	private $domainMap = array();
+	private $domainMap = [];
 
   /**
    * List of behaviors registered for this table
    * 
    * @var array
    */
-  protected $behaviors = array();
+  protected $behaviors = [];
 
 	/**
 	 * Constructs a new Database object.
@@ -418,7 +418,7 @@ class Database extends XMLElement {
       $defaultBehaviors = explode(',', (string) $defaultBehaviors);
       foreach ($defaultBehaviors as $behavior)
       {
-        $this->addBehavior(array('name' => trim($behavior)));
+        $this->addBehavior(['name' => trim($behavior)]);
       }
     }
     

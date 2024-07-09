@@ -23,7 +23,7 @@ abstract class sfPropelBaseTask extends sfBaseTask
 
   static protected $done = false;
 
-  protected $additionalPhingArgs = array();
+  protected $additionalPhingArgs = [];
 
   public function initialize(sfEventDispatcher $dispatcher, sfFormatter $formatter)
   {
@@ -31,10 +31,7 @@ abstract class sfPropelBaseTask extends sfBaseTask
 
     if (!self::$done)
     {
-      sfToolkit::addIncludePath(array(
-        sfConfig::get('sf_propel_runtime_path', realpath(__DIR__.'/../lib/vendor')),
-        __DIR__,
-      ));
+      sfToolkit::addIncludePath([sfConfig::get('sf_propel_runtime_path', realpath(__DIR__.'/../lib/vendor')), __DIR__]);
 
       self::$done = true;
     }
@@ -88,7 +85,7 @@ abstract class sfPropelBaseTask extends sfBaseTask
   protected function schemaToXML($checkSchema = self::CHECK_SCHEMA, $prefix = '')
   {
     $finder = sfFinder::type('file')->name('*schema.yml')->prune('doctrine');
-    $dirs = array_merge(array(sfConfig::get('sf_config_dir')), $this->configuration->getPluginSubPaths('/config'));
+    $dirs = array_merge([sfConfig::get('sf_config_dir')], $this->configuration->getPluginSubPaths('/config'));
     $schemas = $finder->in($dirs);
     if (self::CHECK_SCHEMA === $checkSchema && !count($schemas))
     {
@@ -112,13 +109,7 @@ abstract class sfPropelBaseTask extends sfBaseTask
         $schemaArray = $dbSchema->convertOldToNewYaml($schemaArray);
       }
 
-      $customSchemaFilename = str_replace(array(
-        str_replace(DIRECTORY_SEPARATOR, '/', sfConfig::get('sf_root_dir')).'/',
-        'plugins/',
-        'config/',
-        '/',
-        'schema.yml'
-      ), array('', '', '', '_', 'schema.custom.yml'), $schema);
+      $customSchemaFilename = str_replace([str_replace(DIRECTORY_SEPARATOR, '/', sfConfig::get('sf_root_dir')).'/', 'plugins/', 'config/', '/', 'schema.yml'], ['', '', '', '_', 'schema.custom.yml'], $schema);
       $customSchemas = sfFinder::type('file')->name($customSchemaFilename)->in($dirs);
 
       foreach ($customSchemas as $customSchema)
@@ -197,11 +188,11 @@ abstract class sfPropelBaseTask extends sfBaseTask
     if (null === $this->commandApplication || !$this->commandApplication->withTrace())
     {
       $finder = sfFinder::type('file')->name('generated-*schema.xml')->name('*schema-transformed.xml');
-      $this->getFilesystem()->remove($finder->in(array('config', 'plugins')));
+      $this->getFilesystem()->remove($finder->in(['config', 'plugins']));
     }
   }
 
-  protected function callPhing($taskName, $checkSchema, $properties = array())
+  protected function callPhing($taskName, $checkSchema, $properties = [])
   {
     $schemas = sfFinder::type('file')->name('*schema.xml')->relative()->follow_link()->in(sfConfig::get('sf_config_dir'));
     if (self::CHECK_SCHEMA === $checkSchema && !$schemas)
@@ -210,19 +201,12 @@ abstract class sfPropelBaseTask extends sfBaseTask
     }
 
     // Call phing targets
-    sfToolkit::addIncludePath(array(
-      sfConfig::get('sf_symfony_lib_dir'),
-      sfConfig::get('sf_propel_generator_path', realpath(__DIR__.'/../vendor/propel-generator/classes')),
-    ));
+    sfToolkit::addIncludePath([sfConfig::get('sf_symfony_lib_dir'), sfConfig::get('sf_propel_generator_path', realpath(__DIR__.'/../vendor/propel-generator/classes'))]);
 
-    $args = array();
+    $args = [];
     $bufferPhingOutput = null === $this->commandApplication || !$this->commandApplication->withTrace();
 
-    $properties = array_merge(array(
-      'build.properties'  => 'propel.ini',
-      'project.dir'       => sfConfig::get('sf_config_dir'),
-      'propel.output.dir' => sfConfig::get('sf_root_dir'),
-    ), $properties);
+    $properties = array_merge(['build.properties'  => 'propel.ini', 'project.dir'       => sfConfig::get('sf_config_dir'), 'propel.output.dir' => sfConfig::get('sf_root_dir')], $properties);
     foreach ($properties as $key => $value)
     {
       $args[] = "-D$key=$value";
@@ -246,7 +230,7 @@ abstract class sfPropelBaseTask extends sfBaseTask
     // Add any arbitrary arguments last
     foreach ($this->additionalPhingArgs as $arg)
     {
-      if (in_array($arg, array('verbose', 'debug')))
+      if (in_array($arg, ['verbose', 'debug']))
       {
         $bufferPhingOutput = false;
       }
@@ -288,7 +272,7 @@ abstract class sfPropelBaseTask extends sfBaseTask
     $ret = true;
     if (sfPhingListener::hasErrors())
     {
-      $messages = array('Some problems occurred when executing the task:');
+      $messages = ['Some problems occurred when executing the task:'];
 
       foreach (sfPhingListener::getExceptions() as $exception)
       {
@@ -315,19 +299,12 @@ abstract class sfPropelBaseTask extends sfBaseTask
   {
     $database = $databaseManager->getDatabase($connection);
 
-    return array(
-      'propel.database'          => $database->getParameter('phptype'),
-      'propel.database.driver'   => $database->getParameter('phptype'),
-      'propel.database.url'      => $database->getParameter('dsn'),
-      'propel.database.user'     => $database->getParameter('username'),
-      'propel.database.password' => $database->getParameter('password'),
-      'propel.database.encoding' => $database->getParameter('encoding'),
-    );
+    return ['propel.database'          => $database->getParameter('phptype'), 'propel.database.driver'   => $database->getParameter('phptype'), 'propel.database.url'      => $database->getParameter('dsn'), 'propel.database.user'     => $database->getParameter('username'), 'propel.database.password' => $database->getParameter('password'), 'propel.database.encoding' => $database->getParameter('encoding')];
   }
 
   protected function getProperties($file)
   {
-    $properties = array();
+    $properties = [];
 
     if (false === $lines = @file($file))
     {
@@ -343,7 +320,7 @@ abstract class sfPropelBaseTask extends sfBaseTask
         continue;
       }
 
-      if (in_array($line[0], array('#', ';')))
+      if (in_array($line[0], ['#', ';']))
       {
         continue;
       }

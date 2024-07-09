@@ -90,7 +90,7 @@ class Doctrine_Tree
      * @return Doctrine_Tree
      * @throws Doctrine_Exception               if class $implName does not extend Doctrine_Tree
      */
-    public static function factory(Doctrine_Table $table, $implName, $options = array())
+    public static function factory(Doctrine_Table $table, $implName, $options = [])
     {
         $class = 'Doctrine_Tree_' . $implName;
         if ( ! class_exists($class)) {

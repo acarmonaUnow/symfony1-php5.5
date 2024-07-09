@@ -76,12 +76,12 @@ class sfDateTimeFormatInfo
   /**
    * ICU date time formatting data.
    */
-  protected $data = array();
+  protected $data = [];
 
   /**
    * A list of properties that are accessable/writable.
    */
-  protected $properties = array();
+  protected $properties = [];
 
   /**
    * Allows functions that begins with 'set' to be called directly
@@ -129,7 +129,7 @@ class sfDateTimeFormatInfo
    * @param array   $data ICU data for date time formatting.
    * @see getInstance()
    */
-  function __construct($data = array())
+  function __construct($data = [])
   {
     $this->properties = get_class_methods($this);
 
@@ -547,6 +547,6 @@ class sfDateTimeFormatInfo
    */
   function formatDateTime($date, $time)
   {
-    return str_replace(array('{0}','{1}'), array($time, $date), $this->getDateTimeOrderPattern());
+    return str_replace(['{0}', '{1}'], [$time, $date], $this->getDateTimeOrderPattern());
   }
 }

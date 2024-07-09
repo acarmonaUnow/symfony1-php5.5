@@ -64,7 +64,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @var array $tables                       an array containing all the initialized Doctrine_Table objects
      *                                          keys representing Doctrine_Table component names and values as Doctrine_Table objects
      */
-    protected $tables           = array();
+    protected $tables           = [];
 
     /**
      * $_name
@@ -92,14 +92,14 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      *                                          keys representing feature names and values as
      *                                          one of the following (true, false, 'emulated')
      */
-    protected $supported        = array();
+    protected $supported        = [];
 
     /**
      * @var array $pendingAttributes            An array of pending attributes. When setting attributes
      *                                          no connection is needed. When connected all the pending
      *                                          attributes are passed to the underlying adapter (usually PDO) instance.
      */
-    protected $pendingAttributes  = array();
+    protected $pendingAttributes  = [];
 
     /**
      * @var array $modules                      an array containing all modules
@@ -129,59 +129,30 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @see Doctrine_Connection_UnitOfWork
      * @see Doctrine_Formatter
      */
-    private $modules = array('transaction' => false,
-                             'expression'  => false,
-                             'dataDict'    => false,
-                             'export'      => false,
-                             'import'      => false,
-                             'sequence'    => false,
-                             'unitOfWork'  => false,
-                             'formatter'   => false,
-                             'util'        => false,
-                             );
+    private $modules = ['transaction' => false, 'expression'  => false, 'dataDict'    => false, 'export'      => false, 'import'      => false, 'sequence'    => false, 'unitOfWork'  => false, 'formatter'   => false, 'util'        => false];
 
     /**
      * @var array $properties               an array of connection properties
      */
-    protected $properties = array('sql_comments'        => array(array('start' => '--', 'end' => "\n", 'escape' => false),
-                                                                 array('start' => '/*', 'end' => '*/', 'escape' => false)),
-                                  'identifier_quoting'  => array('start' => '"', 'end' => '"','escape' => '"'),
-                                  'string_quoting'      => array('start' => "'",
-                                                                 'end' => "'",
-                                                                 'escape' => false,
-                                                                 'escape_pattern' => false),
-                                  'wildcards'           => array('%', '_'),
-                                  'varchar_max_length'  => 255,
-                                  'sql_file_delimiter'  => ";\n",
-                                  'max_identifier_length' => 64,
-                                  );
+    protected $properties = ['sql_comments'        => [['start' => '--', 'end' => "\n", 'escape' => false], ['start' => '/*', 'end' => '*/', 'escape' => false]], 'identifier_quoting'  => ['start' => '"', 'end' => '"', 'escape' => '"'], 'string_quoting'      => ['start' => "'", 'end' => "'", 'escape' => false, 'escape_pattern' => false], 'wildcards'           => ['%', '_'], 'varchar_max_length'  => 255, 'sql_file_delimiter'  => ";\n", 'max_identifier_length' => 64];
 
     /**
      * @var array $serverInfo
      */
-    protected $serverInfo = array();
+    protected $serverInfo = [];
 
-    protected $options    = array();
+    protected $options    = [];
 
     /**
      * @var array $supportedDrivers         an array containing all supported drivers
      */
-    private static $supportedDrivers    = array(
-                                        'Mysql',
-                                        'Pgsql',
-                                        'Oracle',
-                                        'Mssql',
-                                        'Sqlite',
-                                        );
+    private static $supportedDrivers    = ['Mysql', 'Pgsql', 'Oracle', 'Mssql', 'Sqlite'];
     protected $_count = 0;
 
     /**
      * @var array $_userFkNames                 array of foreign key names that have been used
      */
-    protected $_usedNames = array(
-            'foreign_keys' => array(),
-            'indexes' => array()
-        );
+    protected $_usedNames = ['foreign_keys' => [], 'indexes' => []];
 
     /**
      * the constructor
@@ -206,9 +177,9 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
             $this->options['username'] = $adapter['user'];
             $this->options['password'] = $adapter['pass'];
 
-            $this->options['other'] = array();
+            $this->options['other'] = [];
             if (isset($adapter['other'])) {
-                $this->options['other'] = array(Doctrine_Core::ATTR_PERSISTENT => $adapter['persistent']);
+                $this->options['other'] = [Doctrine_Core::ATTR_PERSISTENT => $adapter['persistent']];
             }
 
         }
@@ -569,7 +540,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
             throw new Doctrine_Connection_Exception('Not specified which fields are keys');
         }
         $identifier = (array) $table->getIdentifier();
-        $condition = array();
+        $condition = [];
 
         foreach ($fields as $fieldName => $value) {
             if (in_array($fieldName, $keys)) {
@@ -605,7 +576,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      */
     public function delete(Doctrine_Table $table, array $identifier)
     {
-        $tmp = array();
+        $tmp = [];
 
         foreach (array_keys($identifier) as $id) {
             $tmp[] = $this->quoteIdentifier($table->getColumnName($id)) . ' = ?';
@@ -633,7 +604,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
             return false;
         }
 
-        $set = array();
+        $set = [];
         foreach ($fields as $fieldName => $value) {
             if ($value instanceof Doctrine_Expression) {
                 $set[] = $this->quoteIdentifier($table->getColumnName($fieldName)) . ' = ' . $value->getSql();
@@ -666,9 +637,9 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
         $tableName = $table->getTableName();
 
         // column names are specified as array keys
-        $cols = array();
+        $cols = [];
         // the query VALUES will contain either expresions (eg 'NOW()') or ?
-        $a = array();
+        $a = [];
         foreach ($fields as $fieldName => $value) {
             $cols[] = $this->quoteIdentifier($table->getColumnName($fieldName));
             if ($value instanceof Doctrine_Expression) {
@@ -795,7 +766,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @param array $params             prepared statement params
      * @return array
      */
-    public function fetchAll($statement, array $params = array())
+    public function fetchAll($statement, array $params = [])
     {
         return $this->execute($statement, $params)->fetchAll(Doctrine_Core::FETCH_ASSOC);
     }
@@ -808,7 +779,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @param int $colnum               0-indexed column number to retrieve
      * @return mixed
      */
-    public function fetchOne($statement, array $params = array(), $colnum = 0)
+    public function fetchOne($statement, array $params = [], $colnum = 0)
     {
         return $this->execute($statement, $params)->fetchColumn($colnum);
     }
@@ -820,7 +791,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @param array $params             prepared statement params
      * @return array
      */
-    public function fetchRow($statement, array $params = array())
+    public function fetchRow($statement, array $params = [])
     {
         return $this->execute($statement, $params)->fetch(Doctrine_Core::FETCH_ASSOC);
     }
@@ -832,7 +803,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @param array $params             prepared statement params
      * @return array
      */
-    public function fetchArray($statement, array $params = array())
+    public function fetchArray($statement, array $params = [])
     {
         return $this->execute($statement, $params)->fetch(Doctrine_Core::FETCH_NUM);
     }
@@ -845,7 +816,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @param int $colnum               0-indexed column number to retrieve
      * @return array
      */
-    public function fetchColumn($statement, array $params = array(), $colnum = 0)
+    public function fetchColumn($statement, array $params = [], $colnum = 0)
     {
         return $this->execute($statement, $params)->fetchAll(Doctrine_Core::FETCH_COLUMN, $colnum);
     }
@@ -857,7 +828,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @param array $params             prepared statement params
      * @return array
      */
-    public function fetchAssoc($statement, array $params = array())
+    public function fetchAssoc($statement, array $params = [])
     {
         return $this->execute($statement, $params)->fetchAll(Doctrine_Core::FETCH_ASSOC);
     }
@@ -869,7 +840,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @param array $params             prepared statement params
      * @return array
      */
-    public function fetchBoth($statement, array $params = array())
+    public function fetchBoth($statement, array $params = [])
     {
         return $this->execute($statement, $params)->fetchAll(Doctrine_Core::FETCH_BOTH);
     }
@@ -891,7 +862,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @see Doctrine_Query
      * @return Doctrine_Collection      Collection of Doctrine_Record objects
      */
-    public function query($query, array $params = array(), $hydrationMode = null)
+    public function query($query, array $params = [], $hydrationMode = null)
     {
         $parser = Doctrine_Query::create($this);
         $res = $parser->query($query, $params, $hydrationMode);
@@ -948,7 +919,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @return Doctrine_Record|false    Doctrine_Record object on success,
      *                                  boolean false on failure
      */
-    public function queryOne($query, array $params = array())
+    public function queryOne($query, array $params = [])
     {
         $parser = Doctrine_Query::create();
 
@@ -984,7 +955,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      *
      * @return PDOStatement|Doctrine_Adapter_Statement
      */
-    public function standaloneQuery($query, $params = array())
+    public function standaloneQuery($query, $params = [])
     {
         return $this->execute($query, $params);
     }
@@ -996,7 +967,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      *
      * @return PDOStatement|Doctrine_Adapter_Statement
      */
-    public function execute($query, array $params = array())
+    public function execute($query, array $params = [])
     {
         $this->connect();
 
@@ -1032,7 +1003,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      *
      * @return integer
      */
-    public function exec($query, array $params = array())
+    public function exec($query, array $params = [])
     {
         $this->connect();
 
@@ -1081,7 +1052,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
 
         $exc  = new $name($message, (int) $e->getCode());
         if ( ! isset($e->errorInfo) || ! is_array($e->errorInfo)) {
-            $e->errorInfo = array(null, null, null, null);
+            $e->errorInfo = [null, null, null, null];
         }
         $exc->processErrorInfo($e->errorInfo);
 
@@ -1250,8 +1221,8 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      */
     public function evictTables()
     {
-        $this->tables = array();
-        $this->exported = array();
+        $this->tables = [];
+        $this->exported = [];
     }
 
     /**
@@ -1515,7 +1486,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
         $username = $this->getOption('username');
         $password = $this->getOption('password');
 
-        $conn = $this->getManager()->openConnection(array($pdoDsn, $username, $password), 'doctrine_tmp_connection', false);
+        $conn = $this->getManager()->openConnection([$pdoDsn, $username, $password], 'doctrine_tmp_connection', false);
         $conn->setOption('username', $username);
         $conn->setOption('password', $password);
 
@@ -1615,13 +1586,8 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      */
     public function generateUniqueRelationForeignKeyName(Doctrine_Relation $relation)
     {
-        $parts = array(
-            $relation['localTable']->getTableName(),
-            $relation->getLocalColumnName(),
-            $relation['table']->getTableName(),
-            $relation->getForeignColumnName(),
-        );
-        $key = implode('_', array_merge($parts, array($relation['onDelete']), array($relation['onUpdate'])));
+        $parts = [$relation['localTable']->getTableName(), $relation->getLocalColumnName(), $relation['table']->getTableName(), $relation->getForeignColumnName()];
+        $key = implode('_', array_merge($parts, [$relation['onDelete']], [$relation['onUpdate']]));
         $format = $this->getAttribute(Doctrine_Core::ATTR_FKNAME_FORMAT);
 
         return $this->_generateUniqueName('foreign_keys', $parts, $key, $format, $this->getAttribute(Doctrine_Core::ATTR_MAX_IDENTIFIER_LENGTH));
@@ -1637,7 +1603,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
     public function generateUniqueIndexName($tableName, $fields)
     {
         $fields = (array) $fields;
-        $parts = array($tableName);
+        $parts = [$tableName];
         $parts = array_merge($parts, $fields);
         $key = implode('_', $parts);
         $format = $this->getAttribute(Doctrine_Core::ATTR_IDXNAME_FORMAT);

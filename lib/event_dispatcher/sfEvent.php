@@ -32,7 +32,7 @@ class sfEvent implements ArrayAccess
    * @param string  $name         The event name
    * @param array   $parameters   An array of parameters
    */
-  public function __construct(mixed $subject, $name, $parameters = array())
+  public function __construct(mixed $subject, $name, $parameters = [])
   {
     $this->subject = $subject;
     $this->name = $name;

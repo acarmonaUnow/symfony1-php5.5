@@ -39,26 +39,27 @@ class Doctrine_Connection_Oracle extends Doctrine_Connection_Common
 
     public function __construct(Doctrine_Manager $manager, $adapter)
     {
-        $this->supported = array(
-                          'sequences'            => true,
-                          'indexes'              => true,
-                          'summary_functions'    => true,
-                          'order_by_text'        => true,
-                          'current_id'           => true,
-                          'affected_rows'        => true,
-                          'transactions'         => true,
-                          'savepoints'           => true,
-                          'limit_queries'        => true,
-                          'LOBs'                 => true,
-                          'replace'              => 'emulated',
-                          'sub_selects'          => true,
-                          'auto_increment'       => false, // implementation is broken
-                          'primary_key'          => true,
-                          'result_introspection' => true,
-                          'prepared_statements'  => true,
-                          'identifier_quoting'   => true,
-                          'pattern_escaping'     => true,
-                          );
+        $this->supported = [
+            'sequences'            => true,
+            'indexes'              => true,
+            'summary_functions'    => true,
+            'order_by_text'        => true,
+            'current_id'           => true,
+            'affected_rows'        => true,
+            'transactions'         => true,
+            'savepoints'           => true,
+            'limit_queries'        => true,
+            'LOBs'                 => true,
+            'replace'              => 'emulated',
+            'sub_selects'          => true,
+            'auto_increment'       => false,
+            // implementation is broken
+            'primary_key'          => true,
+            'result_introspection' => true,
+            'prepared_statements'  => true,
+            'identifier_quoting'   => true,
+            'pattern_escaping'     => true,
+        ];
         
         $this->properties['sql_file_delimiter']    = "\n/\n";
         $this->properties['number_max_precision']  = 38;

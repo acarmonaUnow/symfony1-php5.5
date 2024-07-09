@@ -20,7 +20,7 @@ class sfSessionTestStorage extends sfStorage
 {
   protected
     $sessionId   = null,
-    $sessionData = array();
+    $sessionData = [];
 
   /**
    * Available options:
@@ -39,9 +39,7 @@ class sfSessionTestStorage extends sfStorage
       throw new InvalidArgumentException('The "session_path" option is mandatory for the sfSessionTestStorage class.');
     }
 
-    $options = array_merge(array(
-      'session_id'   => null,
-    ), $options);
+    $options = array_merge(['session_id'   => null], $options);
 
     // initialize parent
     parent::initialize($options);
@@ -52,12 +50,12 @@ class sfSessionTestStorage extends sfStorage
     {
       // we read session data from temp file
       $file = $this->options['session_path'].DIRECTORY_SEPARATOR.$this->sessionId.'.session';
-      $this->sessionData = file_exists($file) ? unserialize(file_get_contents($file)) : array();
+      $this->sessionData = file_exists($file) ? unserialize(file_get_contents($file)) : [];
     }
     else
     {
       $this->sessionId   = md5(uniqid(random_int(0, mt_getrandmax()), true));
-      $this->sessionData = array();
+      $this->sessionData = [];
     }
   }
 
@@ -165,7 +163,7 @@ class sfSessionTestStorage extends sfStorage
       umask($current_umask);
       file_put_contents($this->options['session_path'].DIRECTORY_SEPARATOR.$this->sessionId.'.session', serialize($this->sessionData));
       $this->sessionId   = '';
-      $this->sessionData = array();
+      $this->sessionData = [];
     }
   }
 }

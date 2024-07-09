@@ -19,7 +19,7 @@ class sfCacheSessionStorage extends sfStorage
     $request     = null,
     $response    = null,
     $cache       = null,
-    $data        = array(),
+    $data        = [],
     $dataChanged = false;
 
   /**
@@ -37,7 +37,7 @@ class sfCacheSessionStorage extends sfStorage
    *
    * @throws <b>sfInitializationException</b> If an error occurs while initializing this Storage.
    */
-  public function initialize($options = array())
+  public function initialize($options = [])
   {
     // initialize parent
 
@@ -48,18 +48,12 @@ class sfCacheSessionStorage extends sfStorage
       $options['session_cookie_httponly'] = $options['session_cookie_http_only'];
     }
 
-    parent::initialize(array_merge(array('session_name' => 'sfproject',
-                                         'session_cookie_lifetime' => '+30 days',
-                                         'session_cookie_path' => '/',
-                                         'session_cookie_domain' => null,
-                                         'session_cookie_secure' => false,
-                                         'session_cookie_httponly' => true,
-                                         'session_cookie_secret' => 'sf$ecret'), $options));
+    parent::initialize(array_merge(['session_name' => 'sfproject', 'session_cookie_lifetime' => '+30 days', 'session_cookie_path' => '/', 'session_cookie_domain' => null, 'session_cookie_secure' => false, 'session_cookie_httponly' => true, 'session_cookie_secret' => 'sf$ecret'], $options));
 
     // create cache instance
     if (isset($this->options['cache']) && $this->options['cache']['class'])
     {
-      $this->cache = new $this->options['cache']['class'](is_array($this->options['cache']['param']) ? $this->options['cache']['param'] : array());
+      $this->cache = new $this->options['cache']['class'](is_array($this->options['cache']['param']) ? $this->options['cache']['param'] : []);
     }
     else
     {
@@ -106,7 +100,7 @@ class sfCacheSessionStorage extends sfStorage
 
        if(sfConfig::get('sf_logging_enabled'))
        {
-         $this->dispatcher->notify(new sfEvent($this, 'application.log', array('New session created')));
+         $this->dispatcher->notify(new sfEvent($this, 'application.log', ['New session created']));
        }
 
        // only send cookie when id is issued
@@ -118,7 +112,7 @@ class sfCacheSessionStorage extends sfStorage
                                   $this->options['session_cookie_secure'],
                                   $this->options['session_cookie_httponly']);
 
-       $this->data = array();
+       $this->data = [];
     }
     else
     {
@@ -127,7 +121,7 @@ class sfCacheSessionStorage extends sfStorage
       $raw = $this->cache->get($this->id, null);
       if (is_null($raw))
       {
-        $this->data = array();
+        $this->data = [];
       }
       else
       {
@@ -148,7 +142,7 @@ class sfCacheSessionStorage extends sfStorage
 
       if(sfConfig::get('sf_logging_enabled'))
       {
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array('Restored previous session')));
+        $this->dispatcher->notify(new sfEvent($this, 'application.log', ['Restored previous session']));
       }
     }
     session_id($this->id);
@@ -232,7 +226,7 @@ class sfCacheSessionStorage extends sfStorage
   {
     if($destroy)
     {
-      $this->data = array();
+      $this->data = [];
       $this->cache->remove($this->id);
     }
 
@@ -266,7 +260,7 @@ class sfCacheSessionStorage extends sfStorage
 
     if(sfConfig::get('sf_logging_enabled'))
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array('new session created due to expiraton')));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', ['new session created due to expiraton']));
     }
   }
 
@@ -283,7 +277,7 @@ class sfCacheSessionStorage extends sfStorage
       $this->cache->set($this->id, serialize($this->data));
       if(sfConfig::get('sf_logging_enabled'))
       {
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array('Storing session to cache')));
+        $this->dispatcher->notify(new sfEvent($this, 'application.log', ['Storing session to cache']));
       }
     }
   }

@@ -48,19 +48,19 @@ class sfNumberFormatInfo
    * ICU number formatting data.
    * @var array
    */
-  protected $data = array();
+  protected $data = [];
 
   /**
    * A list of properties that are accessable/writable.
    * @var array
    */
-  protected $properties = array();
+  protected $properties = [];
 
   /**
    * The number pattern.
    * @var array
    */
-  protected $pattern = array();
+  protected $pattern = [];
 
   public const DECIMAL = 0;
   public const CURRENCY = 1;
@@ -114,7 +114,7 @@ class sfNumberFormatInfo
    * @param int   $type The sfNumberFormatInfo type
    * @see getInstance()
    */
-  function __construct($data = array(), $type = sfNumberFormatInfo::DECIMAL)
+  function __construct($data = [], $type = sfNumberFormatInfo::DECIMAL)
   {
     $this->properties = get_class_methods($this);
 
@@ -372,7 +372,7 @@ class sfNumberFormatInfo
     $regexp = '/[#,\.0]+/';
     $result = preg_split($regexp, $pattern);
 
-    return array($result[0], $result[1]);
+    return [$result[0], $result[1]];
   }
 
   /**
@@ -469,7 +469,7 @@ class sfNumberFormatInfo
     $group1 = $this->pattern['groupSize1'];
     $group2 = $this->pattern['groupSize2'];
 
-    return array($group1, $group2);
+    return [$group1, $group2];
   }
 
   /**
@@ -498,7 +498,7 @@ class sfNumberFormatInfo
     $prefix = $this->pattern['negPref'];
     $postfix = $this->pattern['negPost'];
 
-    return array($prefix, $postfix);
+    return [$prefix, $postfix];
   }
 
   /**
@@ -526,7 +526,7 @@ class sfNumberFormatInfo
     $prefix = $this->pattern['posPref'];
     $postfix = $this->pattern['posPost'];
 
-    return array($prefix, $postfix);
+    return [$prefix, $postfix];
   }
 
   /**

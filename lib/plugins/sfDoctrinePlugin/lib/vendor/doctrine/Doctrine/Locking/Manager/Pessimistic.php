@@ -55,26 +55,16 @@ class Doctrine_Locking_Manager_Pessimistic
     private Doctrine_Connection $conn)
     {
         if ($this->conn->getAttribute(Doctrine_Core::ATTR_EXPORT) & Doctrine_Core::EXPORT_TABLES) {
-            $columns = array();
-            $columns['object_type']        = array('type'    => 'string',
-                                                   'length'  => 50,
-                                                   'notnull' => true,
-                                                   'primary' => true);
+            $columns = [];
+            $columns['object_type']        = ['type'    => 'string', 'length'  => 50, 'notnull' => true, 'primary' => true];
 
-            $columns['object_key']         = array('type'    => 'string',
-                                                   'length'  => 250,
-                                                   'notnull' => true,
-                                                   'primary' => true);
+            $columns['object_key']         = ['type'    => 'string', 'length'  => 250, 'notnull' => true, 'primary' => true];
 
-            $columns['user_ident']         = array('type'    => 'string',
-                                                   'length'  => 50,
-                                                   'notnull' => true);
+            $columns['user_ident']         = ['type'    => 'string', 'length'  => 50, 'notnull' => true];
 
-            $columns['timestamp_obtained'] = array('type'    => 'integer',
-                                                   'length'  => 10,
-                                                   'notnull' => true);
+            $columns['timestamp_obtained'] = ['type'    => 'integer', 'length'  => 10, 'notnull' => true];
 
-            $options = array('primary' => array('object_type', 'object_key'));
+            $options = ['primary' => ['object_type', 'object_key']];
             try {
                 $this->conn->export->createTable($this->_lockTable, $columns, $options);
             } catch(Exception) {

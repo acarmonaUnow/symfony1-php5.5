@@ -28,7 +28,7 @@ class sfValidatorSchemaFilter extends sfValidatorSchema
    *
    * @see sfValidatorBase
    */
-  public function __construct($field, sfValidatorBase $validator, $options = array(), $messages = array())
+  public function __construct($field, sfValidatorBase $validator, $options = [], $messages = [])
   {
     $this->addOption('field', $field);
     $this->addOption('validator', $validator);
@@ -43,7 +43,7 @@ class sfValidatorSchemaFilter extends sfValidatorSchema
   {
     if (null === $values)
     {
-      $values = array();
+      $values = [];
     }
 
     if (!is_array($values))
@@ -59,7 +59,7 @@ class sfValidatorSchemaFilter extends sfValidatorSchema
     }
     catch (sfValidatorError $error)
     {
-      throw new sfValidatorErrorSchema($this, array($this->getOption('field') => $error));
+      throw new sfValidatorErrorSchema($this, [$this->getOption('field') => $error]);
     }
 
     return $values;

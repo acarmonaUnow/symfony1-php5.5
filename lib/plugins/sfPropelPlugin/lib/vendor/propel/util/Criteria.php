@@ -129,13 +129,13 @@ class Criteria implements IteratorAggregate {
 
 	private $ignoreCase = false;
 	private $singleRecord = false;
-	private $selectModifiers = array();
-	private $selectColumns = array();
-	private $orderByColumns = array();
-	private $groupByColumns = array();
+	private $selectModifiers = [];
+	private $selectColumns = [];
+	private $orderByColumns = [];
+	private $groupByColumns = [];
 	private $having = null;
-	private $asColumns = array();
-	private $joins = array();
+	private $asColumns = [];
+	private $joins = [];
 
 	/** The name of the database. */
 	private $dbName;
@@ -163,7 +163,7 @@ class Criteria implements IteratorAggregate {
 	// flag to note that the criteria involves a blob.
 	private $blobFlag = null;
 
-	private $aliases = array();
+	private $aliases = [];
 
 	private $useTransaction = false;
 
@@ -171,7 +171,7 @@ class Criteria implements IteratorAggregate {
 	 * Primary storage of criteria data.
 	 * @var        array
 	 */
-	private $map = array();
+	private $map = [];
 
 	/**
 	 * Creates a new instance with the default capacity which corresponds to
@@ -211,21 +211,21 @@ class Criteria implements IteratorAggregate {
 	 */
 	public function clear()
 	{
-		$this->map = array();
+		$this->map = [];
 		$this->ignoreCase = false;
 		$this->singleRecord = false;
-		$this->selectModifiers = array();
-		$this->selectColumns = array();
-		$this->orderByColumns = array();
-		$this->groupByColumns = array();
+		$this->selectModifiers = [];
+		$this->selectColumns = [];
+		$this->orderByColumns = [];
+		$this->groupByColumns = [];
 		$this->having = null;
-		$this->asColumns = array();
-		$this->joins = array();
+		$this->asColumns = [];
+		$this->joins = [];
 		$this->dbName = $this->originalDbName;
 		$this->offset = 0;
 		$this->limit = -1;
 		$this->blobFlag = null;
-		$this->aliases = array();
+		$this->aliases = [];
 		$this->useTransaction = false;
 	}
 
@@ -403,11 +403,11 @@ class Criteria implements IteratorAggregate {
 	 */
 	public function getTablesColumns()
 	{
-		$tables = array();
+		$tables = [];
 		foreach ( array_keys ( $this->map ) as $key) {
 			$t = substr ( $key, 0, strrpos ( $key, '.' ) );
 			if ( ! isset ( $tables[$t] ) ) {
-				$tables[$t] = array( $key );
+				$tables[$t] = [$key];
 			} else {
 				$tables[$t][] = $key;
 			}
@@ -856,7 +856,7 @@ class Criteria implements IteratorAggregate {
 	 * @return     Criteria Modified Criteria object (for fluent API)
 	 */
 	public function clearSelectColumns() {
-		$this->selectColumns = $this->asColumns = array();
+		$this->selectColumns = $this->asColumns = [];
 		return $this;
 	}
 
@@ -923,7 +923,7 @@ class Criteria implements IteratorAggregate {
 	 */
 	public function clearOrderByColumns()
 	{
-		$this->orderByColumns = array();
+		$this->orderByColumns = [];
 		return $this;
 	}
 
@@ -934,7 +934,7 @@ class Criteria implements IteratorAggregate {
 	 */
 	public function clearGroupByColumns()
 	{
-		$this->groupByColumns = array();
+		$this->groupByColumns = [];
 		return $this;
 	}
 
@@ -987,12 +987,12 @@ class Criteria implements IteratorAggregate {
 		$sb = "Criteria:";
 		try {
 
-			$params = array();
+			$params = [];
 			$sb .= "\nSQL (may not be complete): "
 			  . BasePeer::createSelectSql($this, $params);
 
 			$sb .= "\nParams: ";
-			$paramstr = array();
+			$paramstr = [];
 			foreach ($params as $param) {
 				$paramstr[] = $param['table'] . '.' . $param['column'] . ' => ' . var_export($param['value'], true);
 			}
@@ -1289,8 +1289,8 @@ class Criterion  {
 	/**
 	 * other connected criteria and their conjunctions.
 	 */
-	private $clauses = array();
-	private $conjunctions = array();
+	private $clauses = [];
+	private $conjunctions = [];
 
 	/** "Parent" Criteria class */
 	private $parent;
@@ -1521,12 +1521,12 @@ class Criterion  {
 			// OPTION 1:  table.column IN (?, ?) or table.column NOT IN (?, ?)
 			if ($this->comparison === Criteria::IN || $this->comparison === Criteria::NOT_IN) {
 
-				$_bindParams = array(); // the param names used in query building
+				$_bindParams = []; // the param names used in query building
 				$_idxstart = count($params);
 				$valuesLength = 0;
 				foreach ( (array) $this->value as $value ) {
 					$valuesLength++; // increment this first to correct for wanting bind params to start with :p1
-					$params[] = array('table' => $realtable, 'column' => $this->column, 'value' => $value);
+					$params[] = ['table' => $realtable, 'column' => $this->column, 'value' => $value];
 					$_bindParams[] = ':p'.($_idxstart + $valuesLength);
 				}
 				if ( $valuesLength !== 0 ) {
@@ -1555,7 +1555,7 @@ class Criterion  {
 					}
 				}
 
-				$params[] = array('table' => $realtable, 'column' => $this->column, 'value' => $this->value);
+				$params[] = ['table' => $realtable, 'column' => $this->column, 'value' => $this->value];
 
 				$sb .= $field . $this->comparison;
 
@@ -1579,7 +1579,7 @@ class Criterion  {
 						$sb .= $field . $this->comparison . $this->value;
 					} else {
 						
-						$params[] = array('table' => $realtable, 'column' => $this->column, 'value' => $this->value);
+						$params[] = ['table' => $realtable, 'column' => $this->column, 'value' => $this->value];
 						
 						// default case, it is a normal col = value expression; value
 						// will be replaced w/ '?' and will be inserted later using PDO bindValue()
@@ -1678,9 +1678,9 @@ class Criterion  {
 			// replace it if it doesnt bother us?
 			// $clause->appendPsTo($sb='',$params=array());
 			$sb = '';
-			$params = array();
+			$params = [];
 			$clause->appendPsTo($sb,$params);
-			$h ^= crc32(serialize(array($sb,$params)));
+			$h ^= crc32(serialize([$sb, $params]));
 			unset ( $sb, $params );
 		}
 
@@ -1693,7 +1693,7 @@ class Criterion  {
 	 */
 	public function getAllTables()
 	{
-		$tables = array();
+		$tables = [];
 		$this->addCriterionTable($this, $tables);
 		return $tables;
 	}
@@ -1718,7 +1718,7 @@ class Criterion  {
 	 */
 	public function getAttachedCriterion()
 	{
-		$crits = array();
+		$crits = [];
 		$this->traverseCriterion($this, $crits);
 		return $crits;
 	}

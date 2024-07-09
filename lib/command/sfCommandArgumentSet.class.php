@@ -19,7 +19,7 @@
 class sfCommandArgumentSet
 {
   protected
-    $arguments          = array(),
+    $arguments          = [],
     $requiredCount      = 0,
     $hasAnArrayArgument = false,
     $hasOptional        = false;
@@ -29,7 +29,7 @@ class sfCommandArgumentSet
    *
    * @param array $arguments An array of sfCommandArgument objects
    */
-  public function __construct($arguments = array())
+  public function __construct($arguments = [])
   {
     $this->setArguments($arguments);
   }
@@ -39,9 +39,9 @@ class sfCommandArgumentSet
    *
    * @param array $arguments An array of sfCommandArgument objects
    */
-  public function setArguments($arguments = array())
+  public function setArguments($arguments = [])
   {
-    $this->arguments     = array();
+    $this->arguments     = [];
     $this->requiredCount = 0;
     $this->hasOptional   = false;
     $this->addArguments($arguments);
@@ -52,7 +52,7 @@ class sfCommandArgumentSet
    *
    * @param array $arguments An array of sfCommandArgument objects
    */
-  public function addArguments($arguments = array())
+  public function addArguments($arguments = [])
   {
     if (null !== $arguments)
     {
@@ -168,7 +168,7 @@ class sfCommandArgumentSet
    */
   public function getDefaults()
   {
-    $values = array();
+    $values = [];
     foreach ($this->arguments as $argument)
     {
       $values[$argument->getName()] = $argument->getDefault();

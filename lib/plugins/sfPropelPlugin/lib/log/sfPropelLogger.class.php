@@ -116,6 +116,6 @@ class sfPropelLogger implements BasicLogger
    */
   public function log($message, $severity = sfLogger::DEBUG)
   {
-    $this->dispatcher->notify(new sfEvent($this, 'application.log', array($message, 'priority' => $severity)));
+    $this->dispatcher->notify(new sfEvent($this, 'application.log', [$message, 'priority' => $severity]));
   }
 }

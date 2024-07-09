@@ -31,13 +31,13 @@ class sfRoutingConfigHandler extends sfYamlConfigHandler
     $options = $this->getOptions();
     unset($options['cache']);
 
-    $data = array();
+    $data = [];
     foreach ($this->parse($configFiles) as $name => $routeConfig)
     {
       $r = new ReflectionClass($routeConfig[0]);
       $route = $r->newInstanceArgs($routeConfig[1]);
 
-      $routes = $route instanceof sfRouteCollection ? $route : array($name => $route);
+      $routes = $route instanceof sfRouteCollection ? $route : [$name => $route];
       foreach (sfPatternRouting::flattenRoutes($routes) as $name => $route)
       {
         $route->setDefaultOptions($options);
@@ -61,7 +61,7 @@ class sfRoutingConfigHandler extends sfYamlConfigHandler
   {
     $routeDefinitions = $this->parse($configFiles);
 
-    $routes = array();
+    $routes = [];
     foreach ($routeDefinitions as $name => $route)
     {
       $r = new ReflectionClass($route[0]);
@@ -77,7 +77,7 @@ class sfRoutingConfigHandler extends sfYamlConfigHandler
     $config = self::getConfiguration($configFiles);
 
     // collect routes
-    $routes = array();
+    $routes = [];
     foreach ($config as $name => $params)
     {
       if (
@@ -86,20 +86,15 @@ class sfRoutingConfigHandler extends sfYamlConfigHandler
         (isset($params['class']) && str_contains((string) $params['class'], 'Collection'))
       )
       {
-        $options = $params['options'] ?? array();
+        $options = $params['options'] ?? [];
         $options['name'] = $name;
-        $options['requirements'] = $params['requirements'] ?? array();
+        $options['requirements'] = $params['requirements'] ?? [];
 
-        $routes[$name] = array($params['class'] ?? 'sfRouteCollection', array($options));
+        $routes[$name] = [$params['class'] ?? 'sfRouteCollection', [$options]];
       }
       else
       {
-        $routes[$name] = array($params['class'] ?? 'sfRoute', array(
-          $params['url'] ?: '/',
-          $params['params'] ?? $params['param'] ?? array(),
-          $params['requirements'] ?? array(),
-          $params['options'] ?? array(),
-        ));
+        $routes[$name] = [$params['class'] ?? 'sfRoute', [$params['url'] ?: '/', $params['params'] ?? $params['param'] ?? [], $params['requirements'] ?? [], $params['options'] ?? []]];
       }
     }
 

@@ -35,7 +35,7 @@ class sfValidatorDoctrineChoice extends sfValidatorBase
    *
    * @see sfValidatorBase
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     $this->addRequiredOption('model');
     $this->addOption('query', null);
@@ -66,7 +66,7 @@ class sfValidatorDoctrineChoice extends sfValidatorBase
     {
       if (!is_array($value))
       {
-        $value = array($value);
+        $value = [$value];
       }
 
       if (isset($value[0]) && '' === $value[0])
@@ -78,19 +78,19 @@ class sfValidatorDoctrineChoice extends sfValidatorBase
 
       if ($this->hasOption('min') && $count < $this->getOption('min'))
       {
-        throw new sfValidatorError($this, 'min', array('count' => $count, 'min' => $this->getOption('min')));
+        throw new sfValidatorError($this, 'min', ['count' => $count, 'min' => $this->getOption('min')]);
       }
 
       if ($this->hasOption('max') && $count > $this->getOption('max'))
       {
-        throw new sfValidatorError($this, 'max', array('count' => $count, 'max' => $this->getOption('max')));
+        throw new sfValidatorError($this, 'max', ['count' => $count, 'max' => $this->getOption('max')]);
       }
 
       $query->andWhereIn(sprintf('%s.%s', $query->getRootAlias(), $this->getColumn()), $value);
 
       if ($query->count() != count($value))
       {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+        throw new sfValidatorError($this, 'invalid', ['value' => $value]);
       }
     }
     else
@@ -99,7 +99,7 @@ class sfValidatorDoctrineChoice extends sfValidatorBase
 
       if (!$query->count())
       {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+        throw new sfValidatorError($this, 'invalid', ['value' => $value]);
       }
     }
 

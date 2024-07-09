@@ -38,7 +38,7 @@ class CoverageReportTask extends Task
 {
 	private $outfile = "coverage.xml";
 
-	private $transformers = array();
+	private $transformers = [];
 
 	/** the classpath to use (optional) */
 	private $classpath = NULL;
@@ -173,7 +173,7 @@ class CoverageReportTask extends Task
 
 			$lines = array_filter($lines);
 
-			$lines = array_map(array($this, 'stripDiv'), $lines);
+			$lines = array_map([$this, 'stripDiv'], $lines);
 
 			return $lines;
 		}
@@ -316,7 +316,7 @@ class CoverageReportTask extends Task
 				}
 
 				$statementcount = count($coverageInformation);
-				$statementscovered = count(array_filter($coverageInformation, array($this, 'filterCovered')));
+				$statementscovered = count(array_filter($coverageInformation, [$this, 'filterCovered']));
 
 				$classElement->appendChild($this->transformSourceFile($filename, $coverageInformation, $classStartLine));
 

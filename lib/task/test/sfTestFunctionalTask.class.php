@@ -23,14 +23,9 @@ class sfTestFunctionalTask extends sfTestBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
-      new sfCommandArgument('controller', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'The controller name'),
-    ));
+    $this->addArguments([new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'), new sfCommandArgument('controller', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'The controller name')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('xml', null, sfCommandOption::PARAMETER_REQUIRED, 'The file name for the JUnit compatible XML log file'),
-    ));
+    $this->addOptions([new sfCommandOption('xml', null, sfCommandOption::PARAMETER_REQUIRED, 'The file name for the JUnit compatible XML log file')]);
 
     $this->namespace = 'test';
     $this->name = 'functional';
@@ -68,13 +63,13 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $app = $arguments['application'];
 
     if (count($arguments['controller']))
     {
-      $files = array();
+      $files = [];
 
       foreach ($arguments['controller'] as $controller)
       {
@@ -98,11 +93,8 @@ EOF;
     {
       require_once __DIR__.'/sfLimeHarness.class.php';
 
-      $h = new sfLimeHarness(array(
-        'force_colors' => isset($options['color']) && $options['color'],
-        'verbose'      => isset($options['trace']) && $options['trace'],
-      ));
-      $h->addPlugins(array_map(array($this->configuration, 'getPluginConfiguration'), $this->configuration->getPlugins()));
+      $h = new sfLimeHarness(['force_colors' => isset($options['color']) && $options['color'], 'verbose'      => isset($options['trace']) && $options['trace']]);
+      $h->addPlugins(array_map([$this->configuration, 'getPluginConfiguration'], $this->configuration->getPlugins()));
       $h->base_dir = sfConfig::get('sf_test_dir').'/functional/'.$app;
 
       // filter and register functional tests

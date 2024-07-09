@@ -27,7 +27,7 @@ abstract class sfPager implements Iterator, Countable
     $tableName       = '',
     $objects         = null,
     $cursor          = 1,
-    $parameters      = array(),
+    $parameters      = [],
     $currentMaxLink  = 1,
     $parameterHolder = null,
     $maxRecordLimit  = false,
@@ -111,7 +111,7 @@ abstract class sfPager implements Iterator, Countable
    */
   public function getLinks($nb_links = 5)
   {
-    $links = array();
+    $links = [];
     $tmp   = $this->page - floor($nb_links / 2);
     $check = $this->lastPage - $nb_links + 1;
     $limit = $check > 0 ? $check : 1;

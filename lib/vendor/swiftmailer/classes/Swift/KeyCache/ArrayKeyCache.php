@@ -23,7 +23,7 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
    * @var array
    * @access private
    */
-  private $_contents = array();
+  private $_contents = [];
   
   /**
    * Create a new ArrayKeyCache with the given $stream for cloning to make
@@ -195,7 +195,7 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
   {
     if (!array_key_exists($nsKey, $this->_contents))
     {
-      $this->_contents[$nsKey] = array();
+      $this->_contents[$nsKey] = [];
     }
   }
   

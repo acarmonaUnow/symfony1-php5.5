@@ -82,7 +82,7 @@ class Swift_PropelSpool extends Swift_ConfigurableSpool
     }
 
     $model = constant($this->model.'::PEER');
-    $method = 'set'.call_user_func(array($model, 'translateFieldName'), $this->column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
+    $method = 'set'.call_user_func([$model, 'translateFieldName'], $this->column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
 
     $object->$method(serialize($message));
     $object->save();
@@ -102,14 +102,14 @@ class Swift_PropelSpool extends Swift_ConfigurableSpool
     $criteria->setLimit($this->getMessageLimit());
 
     $model = constant($this->model.'::PEER');
-    $objects = call_user_func(array($model, $this->method), $criteria);
+    $objects = call_user_func([$model, $this->method], $criteria);
 
     if (!$transport->isStarted())
     {
       $transport->start();
     }
 
-    $method = 'get'.call_user_func(array($model, 'translateFieldName'), $this->column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
+    $method = 'get'.call_user_func([$model, 'translateFieldName'], $this->column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
     $count = 0;
     $time = time();
     foreach ($objects as $object)

@@ -33,19 +33,7 @@
  */
 class Doctrine_Export extends Doctrine_Connection_Module
 {
-    protected $valid_default_values = array(
-        'text'      => '',
-        'boolean'   => true,
-        'integer'   => 0,
-        'decimal'   => 0.0,
-        'float'     => 0.0,
-        'timestamp' => '1970-01-01 00:00:00',
-        'time'      => '00:00:00',
-        'date'      => '1970-01-01',
-        'clob'      => '',
-        'blob'      => '',
-        'string'    => ''
-    );
+    protected $valid_default_values = ['text'      => '', 'boolean'   => true, 'integer'   => 0, 'decimal'   => 0.0, 'float'     => 0.0, 'timestamp' => '1970-01-01 00:00:00', 'time'      => '00:00:00', 'date'      => '1970-01-01', 'clob'      => '', 'blob'      => '', 'string'    => ''];
 
     /**
      * drop an existing database
@@ -230,7 +218,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      *
      * @return string
      */
-    public function createTableSql($name, array $fields, array $options = array())
+    public function createTableSql($name, array $fields, array $options = [])
     {
         if ( ! $name) {
             throw new Doctrine_Export_Exception('no valid table name specified');
@@ -291,7 +279,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      *
      * @return void
      */
-    public function createTable($name, array $fields, array $options = array())
+    public function createTable($name, array $fields, array $options = [])
     {
         // Build array of the primary keys if any of the individual field definitions
         // specify primary => true
@@ -299,7 +287,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
         foreach ($fields as $fieldName => $field) {
             if (isset($field['primary']) && $field['primary']) {
                 if ($count == 0) {
-                    $options['primary'] = array();
+                    $options['primary'] = [];
                 }
                 $count++;
                 $options['primary'][] = $fieldName;
@@ -327,7 +315,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      *                          );
      * @return void
      */
-    public function createSequence($seqName, $start = 1, array $options = array())
+    public function createSequence($seqName, $start = 1, array $options = [])
     {
         return $this->conn->execute($this->createSequenceSql($seqName, $start = 1, $options));
     }
@@ -347,7 +335,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      *                          );
      * @return string
      */
-    public function createSequenceSql($seqName, $start = 1, array $options = array()): never
+    public function createSequenceSql($seqName, $start = 1, array $options = []): never
     {
         throw new Doctrine_Export_Exception('Create sequence not supported by this driver.');
     }
@@ -413,7 +401,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
             $query .= ' UNIQUE';
         }
 
-        $fields = array();
+        $fields = [];
         foreach (array_keys($definition['fields']) as $field) {
             $fields[] = $this->conn->quoteIdentifier($field, true);
         }
@@ -484,7 +472,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
 
         $query = 'CREATE ' . $type . 'INDEX ' . $name . ' ON ' . $table;
 
-        $fields = array();
+        $fields = [];
         foreach ($definition['fields'] as $field) {
             $fields[] = $this->conn->quoteIdentifier($field);
         }
@@ -805,7 +793,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      */
     public function getCheckDeclaration(array $definition)
     {
-        $constraints = array();
+        $constraints = [];
         foreach ($definition as $field => $def) {
             if (is_string($def)) {
                 $constraints[] = 'CHECK (' . $def . ')';
@@ -866,7 +854,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      */
     public function getIndexFieldDeclarationList(array $fields)
     {
-        $ret = array();
+        $ret = [];
         foreach ($fields as $field => $definition) {
             if (is_array($definition)) {
                 $ret[] = $this->conn->quoteIdentifier($field);
@@ -1012,10 +1000,10 @@ class Doctrine_Export extends Doctrine_Connection_Module
         }
 
         if ( ! is_array($definition['local'])) {
-            $definition['local'] = array($definition['local']);
+            $definition['local'] = [$definition['local']];
         }
         if ( ! is_array($definition['foreign'])) {
-            $definition['foreign'] = array($definition['foreign']);
+            $definition['foreign'] = [$definition['foreign']];
         }
 
         $sql .= implode(', ', array_map($this->conn->quoteIdentifier(...), $definition['local']))
@@ -1092,22 +1080,16 @@ class Doctrine_Export extends Doctrine_Connection_Module
 
     public function exportSortedClassesSql($classes, $groupByConnection = true)
     {
-         $connections = array();
+         $connections = [];
          foreach ($classes as $class) {
              $connection = Doctrine_Manager::getInstance()->getConnectionForComponent($class);
              $connectionName = $connection->getName();
 
              if ( ! isset($connections[$connectionName])) {
-                 $connections[$connectionName] = array(
-                     'create_tables'    => array(),
-                     'create_sequences' => array(),
-                     'create_indexes'   => array(),
-                     'alters'           => array(),
-                     'create_triggers'  => array(),
-                 );
+                 $connections[$connectionName] = ['create_tables'    => [], 'create_sequences' => [], 'create_indexes'   => [], 'alters'           => [], 'create_triggers'  => []];
              }
 
-             $sql = $connection->export->exportClassesSql(array($class));
+             $sql = $connection->export->exportClassesSql([$class]);
 
              // Build array of all the creates
              // We need these to happen first
@@ -1129,7 +1111,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
                  }
 
                  // If create index statement
-                 if (preg_grep("/CREATE ([^ ]* )?INDEX/", array($query))) {
+                 if (preg_grep("/CREATE ([^ ]* )?INDEX/", [$query])) {
                      $connections[$connectionName]['create_indexes'][] =  $query;
 
                      unset($sql[$key]);
@@ -1164,13 +1146,13 @@ class Doctrine_Export extends Doctrine_Connection_Module
          }
 
          // Loop over all the sql again to merge everything together so it is in the correct order
-         $build = array();
+         $build = [];
          foreach ($connections as $connectionName => $sql) {
              $build[$connectionName] = array_unique(array_merge($sql['create_tables'], $sql['create_sequences'], $sql['create_indexes'], $sql['alters'], $sql['create_triggers']));
          }
 
          if ( ! $groupByConnection) {
-             $new = array();
+             $new = [];
              foreach($build as $connectionname => $sql) {
                  $new = array_unique(array_merge($new, $sql));
              }
@@ -1228,7 +1210,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
     {
         $models = Doctrine_Core::filterInvalidModels($classes);
         
-        $sql = array();
+        $sql = [];
         
         foreach ($models as $name) {
             $record = new $name();
@@ -1282,7 +1264,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      */
     public function getAllGenerators(Doctrine_Table $table)
     {
-        $generators = array();
+        $generators = [];
 
         foreach ($table->getGenerators() as $name => $generator) {
             if ($generator === null) {
@@ -1310,7 +1292,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      */
     public function exportGeneratorsSql(Doctrine_Table $table)
     {
-    	$sql = array();
+    	$sql = [];
 
         foreach ($this->getAllGenerators($table) as $name => $generator) {
             $table = $generator->getTable();

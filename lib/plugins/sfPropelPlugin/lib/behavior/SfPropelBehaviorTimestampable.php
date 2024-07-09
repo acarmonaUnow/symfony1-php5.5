@@ -18,10 +18,7 @@
  */
 class SfPropelBehaviorTimestampable extends SfPropelBehaviorBase
 {
-  protected $parameters = array(
-    'create_column' => null,
-    'update_column' => null,
-  );
+  protected $parameters = ['create_column' => null, 'update_column' => null];
 
   public function preInsert()
   {

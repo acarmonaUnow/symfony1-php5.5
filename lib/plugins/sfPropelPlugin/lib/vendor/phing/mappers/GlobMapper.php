@@ -69,7 +69,7 @@ class GlobMapper implements FileNameMapper {
         }
         $varpart = $this->_extractVariablePart($_sourceFileName);
         $substitution = $this->toPrefix.$varpart.$this->toPostfix;
-        return array($substitution);
+        return [$substitution];
     }
 
 

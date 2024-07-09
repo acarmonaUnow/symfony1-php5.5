@@ -19,13 +19,13 @@
 class sfValidatorFromDescription extends sfValidatorDecorator
 {
   protected
-    $tokens = array(),
+    $tokens = [],
     $string = '';
 
   /**
    * @see sfValidatorBase
    */
-  public function __construct($string, $options = array(), $messages = array())
+  public function __construct($string, $options = [], $messages = [])
   {
     $this->string = $string;
     $this->tokens = $this->tokenize($string);
@@ -69,7 +69,7 @@ class sfValidatorFromDescription extends sfValidatorDecorator
    */
   protected function tokenize($string)
   {
-    $tokens = array();
+    $tokens = [];
     $len = strlen($string);
     $i = 0;
     while ($i < $len)
@@ -94,7 +94,7 @@ class sfValidatorFromDescription extends sfValidatorDecorator
         $i += strlen($match[0]);
         $rightField = $match[1];
 
-        $tokens[] = new sfValidatorFDToken('sfValidatorSchemaCompare', array($leftField, $operator, $rightField, $arguments[0], $arguments[1] ?? array()));
+        $tokens[] = new sfValidatorFDToken('sfValidatorSchemaCompare', [$leftField, $operator, $rightField, $arguments[0], $arguments[1] ?? []]);
       }
       else if (preg_match('/^(and|or)/i', substr($string, $i), $match))
       {
@@ -113,7 +113,7 @@ class sfValidatorFromDescription extends sfValidatorDecorator
 
         $class = 'sfValidator'.$match[2];
         $arguments = $this->parseArguments($string, $i);
-        $token = new sfValidatorFDToken($class, array($arguments[0], $arguments[1] ?? array()));
+        $token = new sfValidatorFDToken($class, [$arguments[0], $arguments[1] ?? []]);
         if ($match[1])
         {
           $token = new sfValidatorFDTokenFilter($match[1], $token);
@@ -131,7 +131,7 @@ class sfValidatorFromDescription extends sfValidatorDecorator
         $tokens[] = new sfValidatorFDTokenRightBracket();
         ++$i;
       }
-      else if (in_array($string[$i], array(' ', "\t", "\r", "\n")))
+      else if (in_array($string[$i], [' ', "\t", "\r", "\n"]))
       {
         ++$i;
       }
@@ -158,7 +158,7 @@ class sfValidatorFromDescription extends sfValidatorDecorator
 
     if ($i + 1 > $len || '(' != $string[$i])
     {
-      return array(array(), array());
+      return [[], []];
     }
 
     ++$i;
@@ -198,9 +198,9 @@ class sfValidatorFromDescription extends sfValidatorDecorator
    */
   protected function convertInfixToRpn($tokens)
   {
-    $outputStack = array();
-    $operatorStack = array();
-    $precedences = array('and' => 2, 'or' => 1, '(' => 0);
+    $outputStack = [];
+    $operatorStack = [];
+    $precedences = ['and' => 2, 'or' => 1, '(' => 0];
 
     // based on the shunting yard algorithm
     foreach ($tokens as $token)
@@ -286,7 +286,7 @@ class sfValidatorFDToken
     $class,
     $arguments;
 
-  public function __construct($class, $arguments = array())
+  public function __construct($class, $arguments = [])
   {
     $this->class = $class;
     $this->arguments = $arguments;
@@ -335,7 +335,7 @@ class sfValidatorFDTokenOperator implements \Stringable
     $operator,
     $token;
 
-  public function __construct($operator, $arguments = array())
+  public function __construct($operator, $arguments = [])
   {
     $this->operator = $operator;
     $this->arguments = $arguments;
@@ -351,8 +351,8 @@ class sfValidatorFDTokenOperator implements \Stringable
   {
     return sprintf('new %s(array(%s, %s), %s)',
       $this->class,
-      is_object($tokenLeft) && in_array($tokenLeft::class, array('sfValidatorFDToken', 'sfValidatorFDTokenFilter')) ? $tokenLeft->asPhp() : $tokenLeft,
-      is_object($tokenRight) && in_array($tokenRight::class, array('sfValidatorFDToken', 'sfValidatorFDTokenFilter')) ? $tokenRight->asPhp() : $tokenRight,
+      is_object($tokenLeft) && in_array($tokenLeft::class, ['sfValidatorFDToken', 'sfValidatorFDTokenFilter']) ? $tokenLeft->asPhp() : $tokenLeft,
+      is_object($tokenRight) && in_array($tokenRight::class, ['sfValidatorFDToken', 'sfValidatorFDTokenFilter']) ? $tokenRight->asPhp() : $tokenRight,
       implode(', ', array_map(fn($a) => var_export($a, true), $this->arguments))
     );
   }
@@ -361,12 +361,9 @@ class sfValidatorFDTokenOperator implements \Stringable
   {
     $reflection = new ReflectionClass($this->class);
 
-    $validators = array(
-      in_array($tokenLeft::class, array('sfValidatorFDToken', 'sfValidatorFDTokenFilter')) ? $tokenLeft->getValidator() : $tokenLeft,
-      in_array($tokenRight::class, array('sfValidatorFDToken', 'sfValidatorFDTokenFilter')) ? $tokenRight->getValidator() : $tokenRight,
-    );
+    $validators = [in_array($tokenLeft::class, ['sfValidatorFDToken', 'sfValidatorFDTokenFilter']) ? $tokenLeft->getValidator() : $tokenLeft, in_array($tokenRight::class, ['sfValidatorFDToken', 'sfValidatorFDTokenFilter']) ? $tokenRight->getValidator() : $tokenRight];
 
-    return $reflection->newInstanceArgs(array_merge(array($validators), $this->arguments));
+    return $reflection->newInstanceArgs(array_merge([$validators], $this->arguments));
   }
 }
 

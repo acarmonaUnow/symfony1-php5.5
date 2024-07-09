@@ -43,14 +43,9 @@
  *
  * @return string XHTML compliant <link> tag
  */
-function auto_discovery_link_tag($type = 'rss', $url = '', $tag_options = array())
+function auto_discovery_link_tag($type = 'rss', $url = '', $tag_options = [])
 {
-  return tag('link', array(
-    'rel'   => $tag_options['rel'] ?? 'alternate',
-    'type'  => $tag_options['type'] ?? 'application/'.$type.'+xml',
-    'title' => $tag_options['title'] ?? ucfirst($type),
-    'href'  => url_for($url, true)
-  ));
+  return tag('link', ['rel'   => $tag_options['rel'] ?? 'alternate', 'type'  => $tag_options['type'] ?? 'application/'.$type.'+xml', 'title' => $tag_options['title'] ?? ucfirst($type), 'href'  => url_for($url, true)]);
 }
 
 /**
@@ -99,7 +94,7 @@ function javascript_path($source, $absolute = false)
 function javascript_include_tag()
 {
   $sources = func_get_args();
-  $sourceOptions = (func_num_args() > 1 && is_array($sources[func_num_args() - 1])) ? array_pop($sources) : array();
+  $sourceOptions = (func_num_args() > 1 && is_array($sources[func_num_args() - 1])) ? array_pop($sources) : [];
 
   $html = '';
   foreach ($sources as $source)
@@ -127,7 +122,7 @@ function javascript_include_tag()
       unset($sourceOptions['raw_name']);
     }
 
-    $options = array_merge(array('type' => 'text/javascript', 'src' => $source), $sourceOptions);
+    $options = array_merge(['type' => 'text/javascript', 'src' => $source], $sourceOptions);
     $tag = content_tag('script', '', $options);
 
     if (null !== $condition)
@@ -197,7 +192,7 @@ function stylesheet_path($source, $absolute = false)
 function stylesheet_tag()
 {
   $sources = func_get_args();
-  $sourceOptions = (func_num_args() > 1 && is_array($sources[func_num_args() - 1])) ? array_pop($sources) : array();
+  $sourceOptions = (func_num_args() > 1 && is_array($sources[func_num_args() - 1])) ? array_pop($sources) : [];
 
   $html = '';
   foreach ($sources as $source)
@@ -225,7 +220,7 @@ function stylesheet_tag()
       unset($sourceOptions['raw_name']);
     }
 
-    $options = array_merge(array('rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => $source), $sourceOptions);
+    $options = array_merge(['rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => $source], $sourceOptions);
     $tag = tag('link', $options);
 
     if (null !== $condition)
@@ -244,7 +239,7 @@ function stylesheet_tag()
  *
  * @see sfResponse->addStylesheet()
  */
-function use_stylesheet($css, $position = '', $options = array())
+function use_stylesheet($css, $position = '', $options = [])
 {
   sfContext::getInstance()->getResponse()->addStylesheet($css, $position, $options);
 }
@@ -254,7 +249,7 @@ function use_stylesheet($css, $position = '', $options = array())
  *
  * @see sfResponse->addJavascript()
  */
-function use_javascript($js, $position = '', $options = array())
+function use_javascript($js, $position = '', $options = [])
 {
   sfContext::getInstance()->getResponse()->addJavascript($js, $position, $options);
 }
@@ -323,7 +318,7 @@ function image_path($source, $absolute = false)
  * @return string XHTML compliant <img> tag
  * @see    image_path
  */
-function image_tag($source, $options = array())
+function image_tag($source, $options = [])
 {
   if (!$source)
   {
@@ -437,7 +432,7 @@ function include_metas()
   $i18n = sfConfig::get('sf_i18n') ? $context->getI18N() : null;
   foreach ($context->getResponse()->getMetas() as $name => $content)
   {
-    echo tag('meta', array('name' => $name, 'content' => null === $i18n ? $content : $i18n->__($content)))."\n";
+    echo tag('meta', ['name' => $name, 'content' => null === $i18n ? $content : $i18n->__($content)])."\n";
   }
 }
 
@@ -461,7 +456,7 @@ function include_http_metas()
 {
   foreach (sfContext::getInstance()->getResponse()->getHttpMetas() as $httpequiv => $value)
   {
-    echo tag('meta', array('http-equiv' => $httpequiv, 'content' => $value))."\n";
+    echo tag('meta', ['http-equiv' => $httpequiv, 'content' => $value])."\n";
   }
 }
 
@@ -558,7 +553,7 @@ function include_stylesheets()
  * @return string XHTML compliant <script> tag(s)
  * @see    javascript_include_tag
  */
-function dynamic_javascript_include_tag($uri, $absolute = false, $options = array())
+function dynamic_javascript_include_tag($uri, $absolute = false, $options = [])
 {
   $options['raw_name'] = true;
 
@@ -573,7 +568,7 @@ function dynamic_javascript_include_tag($uri, $absolute = false, $options = arra
  *
  * @see sfResponse->addJavascript()
  */
-function use_dynamic_javascript($js, $position = '', $options = array())
+function use_dynamic_javascript($js, $position = '', $options = [])
 {
   $options['raw_name'] = true;
 
@@ -588,7 +583,7 @@ function use_dynamic_javascript($js, $position = '', $options = array())
  *
  * @see sfResponse->addStylesheet()
  */
-function use_dynamic_stylesheet($css, $position = '', $options = array())
+function use_dynamic_stylesheet($css, $position = '', $options = [])
 {
   $options['raw_name'] = true;
 
@@ -677,7 +672,7 @@ function get_stylesheets_for_form(sfForm $form)
   $html = '';
   foreach ($form->getStylesheets() as $file => $media)
   {
-    $html .= stylesheet_tag($file, array('media' => $media));
+    $html .= stylesheet_tag($file, ['media' => $media]);
   }
 
   return $html;
@@ -704,6 +699,6 @@ function use_stylesheets_for_form(sfForm $form)
 
   foreach ($form->getStylesheets() as $file => $media)
   {
-    $response->addStylesheet($file, '', array('media' => $media));
+    $response->addStylesheet($file, '', ['media' => $media]);
   }
 }

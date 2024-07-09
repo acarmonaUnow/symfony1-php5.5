@@ -54,7 +54,7 @@ class sfTesterPropel extends sfTester
       $criteria = new Criteria();
       foreach ($conditions as $column => $condition)
       {
-        $column = call_user_func(array(constant($model.'::PEER'), 'translateFieldName'), $column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME);
+        $column = call_user_func([constant($model.'::PEER'), 'translateFieldName'], $column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME);
         $operator = Criteria::EQUAL;
         if ('!' == $condition[0])
         {
@@ -70,7 +70,7 @@ class sfTesterPropel extends sfTester
       }
     }
 
-    $objects = call_user_func(array(constant($model.'::PEER'), 'doSelect'), $criteria);
+    $objects = call_user_func([constant($model.'::PEER'), 'doSelect'], $criteria);
 
     if (false === $value)
     {

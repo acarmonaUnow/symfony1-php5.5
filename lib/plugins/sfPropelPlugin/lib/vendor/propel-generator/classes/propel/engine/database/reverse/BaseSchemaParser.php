@@ -41,7 +41,7 @@ abstract class BaseSchemaParser implements SchemaParser {
 	 *
 	 * @var        array string[]
 	 */
-	protected $warnings = array();
+	protected $warnings = [];
 
 	/**
 	 * GeneratorConfig object holding build properties.

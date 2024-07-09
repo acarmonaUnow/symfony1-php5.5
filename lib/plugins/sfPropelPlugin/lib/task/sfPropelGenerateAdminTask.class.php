@@ -25,19 +25,9 @@ class sfPropelGenerateAdminTask extends sfPropelBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
-      new sfCommandArgument('route_or_model', sfCommandArgument::REQUIRED, 'The route name or the model class'),
-    ));
+    $this->addArguments([new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'), new sfCommandArgument('route_or_model', sfCommandArgument::REQUIRED, 'The route name or the model class')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('module', null, sfCommandOption::PARAMETER_REQUIRED, 'The module name', null),
-      new sfCommandOption('theme', null, sfCommandOption::PARAMETER_REQUIRED, 'The theme name', 'admin'),
-      new sfCommandOption('singular', null, sfCommandOption::PARAMETER_REQUIRED, 'The singular name', null),
-      new sfCommandOption('plural', null, sfCommandOption::PARAMETER_REQUIRED, 'The plural name', null),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('actions-base-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The base class for the actions', 'sfActions'),
-    ));
+    $this->addOptions([new sfCommandOption('module', null, sfCommandOption::PARAMETER_REQUIRED, 'The module name', null), new sfCommandOption('theme', null, sfCommandOption::PARAMETER_REQUIRED, 'The theme name', 'admin'), new sfCommandOption('singular', null, sfCommandOption::PARAMETER_REQUIRED, 'The singular name', null), new sfCommandOption('plural', null, sfCommandOption::PARAMETER_REQUIRED, 'The plural name', null), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'), new sfCommandOption('actions-base-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The base class for the actions', 'sfActions')]);
 
     $this->namespace = 'propel';
     $this->name = 'generate-admin';
@@ -74,7 +64,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     // get configuration for the given route
     if (false !== ($route = $this->getRouteFromName($arguments['route_or_model'])))
@@ -99,7 +89,7 @@ EOF;
 
     // create a route
     $model = $arguments['route_or_model'];
-    $name = strtolower((string) preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), '\\1_\\2', $model));
+    $name = strtolower((string) preg_replace(['/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'], '\\1_\\2', $model));
 
     if (isset($options['module']))
     {
@@ -165,16 +155,7 @@ EOF
 
     $this->logSection('app', sprintf('Generating admin module "%s" for model "%s"', $module, $model));
 
-    return $task->run(array($arguments['application'], $module, $model), array(
-      'theme'                 => $options['theme'],
-      'route-prefix'          => $routeOptions['name'],
-      'with-propel-route'     => true,
-      'generate-in-cache'     => true,
-      'non-verbose-templates' => true,
-      'singular'              => $options['singular'],
-      'plural'                => $options['plural'],
-      'actions-base-class'    => $options['actions-base-class'],
-    ));
+    return $task->run([$arguments['application'], $module, $model], ['theme'                 => $options['theme'], 'route-prefix'          => $routeOptions['name'], 'with-propel-route'     => true, 'generate-in-cache'     => true, 'non-verbose-templates' => true, 'singular'              => $options['singular'], 'plural'                => $options['plural'], 'actions-base-class'    => $options['actions-base-class']]);
   }
 
   protected function getRouteFromName($name)
@@ -215,7 +196,7 @@ EOF
   protected function getPrimaryKey($model)
   {
     $peer = constant($model.'::PEER');
-    $map = call_user_func(array($peer, 'getTableMap'));
+    $map = call_user_func([$peer, 'getTableMap']);
 
     if (!$pks = $map->getPrimaryKeys())
     {
@@ -224,6 +205,6 @@ EOF
 
     $column = array_shift($pks);
 
-    return call_user_func(array($peer, 'translateFieldName'), $column->getPhpName(), BasePeer::TYPE_PHPNAME, BasePeer::TYPE_FIELDNAME);
+    return call_user_func([$peer, 'translateFieldName'], $column->getPhpName(), BasePeer::TYPE_PHPNAME, BasePeer::TYPE_FIELDNAME);
   }
 }

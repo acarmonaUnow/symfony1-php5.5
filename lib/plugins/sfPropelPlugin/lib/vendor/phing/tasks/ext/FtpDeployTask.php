@@ -58,8 +58,8 @@ class FtpDeployTask extends Task
 	private $clearFirst = false;
 	
 	public function __construct() {
-		$this->filesets = array();
-		$this->completeDirMap = array();
+		$this->filesets = [];
+		$this->completeDirMap = [];
 	}
 	
 	public function setHost($host) {

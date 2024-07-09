@@ -58,12 +58,7 @@ class PearLogListener implements BuildListener {
      * Maps Phing Project::MSG_* constants to PEAR_LOG_* constants.
      * @var array
      */
-    protected static $levelMap = array( Project::MSG_DEBUG => PEAR_LOG_DEBUG,
-                                        Project::MSG_INFO => PEAR_LOG_INFO,
-                                        Project::MSG_VERBOSE => PEAR_LOG_NOTICE,
-                                        Project::MSG_WARN => PEAR_LOG_WARNING,
-                                        Project::MSG_ERR => PEAR_LOG_ERR
-                                       );
+    protected static $levelMap = [Project::MSG_DEBUG => PEAR_LOG_DEBUG, Project::MSG_INFO => PEAR_LOG_INFO, Project::MSG_VERBOSE => PEAR_LOG_NOTICE, Project::MSG_WARN => PEAR_LOG_WARNING, Project::MSG_ERR => PEAR_LOG_ERR];
     /**
      * Whether logging has been configured.
      * @var boolean
@@ -88,7 +83,7 @@ class PearLogListener implements BuildListener {
         if ($type === null) $type = 'file';
         if ($name === null) $name = 'phing.log';
         if ($ident === null) $ident = 'phing';
-        if ($conf === null) $conf = array();
+        if ($conf === null) $conf = [];
         
         include_once 'Log.php';
         if (!class_exists('Log')) {

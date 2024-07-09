@@ -30,7 +30,7 @@ class sfWidgetFormInputPassword extends sfWidgetFormInput
    *
    * @see sfWidgetFormInput
    */
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);
 
@@ -51,7 +51,7 @@ class sfWidgetFormInputPassword extends sfWidgetFormInput
    *
    * @see sfWidgetForm
    */
-  public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function render($name, $value = null, $attributes = [], $errors = [])
   {
     return parent::render($name, $this->getOption('always_render_empty') ? null : $value, $attributes, $errors);
   }

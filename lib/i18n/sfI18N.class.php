@@ -22,7 +22,7 @@ class sfI18N
     $configuration = null,
     $dispatcher    = null,
     $cache         = null,
-    $options       = array(),
+    $options       = [],
     $culture       = 'en',
     $messageSource = null,
     $messageFormat = null;
@@ -32,7 +32,7 @@ class sfI18N
    *
    * @see initialize()
    */
-  public function __construct(sfApplicationConfiguration $configuration, sfCache $cache = null, $options = array())
+  public function __construct(sfApplicationConfiguration $configuration, sfCache $cache = null, $options = [])
   {
     $this->initialize($configuration, $cache, $options);
   }
@@ -53,7 +53,7 @@ class sfI18N
    * @param sfCache                    $cache           A sfCache instance
    * @param array                      $options         An array of options
    */
-  public function initialize(sfApplicationConfiguration $configuration, sfCache $cache = null, $options = array())
+  public function initialize(sfApplicationConfiguration $configuration, sfCache $cache = null, $options = [])
   {
     $this->configuration = $configuration;
     $this->dispatcher = $configuration->getEventDispatcher();
@@ -65,13 +65,7 @@ class sfI18N
       unset($options['culture']);
     }
 
-    $this->options = array_merge(array(
-      'source'              => 'XLIFF',
-      'debug'               => false,
-      'database'            => 'default',
-      'untranslated_prefix' => '[T]',
-      'untranslated_suffix' => '[/T]',
-    ), $options);
+    $this->options = array_merge(['source'              => 'XLIFF', 'debug'               => false, 'database'            => 'default', 'untranslated_prefix' => '[T]', 'untranslated_suffix' => '[/T]'], $options);
 
     $this->dispatcher->connect('user.change_culture', $this->listenToChangeCultureEvent(...));
 
@@ -209,7 +203,7 @@ class sfI18N
 
       if ($this->options['debug'])
       {
-        $this->messageFormat->setUntranslatedPS(array($this->options['untranslated_prefix'], $this->options['untranslated_suffix']));
+        $this->messageFormat->setUntranslatedPS([$this->options['untranslated_prefix'], $this->options['untranslated_suffix']]);
       }
     }
 
@@ -225,7 +219,7 @@ class sfI18N
    *
    * @return string The translated string
    */
-  public function __($string, $args = array(), $catalogue = 'messages')
+  public function __($string, $args = [], $catalogue = 'messages')
   {
     return $this->getMessageFormat()->format($string, $args, $catalogue);
   }
@@ -296,15 +290,11 @@ class sfI18N
     $dateRegexp = preg_replace('/[dmy]+/i', '(\d+)', preg_quote($dateFormat));
 
     // We parse date format to see where things are (m, d, y)
-    $a = array(
-      'd' => strpos($dateFormat, 'd'),
-      'm' => strpos($dateFormat, 'M'),
-      'y' => strpos($dateFormat, 'y'),
-    );
+    $a = ['d' => strpos($dateFormat, 'd'), 'm' => strpos($dateFormat, 'M'), 'y' => strpos($dateFormat, 'y')];
     $tmp = array_flip($a);
     ksort($tmp);
     $i = 0;
-    $c = array();
+    $c = [];
     foreach ($tmp as $value) $c[++$i] = $value;
     $datePositions = array_flip($c);
 
@@ -312,7 +302,7 @@ class sfI18N
     if (preg_match("~$dateRegexp~", $date, $matches))
     {
       // We get matching timestamp
-      return array($matches[$datePositions['d']], $matches[$datePositions['m']], $matches[$datePositions['y']]);
+      return [$matches[$datePositions['d']], $matches[$datePositions['m']], $matches[$datePositions['y']]];
     }
     else
     {
@@ -338,14 +328,10 @@ class sfI18N
     $timeFormat = $timeFormatInfo->getShortTimePattern();
 
     // We construct the regexp based on time format
-    $timeRegexp = preg_replace(array('/[hm]+/i', '/a/'), array('(\d+)', '(\w+)'), preg_quote($timeFormat));
+    $timeRegexp = preg_replace(['/[hm]+/i', '/a/'], ['(\d+)', '(\w+)'], preg_quote($timeFormat));
 
     // We parse time format to see where things are (h, m)
-    $timePositions = array(
-      'h' => str_contains($timeFormat, 'H') ? strpos($timeFormat, 'H') : strpos($timeFormat, 'h'),
-      'm' => strpos($timeFormat, 'm'),
-      'a' => strpos($timeFormat, 'a')
-    );
+    $timePositions = ['h' => str_contains($timeFormat, 'H') ? strpos($timeFormat, 'H') : strpos($timeFormat, 'h'), 'm' => strpos($timeFormat, 'm'), 'a' => strpos($timeFormat, 'a')];
     asort($timePositions);
     $i = 0;
 
@@ -386,7 +372,7 @@ class sfI18N
       }
 
       // We get matching timestamp
-      return array($hour, $matches[$timePositions['m']]);
+      return [$hour, $matches[$timePositions['m']]];
     }
     else
     {

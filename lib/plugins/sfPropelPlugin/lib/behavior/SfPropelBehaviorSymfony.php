@@ -18,10 +18,7 @@
  */
 class SfPropelBehaviorSymfony extends SfPropelBehaviorBase
 {
-  protected $parameters = array(
-    'form'   => 'true',
-    'filter' => 'true',
-  );
+  protected $parameters = ['form'   => 'true', 'filter' => 'true'];
 
   public function modifyDatabase()
   {
@@ -47,15 +44,15 @@ class SfPropelBehaviorSymfony extends SfPropelBehaviorBase
       // timestampable
       if (!isset($behaviors['symfony_timestampable']))
       {
-        $parameters = array();
+        $parameters = [];
         foreach ($table->getColumns() as $column)
         {
-          if (!isset($parameters['create_column']) && in_array($column->getName(), array('created_at', 'created_on')))
+          if (!isset($parameters['create_column']) && in_array($column->getName(), ['created_at', 'created_on']))
           {
             $parameters['create_column'] = $column->getName();
           }
 
-          if (!isset($parameters['update_column']) && in_array($column->getName(), array('updated_at', 'updated_on')))
+          if (!isset($parameters['update_column']) && in_array($column->getName(), ['updated_at', 'updated_on']))
           {
             $parameters['update_column'] = $column->getName();
           }
@@ -114,7 +111,7 @@ EOF;
       return;
     }
 
-    $unices = array();
+    $unices = [];
     foreach ($this->getTable()->getUnices() as $unique)
     {
       $unices[] = sprintf("array('%s')", implode("', '", $unique->getColumns()));

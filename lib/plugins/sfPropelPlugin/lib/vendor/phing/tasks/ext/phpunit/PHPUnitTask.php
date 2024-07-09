@@ -35,8 +35,8 @@ require_once 'phing/util/LogWriter.php';
  */
 class PHPUnitTask extends Task
 {
-	private $batchtests = array();
-	private $formatters = array();
+	private $batchtests = [];
+	private $formatters = [];
 	private $haltonerror = false;
 	private $haltonfailure = false;
 	private $haltonincomplete = false;
@@ -48,8 +48,8 @@ class PHPUnitTask extends Task
 	private $printsummary = false;
 	private $testfailed = false;
 	private $codecoverage = false;
-	private $groups = array();
-	private $excludeGroups = array();
+	private $groups = [];
+	private $excludeGroups = [];
 
 	/**
 	 * Initialize Task.
@@ -194,7 +194,7 @@ class PHPUnitTask extends Task
 			$this->log("The 'groups' attribute is only available with PHPUnit 3.2.0 or newer", Project::MSG_WARN);
 		}
 		$token = ' ,;';
-		$this->groups = array();
+		$this->groups = [];
 		$tok = strtok($groups, $token);
 		while ($tok !== false) {
 			$this->groups[] = $tok;
@@ -209,7 +209,7 @@ class PHPUnitTask extends Task
 			$this->log("The 'excludeGroups' attribute is only available with PHPUnit 3.2.0 or newer", Project::MSG_WARN);
 		}
 		$token = ' ,;';
-		$this->excludeGroups = array();
+		$this->excludeGroups = [];
 		$tok = strtok($groups, $token);
 		while ($tok !== false) {
 			$this->excludeGroups[] = $tok;
@@ -234,7 +234,7 @@ class PHPUnitTask extends Task
 	 */
 	function main()
 	{
-		$tests = array();
+		$tests = [];
 		
 		if ($this->printsummary)
 		{

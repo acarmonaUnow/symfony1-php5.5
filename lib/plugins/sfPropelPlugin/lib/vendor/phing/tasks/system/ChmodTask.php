@@ -36,7 +36,7 @@ class ChmodTask extends Task {
 
     private $mode;
 
-    private $filesets = array();
+    private $filesets = [];
 
     private $filesystem;
 	

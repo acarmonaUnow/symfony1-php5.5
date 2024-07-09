@@ -39,11 +39,11 @@ class sfValidatorUrl extends sfValidatorRegex
    *
    * @see sfValidatorRegex
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     parent::configure($options, $messages);
 
-    $this->addOption('protocols', array('http', 'https', 'ftp', 'ftps'));
+    $this->addOption('protocols', ['http', 'https', 'ftp', 'ftps']);
     $this->setOption('pattern', new sfCallable($this->generateRegex(...)));
   }
 

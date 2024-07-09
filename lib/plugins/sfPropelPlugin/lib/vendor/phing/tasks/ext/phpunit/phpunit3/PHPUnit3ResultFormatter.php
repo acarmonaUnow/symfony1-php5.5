@@ -84,12 +84,12 @@ abstract class PHPUnit3ResultFormatter implements PHPUnit_Framework_TestListener
 	
 	function startTestRun()
 	{
-		$this->timers = array($this->getMicrotime());
-		$this->runCounts = array(0);
-		$this->failureCounts = array(0);
-		$this->errorCounts = array(0);
-		$this->incompleteCounts = array(0);
-		$this->skipCounts = array(0);
+		$this->timers = [$this->getMicrotime()];
+		$this->runCounts = [0];
+		$this->failureCounts = [0];
+		$this->errorCounts = [0];
+		$this->incompleteCounts = [0];
+		$this->skipCounts = [0];
 	}
 	
 	function endTestRun()

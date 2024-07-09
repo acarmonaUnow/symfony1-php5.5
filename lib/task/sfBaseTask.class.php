@@ -27,12 +27,12 @@ abstract class sfBaseTask extends sfCommandApplicationTask
    */
   protected function doRun(sfCommandManager $commandManager, $options)
   {
-    $event = $this->dispatcher->filter(new sfEvent($this, 'command.filter_options', array('command_manager' => $commandManager)), $options);
+    $event = $this->dispatcher->filter(new sfEvent($this, 'command.filter_options', ['command_manager' => $commandManager]), $options);
     $options = $event->getReturnValue();
 
     $this->process($commandManager, $options);
 
-    $event = new sfEvent($this, 'command.pre_command', array('arguments' => $commandManager->getArgumentValues(), 'options' => $commandManager->getOptionValues()));
+    $event = new sfEvent($this, 'command.pre_command', ['arguments' => $commandManager->getArgumentValues(), 'options' => $commandManager->getOptionValues()]);
     $this->dispatcher->notifyUntil($event);
     if ($event->isProcessed())
     {
@@ -250,10 +250,7 @@ abstract class sfBaseTask extends sfCommandApplicationTask
 
       // project
       $autoload = sfSimpleAutoload::getInstance(sfConfig::get('sf_cache_dir').'/project_autoload.cache');
-      $autoload->loadConfiguration(sfFinder::type('file')->name('autoload.yml')->in(array(
-        sfConfig::get('sf_symfony_lib_dir').'/config/config',
-        sfConfig::get('sf_config_dir'),
-      )));
+      $autoload->loadConfiguration(sfFinder::type('file')->name('autoload.yml')->in([sfConfig::get('sf_symfony_lib_dir').'/config/config', sfConfig::get('sf_config_dir')]));
       $autoload->register();
 
       if ($reload)
@@ -290,14 +287,14 @@ abstract class sfBaseTask extends sfCommandApplicationTask
    * @param array $dirs   An array of directory where to do the replacement
    * @param array $tokens An array of tokens to use
    */
-  protected function replaceTokens($dirs = array(), $tokens = array())
+  protected function replaceTokens($dirs = [], $tokens = [])
   {
     if (!$dirs)
     {
-      $dirs = array(sfConfig::get('sf_config_dir'), sfConfig::get('sf_lib_dir'));
+      $dirs = [sfConfig::get('sf_config_dir'), sfConfig::get('sf_lib_dir')];
     }
 
-    $tokens = array_merge($this->tokens ?? array(), $tokens);
+    $tokens = array_merge($this->tokens ?? [], $tokens);
 
     $this->getFilesystem()->replaceTokens(sfFinder::type('file')->prune('vendor')->in($dirs), '##', '##', $tokens);
   }
@@ -320,7 +317,7 @@ abstract class sfBaseTask extends sfCommandApplicationTask
     $this->commandApplication->loadTasks($this->configuration);
 
     $disabledPluginsRegex = sprintf('#^(%s)#', implode('|', array_diff($this->configuration->getAllPluginPaths(), $this->configuration->getPluginPaths())));
-    $tasks = array();
+    $tasks = [];
     foreach (get_declared_classes() as $class)
     {
       $r = new Reflectionclass($class);
@@ -362,12 +359,7 @@ abstract class sfBaseTask extends sfCommandApplicationTask
   {
     if (null === $this->pluginManager)
     {
-      $environment = new sfPearEnvironment($this->dispatcher, array(
-        'plugin_dir' => sfConfig::get('sf_plugins_dir'),
-        'cache_dir'  => sfConfig::get('sf_cache_dir').'/.pear',
-        'web_dir'    => sfConfig::get('sf_web_dir'),
-        'config_dir' => sfConfig::get('sf_config_dir'),
-      ));
+      $environment = new sfPearEnvironment($this->dispatcher, ['plugin_dir' => sfConfig::get('sf_plugins_dir'), 'cache_dir'  => sfConfig::get('sf_cache_dir').'/.pear', 'web_dir'    => sfConfig::get('sf_web_dir'), 'config_dir' => sfConfig::get('sf_config_dir')]);
 
       $this->pluginManager = new sfSymfonyPluginManager($this->dispatcher, $environment);
     }

@@ -1,5 +1,5 @@
 <ul class="sf_admin_actions">
-<?php foreach (array('new', 'edit') as $action): ?>
+<?php foreach (['new', 'edit'] as $action): ?>
 <?php if ('new' == $action): ?>
 [?php if ($form->isNew()): ?]
 <?php else: ?>

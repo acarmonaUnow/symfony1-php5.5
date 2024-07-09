@@ -21,8 +21,8 @@ class sfWebDebug
   protected
     $dispatcher = null,
     $logger     = null,
-    $options    = array(),
-    $panels     = array();
+    $options    = [],
+    $panels     = [];
 
   /**
    * Constructor.
@@ -36,7 +36,7 @@ class sfWebDebug
    * @param sfVarLogger       $logger     The logger
    * @param array             $options    An array of options
    */
-  public function __construct(sfEventDispatcher $dispatcher, sfVarLogger $logger, array $options = array())
+  public function __construct(sfEventDispatcher $dispatcher, sfVarLogger $logger, array $options = [])
   {
     $this->dispatcher = $dispatcher;
     $this->logger     = $logger;
@@ -49,7 +49,7 @@ class sfWebDebug
 
     if (!isset($this->options['request_parameters']))
     {
-      $this->options['request_parameters'] = array();
+      $this->options['request_parameters'] = [];
     }
 
     $this->configure();
@@ -169,7 +169,7 @@ class sfWebDebug
 
     if (false !== $pos = $posFunction($content, '</head>'))
     {
-      $styles = '<style type="text/css">'.str_replace(array("\r", "\n"), ' ', $this->getStylesheet()).'</style>';
+      $styles = '<style type="text/css">'.str_replace(["\r", "\n"], ' ', $this->getStylesheet()).'</style>';
       $content = $substrFunction($content, 0, $pos).$styles.$substrFunction($content, $pos);
     }
 
@@ -195,8 +195,8 @@ class sfWebDebug
   {
     $current = $this->options['request_parameters']['sfWebDebugPanel'] ?? null;
 
-    $titles = array();
-    $panels = array();
+    $titles = [];
+    $panels = [];
     foreach ($this->panels as $name => $panel)
     {
       if ($title = $panel->getTitle())

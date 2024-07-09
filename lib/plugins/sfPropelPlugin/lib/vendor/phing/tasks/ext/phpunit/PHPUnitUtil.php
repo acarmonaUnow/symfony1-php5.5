@@ -39,7 +39,7 @@ class PHPUnitUtil
 	 */
 	public static $installedMinorVersion = 0;
 	
-	protected static $definedClasses = array();
+	protected static $definedClasses = [];
 	
 	/**
 	 * Returns the package of a class as defined in the docblock of the class using @package
@@ -124,7 +124,7 @@ class PHPUnitUtil
 		}
 		else
 		{
-			return array();
+			return [];
 		}
 	}
 }

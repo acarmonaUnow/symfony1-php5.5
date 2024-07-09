@@ -33,7 +33,7 @@ class GeneratorConfig {
    *
    * @var        array
    */
-  private $buildProperties = array();
+  private $buildProperties = [];
 
   /**
    * Construct a new GeneratorConfig.
@@ -63,9 +63,9 @@ class GeneratorConfig {
    */
   public function setBuildProperties(mixed $props)
   {
-    $this->buildProperties = array();
+    $this->buildProperties = [];
 
-    $renamedPropelProps = array();
+    $renamedPropelProps = [];
     foreach ($props as $key => $propValue) {
       if (str_starts_with((string) $key, "propel.")) {
         $newKey = substr((string) $key, strlen("propel."));

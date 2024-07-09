@@ -21,10 +21,7 @@ class sfPropelPluginConfiguration extends sfPluginConfiguration
       sfConfig::set('sf_admin_module_web_dir', '/sfPropelPlugin');
     }
 
-    sfToolkit::addIncludePath(array(
-      sfConfig::get('sf_root_dir'),
-      sfConfig::get('sf_propel_runtime_path', realpath(__DIR__.'/../lib/vendor')),
-    ));
+    sfToolkit::addIncludePath([sfConfig::get('sf_root_dir'), sfConfig::get('sf_propel_runtime_path', realpath(__DIR__.'/../lib/vendor'))]);
 
     require_once 'propel/Propel.php';
 
@@ -43,11 +40,11 @@ class sfPropelPluginConfiguration extends sfPluginConfiguration
       Propel::initialize();
     }
 
-    $this->dispatcher->connect('user.change_culture', array('sfPropel', 'listenToChangeCultureEvent'));
+    $this->dispatcher->connect('user.change_culture', ['sfPropel', 'listenToChangeCultureEvent']);
 
     if (sfConfig::get('sf_web_debug'))
     {
-      $this->dispatcher->connect('debug.web.load_panels', array('sfWebDebugPanelPropel', 'listenToAddPanelEvent'));
+      $this->dispatcher->connect('debug.web.load_panels', ['sfWebDebugPanelPropel', 'listenToAddPanelEvent']);
     }
 
     if (sfConfig::get('sf_test'))
@@ -71,7 +68,7 @@ class sfPropelPluginConfiguration extends sfPluginConfiguration
       if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject'))
       {
         $peer = constant($omClass.'::PEER');
-        call_user_func(array($peer, 'clearInstancePool'));
+        call_user_func([$peer, 'clearInstancePool']);
       }
     }
   }

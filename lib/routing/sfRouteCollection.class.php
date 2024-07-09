@@ -20,8 +20,8 @@ class sfRouteCollection implements Iterator
 {
   protected
     $count   = 0,
-    $options = array(),
-    $routes  = array();
+    $options = [],
+    $routes  = [];
 
   /**
    * Constructor.

@@ -116,22 +116,7 @@ include_once 'phing/types/selectors/SelectorUtils.php';
 class DirectoryScanner implements SelectorScanner {
 
     /** default set of excludes */
-    protected $DEFAULTEXCLUDES = array(
-        "**/*~",
-        "**/#*#",
-        "**/.#*",
-        "**/%*%",
-        "**/CVS",
-        "**/CVS/**",
-        "**/.cvsignore",
-        "**/SCCS",
-        "**/SCCS/**",
-        "**/vssver.scc",
-		"**/.svn",
-		"**/.svn/**",
-		"**/._*",
-		"**/.DS_Store",
-    );
+    protected $DEFAULTEXCLUDES = ["**/*~", "**/#*#", "**/.#*", "**/%*%", "**/CVS", "**/CVS/**", "**/.cvsignore", "**/SCCS", "**/SCCS/**", "**/vssver.scc", "**/.svn", "**/.svn/**", "**/._*", "**/.DS_Store"];
 
     /** The base directory which should be scanned. */
     protected $basedir;
@@ -278,7 +263,7 @@ class DirectoryScanner implements SelectorScanner {
      *
      * @param includes list of include patterns
      */
-    function setIncludes($_includes = array()) {
+    function setIncludes($_includes = []) {
         if (empty($_includes) || is_null($_includes)) {
             $this->includes = null;
         } else {
@@ -304,7 +289,7 @@ class DirectoryScanner implements SelectorScanner {
      * @param excludes list of exclude patterns
      */
 
-    function setExcludes($_excludes = array()) {
+    function setExcludes($_excludes = []) {
         if (empty($_excludes) || is_null($_excludes)) {
             $this->excludes = null;
         } else {
@@ -333,20 +318,20 @@ class DirectoryScanner implements SelectorScanner {
 
         if ($this->includes === null) {
             // No includes supplied, so set it to 'matches all'
-            $this->includes = array("**");
+            $this->includes = ["**"];
         }
         if (is_null($this->excludes)) {
-            $this->excludes = array();
+            $this->excludes = [];
         }
 
-        $this->filesIncluded = array();
-        $this->filesNotIncluded = array();
-        $this->filesExcluded = array();
-        $this->dirsIncluded = array();
-        $this->dirsNotIncluded = array();
-        $this->dirsExcluded = array();
-        $this->dirsDeselected = array();
-        $this->filesDeselected = array();
+        $this->filesIncluded = [];
+        $this->filesNotIncluded = [];
+        $this->filesExcluded = [];
+        $this->dirsIncluded = [];
+        $this->dirsNotIncluded = [];
+        $this->dirsExcluded = [];
+        $this->dirsDeselected = [];
+        $this->filesDeselected = [];
         
         if ($this->isIncluded("")) {
             if (!$this->isExcluded("")) {
@@ -408,7 +393,7 @@ class DirectoryScanner implements SelectorScanner {
 
     function listDir($_dir) {
         $d = dir($_dir);
-        $list = array();
+        $list = [];
         while($entry = $d->read()) {
             if ($entry != "." && $entry != "..") {
                 $list[] = $entry;

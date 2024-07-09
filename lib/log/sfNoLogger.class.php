@@ -26,7 +26,7 @@ class sfNoLogger extends sfLogger
    *
    * @return Boolean      true, if initialization completes successfully, otherwise false.
    */
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
   }
 

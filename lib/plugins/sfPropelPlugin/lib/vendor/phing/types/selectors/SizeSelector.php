@@ -38,16 +38,46 @@ class SizeSelector extends BaseExtendSelector {
     public const UNITS_KEY = "units";
     public const WHEN_KEY = "when";
 
-    private static $sizeComparisons =  array("less", "more", "equal");
-    private static $byteUnits = array("K", "k", "kilo", "KILO",
-                                 "Ki", "KI", "ki", "kibi", "KIBI",
-                                 "M", "m", "mega", "MEGA",
-                                 "Mi", "MI", "mi", "mebi", "MEBI",
-                                 "G", "g", "giga", "GIGA",
-                                 "Gi", "GI", "gi", "gibi", "GIBI",
-                                 "T", "t", "tera", "TERA",
-            /* You wish! */      "Ti", "TI", "ti", "tebi", "TEBI"
-                                 );
+    private static $sizeComparisons =  ["less", "more", "equal"];
+    private static $byteUnits = [
+        "K",
+        "k",
+        "kilo",
+        "KILO",
+        "Ki",
+        "KI",
+        "ki",
+        "kibi",
+        "KIBI",
+        "M",
+        "m",
+        "mega",
+        "MEGA",
+        "Mi",
+        "MI",
+        "mi",
+        "mebi",
+        "MEBI",
+        "G",
+        "g",
+        "giga",
+        "GIGA",
+        "Gi",
+        "GI",
+        "gi",
+        "gibi",
+        "GIBI",
+        "T",
+        "t",
+        "tera",
+        "TERA",
+        /* You wish! */
+        "Ti",
+        "TI",
+        "ti",
+        "tebi",
+        "TEBI",
+    ];
 
     public function toString() {
         $buf = "{sizeselector value: ";

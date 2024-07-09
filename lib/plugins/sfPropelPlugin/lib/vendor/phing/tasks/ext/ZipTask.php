@@ -51,8 +51,8 @@ class ZipTask extends MatchingTask {
      */
     private $includeEmpty = true;
     
-    private $filesets = array();
-    private $fileSetFiles = array();
+    private $filesets = [];
+    private $fileSetFiles = [];
 
     /**
      * Add a new fileset.
@@ -164,13 +164,13 @@ class ZipTask extends MatchingTask {
                 $fsBasedir = (null != $this->baseDir) ? $this->baseDir :
 									$fs->getDir($this->project);
                 
-                $filesToZip = array();
+                $filesToZip = [];
                 for ($i=0, $fcount=count($files); $i < $fcount; $i++) {
                     $f = new PhingFile($fsBasedir, $files[$i]);
                     $filesToZip[] = $f->getAbsolutePath();
                     $this->log("Adding " . $f->getPath() . " to archive.", Project::MSG_VERBOSE);                        
                 }
-                $zip->add($filesToZip, array('remove_path' => $fsBasedir->getCanonicalPath()));
+                $zip->add($filesToZip, ['remove_path' => $fsBasedir->getCanonicalPath()]);
             }
                          
                 
@@ -226,7 +226,7 @@ class ZipFileSet extends FileSet {
             if ($includeEmpty) {
 
 	            // first any empty directories that will not be implicitly added by any of the files
-				$implicitDirs = array();
+				$implicitDirs = [];
 				foreach($this->files as $file) {
 					$implicitDirs[] = dirname((string) $file);
 				} 

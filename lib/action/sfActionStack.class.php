@@ -22,7 +22,7 @@
 class sfActionStack
 {
   protected
-    $stack = array();
+    $stack = [];
 
   /**
    * Adds an entry to the action stack.

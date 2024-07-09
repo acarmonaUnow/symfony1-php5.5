@@ -42,13 +42,13 @@ class Join
 	public const EQUAL = "=";
 	
 	// the left parts of the join condition
-	protected $left = array();
+	protected $left = [];
 
 	// the right parts of the join condition
-	protected $right = array();
+	protected $right = [];
 
 	// the comparison operators for each pair of columns in the join condition
-	protected $operator = array();
+	protected $operator = [];
 	
 	// the type of the join (LEFT JOIN, ...), or null for an implicit join
 	protected $joinType = null;
@@ -123,13 +123,9 @@ class Join
 	 */
 	public function getConditions()
 	{
-	  $conditions = array();
+	  $conditions = [];
 	  for ($i=0; $i < $this->count; $i++) { 
-	    $conditions[] = array(
-	      'left'     => $this->getLeftColumn($i), 
-	      'operator' => $this->getOperator($i),
-	      'right'    => $this->getRightColumn($i)
-	    );
+	    $conditions[] = ['left'     => $this->getLeftColumn($i), 'operator' => $this->getOperator($i), 'right'    => $this->getRightColumn($i)];
 	  }
 	  return $conditions;
 	}

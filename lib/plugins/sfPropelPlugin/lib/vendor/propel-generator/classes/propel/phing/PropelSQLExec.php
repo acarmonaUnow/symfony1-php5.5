@@ -74,7 +74,7 @@ class PropelSQLExec extends Task {
 	private $sqlCommand = "";
 
 	/** SQL transactions to perform */
-	private $transactions = array();
+	private $transactions = [];
 
 	/** SQL Statement delimiter */
 	private $delimiter = ";";
@@ -290,7 +290,7 @@ class PropelSQLExec extends Task {
 			throw new BuildException("Cannot open and process the sqldbmap!");
 		}
 
-		$databases = array();
+		$databases = [];
 
 		foreach ($map->keys() as $sqlfile) {
 
@@ -299,7 +299,7 @@ class PropelSQLExec extends Task {
 			// Q: already there?
 			if (!isset($databases[$database])) {
 			// A: No.
-				$databases[$database] = array();
+				$databases[$database] = [];
 			}
 
 			// We want to make sure that the base schemas
@@ -313,7 +313,7 @@ class PropelSQLExec extends Task {
 		}
 
 		foreach ($databases as $db => $files) {
-			$transactions = array();
+			$transactions = [];
 
 			foreach ($files as $fileName) {
 
@@ -444,7 +444,7 @@ class PropelSQLExec extends Task {
 		$parser['backslashCount'] = 0;
 		$parser['parsedString'] = "";
 
-		$sqlParts = array();
+		$sqlParts = [];
 
 		while (($line = $in->readLine()) !== null) {
 
@@ -555,7 +555,7 @@ class PropelSQLExec extends Task {
 				$parser['stringQuotes'] = "";
 				$parser['backslashCount'] = 0;
 				$parser['parsedString'] = "";
-				$sqlParts = array();
+				$sqlParts = [];
 			}
 		}
 

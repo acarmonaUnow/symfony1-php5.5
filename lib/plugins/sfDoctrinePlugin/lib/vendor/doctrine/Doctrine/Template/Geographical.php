@@ -39,14 +39,7 @@ class Doctrine_Template_Geographical extends Doctrine_Template
      *
      * @var string
      */
-    protected $_options = array('latitude' =>  array('name'     =>  'latitude',
-                                                     'type'     =>  'double',
-                                                     'size'     =>  null,
-                                                     'options'  =>  array()),
-                                'longitude' => array('name'     =>  'longitude',
-                                                     'type'     =>  'double',
-                                                     'size'     =>  null,
-                                                     'options'  =>  array()));
+    protected $_options = ['latitude' =>  ['name'     =>  'latitude', 'type'     =>  'double', 'size'     =>  null, 'options'  =>  []], 'longitude' => ['name'     =>  'longitude', 'type'     =>  'double', 'size'     =>  null, 'options'  =>  []]];
 
     /**
      * Set table definition for Geographical behavior
@@ -98,8 +91,8 @@ class Doctrine_Template_Geographical extends Doctrine_Template
     {
         $query = $this->getDistanceQuery();
         
-        $conditions = array();
-        $values = array();
+        $conditions = [];
+        $values = [];
         foreach ((array) $record->getTable()->getIdentifier() as $id) {
             $conditions[] = $query->getRootAlias() . '.' . $id . ' = ?';
             $values[] = $record->get($id);

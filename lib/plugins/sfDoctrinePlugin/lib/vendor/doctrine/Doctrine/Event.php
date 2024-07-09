@@ -92,7 +92,7 @@ class Doctrine_Event
     /**
      * @var array $_options             an array of options
      */
-    protected $_options = array();
+    protected $_options = [];
 
     /**
     * constructor
@@ -111,7 +111,7 @@ class Doctrine_Event
     protected $_code, protected $_query = null, /**
      * @var string $_params             the parameters associated with the query (if any)
      */
-    protected $_params = array())
+    protected $_params = [])
     {
         $this->_sequence = self::$_nextSequence++;
     }

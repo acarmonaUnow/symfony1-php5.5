@@ -49,7 +49,7 @@ abstract class BaseObject {
 	 * Tracking modified columns allows us to only update modified columns.
 	 * @var        array
 	 */
-	protected $modifiedColumns = array();
+	protected $modifiedColumns = [];
 
 	/**
 	 * Empty constructor (this allows people with their own BaseObject implementation to use its constructor)
@@ -208,7 +208,7 @@ abstract class BaseObject {
 		}
 		else
 		{
-			$this->modifiedColumns = array();
+			$this->modifiedColumns = [];
 		}
 	}
 

@@ -13,34 +13,12 @@ abstract class BaseArticleForm extends BaseFormPropel
 {
   public function setup()
   {
-    $this->setWidgets(array(
-      'id'                  => new sfWidgetFormInputHidden(),
-      'title'               => new sfWidgetFormInputText(),
-      'body'                => new sfWidgetFormTextarea(),
-      'Online'              => new sfWidgetFormInputCheckbox(),
-      'excerpt'             => new sfWidgetFormInputText(),
-      'category_id'         => new sfWidgetFormPropelChoice(array('model' => 'Category', 'add_empty' => false)),
-      'created_at'          => new sfWidgetFormDateTime(),
-      'end_date'            => new sfWidgetFormDateTime(),
-      'book_id'             => new sfWidgetFormPropelChoice(array('model' => 'Book', 'add_empty' => true)),
-      'author_article_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Author')),
-    ));
+    $this->setWidgets(['id'                  => new sfWidgetFormInputHidden(), 'title'               => new sfWidgetFormInputText(), 'body'                => new sfWidgetFormTextarea(), 'Online'              => new sfWidgetFormInputCheckbox(), 'excerpt'             => new sfWidgetFormInputText(), 'category_id'         => new sfWidgetFormPropelChoice(['model' => 'Category', 'add_empty' => false]), 'created_at'          => new sfWidgetFormDateTime(), 'end_date'            => new sfWidgetFormDateTime(), 'book_id'             => new sfWidgetFormPropelChoice(['model' => 'Book', 'add_empty' => true]), 'author_article_list' => new sfWidgetFormPropelChoice(['multiple' => true, 'model' => 'Author'])]);
 
-    $this->setValidators(array(
-      'id'                  => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'title'               => new sfValidatorString(array('max_length' => 255)),
-      'body'                => new sfValidatorString(array('required' => false)),
-      'Online'              => new sfValidatorBoolean(array('required' => false)),
-      'excerpt'             => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'category_id'         => new sfValidatorPropelChoice(array('model' => 'Category', 'column' => 'id')),
-      'created_at'          => new sfValidatorDateTime(array('required' => false)),
-      'end_date'            => new sfValidatorDateTime(array('required' => false)),
-      'book_id'             => new sfValidatorPropelChoice(array('model' => 'Book', 'column' => 'id', 'required' => false)),
-      'author_article_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Author', 'required' => false)),
-    ));
+    $this->setValidators(['id'                  => new sfValidatorChoice(['choices' => [$this->getObject()->getId()], 'empty_value' => $this->getObject()->getId(), 'required' => false]), 'title'               => new sfValidatorString(['max_length' => 255]), 'body'                => new sfValidatorString(['required' => false]), 'Online'              => new sfValidatorBoolean(['required' => false]), 'excerpt'             => new sfValidatorString(['max_length' => 255, 'required' => false]), 'category_id'         => new sfValidatorPropelChoice(['model' => 'Category', 'column' => 'id']), 'created_at'          => new sfValidatorDateTime(['required' => false]), 'end_date'            => new sfValidatorDateTime(['required' => false]), 'book_id'             => new sfValidatorPropelChoice(['model' => 'Book', 'column' => 'id', 'required' => false]), 'author_article_list' => new sfValidatorPropelChoice(['multiple' => true, 'model' => 'Author', 'required' => false])]);
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorPropelUnique(array('model' => 'Article', 'column' => array('title', 'category_id')))
+      new sfValidatorPropelUnique(['model' => 'Article', 'column' => ['title', 'category_id']])
     );
 
     $this->widgetSchema->setNameFormat('article[%s]');
@@ -62,7 +40,7 @@ abstract class BaseArticleForm extends BaseFormPropel
 
     if (isset($this->widgetSchema['author_article_list']))
     {
-      $values = array();
+      $values = [];
       foreach ($this->object->getAuthorArticles() as $obj)
       {
         $values[] = $obj->getAuthorId();

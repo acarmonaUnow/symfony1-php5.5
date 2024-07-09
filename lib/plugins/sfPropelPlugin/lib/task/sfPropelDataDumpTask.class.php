@@ -25,16 +25,9 @@ class sfPropelDataDumpTask extends sfPropelBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('target', sfCommandArgument::OPTIONAL, 'The target filename'),
-    ));
+    $this->addArguments([new sfCommandArgument('target', sfCommandArgument::OPTIONAL, 'The target filename')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environement', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('classes', null, sfCommandOption::PARAMETER_REQUIRED, 'The class names to dump (separated by a colon)', null),
-    ));
+    $this->addOptions([new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environement', 'cli'), new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'), new sfCommandOption('classes', null, sfCommandOption::PARAMETER_REQUIRED, 'The class names to dump (separated by a colon)', null)]);
 
     $this->namespace = 'propel';
     $this->name = 'data-dump';
@@ -75,7 +68,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 

@@ -21,21 +21,21 @@ abstract class sfRouting
   protected
     $dispatcher        = null,
     $cache             = null,
-    $defaultParameters = array(),
-    $options           = array();
+    $defaultParameters = [],
+    $options           = [];
 
   /**
    * Class constructor.
    *
    * @see initialize()
    */
-  public function __construct(sfEventDispatcher $dispatcher, sfCache $cache = null, $options = array())
+  public function __construct(sfEventDispatcher $dispatcher, sfCache $cache = null, $options = [])
   {
     $this->initialize($dispatcher, $cache, $options);
 
     if (!isset($this->options['auto_shutdown']) || $this->options['auto_shutdown'])
     {
-      register_shutdown_function(array($this, 'shutdown'));
+      register_shutdown_function([$this, 'shutdown']);
     }
   }
 
@@ -64,7 +64,7 @@ abstract class sfRouting
    * @param sfCache           $cache       An sfCache instance
    * @param array             $options     An associative array of initialization options.
    */
-  public function initialize(sfEventDispatcher $dispatcher, sfCache $cache = null, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, sfCache $cache = null, $options = [])
   {
     $this->dispatcher = $dispatcher;
 
@@ -83,7 +83,7 @@ abstract class sfRouting
 
     if (!isset($options['context']))
     {
-      $options['context'] = array();
+      $options['context'] = [];
     }
 
     $this->options = $options;
@@ -161,7 +161,7 @@ abstract class sfRouting
   *
   * @return string The generated URL
   */
-  abstract public function generate($name, $params = array(), $absolute = false);
+  abstract public function generate($name, $params = [], $absolute = false);
 
  /**
   * Parses a URL to find a matching route and sets internal state.

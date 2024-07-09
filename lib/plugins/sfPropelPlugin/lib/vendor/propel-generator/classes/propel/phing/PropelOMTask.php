@@ -124,7 +124,7 @@ class PropelOMTask extends AbstractPropelDataModelTask {
 						// -----------------------------------------------------------------------------------------
 
 						// these files are always created / overwrite any existing files
-						foreach (array('peer', 'object', 'tablemap') as $target) {
+						foreach (['peer', 'object', 'tablemap'] as $target) {
 							$builder = $generatorConfig->getConfiguredBuilder($table, $target);
 							$this->build($builder);
 						}
@@ -134,7 +134,7 @@ class PropelOMTask extends AbstractPropelDataModelTask {
 						// -----------------------------------------------------------------------------------------
 
 						// these classes are only generated if they don't already exist
-						foreach (array('peerstub', 'objectstub') as $target) {
+						foreach (['peerstub', 'objectstub'] as $target) {
 							$builder = $generatorConfig->getConfiguredBuilder($table, $target);
 							$this->build($builder, $overwrite=false);
 						}
@@ -173,19 +173,19 @@ class PropelOMTask extends AbstractPropelDataModelTask {
 						if ($table->treeMode()) {
 							switch($table->treeMode()) {
 								case 'NestedSet':
-									foreach (array('nestedsetpeer', 'nestedset') as $target) {
+									foreach (['nestedsetpeer', 'nestedset'] as $target) {
 										$builder = $generatorConfig->getConfiguredBuilder($table, $target);
 										$this->build($builder);
 									}
 								break;
 
 								case 'MaterializedPath':
-									foreach (array('nodepeer', 'node') as $target) {
+									foreach (['nodepeer', 'node'] as $target) {
 										$builder = $generatorConfig->getConfiguredBuilder($table, $target);
 										$this->build($builder);
 									}
 
-									foreach (array('nodepeerstub', 'nodestub') as $target) {
+									foreach (['nodepeerstub', 'nodestub'] as $target) {
 										$builder = $generatorConfig->getConfiguredBuilder($table, $target);
 										$this->build($builder, $overwrite=false);
 									}

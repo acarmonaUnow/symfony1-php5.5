@@ -159,7 +159,7 @@ class PropelSQLTask extends AbstractPropelDataModelTask {
 			foreach ($dataModel->getDatabases() as $database) {
 
 				// Clear any start/end DLL
-				call_user_func(array($builderClazz, 'reset'));
+				call_user_func([$builderClazz, 'reset']);
 
 				// file we are going to create
 				if (!$this->packageObjectModel) {
@@ -173,7 +173,7 @@ class PropelSQLTask extends AbstractPropelDataModelTask {
 				$this->log("Writing to SQL file: " . $outFile->getPath());
 
 				// First add any "header" SQL
-				$ddl = call_user_func(array($builderClazz, 'getDatabaseStartDDL'));
+				$ddl = call_user_func([$builderClazz, 'getDatabaseStartDDL']);
 
 				foreach ($database->getTables() as $table) {
 
@@ -191,7 +191,7 @@ class PropelSQLTask extends AbstractPropelDataModelTask {
 				} // foreach database->getTables()
 
 				// Finally check to see if there is any "footer" SQL
-				$ddl .= call_user_func(array($builderClazz, 'getDatabaseEndDDL'));
+				$ddl .= call_user_func([$builderClazz, 'getDatabaseEndDDL']);
 
 				#var_dump($outFile->getAbsolutePath());
 				// Now we're done.  Write the file!
@@ -219,7 +219,7 @@ class PropelSQLTask extends AbstractPropelDataModelTask {
 
 			$dataModels = $this->getDataModels();
 			$dataModel = array_shift($dataModels);
-			$packagedDataModels = array();
+			$packagedDataModels = [];
 
 			$platform = $this->getGeneratorConfig()->getConfiguredPlatform();
 
@@ -244,15 +244,7 @@ class PropelSQLTask extends AbstractPropelDataModelTask {
 
 	protected function cloneDatabase($db) {
 
-		$attributes = array (
-			'name' => $db->getName(),
-			'baseClass' => $db->getBaseClass(),
-			'basePeer' => $db->getBasePeer(),
-			'defaultIdMethod' => $db->getDefaultIdMethod(),
-			'defaultPhpNamingMethod' => $db->getDefaultPhpNamingMethod(),
-			'defaultTranslateMethod' => $db->getDefaultTranslateMethod(),
-			'heavyIndexing' => $db->getHeavyIndexing(),
-		);
+		$attributes = ['name' => $db->getName(), 'baseClass' => $db->getBaseClass(), 'basePeer' => $db->getBasePeer(), 'defaultIdMethod' => $db->getDefaultIdMethod(), 'defaultPhpNamingMethod' => $db->getDefaultPhpNamingMethod(), 'defaultTranslateMethod' => $db->getDefaultTranslateMethod(), 'heavyIndexing' => $db->getHeavyIndexing()];
 
 		$clone = new Database();
 		$clone->loadFromXML($attributes);

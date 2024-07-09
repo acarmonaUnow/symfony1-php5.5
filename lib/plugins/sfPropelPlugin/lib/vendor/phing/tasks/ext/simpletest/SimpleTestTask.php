@@ -34,7 +34,7 @@ require_once 'phing/util/LogWriter.php';
  */
 class SimpleTestTask extends Task
 {
-	private $formatters = array();
+	private $formatters = [];
 	private $haltonerror = false;
 	private $haltonfailure = false;
 	private $failureproperty;
@@ -115,7 +115,7 @@ class SimpleTestTask extends Task
 	 */
 	private function getFilenames()
 	{
-		$filenames = array();
+		$filenames = [];
 
 		foreach ($this->filesets as $fileset)
 		{

@@ -37,7 +37,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
    */
   public function clearCredentials()
   {
-    $this->credentials = array();
+    $this->credentials = [];
   }
 
   /**
@@ -65,7 +65,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
         {
           if ($this->options['logging'])
           {
-            $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Remove credential "%s"', $credential))));
+            $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Remove credential "%s"', $credential)]));
           }
 
           unset($this->credentials[$key]);
@@ -102,7 +102,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
 
     if ($this->options['logging'])
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('Add credential(s) "%s"', implode(', ', $credentials)))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('Add credential(s) "%s"', implode(', ', $credentials))]));
     }
 
     $added = false;
@@ -188,7 +188,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
   {
     if ($this->options['logging'])
     {
-      $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('User is %sauthenticated', $authenticated === true ? '' : 'not '))));
+      $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('User is %sauthenticated', $authenticated === true ? '' : 'not ')]));
     }
 
     if ((bool) $authenticated !== $this->authenticated)
@@ -203,7 +203,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
         $this->clearCredentials();
       }
 
-      $this->dispatcher->notify(new sfEvent($this, 'user.change_authentication', array('authenticated' => $this->authenticated)));
+      $this->dispatcher->notify(new sfEvent($this, 'user.change_authentication', ['authenticated' => $this->authenticated]));
 
       $this->storage->regenerate(true);
     }
@@ -241,7 +241,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
    *
    * @see sfUser
    */
-  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = [])
   {
     // initialize parent
     parent::initialize($dispatcher, $storage, $options);
@@ -265,7 +265,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
     if (null === $this->authenticated)
     {
       $this->authenticated = false;
-      $this->credentials   = array();
+      $this->credentials   = [];
     }
     else
     {
@@ -275,7 +275,7 @@ class sfBasicSecurityUser extends sfUser implements sfSecurityUser
       {
         if ($this->options['logging'])
         {
-          $this->dispatcher->notify(new sfEvent($this, 'application.log', array('Automatic user logout due to timeout')));
+          $this->dispatcher->notify(new sfEvent($this, 'application.log', ['Automatic user logout due to timeout']));
         }
 
         $this->setTimedOut();

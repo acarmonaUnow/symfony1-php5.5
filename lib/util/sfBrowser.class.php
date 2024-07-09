@@ -19,7 +19,7 @@
 class sfBrowser extends sfBrowserBase
 {
   protected
-    $listeners        = array(),
+    $listeners        = [],
     $context          = null,
     $currentException = null;
 
@@ -34,7 +34,7 @@ class sfBrowser extends sfBrowserBase
     sfConfig::set('sf_test', true);
 
     // we register a fake rendering filter
-    sfConfig::set('sf_rendering_filter', array('sfFakeRenderingFilter', null));
+    sfConfig::set('sf_rendering_filter', ['sfFakeRenderingFilter', null]);
 
     $this->resetCurrentException();
 

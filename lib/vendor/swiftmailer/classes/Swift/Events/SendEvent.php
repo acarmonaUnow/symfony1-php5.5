@@ -34,7 +34,7 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
    * Any recipients which failed after sending.
    * @var string[]
    */
-  private $_failedRecipients = array();
+  private $_failedRecipients = [];
   
   /**
    * The overall result as a bitmask from the class constants.

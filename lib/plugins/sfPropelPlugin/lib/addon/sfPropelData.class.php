@@ -20,7 +20,7 @@
 class sfPropelData extends sfData
 {
   protected
-    $deletedClasses = array(),
+    $deletedClasses = [],
     $con            = null;
 
   /**
@@ -83,7 +83,7 @@ class sfPropelData extends sfData
 
       $tableMap = $this->dbMap->getTable(constant(constant($class.'::PEER').'::TABLE_NAME'));
 
-      $column_names = call_user_func_array(array(constant($class.'::PEER'), 'getFieldNames'), array(BasePeer::TYPE_FIELDNAME));
+      $column_names = call_user_func_array([constant($class.'::PEER'), 'getFieldNames'], [BasePeer::TYPE_FIELDNAME]);
 
       // iterate through datas for this class
       // might have been empty just for force a table to be emptied on import
@@ -150,7 +150,7 @@ class sfPropelData extends sfData
           {
             $obj->setByPosition($pos, $value);
           }
-          else if (is_callable(array($obj, $method = 'set'.sfInflector::camelize($name))))
+          else if (is_callable([$obj, $method = 'set'.sfInflector::camelize($name)]))
           {
             $obj->$method($value);
           }
@@ -255,7 +255,7 @@ class sfPropelData extends sfData
           throw new InvalidArgumentException(sprintf('Unknown class "%sPeer".', $class));
         }
 
-        call_user_func(array(constant($class.'::PEER'), 'doDeleteAll'), $this->con);
+        call_user_func([constant($class.'::PEER'), 'doDeleteAll'], $this->con);
 
         $this->deletedClasses[] = $class;
       }
@@ -308,7 +308,7 @@ class sfPropelData extends sfData
           continue;
         }
 
-        file_put_contents(sprintf("%s/%03d-%s.yml", $directoryOrFile, ++$i, $tableName), sfYaml::dump(array($tableName => $dumpData[$tableName]), 3));
+        file_put_contents(sprintf("%s/%03d-%s.yml", $directoryOrFile, ++$i, $tableName), sfYaml::dump([$tableName => $dumpData[$tableName]], 3));
       }
     }
   }
@@ -330,7 +330,7 @@ class sfPropelData extends sfData
     // get tables
     if ('all' === $tables || null === $tables)
     {
-      $tables = array();
+      $tables = [];
       foreach ($this->dbMap->getTables() as $table)
       {
         $tables[] = $table->getPhpName();
@@ -338,10 +338,10 @@ class sfPropelData extends sfData
     }
     else if (!is_array($tables))
     {
-      $tables = array($tables);
+      $tables = [$tables];
     }
 
-    $dumpData = array();
+    $dumpData = [];
 
     $tables = $this->fixOrderingOfForeignKeyData($tables);
     foreach ($tables as $tableName)
@@ -378,14 +378,14 @@ class sfPropelData extends sfData
       }
 
       // get db info
-      $resultsSets = array();
+      $resultsSets = [];
       if ($hasParent)
       {
         $resultsSets[] = $this->fixOrderingOfForeignKeyDataInSameTable($resultsSets, $tableName, $fixColumn);
       }
       else
       {
-        $in = array();
+        $in = [];
         foreach ($tableMap->getColumns() as $column)
         {
           $in[] = strtolower((string) $column->getName());
@@ -401,14 +401,14 @@ class sfPropelData extends sfData
       {
         if(count($rows) > 0 && !isset($dumpData[$tableName]))
         {
-          $dumpData[$tableName] = array();
+          $dumpData[$tableName] = [];
 
           foreach ($rows as $row)
           {
             $pk = $tableName;
-            $values = array();
-            $primaryKeys = array();
-            $foreignKeys = array();
+            $values = [];
+            $primaryKeys = [];
+            $foreignKeys = [];
 
             foreach ($tableMap->getColumns() as $column)
             {
@@ -488,7 +488,7 @@ class sfPropelData extends sfData
             // move related table 1 position before current table
             $classes = array_merge(
               array_slice($classes, 0, $i),
-              array($classes[$relatedTablePos]),
+              [$classes[$relatedTablePos]],
               array_slice($classes, $i, $relatedTablePos - $i),
               array_slice($classes, $relatedTablePos + 1)
             );
@@ -513,7 +513,7 @@ class sfPropelData extends sfData
 
     $stmt->execute();
 
-    $in = array();
+    $in = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
       $in[] = "'".$row[strtolower((string) $column->getRelatedColumnName())]."'";

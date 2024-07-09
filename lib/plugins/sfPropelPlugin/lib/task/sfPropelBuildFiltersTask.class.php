@@ -25,13 +25,7 @@ class sfPropelBuildFiltersTask extends sfPropelBaseTask
    */
   protected function configure()
   {
-    $this->addOptions(array(
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('model-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The model dir name', 'model'),
-      new sfCommandOption('filter-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The filter form dir name', 'filter'),
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('generator-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The generator class', 'sfPropelFormFilterGenerator'),
-    ));
+    $this->addOptions([new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'), new sfCommandOption('model-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The model dir name', 'model'), new sfCommandOption('filter-dir-name', null, sfCommandOption::PARAMETER_REQUIRED, 'The filter form dir name', 'filter'), new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('generator-class', null, sfCommandOption::PARAMETER_REQUIRED, 'The generator class', 'sfPropelFormFilterGenerator')]);
 
     $this->namespace = 'propel';
     $this->name = 'build-filters';
@@ -60,23 +54,16 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $this->logSection('propel', 'generating filter form classes');
 
     $generatorManager = new sfGeneratorManager($this->configuration);
-    $generatorManager->generate($options['generator-class'], array(
-      'connection'      => $options['connection'],
-      'model_dir_name'  => $options['model-dir-name'],
-      'filter_dir_name' => $options['filter-dir-name'],
-    ));
+    $generatorManager->generate($options['generator-class'], ['connection'      => $options['connection'], 'model_dir_name'  => $options['model-dir-name'], 'filter_dir_name' => $options['filter-dir-name']]);
 
     $properties = parse_ini_file(sfConfig::get('sf_config_dir').'/properties.ini', true);
 
-    $constants = array(
-      'PROJECT_NAME' => $properties['symfony']['name'] ?? 'symfony',
-      'AUTHOR_NAME'  => $properties['symfony']['author'] ?? 'Your name here'
-    );
+    $constants = ['PROJECT_NAME' => $properties['symfony']['name'] ?? 'symfony', 'AUTHOR_NAME'  => $properties['symfony']['author'] ?? 'Your name here'];
 
     // customize php and yml files
     $finder = sfFinder::type('file')->name('*.php');

@@ -27,17 +27,9 @@ class sfDoctrineMigrateTask extends sfDoctrineBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('version', sfCommandArgument::OPTIONAL, 'The version to migrate to'),
-    ));
+    $this->addArguments([new sfCommandArgument('version', sfCommandArgument::OPTIONAL, 'The version to migrate to')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('up', null, sfCommandOption::PARAMETER_NONE, 'Migrate up one version'),
-      new sfCommandOption('down', null, sfCommandOption::PARAMETER_NONE, 'Migrate down one version'),
-      new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Do not persist migrations'),
-    ));
+    $this->addOptions([new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'), new sfCommandOption('up', null, sfCommandOption::PARAMETER_NONE, 'Migrate up one version'), new sfCommandOption('down', null, sfCommandOption::PARAMETER_NONE, 'Migrate down one version'), new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Do not persist migrations')]);
 
     $this->namespace = 'doctrine';
     $this->name = 'migrate';
@@ -66,7 +58,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 
@@ -136,7 +128,7 @@ EOF;
       else
       {
         $this->logBlock(array_merge(
-          array('The following errors occurred:', ''),
+          ['The following errors occurred:', ''],
           array_map(fn($e) => ' - ' . $e->getMessage(), $migration->getErrors())
         ), 'ERROR_LARGE');
       }

@@ -45,7 +45,7 @@ class sfValidatorDate extends sfValidatorBase
    *
    * @see sfValidatorBase
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     $this->addMessage('bad_format', '"%value%" does not match the date format (%date_format%).');
     $this->addMessage('max', 'The date must be before %max%.');
@@ -71,7 +71,7 @@ class sfValidatorDate extends sfValidatorBase
     {
       if (!preg_match($regex, $value, $match))
       {
-        throw new sfValidatorError($this, 'bad_format', array('value' => $value, 'date_format' => $this->getOption('date_format_error') ?: $this->getOption('date_format')));
+        throw new sfValidatorError($this, 'bad_format', ['value' => $value, 'date_format' => $this->getOption('date_format_error') ?: $this->getOption('date_format')]);
       }
 
       $value = $match;
@@ -100,7 +100,7 @@ class sfValidatorDate extends sfValidatorBase
       }
       catch (Exception)
       {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+        throw new sfValidatorError($this, 'invalid', ['value' => $value]);
       }
     }
 
@@ -123,7 +123,7 @@ class sfValidatorDate extends sfValidatorBase
 
       if ($clean > $max)
       {
-        throw new sfValidatorError($this, 'max', array('value' => $value, 'max' => $maxError));
+        throw new sfValidatorError($this, 'max', ['value' => $value, 'max' => $maxError]);
       }
     }
 
@@ -146,7 +146,7 @@ class sfValidatorDate extends sfValidatorBase
 
       if ($clean < $min)
       {
-        throw new sfValidatorError($this, 'min', array('value' => $value, 'min' => $minError));
+        throw new sfValidatorError($this, 'min', ['value' => $value, 'min' => $minError]);
       }
     }
 
@@ -172,11 +172,11 @@ class sfValidatorDate extends sfValidatorBase
   protected function convertDateArrayToString($value)
   {
     // all elements must be empty or a number
-    foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
+    foreach (['year', 'month', 'day', 'hour', 'minute', 'second'] as $key)
     {
       if (isset($value[$key]) && !preg_match('#^\d+$#', (string) $value[$key]) && !empty($value[$key]))
       {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+        throw new sfValidatorError($this, 'invalid', ['value' => $value]);
       }
     }
 
@@ -188,7 +188,7 @@ class sfValidatorDate extends sfValidatorBase
     ;
     if ($empties > 0 && $empties < 3)
     {
-      throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      throw new sfValidatorError($this, 'invalid', ['value' => $value]);
     }
     else if (3 == $empties)
     {
@@ -197,7 +197,7 @@ class sfValidatorDate extends sfValidatorBase
 
     if (!checkdate(intval($value['month']), intval($value['day']), intval($value['year'])))
     {
-      throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      throw new sfValidatorError($this, 'invalid', ['value' => $value]);
     }
 
     if ($this->getOption('with_time'))
@@ -210,7 +210,7 @@ class sfValidatorDate extends sfValidatorBase
         $this->isValueSet($value, 'minute') && !$this->isValueSet($value, 'hour')
       )
       {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+        throw new sfValidatorError($this, 'invalid', ['value' => $value]);
       }
 
       $clean = sprintf(
@@ -241,7 +241,7 @@ class sfValidatorDate extends sfValidatorBase
 
   protected function isValueSet($values, $key)
   {
-    return isset($values[$key]) && !in_array($values[$key], array(null, ''), true);
+    return isset($values[$key]) && !in_array($values[$key], [null, ''], true);
   }
 
   /**

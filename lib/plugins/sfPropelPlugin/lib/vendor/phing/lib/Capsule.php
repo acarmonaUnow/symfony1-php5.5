@@ -30,7 +30,7 @@ class Capsule {
      * The variables that can be used by the templates.
      * @var array Hash of variables.
      */
-    public $vars = array();
+    public $vars = [];
     
     /**
      * Has template been initialized.
@@ -53,7 +53,7 @@ class Capsule {
      */
     function clear(mixed $which = null) {
         if ($which === null) {
-            $this->vars = array();
+            $this->vars = [];
         } elseif (is_array($which)) {
             foreach($which as $var) {
                 unset($this->vars[$var]);

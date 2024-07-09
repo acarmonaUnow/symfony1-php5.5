@@ -77,7 +77,7 @@ class ManifestTask extends Task
      *
      * @var array An Array of objects
      */
-	private $filesets = array();
+	private $filesets = [];
 
     /**
      * Enable/Disable checksuming or/and select algorithm
@@ -102,7 +102,7 @@ class ManifestTask extends Task
 	 *
 	 * @var array
 	 */
-	private $meta = array('totalFileCount' => 0,'totalFileSize' => 0);
+	private $meta = ['totalFileCount' => 0, 'totalFileSize' => 0];
 	
 	
     /**
@@ -125,7 +125,7 @@ class ManifestTask extends Task
     public function setChecksum(mixed $mixed)
     {
     	if(is_string($mixed)) {
-    		$data = array(strtolower($mixed));
+    		$data = [strtolower($mixed)];
 
     		if(strpos($data[0],',')) {
 				$data = explode(',',$mixed);
@@ -134,7 +134,7 @@ class ManifestTask extends Task
 			$this->checksum = $data;
 						    		
     	} elseif($mixed === true) {
-	        $this->checksum = array('md5');
+	        $this->checksum = ['md5'];
     		
     	}
     }

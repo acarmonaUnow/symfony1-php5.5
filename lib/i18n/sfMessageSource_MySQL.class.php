@@ -229,7 +229,7 @@ class sfMessageSource_MySQL extends sfMessageSource_Database
 
     $rs = mysql_query($statement, $this->db);
 
-    $result = array();
+    $result = [];
 
     while ($row = mysql_fetch_array($rs, MYSQL_NUM))
     {
@@ -310,7 +310,7 @@ class sfMessageSource_MySQL extends sfMessageSource_Database
 
     $count = intval(mysql_result($rs, 0));
 
-    return array($cat_id, $variant, $count);
+    return [$cat_id, $variant, $count];
   }
 
   /**
@@ -469,7 +469,7 @@ class sfMessageSource_MySQL extends sfMessageSource_Database
   {
     $statement = 'SELECT name FROM catalogue ORDER BY name';
     $rs = mysql_query($statement, $this->db);
-    $result = array();
+    $result = [];
     while($row = mysql_fetch_array($rs, MYSQL_NUM))
     {
       $details = explode('.', (string) $row[0]);

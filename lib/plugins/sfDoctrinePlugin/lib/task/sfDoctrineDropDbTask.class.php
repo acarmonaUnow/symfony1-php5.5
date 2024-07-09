@@ -27,15 +27,9 @@ class sfDoctrineDropDbTask extends sfDoctrineBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('database', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'A specific database'),
-    ));
+    $this->addArguments([new sfCommandArgument('database', sfCommandArgument::OPTIONAL | sfCommandArgument::IS_ARRAY, 'A specific database')]);
 
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Whether to force dropping of the database')
-    ));
+    $this->addOptions([new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'), new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Whether to force dropping of the database')]);
 
     $this->namespace = 'doctrine';
     $this->name = 'drop-db';
@@ -61,7 +55,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
     $databases = $this->getDoctrineDatabases($databaseManager, count($arguments['database']) ? $arguments['database'] : null);
@@ -72,9 +66,9 @@ EOF;
       !$options['no-confirmation']
       &&
       !$this->askConfirmation(array_merge(
-        array(sprintf('This command will remove all data in the following "%s" connection(s):', $environment), ''),
+        [sprintf('This command will remove all data in the following "%s" connection(s):', $environment), ''],
         array_map(fn($v) => ' - ' . $v, array_keys($databases)),
-        array('', 'Are you sure you want to proceed? (y/N)')
+        ['', 'Are you sure you want to proceed? (y/N)']
       ), 'QUESTION_LARGE', false)
     )
     {

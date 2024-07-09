@@ -19,14 +19,14 @@
 class sfPropelBehavior
 {
   static protected
-    $loaded    = array(),
-    $behaviors = array();
+    $loaded    = [],
+    $behaviors = [];
 
   static public function registerMethods($name, $callables)
   {
     if (!isset(self::$behaviors[$name]))
     {
-      self::$behaviors[$name] = array('methods' => array(), 'hooks' => array());
+      self::$behaviors[$name] = ['methods' => [], 'hooks' => []];
     }
     foreach ($callables as $callable)
     {
@@ -38,13 +38,13 @@ class sfPropelBehavior
   {
     if (!isset(self::$behaviors[$name]))
     {
-      self::$behaviors[$name] = array('methods' => array(), 'hooks' => array());
+      self::$behaviors[$name] = ['methods' => [], 'hooks' => []];
     }
     foreach ($hooks as $hook => $callable)
     {
       if (!isset(self::$behaviors[$name]['hooks']))
       {
-        self::$behaviors[$name]['hooks'][$hook] = array();
+        self::$behaviors[$name]['hooks'][$hook] = [];
       }
 
       self::$behaviors[$name]['hooks'][$hook][] = $callable;

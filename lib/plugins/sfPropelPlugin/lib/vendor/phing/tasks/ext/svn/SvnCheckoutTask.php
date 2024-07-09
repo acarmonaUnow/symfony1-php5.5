@@ -43,7 +43,7 @@ class SvnCheckoutTask extends SvnBaseTask
 
 		$this->log("Checking out SVN repository to '" . $this->getToDir() . "'");
 
-		$this->run(array($this->getToDir()));
+		$this->run([$this->getToDir()]);
 	}
 }
 

@@ -43,31 +43,13 @@ class sfDateFormat
    * A list of tokens and their function call.
    * @var array
    */
-  protected $tokens = array(
-    'G' => 'Era',
-    'y' => 'year',
-    'M' => 'mon',
-    'd' => 'mday',
-    'h' => 'Hour12',
-    'H' => 'hours',
-    'm' => 'minutes',
-    's' => 'seconds',
-    'E' => 'wday',
-    'D' => 'yday',
-    'F' => 'DayInMonth',
-    'w' => 'WeekInYear',
-    'W' => 'WeekInMonth',
-    'a' => 'AMPM',
-    'k' => 'HourInDay',
-    'K' => 'HourInAMPM',
-    'z' => 'TimeZone'
-  );
+  protected $tokens = ['G' => 'Era', 'y' => 'year', 'M' => 'mon', 'd' => 'mday', 'h' => 'Hour12', 'H' => 'hours', 'm' => 'minutes', 's' => 'seconds', 'E' => 'wday', 'D' => 'yday', 'F' => 'DayInMonth', 'w' => 'WeekInYear', 'W' => 'WeekInMonth', 'a' => 'AMPM', 'k' => 'HourInDay', 'K' => 'HourInAMPM', 'z' => 'TimeZone'];
 
   /**
    * A list of methods, to be used by the token function calls.
    * @var array
    */
-  protected $methods = array();
+  protected $methods = [];
 
   /**
    * The sfDateTimeFormatInfo, containing culture specific patterns and names.
@@ -138,7 +120,7 @@ class sfDateFormat
       $pattern = $this->getPattern($pattern);
       $tokens = $this->getTokens($pattern);
       $pregPattern = '';
-      $matchNames = array();
+      $matchNames = [];
       // current regex allows any char at the end. avoids duplicating [^\d]+ pattern
       // this could cause issues with utf character width
       $allowsAllChars=true;
@@ -194,7 +176,7 @@ class sfDateFormat
     }
 
     // we set default values for the time
-    foreach (array('hours', 'minutes', 'seconds') as $timeDiv)
+    foreach (['hours', 'minutes', 'seconds'] as $timeDiv)
     {
       if (!isset($date[$timeDiv]))
       {
@@ -327,8 +309,8 @@ class sfDateFormat
   {
     $pattern = $this->getPattern($pattern);
 
-    $pattern = strtr($pattern, array('yyyy' => 'Y', 'h'=>'H', 'z'=>'', 'a'=>''));
-    $pattern = strtr($pattern, array('yy'=>'yyyy', 'Y'=>'yyyy'));
+    $pattern = strtr($pattern, ['yyyy' => 'Y', 'h'=>'H', 'z'=>'', 'a'=>'']);
+    $pattern = strtr($pattern, ['yy'=>'yyyy', 'Y'=>'yyyy']);
 
     return trim($pattern);
   }
@@ -345,7 +327,7 @@ class sfDateFormat
   protected function getTokens($pattern)
   {
     $char = null;
-    $tokens = array();
+    $tokens = [];
     $token = null;
 
     $text = false;

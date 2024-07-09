@@ -146,25 +146,25 @@ class myClassMixins
   }
 }
 
-sfMixer::register('myClass:myMethod', array('myClassMixins', 'myMixinMethod'));
-sfMixer::register('myClass:myStaticMethod', array('myClassMixins', 'myMixinStaticMethod'));
+sfMixer::register('myClass:myMethod', ['myClassMixins', 'myMixinMethod']);
+sfMixer::register('myClass:myStaticMethod', ['myClassMixins', 'myMixinStaticMethod']);
 
 $t->is($m->myMethod(), "before myMethod\nin myMethod mixin method\nafter myMethod\n", 'method call with a mixin');
 $t->is(myClass::myStaticMethod(), "before myStaticMethod\nin myStaticMethod mixin method\nafter myStaticMethod\n", 'static method call with a mixin');
 
-sfMixer::register('myClass:myMethodWithArgs', array('myClassMixins', 'myMixinMethodWithArgs'));
+sfMixer::register('myClass:myMethodWithArgs', ['myClassMixins', 'myMixinMethodWithArgs']);
 $t->is($m->myMethodWithArgs('value'), "before myMethodWithArgs\nin myMethodWithArgs mixin method (value, default)\nafter myMethodWithArgs\n", 'method call with arguments with a mixin');
 
-sfMixer::register('myClass:myStaticMethodWithArgs', array('myClassMixins', 'myMixinStaticMethodWithArgs'));
+sfMixer::register('myClass:myStaticMethodWithArgs', ['myClassMixins', 'myMixinStaticMethodWithArgs']);
 $t->is(myClass::myStaticMethodWithArgs('value'), "before myStaticMethodWithArgs\nin myStaticMethodWithArgs mixin method (value, default)\nafter myStaticMethodWithArgs\n", 'static method call with arguments with a mixin');
 
-sfMixer::register('myClass', array('myClassMixins', 'newMethod'));
+sfMixer::register('myClass', ['myClassMixins', 'newMethod']);
 $t->is($m->newMethod(), "before __call\nin newMethod mixin method\nafter __call\n", 'method call from a mixin');
 
-sfMixer::register('myClass', array('myClassMixins', 'newMethodWithArgs'));
+sfMixer::register('myClass', ['myClassMixins', 'newMethodWithArgs']);
 $t->is($m->newMethodWithArgs('value'), "before __call\nin newMethodWithArgs mixin method (value, default)\nafter __call\n", 'method call from a mixin with arguments');
 
-sfMixer::register('myClass:myMethodWithSeveralHooks:before', array('myClassMixins', 'myMethodWithSeveralHooksBefore'));
-sfMixer::register('myClass:myMethodWithSeveralHooks', array('myClassMixins', 'myMethodWithSeveralHooks'));
-sfMixer::register('myClass:myMethodWithSeveralHooks:after', array('myClassMixins', 'myMethodWithSeveralHooksAfter'));
+sfMixer::register('myClass:myMethodWithSeveralHooks:before', ['myClassMixins', 'myMethodWithSeveralHooksBefore']);
+sfMixer::register('myClass:myMethodWithSeveralHooks', ['myClassMixins', 'myMethodWithSeveralHooks']);
+sfMixer::register('myClass:myMethodWithSeveralHooks:after', ['myClassMixins', 'myMethodWithSeveralHooksAfter']);
 $t->is($m->myMethodWithSeveralHooks(), "before myMethodWithSeveralHooks\nin myMethodWithSeveralHooks mixin method for before hook\nmyMethodWithSeveralHooks\nin myMethodWithSeveralHooks mixin method for default hook\nafter myMethodWithSeveralHooks\nin myMethodWithSeveralHooks mixin method for after hook\n", 'method call with several registered hooks');

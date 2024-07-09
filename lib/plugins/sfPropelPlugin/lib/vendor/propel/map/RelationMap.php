@@ -46,8 +46,8 @@ class RelationMap {
     $type,
     $localTable,
     $foreignTable,
-    $localColumns = array(),
-    $foreignColumns = array(),
+    $localColumns = [],
+    $foreignColumns = [],
     $onUpdate, $onDelete;
 
   /**
@@ -149,7 +149,7 @@ class RelationMap {
    */
   public function getColumnMappings()
   {
-    $h = array();
+    $h = [];
     for ($i=0, $size=count($this->localColumns); $i < $size; $i++) {
       $h[$this->localColumns[$i]->getFullyQualifiedName()] = $this->foreignColumns[$i]->getFullyQualifiedName();
     }

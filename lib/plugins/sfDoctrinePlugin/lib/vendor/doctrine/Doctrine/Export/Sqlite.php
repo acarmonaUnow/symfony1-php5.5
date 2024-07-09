@@ -130,7 +130,7 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
      */
     public function getIndexFieldDeclarationList(array $fields)
     {
-        $declFields = array();
+        $declFields = [];
 
         foreach ($fields as $fieldName => $field) {
             $fieldString = $this->conn->quoteIdentifier($fieldName);
@@ -179,7 +179,7 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
      *
      * @return void
      */
-    public function createTableSql($name, array $fields, array $options = array())
+    public function createTableSql($name, array $fields, array $options = [])
     {
         if ( ! $name) {
             throw new Doctrine_Export_Exception('no valid table name specified');
@@ -276,7 +276,7 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
      *                          );
      * @return boolean
      */
-    public function createSequence($seqName, $start = 1, array $options = array())
+    public function createSequence($seqName, $start = 1, array $options = [])
     {
         $sequenceName   = $this->conn->quoteIdentifier($this->conn->formatter->getSequenceName($seqName), true);
         $seqcolName     = $this->conn->quoteIdentifier($this->conn->getAttribute(Doctrine_Core::ATTR_SEQCOL_NAME), true);
@@ -352,7 +352,7 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
             }
         }
 
-        $rename = array();
+        $rename = [];
         if ( ! empty($changes['rename']) && is_array($changes['rename'])) {
             foreach ($changes['rename'] as $fieldName => $field) {
                 $rename[$field['name']] = $fieldName;

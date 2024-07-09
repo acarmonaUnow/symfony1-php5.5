@@ -33,8 +33,8 @@
 class Doctrine_Task_RebuildDb extends Doctrine_Task
 {
     public $description          =   'Drops and re-creates databases',
-           $requiredArguments    =   array(),
-           $optionalArguments    =   array();
+           $requiredArguments    =   [],
+           $optionalArguments    =   [];
     
     public function __construct($dispatcher = null)
     {

@@ -34,43 +34,43 @@ class MssqlSchemaParser extends BaseSchemaParser {
 	 * Map MSSQL native types to Propel types.
 	 * @var        array
 	 */
-	private static $mssqlTypeMap = array(
-		"binary" => CreoleTypes::BINARY,
-		"bit" => PropelTypes::BOOLEAN,
-		"char" => PropelTypes::CHAR,
-		"datetime" => PropelTypes::TIMESTAMP,
-		"decimal() identity"  => PropelTypes::DECIMAL,
-		"decimal"  => PropelTypes::DECIMAL,
-		"image" => PropelTypes::LONGVARBINARY,
-		"int" => PropelTypes::INTEGER,
-		"int identity" => PropelTypes::INTEGER,
-		"integer" => PropelTypes::INTEGER,
-		"money" => PropelTypes::DECIMAL,
-		"nchar" => PropelTypes::CHAR,
-		"ntext" => PropelTypes::LONGVARCHAR,
-		"numeric() identity" => PropelTypes::NUMERIC,
-		"numeric" => PropelTypes::NUMERIC,
-		"nvarchar" => PropelTypes::VARCHAR,
-		"real" => PropelTypes::REAL,
-		"float" => PropelTypes::FLOAT,
-		"smalldatetime" => PropelTypes::TIMESTAMP,
-		"smallint" => PropelTypes::SMALLINT,
-		"smallint identity" => PropelTypes::SMALLINT,
-		"smallmoney" => PropelTypes::DECIMAL,
-		"sysname" => PropelTypes::VARCHAR,
-		"text" => PropelTypes::LONGVARCHAR,
-		"timestamp" => PropelTypes::BINARY,
-		"tinyint identity" => PropelTypes::TINYINT,
-		"tinyint" => PropelTypes::TINYINT,
-		"uniqueidentifier" => PropelTypes::CHAR,
-		"varbinary" => PropelTypes::VARBINARY,
-		"varchar" => PropelTypes::VARCHAR,
-		"uniqueidentifier" => PropelTypes::CHAR,
-	// SQL Server 2000 only
-		"bigint identity" => PropelTypes::BIGINT,
-		"bigint" => PropelTypes::BIGINT,
-		"sql_variant" => PropelTypes::VARCHAR,
-	);
+	private static $mssqlTypeMap = [
+     "binary" => CreoleTypes::BINARY,
+     "bit" => PropelTypes::BOOLEAN,
+     "char" => PropelTypes::CHAR,
+     "datetime" => PropelTypes::TIMESTAMP,
+     "decimal() identity"  => PropelTypes::DECIMAL,
+     "decimal"  => PropelTypes::DECIMAL,
+     "image" => PropelTypes::LONGVARBINARY,
+     "int" => PropelTypes::INTEGER,
+     "int identity" => PropelTypes::INTEGER,
+     "integer" => PropelTypes::INTEGER,
+     "money" => PropelTypes::DECIMAL,
+     "nchar" => PropelTypes::CHAR,
+     "ntext" => PropelTypes::LONGVARCHAR,
+     "numeric() identity" => PropelTypes::NUMERIC,
+     "numeric" => PropelTypes::NUMERIC,
+     "nvarchar" => PropelTypes::VARCHAR,
+     "real" => PropelTypes::REAL,
+     "float" => PropelTypes::FLOAT,
+     "smalldatetime" => PropelTypes::TIMESTAMP,
+     "smallint" => PropelTypes::SMALLINT,
+     "smallint identity" => PropelTypes::SMALLINT,
+     "smallmoney" => PropelTypes::DECIMAL,
+     "sysname" => PropelTypes::VARCHAR,
+     "text" => PropelTypes::LONGVARCHAR,
+     "timestamp" => PropelTypes::BINARY,
+     "tinyint identity" => PropelTypes::TINYINT,
+     "tinyint" => PropelTypes::TINYINT,
+     "uniqueidentifier" => PropelTypes::CHAR,
+     "varbinary" => PropelTypes::VARBINARY,
+     "varchar" => PropelTypes::VARCHAR,
+     "uniqueidentifier" => PropelTypes::CHAR,
+     // SQL Server 2000 only
+     "bigint identity" => PropelTypes::BIGINT,
+     "bigint" => PropelTypes::BIGINT,
+     "sql_variant" => PropelTypes::VARCHAR,
+ ];
 
 	/**
 	 * Gets a type mapping from native types to Propel types
@@ -90,7 +90,7 @@ class MssqlSchemaParser extends BaseSchemaParser {
 		$stmt = $this->dbh->query("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME <> 'dtproperties'");
 
 		// First load the tables (important that this happen before filling out details of tables)
-		$tables = array();
+		$tables = [];
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$name = $row[0];
 			$table = new Table($name);
@@ -178,7 +178,7 @@ class MssqlSchemaParser extends BaseSchemaParser {
 
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 
-		$foreignKeys = array(); // local store to avoid duplicates
+		$foreignKeys = []; // local store to avoid duplicates
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 			$lcol = $row['COLUMN_NAME'];
@@ -210,7 +210,7 @@ class MssqlSchemaParser extends BaseSchemaParser {
 	{
 		$stmt = $this->dbh->query("sp_indexes_rowset " . $table->getName());
 
-		$indexes = array();
+		$indexes = [];
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$colName = $row["COLUMN_NAME"];
 			$name = $row['INDEX_NAME'];

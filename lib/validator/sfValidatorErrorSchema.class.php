@@ -19,9 +19,9 @@
 class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, Iterator, Countable
 {
   protected
-    $errors       = array(),
-    $globalErrors = array(),
-    $namedErrors  = array(),
+    $errors       = [],
+    $globalErrors = [],
+    $namedErrors  = [],
     $count        = 0;
 
   /**
@@ -30,10 +30,10 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
    * @param sfValidatorBase $validator  An sfValidatorBase instance
    * @param array           $errors     An array of errors
    */
-  public function __construct(sfValidatorBase $validator, $errors = array())
+  public function __construct(sfValidatorBase $validator, $errors = [])
   {
     $this->validator = $validator;
-    $this->arguments = array();
+    $this->arguments = [];
 
     // override default exception message and code
     $this->code    = '';
@@ -178,7 +178,7 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
    */
   public function getArguments($raw = false)
   {
-    return array();
+    return [];
   }
 
   /**
@@ -334,7 +334,7 @@ class sfValidatorErrorSchema extends sfValidatorError implements ArrayAccess, It
    */
   public function serialize()
   {
-    return serialize(array($this->validator, $this->arguments, $this->code, $this->message, $this->errors, $this->globalErrors, $this->namedErrors));
+    return serialize([$this->validator, $this->arguments, $this->code, $this->message, $this->errors, $this->globalErrors, $this->namedErrors]);
   }
 
   /**

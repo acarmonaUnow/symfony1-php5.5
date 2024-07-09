@@ -25,17 +25,7 @@ class sfPropelBuildAllLoadTask extends sfPropelBaseTask
    */
   protected function configure()
   {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-      new sfCommandOption('skip-forms', 'F', sfCommandOption::PARAMETER_NONE, 'Skip generating forms'),
-      new sfCommandOption('classes-only', 'C', sfCommandOption::PARAMETER_NONE, 'Do not initialize the database'),
-      new sfCommandOption('phing-arg', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'Arbitrary phing argument'),
-      new sfCommandOption('append', null, sfCommandOption::PARAMETER_NONE, 'Don\'t delete current data in the database'),
-      new sfCommandOption('dir', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'The directories to look for fixtures'),
-    ));
+    $this->addOptions([new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true), new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'), new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'), new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'), new sfCommandOption('skip-forms', 'F', sfCommandOption::PARAMETER_NONE, 'Skip generating forms'), new sfCommandOption('classes-only', 'C', sfCommandOption::PARAMETER_NONE, 'Do not initialize the database'), new sfCommandOption('phing-arg', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'Arbitrary phing argument'), new sfCommandOption('append', null, sfCommandOption::PARAMETER_NONE, 'Don\'t delete current data in the database'), new sfCommandOption('dir', null, sfCommandOption::PARAMETER_REQUIRED | sfCommandOption::IS_ARRAY, 'The directories to look for fixtures')]);
 
     $this->namespace = 'propel';
     $this->name = 'build-all-load';
@@ -63,7 +53,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     // load Propel configuration before Phing
     $databaseManager = new sfDatabaseManager($this->configuration);
@@ -71,21 +61,14 @@ EOF;
     $buildAll = new sfPropelBuildAllTask($this->dispatcher, $this->formatter);
     $buildAll->setCommandApplication($this->commandApplication);
     $buildAll->setConfiguration($this->configuration);
-    $ret = $buildAll->run(array(), array(
-      'phing-arg'       => $options['phing-arg'],
-      'skip-forms'      => $options['skip-forms'],
-      'classes-only'    => $options['classes-only'],
-      'no-confirmation' => $options['no-confirmation'],
-    ));
+    $ret = $buildAll->run([], ['phing-arg'       => $options['phing-arg'], 'skip-forms'      => $options['skip-forms'], 'classes-only'    => $options['classes-only'], 'no-confirmation' => $options['no-confirmation']]);
 
     if (0 == $ret)
     {
       $loadData = new sfPropelDataLoadTask($this->dispatcher, $this->formatter);
       $loadData->setCommandApplication($this->commandApplication);
       $loadData->setConfiguration($this->configuration);
-      $loadData->run($options['dir'], array(
-        'append' => $options['append'],
-      ));
+      $loadData->run($options['dir'], ['append' => $options['append']]);
     }
 
     $this->cleanup();

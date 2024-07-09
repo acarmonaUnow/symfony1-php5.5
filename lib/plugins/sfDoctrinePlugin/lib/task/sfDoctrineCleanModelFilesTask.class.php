@@ -22,11 +22,9 @@ class sfDoctrineCleanModelFilesTask extends sfDoctrineBaseTask
 {
   protected function configure()
   {
-    $this->addOptions(array(
-      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-    ));
+    $this->addOptions([new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation')]);
 
-    $this->aliases = array('doctrine:clean');
+    $this->aliases = ['doctrine:clean'];
     $this->namespace = 'doctrine';
     $this->name = 'clean-model-files';
     $this->briefDescription = 'Delete all generated model classes for models which no longer exist in your YAML schema';
@@ -42,7 +40,7 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $config = $this->getCliConfig();
     $changed = false;
@@ -56,7 +54,7 @@ EOF;
     // remove any models present in the filesystem but not in the yaml schema
     if ($modelsToRemove = array_diff($this->getFileModels($config['models_path']), array_keys($yamlSchema)))
     {
-      $deleteModelFiles->run($modelsToRemove, array('no-confirmation' => $options['no-confirmation']));
+      $deleteModelFiles->run($modelsToRemove, ['no-confirmation' => $options['no-confirmation']]);
       $changed = true;
     }
 
@@ -65,13 +63,13 @@ EOF;
     {
       if (isset($definition['options']['symfony']['form']) && !$definition['options']['symfony']['form'] && class_exists($model.'Form'))
       {
-        $deleteModelFiles->run(array($model), array('suffix' => array('Form'), 'no-confirmation' => $options['no-confirmation']));
+        $deleteModelFiles->run([$model], ['suffix' => ['Form'], 'no-confirmation' => $options['no-confirmation']]);
         $changed = true;
       }
 
       if (isset($definition['options']['symfony']['filter']) && !$definition['options']['symfony']['filter'] && class_exists($model.'FormFilter'))
       {
-        $deleteModelFiles->run(array($model), array('suffix' => array('FormFilter'), 'no-confirmation' => $options['no-confirmation']));
+        $deleteModelFiles->run([$model], ['suffix' => ['FormFilter'], 'no-confirmation' => $options['no-confirmation']]);
         $changed = true;
       }
     }

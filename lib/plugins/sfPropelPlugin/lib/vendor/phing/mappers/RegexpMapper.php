@@ -71,7 +71,7 @@ class RegexpMapper implements FileNameMapper {
         if ($this->reg === null  || $this->to === null || !$this->reg->matches((string) $sourceFileName)) {
             return null;
         }
-        return array($this->replaceReferences($sourceFileName));
+        return [$this->replaceReferences($sourceFileName)];
     }
 
     /**

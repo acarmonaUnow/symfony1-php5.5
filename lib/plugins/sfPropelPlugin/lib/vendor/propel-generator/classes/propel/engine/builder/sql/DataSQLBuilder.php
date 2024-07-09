@@ -95,7 +95,7 @@ abstract class DataSQLBuilder extends DataModelBuilder {
 		$sql .= "INSERT INTO ".$this->quoteIdentifier($this->prefixTablename($this->getTable()->getName()))." (";
 
 		// add column names to SQL
-		$colNames = array();
+		$colNames = [];
 		foreach ($row->getColumnValues() as $colValue) {
 			$colNames[] = $this->quoteIdentifier($colValue->getColumn()->getName());
 		}
@@ -104,7 +104,7 @@ abstract class DataSQLBuilder extends DataModelBuilder {
 
 		$sql .= ") VALUES (";
 
-		$colVals = array();
+		$colVals = [];
 		foreach ($row->getColumnValues() as $colValue) {
 			$colVals[] = $this->getColumnValueSql($colValue);
 		}

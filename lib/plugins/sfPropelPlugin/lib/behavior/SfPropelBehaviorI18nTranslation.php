@@ -18,9 +18,7 @@
  */
 class SfPropelBehaviorI18nTranslation extends SfPropelBehaviorBase
 {
-  protected $parameters = array(
-    'culture_column' => null,
-  );
+  protected $parameters = ['culture_column' => null];
 
   public function objectFilter(& $script)
   {

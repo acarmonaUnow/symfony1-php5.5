@@ -20,7 +20,7 @@ require_once 'PEAR/Config.php';
  */
 class sfPearConfig extends PEAR_Config
 {
-  function &getREST($version, $options = array())
+  function &getREST($version, $options = [])
   {
     $class = 'sfPearRest'.str_replace('.', '', $version);
 

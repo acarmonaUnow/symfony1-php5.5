@@ -265,7 +265,7 @@ abstract class sfFormObject extends BaseForm
    *
    * @see sfForm
    */
-  public function renderFormTag($url, array $attributes = array())
+  public function renderFormTag($url, array $attributes = [])
   {
     if (!isset($attributes['method']))
     {

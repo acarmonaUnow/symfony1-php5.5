@@ -32,7 +32,7 @@
  */
 class Doctrine_Search_Analyzer implements Doctrine_Search_Analyzer_Interface
 {
-    public function __construct(protected $_options = array())
+    public function __construct(protected $_options = [])
     {
     }
 

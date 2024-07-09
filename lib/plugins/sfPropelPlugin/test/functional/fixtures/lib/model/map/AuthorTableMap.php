@@ -50,7 +50,7 @@ class AuthorTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('AuthorArticle', 'AuthorArticle', RelationMap::ONE_TO_MANY, array('id' => 'author_id', ), null, null);
+    $this->addRelation('AuthorArticle', 'AuthorArticle', RelationMap::ONE_TO_MANY, ['id' => 'author_id'], null, null);
 	} // buildRelations()
 
 	/**
@@ -61,10 +61,7 @@ class AuthorTableMap extends TableMap {
 	 */
 	public function getBehaviors()
 	{
-		return array(
-			'symfony' => array('form' => 'true', 'filter' => 'true', ),
-			'symfony_behaviors' => array(),
-		);
+		return ['symfony' => ['form' => 'true', 'filter' => 'true'], 'symfony_behaviors' => []];
 	} // getBehaviors()
 
 } // AuthorTableMap

@@ -46,8 +46,7 @@ class Doctrine_Adapter_Oracle implements Doctrine_Adapter_Interface
     protected $connection = false;
 
 
-    protected $attributes = array(Doctrine_Core::ATTR_DRIVER_NAME    => "oci8",
-                                  Doctrine_Core::ATTR_ERRMODE        => Doctrine_Core::ERRMODE_SILENT);
+    protected $attributes = [Doctrine_Core::ATTR_DRIVER_NAME    => "oci8", Doctrine_Core::ATTR_ERRMODE        => Doctrine_Core::ERRMODE_SILENT];
 
     /**
      * User-provided configuration.
@@ -61,13 +60,7 @@ class Doctrine_Adapter_Oracle implements Doctrine_Adapter_Interface
      *
      * @var array
      */
-    protected $config = array(
-        'dbname'     => null,
-        'username'   => null,
-        'password'   => null,
-        'charset'    => null,
-        'persistent' => false
-    );
+    protected $config = ['dbname'     => null, 'username'   => null, 'password'   => null, 'charset'    => null, 'persistent' => false];
 
     /**
      * Doctrine Oracle adapter constructor
@@ -85,7 +78,7 @@ class Doctrine_Adapter_Oracle implements Doctrine_Adapter_Interface
      * @param string $name
      * @return void
      */
-    public function __construct($config = array(), $username = null, $password = null)
+    public function __construct($config = [], $username = null, $password = null)
     {
         if (is_string($config))
         {

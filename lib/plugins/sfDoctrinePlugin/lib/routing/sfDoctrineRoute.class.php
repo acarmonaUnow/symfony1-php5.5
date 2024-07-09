@@ -63,8 +63,8 @@ class sfDoctrineRoute extends sfObjectRoute
   {
     $tableModel = Doctrine_Core::getTable($this->options['model']);
 
-    $variables = array();
-    $values = array();
+    $variables = [];
+    $values = [];
     foreach($this->getRealVariables() as $variable)
     {
       if($tableModel->hasColumn($tableModel->getColumnName($variable)))
@@ -125,7 +125,7 @@ class sfDoctrineRoute extends sfObjectRoute
       return parent::doConvertObjectToArray($object);
     }
 
-    $parameters = array();
+    $parameters = [];
     foreach ($this->getRealVariables() as $variable)
     {
       try {

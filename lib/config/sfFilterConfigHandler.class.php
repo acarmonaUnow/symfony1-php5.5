@@ -36,8 +36,8 @@ class sfFilterConfigHandler extends sfYamlConfigHandler
     $config = self::getConfiguration($configFiles);
 
     // init our data and includes arrays
-    $data     = array();
-    $includes = array();
+    $data     = [];
+    $includes = [];
 
     $execution = false;
     $rendering = false;
@@ -175,7 +175,7 @@ EOF;
       // we get the order of the new file and merge with the previous configurations
       $previous = $config;
 
-      $config = array();
+      $config = [];
       foreach (self::parseYaml($configFile) as $key => $value)
       {
         $value = (array) $value;

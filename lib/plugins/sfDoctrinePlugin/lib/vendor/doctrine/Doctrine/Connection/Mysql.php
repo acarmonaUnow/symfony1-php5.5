@@ -47,41 +47,13 @@ class Doctrine_Connection_Mysql extends Doctrine_Connection_Common
     public function __construct(Doctrine_Manager $manager, $adapter)
     {
         $this->setAttribute(Doctrine_Core::ATTR_DEFAULT_TABLE_TYPE, 'INNODB');
-        $this->supported = array(
-                          'sequences'            => 'emulated',
-                          'indexes'              => true,
-                          'affected_rows'        => true,
-                          'transactions'         => true,
-                          'savepoints'           => false,
-                          'summary_functions'    => true,
-                          'order_by_text'        => true,
-                          'current_id'           => 'emulated',
-                          'limit_queries'        => true,
-                          'LOBs'                 => true,
-                          'replace'              => true,
-                          'sub_selects'          => true,
-                          'auto_increment'       => true,
-                          'primary_key'          => true,
-                          'result_introspection' => true,
-                          'prepared_statements'  => 'emulated',
-                          'identifier_quoting'   => true,
-                          'pattern_escaping'     => true
-                          );
+        $this->supported = ['sequences'            => 'emulated', 'indexes'              => true, 'affected_rows'        => true, 'transactions'         => true, 'savepoints'           => false, 'summary_functions'    => true, 'order_by_text'        => true, 'current_id'           => 'emulated', 'limit_queries'        => true, 'LOBs'                 => true, 'replace'              => true, 'sub_selects'          => true, 'auto_increment'       => true, 'primary_key'          => true, 'result_introspection' => true, 'prepared_statements'  => 'emulated', 'identifier_quoting'   => true, 'pattern_escaping'     => true];
 
-        $this->properties['string_quoting'] = array('start' => "'",
-                                                    'end' => "'",
-                                                    'escape' => '\\',
-                                                    'escape_pattern' => '\\');
+        $this->properties['string_quoting'] = ['start' => "'", 'end' => "'", 'escape' => '\\', 'escape_pattern' => '\\'];
 
-        $this->properties['identifier_quoting'] = array('start' => '`',
-                                                        'end' => '`',
-                                                        'escape' => '`');
+        $this->properties['identifier_quoting'] = ['start' => '`', 'end' => '`', 'escape' => '`'];
 
-        $this->properties['sql_comments'] = array(
-                                            array('start' => '-- ', 'end' => "\n", 'escape' => false),
-                                            array('start' => '#', 'end' => "\n", 'escape' => false),
-                                            array('start' => '/*', 'end' => '*/', 'escape' => false),
-                                            );
+        $this->properties['sql_comments'] = [['start' => '-- ', 'end' => "\n", 'escape' => false], ['start' => '#', 'end' => "\n", 'escape' => false], ['start' => '/*', 'end' => '*/', 'escape' => false]];
 
         $this->properties['varchar_max_length'] = 255;
 
@@ -197,9 +169,9 @@ class Doctrine_Connection_Mysql extends Doctrine_Connection_Common
             throw new Doctrine_Connection_Exception('Not specified which fields are keys');
         }
 
-        $columns = array();
-        $values = array();
-        $params = array();
+        $columns = [];
+        $values = [];
+        $params = [];
         foreach ($fields as $fieldName => $value) {
             $columns[] = $table->getColumnName($fieldName);
             $values[] = '?';

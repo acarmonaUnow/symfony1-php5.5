@@ -48,7 +48,7 @@ abstract class DataModelBuilder {
 	 * An array of warning messages that can be retrieved for display (e.g. as part of phing build process).
 	 * @var        array string[]
 	 */
-	private $warnings = array();
+	private $warnings = [];
 
 	/**
 	 * Peer builder class for current table.

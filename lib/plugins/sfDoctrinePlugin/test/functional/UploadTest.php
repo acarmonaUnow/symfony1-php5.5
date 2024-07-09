@@ -11,9 +11,7 @@
 $app = 'frontend';
 require_once __DIR__.'/../bootstrap/functional.php';
 
-$browser = new sfTestFunctional(new sfBrowser(), null, array(
-  'doctrine' => 'sfTesterDoctrine',
-));
+$browser = new sfTestFunctional(new sfBrowser(), null, ['doctrine' => 'sfTesterDoctrine']);
 
 $browser
   ->get('/attachment/index')
@@ -25,9 +23,7 @@ $browser
     ->checkElement('h1:contains("ok")')
   ->end()
 
-  ->with('doctrine')->check('Attachment', array(
-    'file_path' => AttachmentForm::TEST_GENERATED_FILENAME,
-  ), 1)
+  ->with('doctrine')->check('Attachment', ['file_path' => AttachmentForm::TEST_GENERATED_FILENAME], 1)
 ;
 
 $browser->test()->is(file_exists(sfConfig::get('sf_cache_dir').'/'.AttachmentForm::TEST_GENERATED_FILENAME), true, 'uploaded file is named correctly');
@@ -42,9 +38,7 @@ $browser
     ->checkElement('h1', 'ok')
   ->end()
 
-  ->with('doctrine')->check('Attachment', array(
-    'file_path' => AttachmentForm::TEST_GENERATED_FILENAME,
-  ), false)
+  ->with('doctrine')->check('Attachment', ['file_path' => AttachmentForm::TEST_GENERATED_FILENAME], false)
 ;
 
 $browser->test()->is(file_exists(sfConfig::get('sf_cache_dir').'/'.AttachmentForm::TEST_GENERATED_FILENAME), false, 'uploaded file is removed');

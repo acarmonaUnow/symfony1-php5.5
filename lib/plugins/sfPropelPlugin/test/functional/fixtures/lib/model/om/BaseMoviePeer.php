@@ -46,7 +46,7 @@ abstract class BaseMoviePeer {
 	 * queries.
 	 * @var        array Movie[]
 	 */
-	public static $instances = array();
+	public static $instances = [];
 
 
 	// symfony behavior
@@ -62,13 +62,7 @@ abstract class BaseMoviePeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
-	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Director', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'director', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DIRECTOR, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'director', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
-	);
+	private static $fieldNames = [BasePeer::TYPE_PHPNAME => ['Id', 'Director'], BasePeer::TYPE_STUDLYPHPNAME => ['id', 'director'], BasePeer::TYPE_COLNAME => [self::ID, self::DIRECTOR], BasePeer::TYPE_FIELDNAME => ['id', 'director'], BasePeer::TYPE_NUM => [0, 1]];
 
 	/**
 	 * holds an array of keys for quick access to the fieldnames array
@@ -76,13 +70,7 @@ abstract class BaseMoviePeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
-	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Director' => 1, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'director' => 1, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DIRECTOR => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'director' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
-	);
+	private static $fieldKeys = [BasePeer::TYPE_PHPNAME => ['Id' => 0, 'Director' => 1], BasePeer::TYPE_STUDLYPHPNAME => ['id' => 0, 'director' => 1], BasePeer::TYPE_COLNAME => [self::ID => 0, self::DIRECTOR => 1], BasePeer::TYPE_FIELDNAME => ['id' => 0, 'director' => 1], BasePeer::TYPE_NUM => [0, 1]];
 
 	/**
 	 * Translates a fieldname to another type
@@ -348,7 +336,7 @@ abstract class BaseMoviePeer {
 	 */
 	public static function clearInstancePool()
 	{
-		self::$instances = array();
+		self::$instances = [];
 	}
 	
 	/**
@@ -390,7 +378,7 @@ abstract class BaseMoviePeer {
 	 */
 	public static function populateObjects(PDOStatement $stmt)
 	{
-		$results = array();
+		$results = [];
 	
 		// set the class once to avoid overhead in the loop
 		$cls = MoviePeer::getOMClass(false);
@@ -699,14 +687,14 @@ abstract class BaseMoviePeer {
 	 */
 	public static function doValidate(Movie $obj, mixed $cols = null)
 	{
-		$columns = array();
+		$columns = [];
 
 		if ($cols) {
 			$dbMap = Propel::getDatabaseMap(MoviePeer::DATABASE_NAME);
 			$tableMap = $dbMap->getTable(MoviePeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
-				$cols = array($cols);
+				$cols = [$cols];
 			}
 
 			foreach ($cols as $colName) {
@@ -764,7 +752,7 @@ abstract class BaseMoviePeer {
 
 		$objs = null;
 		if (empty($pks)) {
-			$objs = array();
+			$objs = [];
 		} else {
 			$criteria = new Criteria(MoviePeer::DATABASE_NAME);
 			$criteria->add(MoviePeer::ID, $pks, Criteria::IN);
@@ -782,7 +770,7 @@ abstract class BaseMoviePeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return [];
 	}
 
 	// symfony_behaviors behavior
@@ -854,7 +842,7 @@ abstract class BaseMoviePeer {
 	  }
 	
 	  $stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 	
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = MoviePeer::getPrimaryKeyHashFromRow($row, 0);

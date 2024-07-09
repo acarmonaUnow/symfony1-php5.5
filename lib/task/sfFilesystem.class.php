@@ -47,7 +47,7 @@ class sfFilesystem
    * @param string $targetFile  The target filename
    * @param array  $options     An array of options
    */
-  public function copy($originFile, $targetFile, $options = array())
+  public function copy($originFile, $targetFile, $options = [])
   {
     if (!array_key_exists('override', $options))
     {
@@ -107,7 +107,7 @@ class sfFilesystem
   {
     if (!is_array($files))
     {
-      $files = array($files);
+      $files = [$files];
     }
 
     foreach ($files as $file)
@@ -127,7 +127,7 @@ class sfFilesystem
   {
     if (!is_array($files))
     {
-      $files = array($files);
+      $files = [$files];
     }
 
     $files = array_reverse($files);
@@ -162,7 +162,7 @@ class sfFilesystem
 
     if (!is_array($files))
     {
-      $files = array($files);
+      $files = [$files];
     }
 
     foreach ($files as $file)
@@ -254,7 +254,7 @@ class sfFilesystem
    * @param sfFinder $finder     An sfFinder instance
    * @param array    $options    An array of options (see copy())
    */
-  public function mirror($originDir, $targetDir, $finder, $options = array())
+  public function mirror($originDir, $targetDir, $finder, $options = [])
   {
     foreach ($finder->relative()->in($originDir) as $file)
     {
@@ -290,10 +290,11 @@ class sfFilesystem
   {
     $this->logSection('exec ', $cmd);
 
-    $descriptorspec = array(
-      1 => array('pipe', 'w'), // stdout
-      2 => array('pipe', 'w'), // stderr
-    );
+    $descriptorspec = [
+        1 => ['pipe', 'w'],
+        // stdout
+        2 => ['pipe', 'w'],
+    ];
 
     $process = proc_open($cmd, $descriptorspec, $pipes);
     if (!is_resource($process))
@@ -346,7 +347,7 @@ class sfFilesystem
       throw new RuntimeException('Problem executing command.', $return);
     }
 
-    return array($output, $err);
+    return [$output, $err];
   }
 
   /**
@@ -361,7 +362,7 @@ class sfFilesystem
   {
     if (!is_array($files))
     {
-      $files = array($files);
+      $files = [$files];
     }
 
     foreach ($files as $file)
@@ -394,7 +395,7 @@ class sfFilesystem
 
     $message = $this->formatter ? $this->formatter->formatSection($section, $message, $size) : $section.' '.$message."\n";
 
-    $this->dispatcher->notify(new sfEvent($this, 'command.log', array($message)));
+    $this->dispatcher->notify(new sfEvent($this, 'command.log', [$message]));
   }
 
   /**
@@ -464,7 +465,7 @@ class sfFilesystem
       return '';
     }
 
-    $out = array();
+    $out = [];
     foreach (explode(DIRECTORY_SEPARATOR, (string) $path) as $i => $fold)
     {
       if ('' == $fold || '.' == $fold)

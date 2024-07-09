@@ -23,7 +23,7 @@
  */
 class sfParameterHolder implements Serializable
 {
-  protected $parameters = array();
+  protected $parameters = [];
 
   /**
    * The constructor for sfParameterHolder.
@@ -64,7 +64,7 @@ class sfParameterHolder implements Serializable
    */
   public function clear()
   {
-    $this->parameters = array();
+    $this->parameters = [];
   }
 
   /**

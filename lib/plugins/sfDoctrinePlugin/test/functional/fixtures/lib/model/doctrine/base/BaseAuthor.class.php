@@ -26,32 +26,17 @@ abstract class BaseAuthor extends myDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('author');
-        $this->hasColumn('name', 'string', 255, array(
-             'type' => 'string',
-             'length' => 255,
-             ));
-        $this->hasColumn('type', 'string', 255, array(
-             'type' => 'string',
-             'length' => 255,
-             ));
+        $this->hasColumn('name', 'string', 255, ['type' => 'string', 'length' => 255]);
+        $this->hasColumn('type', 'string', 255, ['type' => 'string', 'length' => 255]);
 
-        $this->setSubClasses(array(
-             'AuthorInheritance' => 
-             array(
-              'type' => 'AuthorInheritance',
-             ),
-             'BlogAuthor' => 
-             array(
-              'type' => 'BlogAuthor',
-             ),
-             ));
+        $this->setSubClasses(['AuthorInheritance' => 
+        ['type' => 'AuthorInheritance'], 'BlogAuthor' => 
+        ['type' => 'BlogAuthor']]);
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Article as Articles', array(
-             'local' => 'id',
-             'foreign' => 'author_id'));
+        $this->hasMany('Article as Articles', ['local' => 'id', 'foreign' => 'author_id']);
     }
 }

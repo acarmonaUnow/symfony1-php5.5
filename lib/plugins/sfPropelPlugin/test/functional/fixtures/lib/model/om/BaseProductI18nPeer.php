@@ -49,7 +49,7 @@ abstract class BaseProductI18nPeer {
 	 * queries.
 	 * @var        array ProductI18n[]
 	 */
-	public static $instances = array();
+	public static $instances = [];
 
 
 	// symfony behavior
@@ -65,13 +65,7 @@ abstract class BaseProductI18nPeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
-	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Culture', 'Name', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'culture', 'name', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CULTURE, self::NAME, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'culture', 'name', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
-	);
+	private static $fieldNames = [BasePeer::TYPE_PHPNAME => ['Id', 'Culture', 'Name'], BasePeer::TYPE_STUDLYPHPNAME => ['id', 'culture', 'name'], BasePeer::TYPE_COLNAME => [self::ID, self::CULTURE, self::NAME], BasePeer::TYPE_FIELDNAME => ['id', 'culture', 'name'], BasePeer::TYPE_NUM => [0, 1, 2]];
 
 	/**
 	 * holds an array of keys for quick access to the fieldnames array
@@ -79,13 +73,7 @@ abstract class BaseProductI18nPeer {
 	 * first dimension keys are the type constants
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
-	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Culture' => 1, 'Name' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'culture' => 1, 'name' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CULTURE => 1, self::NAME => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'culture' => 1, 'name' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
-	);
+	private static $fieldKeys = [BasePeer::TYPE_PHPNAME => ['Id' => 0, 'Culture' => 1, 'Name' => 2], BasePeer::TYPE_STUDLYPHPNAME => ['id' => 0, 'culture' => 1, 'name' => 2], BasePeer::TYPE_COLNAME => [self::ID => 0, self::CULTURE => 1, self::NAME => 2], BasePeer::TYPE_FIELDNAME => ['id' => 0, 'culture' => 1, 'name' => 2], BasePeer::TYPE_NUM => [0, 1, 2]];
 
 	/**
 	 * Translates a fieldname to another type
@@ -292,7 +280,7 @@ abstract class BaseProductI18nPeer {
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
-				$key = serialize(array((string) $obj->getId(), (string) $obj->getCulture()));
+				$key = serialize([(string) $obj->getId(), (string) $obj->getCulture()]);
 			} // if key === null
 			self::$instances[$key] = $obj;
 		}
@@ -312,10 +300,10 @@ abstract class BaseProductI18nPeer {
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
 			if (is_object($value) && $value instanceof ProductI18n) {
-				$key = serialize(array((string) $value->getId(), (string) $value->getCulture()));
+				$key = serialize([(string) $value->getId(), (string) $value->getCulture()]);
 			} elseif (is_array($value) && count($value) === 2) {
 				// assume we've been passed a primary key
-				$key = serialize(array((string) $value[0], (string) $value[1]));
+				$key = serialize([(string) $value[0], (string) $value[1]]);
 			} else {
 				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ProductI18n object; got " . (is_object($value) ? $value::class . ' object.' : var_export($value,true)));
 				throw $e;
@@ -352,7 +340,7 @@ abstract class BaseProductI18nPeer {
 	 */
 	public static function clearInstancePool()
 	{
-		self::$instances = array();
+		self::$instances = [];
 	}
 	
 	/**
@@ -379,7 +367,7 @@ abstract class BaseProductI18nPeer {
 		if ($row[$startcol] === null && $row[$startcol + 1] === null) {
 			return null;
 		}
-		return serialize(array((string) $row[$startcol], (string) $row[$startcol + 1]));
+		return serialize([(string) $row[$startcol], (string) $row[$startcol + 1]]);
 	}
 
 	/**
@@ -391,7 +379,7 @@ abstract class BaseProductI18nPeer {
 	 */
 	public static function populateObjects(PDOStatement $stmt)
 	{
-		$results = array();
+		$results = [];
 	
 		// set the class once to avoid overhead in the loop
 		$cls = ProductI18nPeer::getOMClass(false);
@@ -501,7 +489,7 @@ abstract class BaseProductI18nPeer {
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = ProductI18nPeer::getPrimaryKeyHashFromRow($row, 0);
@@ -631,7 +619,7 @@ abstract class BaseProductI18nPeer {
 		}
 
 		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
+		$results = [];
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			$key1 = ProductI18nPeer::getPrimaryKeyHashFromRow($row, 0);
@@ -883,7 +871,7 @@ abstract class BaseProductI18nPeer {
 			// the primary key passed to be an array of pkey values
 			if (count($values) == count($values, COUNT_RECURSIVE)) {
 				// array is not multi-dimensional
-				$values = array($values);
+				$values = [$values];
 			}
 			foreach ($values as $value) {
 				$criterion = $criteria->getNewCriterion(ProductI18nPeer::ID, $value[0]);
@@ -928,14 +916,14 @@ abstract class BaseProductI18nPeer {
 	 */
 	public static function doValidate(ProductI18n $obj, mixed $cols = null)
 	{
-		$columns = array();
+		$columns = [];
 
 		if ($cols) {
 			$dbMap = Propel::getDatabaseMap(ProductI18nPeer::DATABASE_NAME);
 			$tableMap = $dbMap->getTable(ProductI18nPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
-				$cols = array($cols);
+				$cols = [$cols];
 			}
 
 			foreach ($cols as $colName) {
@@ -959,7 +947,7 @@ abstract class BaseProductI18nPeer {
 	 * @return     ProductI18n
 	 */
 	public static function retrieveByPK($id, $culture, PropelPDO $con = null) {
-		$key = serialize(array((string) $id, (string) $culture));
+		$key = serialize([(string) $id, (string) $culture]);
  		if (null !== ($obj = ProductI18nPeer::getInstanceFromPool($key))) {
  			return $obj;
 		}
@@ -983,7 +971,7 @@ abstract class BaseProductI18nPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return [];
 	}
 
 	// symfony_behaviors behavior

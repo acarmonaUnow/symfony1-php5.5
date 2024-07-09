@@ -52,7 +52,7 @@ class AttachmentTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Article', 'Article', RelationMap::MANY_TO_ONE, array('article_id' => 'id', ), null, null);
+    $this->addRelation('Article', 'Article', RelationMap::MANY_TO_ONE, ['article_id' => 'id'], null, null);
 	} // buildRelations()
 
 	/**
@@ -63,10 +63,7 @@ class AttachmentTableMap extends TableMap {
 	 */
 	public function getBehaviors()
 	{
-		return array(
-			'symfony' => array('form' => 'true', 'filter' => 'true', ),
-			'symfony_behaviors' => array(),
-		);
+		return ['symfony' => ['form' => 'true', 'filter' => 'true'], 'symfony_behaviors' => []];
 	} // getBehaviors()
 
 } // AttachmentTableMap

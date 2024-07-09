@@ -39,7 +39,7 @@ abstract class sfLogger
 
   protected
     $dispatcher = null,
-    $options = array(),
+    $options = [],
     $level = self::INFO;
 
   /**
@@ -47,13 +47,13 @@ abstract class sfLogger
    *
    * @see initialize()
    */
-  public function __construct(sfEventDispatcher $dispatcher, $options = array())
+  public function __construct(sfEventDispatcher $dispatcher, $options = [])
   {
     $this->initialize($dispatcher, $options);
 
     if (!isset($options['auto_shutdown']) || $options['auto_shutdown'])
     {
-      register_shutdown_function(array($this, 'shutdown'));
+      register_shutdown_function([$this, 'shutdown']);
     }
   }
 
@@ -71,7 +71,7 @@ abstract class sfLogger
    *
    * @throws <b>sfInitializationException</b> If an error occurs while initializing this sfLogger.
    */
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
     $this->dispatcher = $dispatcher;
     $this->options = $options;
@@ -271,16 +271,7 @@ abstract class sfLogger
    */
   static public function getPriorityName($priority)
   {
-    static $levels  = array(
-      self::EMERG   => 'emerg',
-      self::ALERT   => 'alert',
-      self::CRIT    => 'crit',
-      self::ERR     => 'err',
-      self::WARNING => 'warning',
-      self::NOTICE  => 'notice',
-      self::INFO    => 'info',
-      self::DEBUG   => 'debug',
-    );
+    static $levels  = [self::EMERG   => 'emerg', self::ALERT   => 'alert', self::CRIT    => 'crit', self::ERR     => 'err', self::WARNING => 'warning', self::NOTICE  => 'notice', self::INFO    => 'info', self::DEBUG   => 'debug'];
 
     if (!isset($levels[$priority]))
     {

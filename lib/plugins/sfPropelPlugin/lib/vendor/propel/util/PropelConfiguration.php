@@ -42,14 +42,14 @@ class PropelConfiguration implements ArrayAccess
 	/**
 	* @var        array An array of parameters
 	*/
-	protected $parameters = array();
+	protected $parameters = [];
 
 	/**
 	 * Construct a new configuration container
 	 *
 	 * @param      array $parameters
 	 */
-	public function __construct(array $parameters = array())
+	public function __construct(array $parameters = [])
 	{
 		$this->parameters = $parameters;
 	}
@@ -149,7 +149,7 @@ class PropelConfiguration implements ArrayAccess
 	 */
 	protected function toFlatArray()
 	{
-		$result = array();
+		$result = [];
 		$it = new PropelConfigurationIterator(new RecursiveArrayIterator($this->parameters), RecursiveIteratorIterator::SELF_FIRST);
 		foreach($it as $key => $value) {
 			$ns = $it->getDepth() ? $it->getNamespace() . '.'. $key : $key;

@@ -13,17 +13,9 @@ abstract class BaseProductI18nForm extends BaseFormPropel
 {
   public function setup()
   {
-    $this->setWidgets(array(
-      'id'      => new sfWidgetFormInputHidden(),
-      'culture' => new sfWidgetFormInputHidden(),
-      'name'    => new sfWidgetFormInputText(),
-    ));
+    $this->setWidgets(['id'      => new sfWidgetFormInputHidden(), 'culture' => new sfWidgetFormInputHidden(), 'name'    => new sfWidgetFormInputText()]);
 
-    $this->setValidators(array(
-      'id'      => new sfValidatorPropelChoice(array('model' => 'Product', 'column' => 'id', 'required' => false)),
-      'culture' => new sfValidatorChoice(array('choices' => array($this->getObject()->getCulture()), 'empty_value' => $this->getObject()->getCulture(), 'required' => false)),
-      'name'    => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-    ));
+    $this->setValidators(['id'      => new sfValidatorPropelChoice(['model' => 'Product', 'column' => 'id', 'required' => false]), 'culture' => new sfValidatorChoice(['choices' => [$this->getObject()->getCulture()], 'empty_value' => $this->getObject()->getCulture(), 'required' => false]), 'name'    => new sfValidatorString(['max_length' => 50, 'required' => false])]);
 
     $this->widgetSchema->setNameFormat('product_i18n[%s]');
 

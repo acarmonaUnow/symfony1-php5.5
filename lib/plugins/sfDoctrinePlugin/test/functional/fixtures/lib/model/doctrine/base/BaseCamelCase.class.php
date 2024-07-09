@@ -26,20 +26,13 @@ abstract class BaseCamelCase extends myDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('camel_case');
-        $this->hasColumn('article_id', 'integer', null, array(
-             'type' => 'integer',
-             ));
-        $this->hasColumn('testCamelCase', 'string', 255, array(
-             'type' => 'string',
-             'length' => 255,
-             ));
+        $this->hasColumn('article_id', 'integer', null, ['type' => 'integer']);
+        $this->hasColumn('testCamelCase', 'string', 255, ['type' => 'string', 'length' => 255]);
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Article', array(
-             'local' => 'article_id',
-             'foreign' => 'id'));
+        $this->hasOne('Article', ['local' => 'article_id', 'foreign' => 'id']);
     }
 }

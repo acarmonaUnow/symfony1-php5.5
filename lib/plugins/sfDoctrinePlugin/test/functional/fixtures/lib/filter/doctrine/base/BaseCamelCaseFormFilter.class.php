@@ -12,15 +12,9 @@ abstract class BaseCamelCaseFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
-    $this->setWidgets(array(
-      'article_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Article'), 'add_empty' => true)),
-      'testCamelCase' => new sfWidgetFormFilterInput(),
-    ));
+    $this->setWidgets(['article_id'    => new sfWidgetFormDoctrineChoice(['model' => $this->getRelatedModelName('Article'), 'add_empty' => true]), 'testCamelCase' => new sfWidgetFormFilterInput()]);
 
-    $this->setValidators(array(
-      'article_id'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Article'), 'column' => 'id')),
-      'testCamelCase' => new sfValidatorPass(array('required' => false)),
-    ));
+    $this->setValidators(['article_id'    => new sfValidatorDoctrineChoice(['required' => false, 'model' => $this->getRelatedModelName('Article'), 'column' => 'id']), 'testCamelCase' => new sfValidatorPass(['required' => false])]);
 
     $this->widgetSchema->setNameFormat('camel_case_filters[%s]');
 
@@ -38,10 +32,6 @@ abstract class BaseCamelCaseFormFilter extends BaseFormFilterDoctrine
 
   public function getFields()
   {
-    return array(
-      'id'            => 'Number',
-      'article_id'    => 'ForeignKey',
-      'testCamelCase' => 'Text',
-    );
+    return ['id'            => 'Number', 'article_id'    => 'ForeignKey', 'testCamelCase' => 'Text'];
   }
 }

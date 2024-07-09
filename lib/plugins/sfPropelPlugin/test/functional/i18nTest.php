@@ -79,7 +79,7 @@ $b->
     checkElement('#movie_fr_culture', false)->
   end()->
   
-  click('submit', array('movie' => array('director' => 'Robert Aldrich', 'en' => array('title' => 'The Dirty Dozen'), 'fr' => array('title' => 'Les Douze Salopards'))))->
+  click('submit', ['movie' => ['director' => 'Robert Aldrich', 'en' => ['title' => 'The Dirty Dozen'], 'fr' => ['title' => 'Les Douze Salopards']]])->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -93,15 +93,15 @@ $b->
   end()->
 
   with('propel')->begin()->
-    check('Movie', array(), 2)->
-    check('Movie', array('director' => 'Robert Aldrich', 'id' => 2))->
-    check('MovieI18N', array(), 4)->
-    check('MovieI18N', array('id' => 2), 2)->
-    check('MovieI18N', array('culture' => 'fr', 'id' => 2, 'title' => 'Les Douze Salopards'))->
-    check('MovieI18N', array('culture' => 'en', 'id' => 2, 'title' => 'The Dirty Dozen'))->
+    check('Movie', [], 2)->
+    check('Movie', ['director' => 'Robert Aldrich', 'id' => 2])->
+    check('MovieI18N', [], 4)->
+    check('MovieI18N', ['id' => 2], 2)->
+    check('MovieI18N', ['culture' => 'fr', 'id' => 2, 'title' => 'Les Douze Salopards'])->
+    check('MovieI18N', ['culture' => 'en', 'id' => 2, 'title' => 'The Dirty Dozen'])->
   end()->
 
-  click('submit', array('movie' => array('director' => 'Robert Aldrich (1)', 'en' => array('title' => 'The Dirty Dozen (1)'), 'fr' => array('title' => 'Les Douze Salopards (1)'))))->
+  click('submit', ['movie' => ['director' => 'Robert Aldrich (1)', 'en' => ['title' => 'The Dirty Dozen (1)'], 'fr' => ['title' => 'Les Douze Salopards (1)']]])->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -113,12 +113,12 @@ $b->
   end()->
 
   with('propel')->begin()->
-    check('Movie', array(), 2)->
-    check('Movie', array('director' => 'Robert Aldrich (1)', 'id' => 2))->
-    check('MovieI18N', array(), 4)->
-    check('MovieI18N', array('id' => 2), 2)->
-    check('MovieI18N', array('culture' => 'fr', 'id' => 2, 'title' => 'Les Douze Salopards (1)'))->
-    check('MovieI18N', array('culture' => 'en', 'id' => 2, 'title' => 'The Dirty Dozen (1)'))->
+    check('Movie', [], 2)->
+    check('Movie', ['director' => 'Robert Aldrich (1)', 'id' => 2])->
+    check('MovieI18N', [], 4)->
+    check('MovieI18N', ['id' => 2], 2)->
+    check('MovieI18N', ['culture' => 'fr', 'id' => 2, 'title' => 'Les Douze Salopards (1)'])->
+    check('MovieI18N', ['culture' => 'en', 'id' => 2, 'title' => 'The Dirty Dozen (1)'])->
   end()->
 
   // Bug #7486
@@ -129,13 +129,13 @@ $b->
   end()->
 
   get('/i18n/movie')->
-  click('submit', array('movie' => array('director' => 'Robert Aldrich', 'en' => array('title' => 'The Dirty Dozen (1)'), 'fr' => array('title' => 'Les Douze Salopards (1)'))))->
+  click('submit', ['movie' => ['director' => 'Robert Aldrich', 'en' => ['title' => 'The Dirty Dozen (1)'], 'fr' => ['title' => 'Les Douze Salopards (1)']]])->
 
   with('form')->begin()->
     hasErrors(2)->
   end()->
 
-  click('submit', array('movie' => array('director' => 'Robert Aldrich', 'en' => array('title' => 'The Dirty Dozen'), 'fr' => array('title' => 'Les Douze Salopards'))))->
+  click('submit', ['movie' => ['director' => 'Robert Aldrich', 'en' => ['title' => 'The Dirty Dozen'], 'fr' => ['title' => 'Les Douze Salopards']]])->
 
   with('form')->begin()->
     hasErrors(false)->
