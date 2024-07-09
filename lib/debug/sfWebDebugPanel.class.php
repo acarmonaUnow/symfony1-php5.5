@@ -111,7 +111,7 @@ abstract class sfWebDebugPanel
       return '';
     }
 
-    $element = get_class($this).'Debug'.$i++;
+    $element = $this::class.'Debug'.$i++;
     $keys = array_reverse(array_keys($debugStack));
 
     $html  = $this->getToggler($element, 'Toggle debug stack');

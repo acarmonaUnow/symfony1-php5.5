@@ -735,7 +735,7 @@ class Doctrine_Collection extends Doctrine_Access implements Countable, Iterator
         $data = array();
         foreach ($this as $key => $record) {
             
-            $key = $prefixKey ? get_class($record) . '_' .$key:$key;
+            $key = $prefixKey ? $record::class . '_' .$key:$key;
             
             $data[$key] = $record->toArray($deep, $prefixKey);
         }

@@ -37,7 +37,7 @@ class sfException extends Exception
    */
   static public function createFromException(Exception $e)
   {
-    $exception = new sfException(sprintf('Wrapped %s: %s', get_class($e), $e->getMessage()));
+    $exception = new sfException(sprintf('Wrapped %s: %s', $e::class, $e->getMessage()));
     $exception->setWrappedException($e);
     self::$lastException = $e;
 
@@ -203,7 +203,7 @@ class sfException extends Exception
     }
 
     $message = null === $exception->getMessage() ? 'n/a' : $exception->getMessage();
-    $name    = get_class($exception);
+    $name    = $exception::class;
     $traces  = self::getTraces($exception, $format);
 
     // dump main objects values
@@ -379,7 +379,7 @@ class sfException extends Exception
     {
       if (is_object($value))
       {
-        $formattedValue = ($format == 'html' ? '<em>object</em>' : 'object').sprintf("('%s')", get_class($value));
+        $formattedValue = ($format == 'html' ? '<em>object</em>' : 'object').sprintf("('%s')", $value::class);
       }
       else if (is_array($value))
       {

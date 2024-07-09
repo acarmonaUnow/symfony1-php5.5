@@ -2033,7 +2033,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             $value = $value->getIncremented();
         } else if ($value instanceof Doctrine_Record && ! $value->exists()) {
             foreach($this->getRelations() as $relation) {
-                if ($fieldName == $relation->getLocalFieldName() && (get_class($value) == $relation->getClass() || is_subclass_of($value, $relation->getClass()))) {
+                if ($fieldName == $relation->getLocalFieldName() && ($value::class == $relation->getClass() || is_subclass_of($value, $relation->getClass()))) {
                     return $errorStack;
                 }
             }
@@ -2925,7 +2925,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             return call_user_func_array(array($this->getRecordInstance(), $method . 'TableProxy'), $arguments);
         } catch (Doctrine_Record_UnknownPropertyException) {}
 
-        throw new Doctrine_Table_Exception(sprintf('Unknown method %s::%s', get_class($this), $method));
+        throw new Doctrine_Table_Exception(sprintf('Unknown method %s::%s', $this::class, $method));
     }
 
     /**

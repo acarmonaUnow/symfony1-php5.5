@@ -259,7 +259,7 @@ abstract class sfTask
       return $this->name;
     }
 
-    $name = get_class($this);
+    $name = $this::class;
 
     if (str_starts_with($name, 'sf'))
     {

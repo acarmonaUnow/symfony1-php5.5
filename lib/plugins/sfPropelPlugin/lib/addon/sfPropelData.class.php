@@ -183,7 +183,7 @@ class sfPropelData extends sfData
     $middleClass = $middleTable->getPhpName();
     foreach ($middleTable->getColumns()  as $column)
     {
-      if ($column->isForeignKey() && constant(constant(get_class($obj).'::PEER').'::TABLE_NAME') != $column->getRelatedTableName())
+      if ($column->isForeignKey() && constant(constant($obj::class.'::PEER').'::TABLE_NAME') != $column->getRelatedTableName())
       {
         $relatedClass = $this->dbMap->getTable($column->getRelatedTableName())->getPhpName();
         break;
@@ -192,10 +192,10 @@ class sfPropelData extends sfData
 
     if (!isset($relatedClass))
     {
-      throw new InvalidArgumentException(sprintf('Unable to find the many-to-many relationship for object "%s".', get_class($obj)));
+      throw new InvalidArgumentException(sprintf('Unable to find the many-to-many relationship for object "%s".', $obj::class));
     }
 
-    $setter = 'set'.get_class($obj);
+    $setter = 'set'.$obj::class;
     $relatedSetter = 'set'.$relatedClass;
 
     foreach ($values as $value)

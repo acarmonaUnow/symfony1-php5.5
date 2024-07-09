@@ -153,7 +153,7 @@ class sfTesterResponse extends sfTester
             unset($rendered[$pos]);
           }
 
-          $this->tester->ok(false !== $pos, sprintf('response includes "%s" form "%s" field - "%s %s[name=%s]"', get_class($form), $field, $selector, $element->tagName, $element->getAttribute('name')));
+          $this->tester->ok(false !== $pos, sprintf('response includes "%s" form "%s" field - "%s %s[name=%s]"', $form::class, $field, $selector, $element->tagName, $element->getAttribute('name')));
         }
       }
     }

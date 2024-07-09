@@ -122,7 +122,7 @@ class ProjectConfigurator {
 			}
 		}
 
-        $bean = get_class($target);
+        $bean = $target::class;
         $ih = IntrospectionHelper::getHelper($bean);
 
         foreach ($attrs as $key => $value) {
@@ -154,7 +154,7 @@ class ProjectConfigurator {
         if ($text === null || strlen(trim($text)) === 0) {
             return;
         }    
-        $ih = IntrospectionHelper::getHelper(get_class($target));
+        $ih = IntrospectionHelper::getHelper($target::class);
         $text = self::replaceProperties($project, $text, $project->getProperties());
         $ih->addText($project, $target, $text);
     }
@@ -169,7 +169,7 @@ class ProjectConfigurator {
      * @access public
      */
     public static function storeChild($project, $parent, $child, $tag) {
-        $ih = IntrospectionHelper::getHelper(get_class($parent));
+        $ih = IntrospectionHelper::getHelper($parent::class);
         $ih->storeElement($project, $parent, $child, $tag);
     }
 

@@ -46,13 +46,13 @@ abstract class sfWidget
     // check option names
     if ($diff = array_diff($optionKeys, array_merge($currentOptionKeys, $this->requiredOptions)))
     {
-      throw new InvalidArgumentException(sprintf('%s does not support the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
+      throw new InvalidArgumentException(sprintf('%s does not support the following options: \'%s\'.', $this::class, implode('\', \'', $diff)));
     }
 
     // check required options
     if ($diff = array_diff($this->requiredOptions, array_merge($currentOptionKeys, $optionKeys)))
     {
-      throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
+      throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', $this::class, implode('\', \'', $diff)));
     }
 
     $this->options = array_merge($this->options, $options);
@@ -145,7 +145,7 @@ abstract class sfWidget
   {
     if (!in_array($name, array_merge(array_keys($this->options), $this->requiredOptions)))
     {
-      throw new InvalidArgumentException(sprintf('%s does not support the following option: \'%s\'.', get_class($this), $name));
+      throw new InvalidArgumentException(sprintf('%s does not support the following option: \'%s\'.', $this::class, $name));
     }
 
     $this->options[$name] = $value;

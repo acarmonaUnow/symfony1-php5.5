@@ -115,7 +115,7 @@ class Doctrine_Validator_Driver implements \Stringable
 
     public function __toString(): string
     {
-        $className = get_class($this);
+        $className = $this::class;
         if (str_starts_with($className, 'Doctrine_Validator_')) { 
             return strtolower(substr($className, 19));
         } else {

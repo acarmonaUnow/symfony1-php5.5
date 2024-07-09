@@ -93,7 +93,7 @@ class Swift_Plugins_LoggerPlugin
    */
   public function beforeTransportStarted(Swift_Events_TransportChangeEvent $evt)
   {
-    $transportName = get_class($evt->getSource());
+    $transportName = $evt->getSource()::class;
     $this->_logger->add(sprintf("++ Starting %s", $transportName));
   }
   
@@ -104,7 +104,7 @@ class Swift_Plugins_LoggerPlugin
    */
   public function transportStarted(Swift_Events_TransportChangeEvent $evt)
   {
-    $transportName = get_class($evt->getSource());
+    $transportName = $evt->getSource()::class;
     $this->_logger->add(sprintf("++ %s started", $transportName));
   }
   
@@ -115,7 +115,7 @@ class Swift_Plugins_LoggerPlugin
    */
   public function beforeTransportStopped(Swift_Events_TransportChangeEvent $evt)
   {
-    $transportName = get_class($evt->getSource());
+    $transportName = $evt->getSource()::class;
     $this->_logger->add(sprintf("++ Stopping %s", $transportName));
   }
   
@@ -126,7 +126,7 @@ class Swift_Plugins_LoggerPlugin
    */
   public function transportStopped(Swift_Events_TransportChangeEvent $evt)
   {
-    $transportName = get_class($evt->getSource());
+    $transportName = $evt->getSource()::class;
     $this->_logger->add(sprintf("++ %s stopped", $transportName));
   }
   

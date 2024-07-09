@@ -40,7 +40,7 @@ $t->ok($pager->isLastPage());
 $results = $pager->getResults();
 
 $t->is(gettype($results), 'object');
-$t->is(get_class($results), 'Doctrine_Collection');
+$t->is($results::class, 'Doctrine_Collection');
 $t->is(count($results), $numPerPage);
 $t->is($pager->getCountQuery()->count(), $total);
 

@@ -164,7 +164,7 @@ abstract class Doctrine_Access extends Doctrine_Locator_Injectable implements Ar
      */
     public function remove($offset)
     {
-        throw new Doctrine_Exception('Remove is not supported for ' . get_class($this));
+        throw new Doctrine_Exception('Remove is not supported for ' . $this::class);
     }
 
     /**
@@ -175,7 +175,7 @@ abstract class Doctrine_Access extends Doctrine_Locator_Injectable implements Ar
      */
     public function get($offset)
     {
-        throw new Doctrine_Exception('Get is not supported for ' . get_class($this));
+        throw new Doctrine_Exception('Get is not supported for ' . $this::class);
     }
 
     /**
@@ -187,7 +187,7 @@ abstract class Doctrine_Access extends Doctrine_Locator_Injectable implements Ar
      */
     public function set($offset, $value)
     {
-        throw new Doctrine_Exception('Set is not supported for ' . get_class($this));
+        throw new Doctrine_Exception('Set is not supported for ' . $this::class);
     }
 
     /**
@@ -198,7 +198,7 @@ abstract class Doctrine_Access extends Doctrine_Locator_Injectable implements Ar
      */
     public function contains($offset)
     {
-        throw new Doctrine_Exception('Contains is not supported for ' . get_class($this));
+        throw new Doctrine_Exception('Contains is not supported for ' . $this::class);
     }
 
     /**
@@ -209,6 +209,6 @@ abstract class Doctrine_Access extends Doctrine_Locator_Injectable implements Ar
      */
     public function add($value)
     {
-        throw new Doctrine_Exception('Add is not supported for ' . get_class($this));
+        throw new Doctrine_Exception('Add is not supported for ' . $this::class);
     }
 }

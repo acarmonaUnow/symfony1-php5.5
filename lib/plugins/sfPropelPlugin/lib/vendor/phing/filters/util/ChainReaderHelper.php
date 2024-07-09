@@ -171,7 +171,7 @@ class ChainReaderHelper {
                     }                    
                     $instream = $filter->chain($instream);
                 } else {
-                    throw new Exception("Cannot chain invalid filter: " . get_class($filter));
+                    throw new Exception("Cannot chain invalid filter: " . $filter::class);
                 }
             }
         }

@@ -705,7 +705,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 	public function copy($deepCopy = false)
 	{
 		// we use get_class(), because this might be a subclass
-		$clazz = get_class($this);
+		$clazz = $this::class;
 		$copyObj = new $clazz();
 		$this->copyInto($copyObj, $deepCopy);
 		return $copyObj;

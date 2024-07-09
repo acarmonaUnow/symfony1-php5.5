@@ -70,7 +70,7 @@ function link_to1($name, $internal_uri, $options = array())
     }
     else
     {
-      throw new sfException(sprintf('Object of class "%s" cannot be converted to string (Please create a __toString() method).', get_class($name)));
+      throw new sfException(sprintf('Object of class "%s" cannot be converted to string (Please create a __toString() method).', $name::class));
     }
   }
 

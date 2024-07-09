@@ -239,7 +239,7 @@ abstract class sfLogger
     $priority = isset($event['priority']) ? $event['priority'] : self::INFO;
 
     $subject  = $event->getSubject();
-    $subject  = is_object($subject) ? get_class($subject) : (is_string($subject) ? $subject : 'main');
+    $subject  = is_object($subject) ? $subject::class : (is_string($subject) ? $subject : 'main');
     foreach ($event->getParameters() as $key => $message)
     {
       if ('priority' === $key)

@@ -227,7 +227,7 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
      */
     public function createSubquery()
     {
-        $class = get_class($this);
+        $class = $this::class;
         $obj   = new $class();
 
         // copy the aliases to the subquery

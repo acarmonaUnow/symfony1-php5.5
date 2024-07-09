@@ -97,7 +97,7 @@ class sfPartialView extends sfPHPView
     {
       $mainResponse = $this->context->getResponse();
 
-      $responseClass = get_class($mainResponse);
+      $responseClass = $mainResponse::class;
       $response = new $responseClass($this->context->getEventDispatcher(), $mainResponse->getOptions());
 
       // the inner response has access to different properties, depending on whether it is marked as contextual in cache.yml

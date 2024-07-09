@@ -50,7 +50,7 @@ class sfMySQLSessionStorage extends sfDatabaseSessionStorage
     }
 
     // failed to destroy session
-    throw new sfDatabaseException(sprintf('%s cannot destroy session id "%s" (%s).', get_class($this), $id, $this->db_error()));
+    throw new sfDatabaseException(sprintf('%s cannot destroy session id "%s" (%s).', $this::class, $id, $this->db_error()));
   }
 
   /**
@@ -74,7 +74,7 @@ class sfMySQLSessionStorage extends sfDatabaseSessionStorage
 
     if (!$this->db_query($sql))
     {
-      throw new sfDatabaseException(sprintf('%s cannot delete old sessions (%s).', get_class($this), $this->db_error()));
+      throw new sfDatabaseException(sprintf('%s cannot delete old sessions (%s).', $this::class, $this->db_error()));
     }
 
     return true;
@@ -122,7 +122,7 @@ class sfMySQLSessionStorage extends sfDatabaseSessionStorage
       }
 
       // can't create record
-      throw new sfDatabaseException(sprintf('%s cannot create new record for id "%s" (%s).', get_class($this), $id, $this->db_error()));
+      throw new sfDatabaseException(sprintf('%s cannot create new record for id "%s" (%s).', $this::class, $id, $this->db_error()));
     }
   }
 
@@ -157,7 +157,7 @@ class sfMySQLSessionStorage extends sfDatabaseSessionStorage
     }
 
     // failed to write session data
-    throw new sfDatabaseException(sprintf('%s cannot write session data for id "%s" (%s).', get_class($this), $id, $this->db_error()));
+    throw new sfDatabaseException(sprintf('%s cannot write session data for id "%s" (%s).', $this::class, $id, $this->db_error()));
   }
 
   /**

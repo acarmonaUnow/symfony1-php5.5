@@ -152,7 +152,7 @@ class PDOSQLExecFormatterElement
 
     	$out = $this->getOutputWriter();
 
-    	print "Setting output writer to: " . get_class($out) . "\n";
+    	print "Setting output writer to: " . $out::class . "\n";
     	$this->formatter->setOutput($out);
 
     	if ($this->formatter instanceof PlainPDOResultFormatter) {
@@ -170,7 +170,7 @@ class PDOSQLExecFormatterElement
     		$param = new Parameter();
     		$method = 'set' . $param->getName();
     		if (!method_exists($this->formatter, $param->getName())) {
-    			throw new BuildException("Formatter " . get_class($this->formatter) . " does not have a $method method.", $this->getLocation());
+    			throw new BuildException("Formatter " . $this->formatter::class . " does not have a $method method.", $this->getLocation());
     		}
     		call_user_func(array($this->formatter, $method), $param->getValue());
     	}

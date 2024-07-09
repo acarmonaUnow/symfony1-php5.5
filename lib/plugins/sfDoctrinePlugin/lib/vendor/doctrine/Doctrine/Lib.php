@@ -194,7 +194,7 @@ class Doctrine_Lib
     public static function getCollectionAsString(Doctrine_Collection $collection)
     {
         $r[] = "<pre>";
-        $r[] = get_class($collection);
+        $r[] = $collection::class;
         $r[] = 'data : ' . Doctrine_Core::dump($collection->getData(), false);
         //$r[] = 'snapshot : ' . Doctrine_Core::dump($collection->getSnapshot());
         $r[] = "</pre>";

@@ -41,7 +41,7 @@ class Doctrine_Record_Filter_Standard extends Doctrine_Record_Filter
      */
     public function filterSet(Doctrine_Record $record, $name, $value): never
     {
-        throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown record property / related component "%s" on "%s"', $name, get_class($record)));
+        throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown record property / related component "%s" on "%s"', $name, $record::class));
     }
 
     /**
@@ -52,6 +52,6 @@ class Doctrine_Record_Filter_Standard extends Doctrine_Record_Filter
      */
     public function filterGet(Doctrine_Record $record, $name): never
     {
-        throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown record property / related component "%s" on "%s"', $name, get_class($record)));
+        throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown record property / related component "%s" on "%s"', $name, $record::class));
     }
 }

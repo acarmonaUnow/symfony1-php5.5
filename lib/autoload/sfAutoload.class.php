@@ -59,7 +59,7 @@ class sfAutoload
 
     if (false === spl_autoload_register(array(self::getInstance(), 'autoload')))
     {
-      throw new sfException(sprintf('Unable to register %s::autoload as an autoloading method.', get_class(self::getInstance())));
+      throw new sfException(sprintf('Unable to register %s::autoload as an autoloading method.', self::getInstance()::class));
     }
   }
 

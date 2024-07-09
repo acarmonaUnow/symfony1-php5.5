@@ -222,7 +222,7 @@ abstract class BaseObject {
 	 */
 	public function equals($obj)
 	{
-		$thisclazz = get_class($this);
+		$thisclazz = $this::class;
 		if (is_object($obj) && $obj instanceof $thisclazz) {
 			if ($this === $obj) {
 				return true;
@@ -260,7 +260,7 @@ abstract class BaseObject {
 	 */
 	protected function log($msg, $priority = Propel::LOG_INFO)
 	{
-		return Propel::log(get_class($this) . ': ' . $msg, $priority);
+		return Propel::log($this::class . ': ' . $msg, $priority);
 	}
 
 }

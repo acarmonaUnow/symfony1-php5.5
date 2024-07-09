@@ -57,7 +57,7 @@ abstract class Doctrine_Task
 
         //Derive the task name only if it wasn't entered at design-time
         if (! strlen($taskName)) {
-            $taskName = self::deriveTaskName(get_class($this));
+            $taskName = self::deriveTaskName($this::class);
         }
 
         /*
@@ -230,7 +230,7 @@ abstract class Doctrine_Task
     {
         if (! self::validateTaskName($taskName)) {
             throw new InvalidArgumentException(
-                sprintf('The task name "%s", in %s, is invalid', $taskName, get_class($this))
+                sprintf('The task name "%s", in %s, is invalid', $taskName, $this::class)
             );
         }
 

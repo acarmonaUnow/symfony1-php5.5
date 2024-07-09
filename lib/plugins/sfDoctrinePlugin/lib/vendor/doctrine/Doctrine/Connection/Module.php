@@ -54,7 +54,7 @@ class Doctrine_Connection_Module
         }
         $this->conn = $conn;
 
-        $e = explode('_', get_class($this));
+        $e = explode('_', $this::class);
 
         $this->moduleName = $e[1];
     }

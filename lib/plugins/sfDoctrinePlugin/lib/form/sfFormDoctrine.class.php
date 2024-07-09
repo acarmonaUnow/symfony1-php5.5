@@ -42,7 +42,7 @@ abstract class sfFormDoctrine extends sfFormObject
     {
       if (!$object instanceof $class)
       {
-        throw new sfException(sprintf('The "%s" form only accepts a "%s" object.', get_class($this), $class));
+        throw new sfException(sprintf('The "%s" form only accepts a "%s" object.', $this::class, $class));
       }
 
       $this->object = $object;

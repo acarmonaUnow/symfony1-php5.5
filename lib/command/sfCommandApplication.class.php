@@ -139,7 +139,7 @@ abstract class sfCommandApplication
   {
     if (isset($this->tasks[$task->getFullName()]))
     {
-      throw new sfCommandException(sprintf('The task named "%s" in "%s" task is already registered by the "%s" task.', $task->getFullName(), get_class($task), get_class($this->tasks[$task->getFullName()])));
+      throw new sfCommandException(sprintf('The task named "%s" in "%s" task is already registered by the "%s" task.', $task->getFullName(), $task::class, $this->tasks[$task->getFullName()]::class));
     }
 
     $this->tasks[$task->getFullName()] = $task;
@@ -365,7 +365,7 @@ abstract class sfCommandApplication
    */
   public function renderException($e)
   {
-    $title = sprintf('  [%s]  ', get_class($e));
+    $title = sprintf('  [%s]  ', $e::class);
     $len = $this->strlen($title);
     $lines = array();
     foreach (explode("\n", $e->getMessage()) as $line)

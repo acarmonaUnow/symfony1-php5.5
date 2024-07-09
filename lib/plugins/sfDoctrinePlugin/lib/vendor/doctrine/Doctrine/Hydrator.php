@@ -121,7 +121,7 @@ class Doctrine_Hydrator
         $driverClass = $this->getHydratorDriverClassName($mode);
         if (is_object($driverClass)) {
             if (!$driverClass instanceOf Doctrine_Hydrator_Abstract) {
-                throw new Doctrine_Hydrator_Exception('Invalid hydration class specified: '.get_class($driverClass));
+                throw new Doctrine_Hydrator_Exception('Invalid hydration class specified: '.$driverClass::class);
             }
             $driver = $driverClass;
             $driver->setQueryComponents($this->_queryComponents);

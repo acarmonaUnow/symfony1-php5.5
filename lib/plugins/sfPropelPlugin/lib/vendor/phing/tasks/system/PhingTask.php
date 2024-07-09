@@ -474,7 +474,7 @@ class PhingTask extends Task {
 
         if ($copy instanceof ProjectComponent) {
             $copy->setProject($this->newProject);
-        } elseif (in_array('setProject', get_class_methods(get_class($copy)))) {
+        } elseif (in_array('setProject', get_class_methods($copy::class))) {
             $copy->setProject($this->newProject);
 		} elseif ($copy instanceof Project) {
 			// don't copy the old "Project" itself

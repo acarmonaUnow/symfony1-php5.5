@@ -787,7 +787,7 @@ class Doctrine_Core
     public static function isValidModelClass($class)
     {
         if ($class instanceof Doctrine_Record) {
-            $class = get_class($class);
+            $class = $class::class;
         }
 
         if (is_string($class) && class_exists($class)) {
@@ -1213,7 +1213,7 @@ class Doctrine_Core
                 $ret[] = $indent . ")";
                 break;
             case 'object':
-                $ret[] = 'Object(' . get_class($var) . ')';
+                $ret[] = 'Object(' . $var::class . ')';
                 break;
             default:
                 $ret[] = var_export($var, true);

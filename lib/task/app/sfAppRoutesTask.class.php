@@ -99,7 +99,7 @@ EOF;
     $route = $this->routes[$name];
     $this->log(sprintf('%s         %s', $this->formatter->format('Name', 'COMMENT'), $name));
     $this->log(sprintf('%s      %s', $this->formatter->format('Pattern', 'COMMENT'), $route->getPattern()));
-    $this->log(sprintf('%s        %s', $this->formatter->format('Class', 'COMMENT'), get_class($route)));
+    $this->log(sprintf('%s        %s', $this->formatter->format('Class', 'COMMENT'), $route::class));
 
     $defaults = '';
     $d = $route->getDefaults();
@@ -156,7 +156,7 @@ EOF;
   {
     if (is_object($value))
     {
-      return sprintf('object(%s)', get_class($value));
+      return sprintf('object(%s)', $value::class);
     }
     else
     {

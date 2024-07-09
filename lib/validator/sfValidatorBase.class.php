@@ -64,19 +64,19 @@ abstract class sfValidatorBase
     // check option names
     if ($diff = array_diff($optionKeys, array_merge($currentOptionKeys, $this->requiredOptions)))
     {
-      throw new InvalidArgumentException(sprintf('%s does not support the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
+      throw new InvalidArgumentException(sprintf('%s does not support the following options: \'%s\'.', $this::class, implode('\', \'', $diff)));
     }
 
     // check error code names
     if ($diff = array_diff(array_keys($messages), array_keys($this->messages)))
     {
-      throw new InvalidArgumentException(sprintf('%s does not support the following error codes: \'%s\'.', get_class($this), implode('\', \'', $diff)));
+      throw new InvalidArgumentException(sprintf('%s does not support the following error codes: \'%s\'.', $this::class, implode('\', \'', $diff)));
     }
 
     // check required options
     if ($diff = array_diff($this->requiredOptions, array_merge($currentOptionKeys, $optionKeys)))
     {
-      throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
+      throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', $this::class, implode('\', \'', $diff)));
     }
 
     $this->options  = array_merge($this->options, $options);
@@ -141,7 +141,7 @@ abstract class sfValidatorBase
   {
     if (!array_key_exists($name, $this->messages))
     {
-      throw new InvalidArgumentException(sprintf('%s does not support the following error code: \'%s\'.', get_class($this), $name));
+      throw new InvalidArgumentException(sprintf('%s does not support the following error code: \'%s\'.', $this::class, $name));
     }
 
     $this->messages[$name] = $value;
@@ -212,7 +212,7 @@ abstract class sfValidatorBase
   {
     if (!in_array($name, array_merge(array_keys($this->options), $this->requiredOptions)))
     {
-      throw new InvalidArgumentException(sprintf('%s does not support the following option: \'%s\'.', get_class($this), $name));
+      throw new InvalidArgumentException(sprintf('%s does not support the following option: \'%s\'.', $this::class, $name));
     }
 
     $this->options[$name] = $value;
@@ -448,7 +448,7 @@ abstract class sfValidatorBase
 
     return sprintf('%s%s(%s%s)',
       str_repeat(' ', $indent),
-      str_replace('sfValidator', '', get_class($this)),
+      str_replace('sfValidator', '', $this::class),
       $options ? sfYamlInline::dump($options) : ($messages ? '{}' : ''),
       $messages ? ', '.sfYamlInline::dump($messages) : ''
     );

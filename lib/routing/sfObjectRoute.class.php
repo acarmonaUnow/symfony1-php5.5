@@ -38,12 +38,12 @@ class sfObjectRoute extends sfRequestRoute
   {
     if (!isset($options['model']))
     {
-      throw new InvalidArgumentException(sprintf('You must pass a "model" option for a %s object (%s).', get_class($this), $pattern));
+      throw new InvalidArgumentException(sprintf('You must pass a "model" option for a %s object (%s).', $this::class, $pattern));
     }
 
     if (!isset($options['type']))
     {
-      throw new InvalidArgumentException(sprintf('You must pass a "type" option for a %s object (%s).', get_class($this), $pattern));
+      throw new InvalidArgumentException(sprintf('You must pass a "type" option for a %s object (%s).', $this::class, $pattern));
     }
 
     if (!in_array($options['type'], array('object', 'list')))
@@ -154,7 +154,7 @@ class sfObjectRoute extends sfRequestRoute
 
     if (!isset($this->options['method']))
     {
-      throw new InvalidArgumentException(sprintf('You must pass a "method" option for a %s object.', get_class($this)));
+      throw new InvalidArgumentException(sprintf('You must pass a "method" option for a %s object.', $this::class));
     }
 
     return call_user_func(array($className, $this->options['method']), $this->filterParameters($parameters));
@@ -166,7 +166,7 @@ class sfObjectRoute extends sfRequestRoute
 
     if (!isset($this->options['method']))
     {
-      throw new InvalidArgumentException(sprintf('You must pass a "method" option for a %s object.', get_class($this)));
+      throw new InvalidArgumentException(sprintf('You must pass a "method" option for a %s object.', $this::class));
     }
 
     return call_user_func(array($className, $this->options['method']), $this->filterParameters($parameters));

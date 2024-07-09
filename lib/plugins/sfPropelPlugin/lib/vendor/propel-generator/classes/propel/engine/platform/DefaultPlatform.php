@@ -146,7 +146,7 @@ class DefaultPlatform implements Platform {
 	 */
 	public function getDatabaseType()
 	{
-		$clazz = get_class($this);
+		$clazz = $this::class;
 		$pos = strpos($clazz, 'Platform');
 		return strtolower(substr($clazz,0,$pos));
 	}

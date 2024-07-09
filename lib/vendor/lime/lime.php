@@ -567,7 +567,7 @@ class lime_test
 
   public function handle_exception(\Throwable $exception)
   {
-    $this->error(get_class($exception).': '.$exception->getMessage(), $exception->getFile(), $exception->getLine(), $exception->getTrace());
+    $this->error($exception::class.': '.$exception->getMessage(), $exception->getFile(), $exception->getLine(), $exception->getTrace());
 
     // exception was handled
     return true;

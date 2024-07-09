@@ -41,7 +41,7 @@ class Swift_Mime_ContentEncoder_QpContentEncoder extends Swift_Encoder_QpEncoder
 
   protected function getSafeMapShareId()
   {
-    return get_class($this).($this->_dotEscape ? '.dotEscape' : '');
+    return $this::class.($this->_dotEscape ? '.dotEscape' : '');
   }
 
   protected function initSafeMap()

@@ -147,7 +147,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
 
     public function setSubclasses($map)
     {
-        $class = get_class($this);
+        $class = $this::class;
         // Set the inheritance map for subclasses
         if (isset($map[$class])) {
             // fix for #1621 
@@ -330,7 +330,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
     {
     	$generator->initialize($this->_table);
 
-        $this->_table->addGenerator($generator, get_class($generator));
+        $this->_table->addGenerator($generator, $generator::class);
     }
 
     /**
@@ -364,7 +364,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
             throw new Doctrine_Record_Exception('Loaded behavior class is not an instance of Doctrine_Template.');
         }
 
-        $className = get_class($tpl);
+        $className = $tpl::class;
 
         $this->_table->addTemplate($className, $tpl);
 

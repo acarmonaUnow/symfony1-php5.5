@@ -331,7 +331,7 @@ class sfUser implements ArrayAccess
     $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'user.method_not_found', array('method' => $method, 'arguments' => $arguments)));
     if (!$event->isProcessed())
     {
-      throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
+      throw new sfException(sprintf('Call to undefined method %s::%s.', $this::class, $method));
     }
 
     return $event->getReturnValue();

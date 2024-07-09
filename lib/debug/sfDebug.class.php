@@ -238,7 +238,7 @@ class sfDebug
       }
       else if (is_object($value))
       {
-        $nvalues[$key] = sprintf('%s Object()', get_class($value));
+        $nvalues[$key] = sprintf('%s Object()', $value::class);
       }
       else
       {

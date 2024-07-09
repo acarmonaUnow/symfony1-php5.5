@@ -317,7 +317,7 @@ abstract class BaseMovieI18nPeer {
 				// assume we've been passed a primary key
 				$key = serialize(array((string) $value[0], (string) $value[1]));
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or MovieI18n object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or MovieI18n object; got " . (is_object($value) ? $value::class . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 

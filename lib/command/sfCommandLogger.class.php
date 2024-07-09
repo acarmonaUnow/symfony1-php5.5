@@ -43,7 +43,7 @@ class sfCommandLogger extends sfConsoleLogger
     if ('application.log' == $event->getName())
     {
       $subject  = $event->getSubject();
-      $subject  = is_object($subject) ? get_class($subject) : (is_string($subject) ? $subject : 'main');
+      $subject  = is_object($subject) ? $subject::class : (is_string($subject) ? $subject : 'main');
 
       $prefix = '>> '.$subject.' ';
     }

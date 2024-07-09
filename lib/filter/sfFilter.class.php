@@ -62,7 +62,7 @@ abstract class sfFilter
    */
   protected function isFirstCall()
   {
-    $class = get_class($this);
+    $class = $this::class;
     if (isset(self::$filterCalled[$class]))
     {
       return false;

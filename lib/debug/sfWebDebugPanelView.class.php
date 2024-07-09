@@ -301,7 +301,7 @@ class sfWebDebugPanelView extends sfWebDebugPanel
       $typeFormat = '<span class="sfWebDebugDataType">(%s)</span>';
     }
 
-    return sprintf($nameFormat.' '.$typeFormat, $name, is_object($parameter) ? $this->formatFileLink(get_class($parameter)) : gettype($parameter));
+    return sprintf($nameFormat.' '.$typeFormat, $name, is_object($parameter) ? $this->formatFileLink($parameter::class) : gettype($parameter));
   }
 
   /**

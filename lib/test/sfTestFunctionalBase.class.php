@@ -422,7 +422,7 @@ abstract class sfTestFunctionalBase
   {
     if (false === ($empty = $this->browser->checkCurrentExceptionIsEmpty()))
     {
-      $this->test()->fail(sprintf('last request threw an uncaught exception "%s: %s"', get_class($this->browser->getCurrentException()), $this->browser->getCurrentException()->getMessage()));
+      $this->test()->fail(sprintf('last request threw an uncaught exception "%s: %s"', $this->browser->getCurrentException()::class, $this->browser->getCurrentException()->getMessage()));
     }
 
     return $empty;
@@ -482,7 +482,7 @@ abstract class sfTestFunctionalBase
    */
   function handleException(\Throwable $exception)
   {
-    $this->test()->error(sprintf('%s: %s', get_class($exception), $exception->getMessage()));
+    $this->test()->error(sprintf('%s: %s', $exception::class, $exception->getMessage()));
 
     $traceData = $exception->getTrace();
     array_unshift($traceData, array(

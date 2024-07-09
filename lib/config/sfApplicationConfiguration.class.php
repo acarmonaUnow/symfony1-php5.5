@@ -42,7 +42,7 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
   {
     $this->environment = $environment;
     $this->debug       = (boolean) $debug;
-    $this->application = str_replace('Configuration', '', get_class($this));
+    $this->application = str_replace('Configuration', '', $this::class);
 
     parent::__construct($rootDir, $dispatcher);
 

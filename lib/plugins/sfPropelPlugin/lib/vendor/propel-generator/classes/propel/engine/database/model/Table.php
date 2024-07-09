@@ -638,7 +638,7 @@ class Table extends XMLElement implements IDMethod {
     $children = $this->inheritanceColumn->getChildren();
     $names = array();
     for ($i = 0, $size=count($children); $i < $size; $i++) {
-      $names[] = get_class($children[$i]);
+      $names[] = $children[$i]::class;
     }
     return $names;
   }

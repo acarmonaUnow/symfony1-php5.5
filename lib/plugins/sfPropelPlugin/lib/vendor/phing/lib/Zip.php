@@ -559,7 +559,7 @@ class Archive_Zip
 
         // ----- Look if the $p_archive is a Archive_Zip object
         if (   (is_object($p_archive))
-		    && (strtolower(get_class($p_archive)) == 'archive_zip')) {
+		    && (strtolower($p_archive::class) == 'archive_zip')) {
             $v_result = $this->_duplicate($p_archive->_zipname);
         }
 
@@ -612,7 +612,7 @@ class Archive_Zip
 
         // ----- Look if the $p_archive_to_add is a Archive_Zip object
         if (   (is_object($p_archive_to_add))
-		    && (strtolower(get_class($p_archive_to_add)) == 'archive_zip')) {
+		    && (strtolower($p_archive_to_add::class) == 'archive_zip')) {
             $v_result = $this->_merge($p_archive_to_add);
         }
 

@@ -266,7 +266,7 @@ class PropelCreoleTransformTask extends Task {
 	{
 		include_once 'creole/Creole.php';
 		if (!class_exists('Creole')) {
-			throw new BuildException( get_class($this) . " task depends on Creole classes being on include_path. (i.e. include of 'creole/Creole.php' failed.)", $this->getLocation());
+			throw new BuildException( $this::class . " task depends on Creole classes being on include_path. (i.e. include of 'creole/Creole.php' failed.)", $this->getLocation());
 		}
 
 		$this->log("Propel - CreoleToXMLSchema starting");

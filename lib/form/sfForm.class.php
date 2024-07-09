@@ -902,7 +902,7 @@ class sfForm implements ArrayAccess, Iterator, Countable, \Stringable
       $secret = $this->localCSRFSecret ?: self::$CSRFSecret;
     }
 
-    return md5($secret.session_id().get_class($this));
+    return md5($secret.session_id().$this::class);
   }
 
   /**

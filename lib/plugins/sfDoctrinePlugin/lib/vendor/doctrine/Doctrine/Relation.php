@@ -455,7 +455,7 @@ abstract class Doctrine_Relation implements ArrayAccess, \Stringable
         $r[] = "<pre>";
         foreach ($this->definition as $k => $v) {
             if (is_object($v)) {
-                $v = 'Object(' . get_class($v) . ')';
+                $v = 'Object(' . $v::class . ')';
             }
             $r[] = $k . ' : ' . $v;
         }

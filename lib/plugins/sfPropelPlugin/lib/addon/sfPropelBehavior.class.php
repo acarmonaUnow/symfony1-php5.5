@@ -103,6 +103,6 @@ class sfPropelBehavior
 
   static protected function callableToString($callable)
   {
-    return is_array($callable) ? (is_object($callable[0]) ? get_class($callable[0]) : $callable[0]).'::'.$callable[1] : var_export($callable, true);
+    return is_array($callable) ? (is_object($callable[0]) ? $callable[0]::class : $callable[0]).'::'.$callable[1] : var_export($callable, true);
   }
 }

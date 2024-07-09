@@ -499,7 +499,7 @@ class IntrospectionHelper {
         
         // check if class of element is registered with project (tasks & types)        
         // most element types don't have a getTag() method
-        $elClass = get_class($element);
+        $elClass = $element::class;
         
         if (!in_array('getTag', get_class_methods($elClass))) {
                 // loop through taskdefs and typesdefs and see if the class name

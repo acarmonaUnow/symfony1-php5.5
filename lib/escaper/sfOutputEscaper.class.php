@@ -108,7 +108,7 @@ abstract class sfOutputEscaper
 
         return $copy;
       }
-      else if (self::isClassMarkedAsSafe(get_class($value)))
+      else if (self::isClassMarkedAsSafe($value::class))
       {
         // the class or one of its children is marked as safe
         // return the unescaped object

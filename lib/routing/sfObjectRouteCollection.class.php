@@ -32,7 +32,7 @@ class sfObjectRouteCollection extends sfRouteCollection
 
     if (!isset($this->options['model']))
     {
-      throw new InvalidArgumentException(sprintf('You must pass a "model" option to %s ("%s" route)', get_class($this), $this->options['name']));
+      throw new InvalidArgumentException(sprintf('You must pass a "model" option to %s ("%s" route)', $this::class, $this->options['name']));
     }
 
     $this->options = array_merge(array(

@@ -155,7 +155,7 @@ class Doctrine_Data_Export extends Doctrine_Data
             $preparedData[$className] = array();
             $keyType = $classData->getTable()->getIdentifierType();
             foreach ($classData as $record) {
-                $className = get_class($record);
+                $className = $record::class;
                 $recordKey = $className . '_' . implode('_', $record->identifier());
                 $preparedData[$className][$recordKey] = array();
 
@@ -196,7 +196,7 @@ class Doctrine_Data_Export extends Doctrine_Data
                         }
 
                         // Get class name for relation
-                        $relationClassName = get_class($relationRecord);
+                        $relationClassName = $relationRecord::class;
 
                         $relationValue = $relationClassName . '_' . $value;
 

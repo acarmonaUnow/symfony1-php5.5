@@ -143,7 +143,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
 
         $this->initOptions();
 
-        $table->addGenerator($this, get_class($this));
+        $table->addGenerator($this, $this::class);
 
         $this->_options['table'] = $table;
 
@@ -249,17 +249,17 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
         foreach ($this->_options['children'] as $child) {
             if ($child instanceof Doctrine_Template) {
                 if ($child->getPlugin() !== null) {
-                    $this->_table->addGenerator($child->getPlugin(), $child->getPlugin() !== null ? get_class($child->getPlugin()) : self::class);
+                    $this->_table->addGenerator($child->getPlugin(), $child->getPlugin() !== null ? $child->getPlugin()::class : self::class);
                 }
 
-                $this->_table->addTemplate(get_class($child), $child);
+                $this->_table->addTemplate($child::class, $child);
 
                 $child->setInvoker($this);
                 $child->setTable($this->_table);
                 $child->setTableDefinition();
                 $child->setUp();
             } else {
-                $this->_table->addGenerator($child, get_class($child));
+                $this->_table->addGenerator($child, $child::class);
                 $child->initialize($this->_table);
             }
         }

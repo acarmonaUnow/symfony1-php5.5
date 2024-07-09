@@ -215,7 +215,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
             $exists = ( ! $isNewEntry);
         } else {
             // get the table of this class
-            $class = get_class($this);
+            $class = $this::class;
             $this->_table = Doctrine_Core::getTable($class);
             $exists = false;
         }
@@ -611,7 +611,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
         $errorStack = $this->getErrorStack();
 
         if (count($errorStack)) {
-            $message = sprintf("Validation failed in class %s\n\n", get_class($this));
+            $message = sprintf("Validation failed in class %s\n\n", $this::class);
 
             $message .= "  " . count($errorStack) . " field" . (count($errorStack) > 1 ?  's' : null) . " had validation error" . (count($errorStack) > 1 ?  's' : null) . ":\n\n";
             foreach ($errorStack as $field => $errors) {
@@ -631,7 +631,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
     public function getErrorStack()
     {
         if ( ! $this->_errorStack) {
-            $this->_errorStack = new Doctrine_Validator_ErrorStack(get_class($this));
+            $this->_errorStack = new Doctrine_Validator_ErrorStack($this::class);
         }
 
         return $this->_errorStack;
@@ -859,9 +859,9 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
         $event = new Doctrine_Event($this, Doctrine_Event::RECORD_UNSERIALIZE);
 
         $manager    = Doctrine_Manager::getInstance();
-        $connection = $manager->getConnectionForComponent(get_class($this));
+        $connection = $manager->getConnectionForComponent($this::class);
 
-        $this->_table = $connection->getTable(get_class($this));
+        $this->_table = $connection->getTable($this::class);
 
         $this->preUnserialize($event);
         $this->getTable()->getRecordListener()->preUnserialize($event);
@@ -981,7 +981,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
         if ($deep) {
             $query = $this->getTable()->createQuery();
             foreach (array_keys($this->_references) as $name) {
-                $query->leftJoin(get_class($this) . '.' . $name);
+                $query->leftJoin($this::class . '.' . $name);
             }
             $query->where(implode(' = ? AND ', (array)$this->getTable()->getIdentifier()) . ' = ?');
             $this->clearRelated();
@@ -2676,7 +2676,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
             }
         }
 
-        throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown method %s::%s', get_class($this), $method));
+        throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown method %s::%s', $this::class, $method));
     }
 
     /**

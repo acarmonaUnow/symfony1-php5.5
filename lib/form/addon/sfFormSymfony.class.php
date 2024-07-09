@@ -104,6 +104,6 @@ class sfFormSymfony extends sfForm
       }
     }
 
-    throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
+    throw new sfException(sprintf('Call to undefined method %s::%s.', $this::class, $method));
   }
 }

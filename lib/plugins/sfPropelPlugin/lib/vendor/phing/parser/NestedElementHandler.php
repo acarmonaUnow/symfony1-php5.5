@@ -115,7 +115,7 @@ class NestedElementHandler extends AbstractHandler {
         $project = $this->configurator->project;
 
         // introspect the parent class that is custom
-        $parentClass = get_class($this->parent);
+        $parentClass = $this->parent::class;
         $ih = IntrospectionHelper::getHelper($parentClass);
         try {
             if ($this->parent instanceof UnknownElement) {

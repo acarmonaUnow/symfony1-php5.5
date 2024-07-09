@@ -216,7 +216,7 @@ abstract class sfPluginConfiguration
    */
   protected function guessRootDir()
   {
-    $r = new ReflectionClass(get_class($this));
+    $r = new ReflectionClass($this::class);
     return realpath(dirname($r->getFilename()).'/..');
   }
 
@@ -227,6 +227,6 @@ abstract class sfPluginConfiguration
    */
   protected function guessName()
   {
-    return substr(get_class($this), 0, -13);
+    return substr($this::class, 0, -13);
   }
 }

@@ -86,7 +86,7 @@ class sfPropelManyToMany
       $criteria = new Criteria();
     }
 
-    $relatedClass = self::getRelatedClass(get_class($object), $middleClass, $relatedColumn);
+    $relatedClass = self::getRelatedClass($object::class, $middleClass, $relatedColumn);
 
     // don't show $this object for self-referential relation
     // make sure to use all primary keys
@@ -116,7 +116,7 @@ class sfPropelManyToMany
       $criteria = new Criteria();
     }
 
-    $relatedClass = self::getRelatedClass(get_class($object), $middleClass, $relatedColumn);
+    $relatedClass = self::getRelatedClass($object::class, $middleClass, $relatedColumn);
 
     $relatedObjects = array();
     if (empty($relatedColumn))
@@ -128,8 +128,8 @@ class sfPropelManyToMany
     else
     {
       // as there is no way to join the related objects starting from this object we'll use the through class peer instead
-      $localColumn = self::getColumn(get_class($object), $middleClass, $relatedColumn);
-      $remoteColumn = self::getRelatedColumn(get_class($object), $middleClass, $relatedColumn);
+      $localColumn = self::getColumn($object::class, $middleClass, $relatedColumn);
+      $remoteColumn = self::getRelatedColumn($object::class, $middleClass, $relatedColumn);
       $c = new Criteria();
       $c->add(constant(constant($middleClass.'::PEER').'::'.$localColumn->getName()), $object->getId());
       $relatedMethod = 'get'.$relatedClass.'RelatedBy'.$remoteColumn->getPhpName();
