@@ -43,9 +43,8 @@ class Doctrine_Connection_Statement implements Doctrine_Adapter_Statement_Interf
      *
      * @param Doctrine_Connection $conn     Doctrine_Connection object, every connection
      *                                      statement holds an instance of Doctrine_Connection
-     * @param mixed $_stmt
      */
-    public function __construct(Doctrine_Connection $conn, protected $_stmt)
+    public function __construct(Doctrine_Connection $conn, protected mixed $_stmt)
     {
         $this->_conn = $conn;
 

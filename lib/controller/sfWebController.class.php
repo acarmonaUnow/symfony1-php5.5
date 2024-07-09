@@ -28,7 +28,7 @@ abstract class sfWebController extends sfController
    *
    * @return string A URL to a symfony resource
    */
-  public function genUrl($parameters = array(), $absolute = false)
+  public function genUrl(mixed $parameters = array(), $absolute = false)
   {
     $route = '';
     $fragment = '';

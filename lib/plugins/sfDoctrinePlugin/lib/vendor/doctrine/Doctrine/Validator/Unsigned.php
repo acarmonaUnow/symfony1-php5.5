@@ -38,10 +38,9 @@ class Doctrine_Validator_Unsigned extends Doctrine_Validator_Driver
      * valid values: null, '', 5, '5', 5.9, '5.9'
      * invalid values: -5, '-5', 'five', -5.9, '-5.9', '5.5.5'
      *
-     * @param mixed $value
      * @return boolean
      */
-    public function validate($value)
+    public function validate(mixed $value)
     {
         if (is_null($value) || $value == '') {
             return true;

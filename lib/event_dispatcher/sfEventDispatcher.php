@@ -31,7 +31,7 @@ class sfEventDispatcher
    * @param string  $name      An event name
    * @param mixed   $listener  A PHP callable
    */
-  public function connect($name, $listener)
+  public function connect($name, mixed $listener)
   {
     if (!isset($this->listeners[$name]))
     {
@@ -49,7 +49,7 @@ class sfEventDispatcher
    *
    * @return mixed false if listener does not exist, null otherwise
    */
-  public function disconnect($name, $listener)
+  public function disconnect($name, mixed $listener)
   {
     if (!isset($this->listeners[$name]))
     {
@@ -111,7 +111,7 @@ class sfEventDispatcher
    *
    * @return sfEvent The sfEvent instance
    */
-  public function filter(sfEvent $event, $value)
+  public function filter(sfEvent $event, mixed $value)
   {
     foreach ($this->getListeners($event->getName()) as $listener)
     {

@@ -85,7 +85,7 @@ abstract class sfBrowserBase
    *
    * @return sfBrowserBase
    */
-  public function setVar($name, $value)
+  public function setVar($name, mixed $value)
   {
     $this->vars[$name] = $value;
 

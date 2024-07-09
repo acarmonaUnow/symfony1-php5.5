@@ -926,7 +926,7 @@ class Phing {
 	 * @return string The unqualified classname (which can be instantiated).
 	 * @throws BuildException - if cannot find the specified file
 	 */
-	public static function import($dotPath, $classpath = null) {
+	public static function import($dotPath, mixed $classpath = null) {
 
 		// first check to see that the class specified hasn't already been included.
 		// (this also handles case where this method is called w/ a classname rather than dotpath)
@@ -960,7 +960,7 @@ class Phing {
 	 * @param mixed $classpath String or object supporting __toString()
 	 * @throws BuildException - if cannot find the specified file
 	 */
-	public static function __import($path, $classpath = null) {
+	public static function __import($path, mixed $classpath = null) {
 
 		if ($classpath) {
 

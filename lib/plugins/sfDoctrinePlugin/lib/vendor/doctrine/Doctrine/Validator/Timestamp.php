@@ -36,10 +36,9 @@ class Doctrine_Validator_Timestamp extends Doctrine_Validator_Driver
      * checks if given value is a valid timestamp
      * ISO-8601 timestamp (YYYY-MM-DDTHH:MM:SS+00:00) or (YYYY-MM-DD HH:MM:SS)
      *
-     * @param mixed $value
      * @return boolean
      */
-    public function validate($value)
+    public function validate(mixed $value)
     {
         if (is_null($value)) {
             return true;

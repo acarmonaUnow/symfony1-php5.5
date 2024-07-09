@@ -240,7 +240,7 @@ class Doctrine_Event
      * @param mixed $value      the value of the given option
      * @return Doctrine_Event   this object
      */
-    public function __set($option, $value)
+    public function __set($option, mixed $value)
     {
         $this->_options[$option] = $value;
 
@@ -255,7 +255,7 @@ class Doctrine_Event
      * @param mixed $value      the value of the given option
      * @return Doctrine_Event   this object
      */
-    public function set($option, &$value)
+    public function set($option, mixed &$value)
     {
         $this->_options[$option] =& $value;
 
@@ -324,10 +324,9 @@ class Doctrine_Event
      * setInvoker
      * Defines new invoker (used in Hydrator)
      *
-     * @param mixed $invoker
      * @return void
      */
-    public function setInvoker($invoker)
+    public function setInvoker(mixed $invoker)
     {
         $this->_invoker = $invoker;
     }

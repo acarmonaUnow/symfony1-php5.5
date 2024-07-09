@@ -78,7 +78,7 @@ class sfNumberFormat
    * @param mixed $formatInfo either null, a sfCultureInfo, a sfNumberFormatInfo, or string
    * @return sfNumberFormat
    */
-  function __construct($formatInfo = null)
+  function __construct(mixed $formatInfo = null)
   {
     if (null === $formatInfo)
     {
@@ -112,7 +112,7 @@ class sfNumberFormat
    * @param string  $charset  The charset
    * @return string formatted number string
    */
-  function format($number, $pattern = 'd', $currency = 'USD', $charset = 'UTF-8')
+  function format(mixed $number, $pattern = 'd', $currency = 'USD', $charset = 'UTF-8')
   {
     $this->setPattern($pattern);
 

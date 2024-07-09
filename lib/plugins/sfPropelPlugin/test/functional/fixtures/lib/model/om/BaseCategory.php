@@ -437,7 +437,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 	 * @see        doValidate()
 	 * @see        getValidationFailures()
 	 */
-	public function validate($columns = null)
+	public function validate(mixed $columns = null)
 	{
 		$res = $this->doValidate($columns);
 		if ($res === true) {
@@ -551,7 +551,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 	 *                     BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM
 	 * @return     void
 	 */
-	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
+	public function setByName($name, mixed $value, $type = BasePeer::TYPE_PHPNAME)
 	{
 		$pos = CategoryPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
@@ -565,7 +565,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 	 * @param      mixed $value field value
 	 * @return     void
 	 */
-	public function setByPosition($pos, $value)
+	public function setByPosition($pos, mixed $value)
 	{
 		switch($pos) {
 			case 0:

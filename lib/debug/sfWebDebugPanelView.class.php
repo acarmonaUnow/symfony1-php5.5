@@ -176,11 +176,10 @@ class sfWebDebugPanelView extends sfWebDebugPanel
    * Formats information about a parameter as HTML.
    *
    * @param  string $name
-   * @param  mixed  $parameter
    *
    * @return string
    */
-  protected function formatParameterAsHtml($name, $parameter)
+  protected function formatParameterAsHtml($name, mixed $parameter)
   {
     if (!method_exists($this, $method = 'format'.ucwords(gettype($parameter)).'AsHtml'))
     {
@@ -285,11 +284,10 @@ class sfWebDebugPanelView extends sfWebDebugPanel
    * Formats information about a parameter as HTML.
    *
    * @param  string $name
-   * @param  mixed  $parameter
    *
    * @return string
    */
-  protected function getParameterDescription($name, $parameter, $nameFormat = null, $typeFormat = null)
+  protected function getParameterDescription($name, mixed $parameter, $nameFormat = null, $typeFormat = null)
   {
     if (null === $nameFormat)
     {

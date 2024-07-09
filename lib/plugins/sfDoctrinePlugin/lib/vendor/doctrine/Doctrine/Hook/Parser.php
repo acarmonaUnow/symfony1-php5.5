@@ -63,5 +63,5 @@ abstract class Doctrine_Hook_Parser
      * @param mixed $value      the value of the field
      * @return void
      */
-    abstract public function parse($alias, $field, $value);
+    abstract public function parse($alias, $field, mixed $value);
 }

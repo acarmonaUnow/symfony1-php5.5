@@ -463,11 +463,10 @@ abstract class sfPager implements Iterator, Countable
    * Returns a parameter.
    *
    * @param  string $name
-   * @param  mixed  $default
    *
    * @return mixed
    */
-  public function getParameter($name, $default = null)
+  public function getParameter($name, mixed $default = null)
   {
     return $this->parameterHolder->get($name, $default);
   }
@@ -488,9 +487,8 @@ abstract class sfPager implements Iterator, Countable
    * Sets a parameter.
    *
    * @param  string $name
-   * @param  mixed  $value
    */
-  public function setParameter($name, $value)
+  public function setParameter($name, mixed $value)
   {
     $this->parameterHolder->set($name, $value);
   }

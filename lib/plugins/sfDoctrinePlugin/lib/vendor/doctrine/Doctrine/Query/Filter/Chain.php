@@ -52,10 +52,9 @@ class Doctrine_Query_Filter_Chain
      * returns a Doctrine_Query_Filter on success
      * and null on failure
      *
-     * @param mixed $key
      * @return mixed
      */
-    public function get($key)
+    public function get(mixed $key)
     {
         if ( ! isset($this->_filters[$key])) {
             throw new Doctrine_Query_Exception('Unknown filter ' . $key);
@@ -66,11 +65,10 @@ class Doctrine_Query_Filter_Chain
     /**
      * set
      *
-     * @param mixed $key
      * @param Doctrine_Query_Filter $listener
      * @return void
      */
-    public function set($key, Doctrine_Query_Filter $listener)
+    public function set(mixed $key, Doctrine_Query_Filter $listener)
     {
         $this->_filters[$key] = $listener;
     }

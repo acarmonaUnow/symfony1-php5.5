@@ -1300,7 +1300,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params An array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function andWhere($where, $params = array())
+    public function andWhere($where, mixed $params = array())
     {
         if (is_array($params)) {
             $this->_params['where'] = array_merge($this->_params['where'], $params);
@@ -1325,7 +1325,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params An array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function orWhere($where, $params = array())
+    public function orWhere($where, mixed $params = array())
     {
         if (is_array($params)) {
             $this->_params['where'] = array_merge($this->_params['where'], $params);
@@ -1348,7 +1348,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param boolean $not          whether or not to use NOT in front of IN
      * @return Doctrine_Query
      */
-    public function whereIn($expr, $params = array(), $not = false)
+    public function whereIn($expr, mixed $params = array(), $not = false)
     {
         return $this->andWhereIn($expr, $params, $not);
     }
@@ -1364,7 +1364,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param boolean $not      Whether or not to use NOT in front of IN. Defaults to false (simple IN clause)
      * @return Doctrine_Query   this object.
      */
-    public function andWhereIn($expr, $params = array(), $not = false)
+    public function andWhereIn($expr, mixed $params = array(), $not = false)
     {
         // if there's no params, return (else we'll get a WHERE IN (), invalid SQL)
         if (isset($params) and (count($params) == 0)) {
@@ -1391,7 +1391,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param boolean $not Whether or not to use NOT in front of IN
      * @return Doctrine_Query
      */
-    public function orWhereIn($expr, $params = array(), $not = false)
+    public function orWhereIn($expr, mixed $params = array(), $not = false)
     {
         // if there's no params, return (else we'll get a WHERE IN (), invalid SQL)
         if (isset($params) and (count($params) == 0)) {
@@ -1444,7 +1444,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params         an array of parameters or a simple scalar
      * @return Doctrine_Query       this object
      */
-    public function whereNotIn($expr, $params = array())
+    public function whereNotIn($expr, mixed $params = array())
     {
         return $this->whereIn($expr, $params, true);
     }
@@ -1457,7 +1457,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params An array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function andWhereNotIn($expr, $params = array())
+    public function andWhereNotIn($expr, mixed $params = array())
     {
         return $this->andWhereIn($expr, $params, true);
     }
@@ -1469,7 +1469,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params An array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function orWhereNotIn($expr, $params = array())
+    public function orWhereNotIn($expr, mixed $params = array())
     {
         return $this->orWhereIn($expr, $params, true);
     }
@@ -1501,7 +1501,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params         an array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function addHaving($having, $params = array())
+    public function addHaving($having, mixed $params = array())
     {
         if (is_array($params)) {
             $this->_params['having'] = array_merge($this->_params['having'], $params);
@@ -1698,7 +1698,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params        an array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function where($where, $params = array())
+    public function where($where, mixed $params = array())
     {
         $this->_params['where'] = array();
 
@@ -1719,7 +1719,7 @@ abstract class Doctrine_Query_Abstract implements \Stringable
      * @param mixed $params        an array of parameters or a simple scalar
      * @return Doctrine_Query
      */
-    public function having($having, $params = array())
+    public function having($having, mixed $params = array())
     {
         $this->_params['having'] = array();
         if (is_array($params)) {

@@ -35,10 +35,9 @@ class Doctrine_Validator_HtmlColor extends Doctrine_Validator_Driver
     /**
      * checks if given value is a valid html color code
      *
-     * @param mixed $value
      * @return boolean
      */
-    public function validate($value)
+    public function validate(mixed $value)
     {
         if (is_null($value)) {
             return true;

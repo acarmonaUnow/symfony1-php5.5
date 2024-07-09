@@ -32,7 +32,7 @@ class sfEvent implements ArrayAccess
    * @param string  $name         The event name
    * @param array   $parameters   An array of parameters
    */
-  public function __construct($subject, $name, $parameters = array())
+  public function __construct(mixed $subject, $name, $parameters = array())
   {
     $this->subject = $subject;
     $this->name = $name;
@@ -65,7 +65,7 @@ class sfEvent implements ArrayAccess
    *
    * @param mixed $value The return value
    */
-  public function setReturnValue($value)
+  public function setReturnValue(mixed $value)
   {
     $this->value = $value;
   }
@@ -148,7 +148,7 @@ class sfEvent implements ArrayAccess
    * @param mixed   $value  The parameter value 
    */
   #[\ReturnTypeWillChange]
-  public function offsetSet($name, $value)
+  public function offsetSet($name, mixed $value)
   {
     $this->parameters[$name] = $value;
   }

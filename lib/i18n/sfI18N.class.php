@@ -107,7 +107,7 @@ class sfI18N
    * @param mixed  $dirs    An array of i18n directories if message source is a sfMessageSource_File subclass, null otherwise
    * @param string $culture The culture
    */
-  public function setMessageSource($dirs, $culture = null)
+  public function setMessageSource(mixed $dirs, $culture = null)
   {
     if (null === $dirs)
     {
@@ -142,7 +142,7 @@ class sfI18N
    *
    * @return sfMessageSource A sfMessageSource object
    */
-  public function createMessageSource($dir = null)
+  public function createMessageSource(mixed $dir = null)
   {
     return sfMessageSource::factory($this->options['source'], self::isMessageSourceFileBased($this->options['source']) ? $dir : $this->options['database']);
   }

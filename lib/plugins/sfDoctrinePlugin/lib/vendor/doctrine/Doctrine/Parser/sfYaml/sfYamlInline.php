@@ -65,7 +65,7 @@ class sfYamlInline
    *
    * @return string The YAML string representing the PHP array
    */
-  static public function dump($value)
+  static public function dump(mixed $value)
   {
     if ('1.1' === sfYaml::getSpecVersion())
     {

@@ -29,7 +29,7 @@ class sfConfig
    *
    * @return mixed A config parameter value, if the config parameter exists, otherwise null
    */
-  public static function get($name, $default = null)
+  public static function get($name, mixed $default = null)
   {
     return isset(self::$config[$name]) ? self::$config[$name] : $default;
   }
@@ -54,7 +54,7 @@ class sfConfig
    * @param string $name  A config parameter name
    * @param mixed  $value A config parameter value
    */
-  public static function set($name, $value)
+  public static function set($name, mixed $value)
   {
     self::$config[$name] = $value;
   }

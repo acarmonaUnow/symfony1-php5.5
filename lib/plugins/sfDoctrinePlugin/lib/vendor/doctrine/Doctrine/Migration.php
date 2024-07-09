@@ -54,7 +54,7 @@ class Doctrine_Migration
      * @param mixed $connection The connection name or instance to use for this migration
      * @return void
      */
-    public function __construct($directory = null, $connection = null)
+    public function __construct($directory = null, mixed $connection = null)
     {
         $this->_reflectionClass = new ReflectionClass('Doctrine_Migration_Base');
 

@@ -149,9 +149,8 @@ class sfPropelDatabase extends sfPDODatabase
    * Sets database configuration parameter
    *
    * @param string $key
-   * @param mixed  $value
    */
-  public function setConnectionParameter($key, $value)
+  public function setConnectionParameter($key, mixed $value)
   {
     if ('host' == $key)
     {

@@ -71,7 +71,7 @@ abstract class sfCache
    *
    * @return string The data of the cache
    */
-  abstract public function get($key, $default = null);
+  abstract public function get($key, mixed $default = null);
 
   /**
    * Returns true if there is a cache for the given key.
@@ -190,7 +190,7 @@ abstract class sfCache
    *
    * @return mixed The option value
    */
-  public function getOption($name, $default = null)
+  public function getOption($name, mixed $default = null)
   {
     return isset($this->options[$name]) ? $this->options[$name] : $default;
   }
@@ -201,7 +201,7 @@ abstract class sfCache
    * @param string $name  The option name
    * @param mixed  $value The option value
    */
-  public function setOption($name, $value)
+  public function setOption($name, mixed $value)
   {
     return $this->options[$name] = $value;
   }

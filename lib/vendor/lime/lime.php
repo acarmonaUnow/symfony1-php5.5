@@ -166,7 +166,7 @@ class lime_test
    *
    * @return boolean
    */
-  public function ok($exp, $message = '')
+  public function ok(mixed $exp, $message = '')
   {
     $this->update_stats();
 
@@ -199,7 +199,7 @@ class lime_test
    *
    * @return boolean
    */
-  public function is($exp1, $exp2, $message = '')
+  public function is(mixed $exp1, mixed $exp2, $message = '')
   {
     if (is_object($exp1) || is_object($exp2))
     {
@@ -231,7 +231,7 @@ class lime_test
    *
    * @return boolean
    */
-  public function isnt($exp1, $exp2, $message = '')
+  public function isnt(mixed $exp1, mixed $exp2, $message = '')
   {
     if (!$result = $this->ok($exp1 != $exp2, $message))
     {
@@ -289,7 +289,7 @@ class lime_test
    *
    * @return boolean
    */
-  public function cmp_ok($exp1, $op, $exp2, $message = '')
+  public function cmp_ok(mixed $exp1, $op, mixed $exp2, $message = '')
   {
     $php = sprintf("\$result = \$exp1 $op \$exp2;");
     // under some unknown conditions the sprintf() call causes a segmentation fault
@@ -313,7 +313,7 @@ class lime_test
    *
    * @return boolean
    */
-  public function can_ok($object, $methods, $message = '')
+  public function can_ok(mixed $object, $methods, $message = '')
   {
     $result = true;
     $failed_messages = array();
@@ -342,7 +342,7 @@ class lime_test
    *
    * @return boolean
    */
-  public function isa_ok($var, $class, $message = '')
+  public function isa_ok(mixed $var, $class, $message = '')
   {
     $type = get_debug_type($var);
     if (!$result = $this->ok($type == $class, $message))
@@ -362,7 +362,7 @@ class lime_test
    *
    * @return boolean
    */
-  public function is_deeply($exp1, $exp2, $message = '')
+  public function is_deeply(mixed $exp1, mixed $exp2, $message = '')
   {
     if (!$result = $this->ok($this->test_is_deeply($exp1, $exp2), $message))
     {

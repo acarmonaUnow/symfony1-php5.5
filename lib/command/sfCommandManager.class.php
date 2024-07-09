@@ -93,7 +93,7 @@ class sfCommandManager
    *
    * @param mixed $arguments A string or an array of command line parameters
    */
-  public function process($arguments = null)
+  public function process(mixed $arguments = null)
   {
     if (null === $arguments)
     {

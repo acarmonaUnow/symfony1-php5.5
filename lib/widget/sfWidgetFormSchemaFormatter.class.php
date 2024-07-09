@@ -60,7 +60,7 @@ abstract class sfWidgetFormSchemaFormatter
    * @param  array  $parameters  Additional parameters to pass back to the callable
    * @return string
    */
-  public function translate($subject, $parameters = array())
+  public function translate(mixed $subject, $parameters = array())
   {
     if (false === $subject)
     {
@@ -104,11 +104,10 @@ abstract class sfWidgetFormSchemaFormatter
   /**
    * Sets a callable which aims to translate form labels, errors and help messages
    *
-   * @param  mixed  $callable
    *
    * @throws InvalidArgumentException if an invalid php callable or sfCallable has been provided
    */
-  static public function setTranslationCallable($callable)
+  static public function setTranslationCallable(mixed $callable)
   {
     if (!$callable instanceof sfCallable && !is_callable($callable))
     {

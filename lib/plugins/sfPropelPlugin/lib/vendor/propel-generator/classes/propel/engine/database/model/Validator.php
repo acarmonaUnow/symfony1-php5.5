@@ -82,7 +82,7 @@ class Validator extends XMLElement {
 	 * @param      mixed $data Rule object or XML attribs (array) from <rule/> element.
 	 * @return     Rule The added Rule.
 	 */
-	public function addRule($data)
+	public function addRule(mixed $data)
 	{
 		if ($data instanceof Rule) {
 			$rule = $data; // alias

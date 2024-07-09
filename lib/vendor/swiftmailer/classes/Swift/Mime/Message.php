@@ -71,22 +71,21 @@ interface Swift_Mime_Message extends Swift_Mime_MimeEntity
   
   /**
    * Set the sender of this message.
-   * 
+   *
    * If multiple addresses are present in the From field, this SHOULD be set.
-   * 
+   *
    * According to RFC 2822 it is a requirement when there are multiple From
    * addresses, but Swift itself does not require it directly.
-   * 
+   *
    * An associative array (with one element!) can be used to provide a display-
    * name: i.e. array('email@address' => 'Real Name').
-   * 
+   *
    * If the second parameter is provided and the first is a string, then $name
    * is associated with the address.
-   * 
-   * @param mixed $address
+   *
    * @param string $name optional
    */
-  public function setSender($address, $name = null);
+  public function setSender(mixed $address, $name = null);
   
   /**
    * Get the sender address for this message.
@@ -99,22 +98,21 @@ interface Swift_Mime_Message extends Swift_Mime_MimeEntity
   
   /**
    * Set the From address of this message.
-   * 
+   *
    * It is permissible for multiple From addresses to be set using an array.
-   * 
+   *
    * If multiple From addresses are used, you SHOULD set the Sender address and
    * according to RFC 2822, MUST set the sender address.
-   * 
+   *
    * An array can be used if display names are to be provided: i.e.
    * array('email@address.com' => 'Real Name').
-   * 
+   *
    * If the second parameter is provided and the first is a string, then $name
    * is associated with the address.
    *
-   * @param mixed $addresses
    * @param string $name optional
    */
-  public function setFrom($addresses, $name = null);
+  public function setFrom(mixed $addresses, $name = null);
   
   /**
    * Get the From address(es) of this message.
@@ -128,20 +126,19 @@ interface Swift_Mime_Message extends Swift_Mime_MimeEntity
   
   /**
    * Set the Reply-To address(es).
-   * 
+   *
    * Any replies from the receiver will be sent to this address.
-   * 
+   *
    * It is permissible for multiple reply-to addresses to be set using an array.
-   * 
+   *
    * This method has the same synopsis as {@link setFrom()} and {@link setTo()}.
-   * 
+   *
    * If the second parameter is provided and the first is a string, then $name
    * is associated with the address.
-   * 
-   * @param mixed $addresses
+   *
    * @param string $name optional
    */
-  public function setReplyTo($addresses, $name = null);
+  public function setReplyTo(mixed $addresses, $name = null);
   
   /**
    * Get the Reply-To addresses for this message.
@@ -155,18 +152,17 @@ interface Swift_Mime_Message extends Swift_Mime_MimeEntity
   
   /**
    * Set the To address(es).
-   * 
+   *
    * Recipients set in this field will receive a copy of this message.
-   * 
+   *
    * This method has the same synopsis as {@link setFrom()} and {@link setCc()}.
-   * 
+   *
    * If the second parameter is provided and the first is a string, then $name
    * is associated with the address.
-   * 
-   * @param mixed $addresses
+   *
    * @param string $name optional
    */
-  public function setTo($addresses, $name = null);
+  public function setTo(mixed $addresses, $name = null);
   
   /**
    * Get the To addresses for this message.
@@ -180,15 +176,14 @@ interface Swift_Mime_Message extends Swift_Mime_MimeEntity
   
   /**
    * Set the Cc address(es).
-   * 
+   *
    * Recipients set in this field will receive a 'carbon-copy' of this message.
-   * 
+   *
    * This method has the same synopsis as {@link setFrom()} and {@link setTo()}.
-   * 
-   * @param mixed $addresses
+   *
    * @param string $name optional
    */
-  public function setCc($addresses, $name = null);
+  public function setCc(mixed $addresses, $name = null);
   
   /**
    * Get the Cc addresses for this message.
@@ -202,19 +197,18 @@ interface Swift_Mime_Message extends Swift_Mime_MimeEntity
   
   /**
    * Set the Bcc address(es).
-   * 
+   *
    * Recipients set in this field will receive a 'blind-carbon-copy' of this
    * message.
-   * 
+   *
    * In other words, they will get the message, but any other recipients of the
    * message will have no such knowledge of their receipt of it.
-   * 
+   *
    * This method has the same synopsis as {@link setFrom()} and {@link setTo()}.
-   * 
-   * @param mixed $addresses
+   *
    * @param string $name optional
    */
-  public function setBcc($addresses, $name = null);
+  public function setBcc(mixed $addresses, $name = null);
   
   /**
    * Get the Bcc addresses for this message.

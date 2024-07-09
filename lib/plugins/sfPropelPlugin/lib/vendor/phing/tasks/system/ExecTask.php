@@ -187,7 +187,7 @@ class ExecTask extends Task {
 	 * The command to use.
 	 * @param mixed $command String or string-compatible (e.g. w/ __toString()).
 	 */
-	function setCommand($command) {
+	function setCommand(mixed $command) {
 		$this->command = "" . $command;
 	}
 

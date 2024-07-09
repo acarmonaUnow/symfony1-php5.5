@@ -23,7 +23,7 @@ class sfOutputEscaperSafe extends ArrayIterator implements \Stringable
    *
    * @param mixed $value  The value to mark as safe
    */
-  public function __construct(protected $value)
+  public function __construct(protected mixed $value)
   {
     if (is_array($this->value) || is_object($this->value))
     {

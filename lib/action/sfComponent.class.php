@@ -126,7 +126,7 @@ abstract class sfComponent
    *
    * @see sfLogger
    */
-  public function logMessage($message, $priority = 'info')
+  public function logMessage(mixed $message, $priority = 'info')
   {
     if (sfConfig::get('sf_logging_enabled'))
     {
@@ -146,7 +146,7 @@ abstract class sfComponent
    *
    * @return string The request parameter value
    */
-  public function getRequestParameter($name, $default = null)
+  public function getRequestParameter($name, mixed $default = null)
   {
     return $this->requestParameterHolder->get($name, $default);
   }
@@ -261,7 +261,7 @@ abstract class sfComponent
    * @param mixed   $value The variable value
    * @param Boolean $safe  true if the value is safe for output (false by default)
    */
-  public function setVar($name, $value, $safe = false)
+  public function setVar($name, mixed $value, $safe = false)
   {
     $this->varHolder->set($name, $safe ? new sfOutputEscaperSafe($value) : $value);
   }

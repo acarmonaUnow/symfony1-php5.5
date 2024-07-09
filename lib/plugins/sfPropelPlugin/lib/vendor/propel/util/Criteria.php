@@ -370,16 +370,15 @@ class Criteria implements IteratorAggregate {
 	}
 
 	/**
-	 * Method to return criterion that is not added automatically
-	 * to this Criteria.  This can be used to chain the
-	 * Criterions to form a more complex where clause.
-	 *
-	 * @param      string $column Full name of column (for example TABLE.COLUMN).
-	 * @param      mixed $value
-	 * @param      string $comparison
-	 * @return     Criterion
-	 */
-	public function getNewCriterion($column, $value, $comparison = null)
+  * Method to return criterion that is not added automatically
+  * to this Criteria.  This can be used to chain the
+  * Criterions to form a more complex where clause.
+  *
+  * @param      string $column Full name of column (for example TABLE.COLUMN).
+  * @param      string $comparison
+  * @return     Criterion
+  */
+ public function getNewCriterion($column, mixed $value, $comparison = null)
 	{
 		return new Criterion($this, $column, $value, $comparison);
 	}
@@ -520,20 +519,19 @@ class Criteria implements IteratorAggregate {
 	}
 
 	/**
-	 * Overrides Hashtable put, so that this object is returned
-	 * instead of the value previously in the Criteria object.
-	 * The reason is so that it more closely matches the behavior
-	 * of the add() methods. If you want to get the previous value
-	 * then you should first Criteria.get() it yourself. Note, if
-	 * you attempt to pass in an Object that is not a String, it will
-	 * throw a NPE. The reason for this is that none of the add()
-	 * methods support adding anything other than a String as a key.
-	 *
-	 * @param      string $key
-	 * @param      mixed $value
-	 * @return     Instance of self.
-	 */
-	public function put($key, $value)
+  * Overrides Hashtable put, so that this object is returned
+  * instead of the value previously in the Criteria object.
+  * The reason is so that it more closely matches the behavior
+  * of the add() methods. If you want to get the previous value
+  * then you should first Criteria.get() it yourself. Note, if
+  * you attempt to pass in an Object that is not a String, it will
+  * throw a NPE. The reason for this is that none of the add()
+  * methods support adding anything other than a String as a key.
+  *
+  * @param      string $key
+  * @return     Instance of self.
+  */
+ public function put($key, mixed $value)
 	{
 		return $this->add($key, $value);
 	}
@@ -548,7 +546,7 @@ class Criteria implements IteratorAggregate {
 	 *
 	 * @param      mixed $t Mappings to be stored in this map.
 	 */
-	public function putAll($t)
+	public function putAll(mixed $t)
 	{
 
 		if (is_array($t)) {
@@ -577,31 +575,29 @@ class Criteria implements IteratorAggregate {
 
 
 	/**
-	 * This method adds a new criterion to the list of criterias.
-	 * If a criterion for the requested column already exists, it is
-	 * replaced. If is used as follow:
-	 *
-	 * <p>
-	 * <code>
-	 * $crit = new Criteria();
-	 * $crit->add(&quot;column&quot;,
-	 *                                      &quot;value&quot;
-	 *                                      &quot;Criteria::GREATER_THAN&quot;);
-	 * </code>
-	 *
-	 * Any comparison can be used.
-	 *
-	 * The name of the table must be used implicitly in the column name,
-	 * so the Column name must be something like 'TABLE.id'. If you
-	 * don't like this, you can use the add(table, column, value) method.
-	 *
-	 * @param      string $critOrColumn The column to run the comparison on, or Criterion object.
-	 * @param      mixed $value
-	 * @param      string $comparison A String.
-	 *
-	 * @return     A modified Criteria object.
-	 */
-	public function add($p1, $value = null, $comparison = null)
+  * This method adds a new criterion to the list of criterias.
+  * If a criterion for the requested column already exists, it is
+  * replaced. If is used as follow:
+  *
+  * <p>
+  * <code>
+  * $crit = new Criteria();
+  * $crit->add(&quot;column&quot;,
+  *                                      &quot;value&quot;
+  *                                      &quot;Criteria::GREATER_THAN&quot;);
+  * </code>
+  *
+  * Any comparison can be used.
+  *
+  * The name of the table must be used implicitly in the column name,
+  * so the Column name must be something like 'TABLE.id'. If you
+  * don't like this, you can use the add(table, column, value) method.
+  *
+  * @param      string $critOrColumn The column to run the comparison on, or Criterion object.
+  * @param      string $comparison A String.
+  * @return     A modified Criteria object.
+  */
+ public function add($p1, mixed $value = null, $comparison = null)
 	{
 		if ($p1 instanceof Criterion) {
 			$this->map[$p1->getTable() . '.' . $p1->getColumn()] = $p1;
@@ -628,7 +624,7 @@ class Criteria implements IteratorAggregate {
    *
 	 * @return     Criteria A modified Criteria object.
 	 */
-	public function addJoin($left, $right, $operator = null)
+	public function addJoin(mixed $left, mixed $right, mixed $operator = null)
 	{
 		$join = new Join();
     if (!is_array($left)) {
@@ -1300,14 +1296,13 @@ class Criterion  {
 	private $parent;
 
 	/**
-	 * Create a new instance.
-	 *
-	 * @param      Criteria $parent The outer class (this is an "inner" class).
-	 * @param      string $column TABLE.COLUMN format.
-	 * @param      mixed $value
-	 * @param      string $comparison
-	 */
-	public function __construct(Criteria $outer, $column, private $value, $comparison = null)
+  * Create a new instance.
+  *
+  * @param      Criteria $parent The outer class (this is an "inner" class).
+  * @param      string $column TABLE.COLUMN format.
+  * @param      string $comparison
+  */
+ public function __construct(Criteria $outer, $column, private mixed $value, $comparison = null)
 	{
 		$dotPos = strrpos($column,'.');
 		if ($dotPos === false) {

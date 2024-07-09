@@ -92,7 +92,7 @@ class Doctrine_Locking_Manager_Pessimistic
      *                  holds a lock on this record
      * @throws Doctrine_Locking_Exception  If the locking failed due to database errors
      */
-    public function getLock(Doctrine_Record $record, $userIdent)
+    public function getLock(Doctrine_Record $record, mixed $userIdent)
     {
         $objectType = $record->getTable()->getComponentName();
         $key        = $record->getTable()->getIdentifier();
@@ -161,7 +161,7 @@ class Doctrine_Locking_Manager_Pessimistic
      * @return boolean  TRUE if a lock was released, FALSE if no lock was released
      * @throws Doctrine_Locking_Exception If the release procedure failed due to database errors
      */
-    public function releaseLock(Doctrine_Record $record, $userIdent)
+    public function releaseLock(Doctrine_Record $record, mixed $userIdent)
     {
         $objectType = $record->getTable()->getComponentName();
         $key        = $record->getTable()->getIdentifier();
@@ -198,7 +198,7 @@ class Doctrine_Locking_Manager_Pessimistic
      * @return string              The unique user identifier for the specified lock
      * @throws Doctrine_Locking_Exception If the query failed due to database errors
      */
-    private function _getLockingUserIdent($objectType, $key)
+    private function _getLockingUserIdent($objectType, mixed $key)
     {
         if (is_array($key)) {
             // Composite key
@@ -250,7 +250,7 @@ class Doctrine_Locking_Manager_Pessimistic
      * @return integer The number of locks that have been released
      * @throws Doctrine_Locking_Exception If the release process failed due to database errors
      */
-    public function releaseAgedLocks($age = 900, $objectType = null, $userIdent = null)
+    public function releaseAgedLocks($age = 900, $objectType = null, mixed $userIdent = null)
     {
         $age = time() - $age;
 

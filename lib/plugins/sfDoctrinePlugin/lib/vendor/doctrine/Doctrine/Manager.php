@@ -610,7 +610,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      * @throws InvalidKeyException
      * @return void
      */
-    public function setCurrentConnection($key)
+    public function setCurrentConnection(mixed $key)
     {
         $key = (string) $key;
         if ( ! isset($this->_connections[$key])) {
@@ -625,7 +625,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      * @param mixed $key                        the connection key
      * @return boolean
      */
-    public function contains($key)
+    public function contains(mixed $key)
     {
         return isset($this->_connections[$key]);
     }
@@ -771,7 +771,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      * @param  mixed $validators Name of validator or array of validators
      * @return void
      */
-    public function registerValidators($validators)
+    public function registerValidators(mixed $validators)
     {
         $validators = (array) $validators;
         foreach ($validators as $validator) {

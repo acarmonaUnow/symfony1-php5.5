@@ -83,7 +83,7 @@ class Doctrine_Pager
      * @param int $maxPerPage     Maximum itens per page
      * @return void
      */
-    public function __construct($query, $page, $maxPerPage = 0)
+    public function __construct(mixed $query, $page, $maxPerPage = 0)
     {
         $this->_setExecuted(false);
 

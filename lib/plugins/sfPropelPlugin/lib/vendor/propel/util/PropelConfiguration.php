@@ -94,7 +94,7 @@ class PropelConfiguration implements ArrayAccess
 	 *                             requested value is not found
 	 * @return     mixed           Parameter value or the default
 	 */
-	public function getParameter($name, $default = null)
+	public function getParameter($name, mixed $default = null)
 	{
 		$ret = $this->parameters;
 		$parts = explode('.', $name); //name.space.name
@@ -114,7 +114,7 @@ class PropelConfiguration implements ArrayAccess
 	 * @param      string $name Configuration item name (name.space.name)
 	 * @param      mixed $value Value to be stored
 	 */
-	public function setParameter($name, $value)
+	public function setParameter($name, mixed $value)
 	{
 		$param = &$this->parameters;
 		$parts = explode('.', $name); //name.space.name

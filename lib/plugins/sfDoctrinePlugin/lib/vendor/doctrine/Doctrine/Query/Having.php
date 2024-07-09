@@ -75,10 +75,9 @@ class Doctrine_Query_Having extends Doctrine_Query_Condition
      * _parseAliases
      * Processes part of the query not being an aggregate function
      *
-     * @param mixed $value
      * @return string
      */
-    private function _parseAliases($value)
+    private function _parseAliases(mixed $value)
     {
         if ( ! is_numeric($value)) {
             $a = explode('.', $value);

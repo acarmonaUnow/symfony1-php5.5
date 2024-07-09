@@ -90,7 +90,7 @@ abstract class sfWidget
    *
    * @return string A HTML representation of the widget
    */
-  abstract public function render($name, $value = null, $attributes = array(), $errors = array());
+  abstract public function render($name, mixed $value = null, $attributes = array(), $errors = array());
 
   /**
    * Adds a required option.
@@ -124,7 +124,7 @@ abstract class sfWidget
    *
    * @return sfWidget The current widget instance
    */
-  public function addOption($name, $value = null)
+  public function addOption($name, mixed $value = null)
   {
     $this->options[$name] = $value;
 
@@ -141,7 +141,7 @@ abstract class sfWidget
    *
    * @throws InvalidArgumentException when a option is not supported
    */
-  public function setOption($name, $value)
+  public function setOption($name, mixed $value)
   {
     if (!in_array($name, array_merge(array_keys($this->options), $this->requiredOptions)))
     {

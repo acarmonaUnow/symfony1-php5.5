@@ -194,7 +194,7 @@ EOF
    *
    * @return boolean
    */
-  protected function checkRoute($route, $model, $module)
+  protected function checkRoute(mixed $route, $model, $module)
   {
     if ($route instanceof sfPropelRouteCollection)
     {

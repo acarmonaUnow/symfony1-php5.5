@@ -167,7 +167,7 @@ class sfRoute implements Serializable
    *
    * @return Boolean         true if the parameters matches this route, false otherwise.
    */
-  public function matchesParameters($params, $context = array())
+  public function matchesParameters(mixed $params, $context = array())
   {
     if (!$this->compiled)
     {
@@ -232,7 +232,7 @@ class sfRoute implements Serializable
    *
    * @return string The generated URL
    */
-  public function generate($params, $context = array(), $absolute = false)
+  public function generate(mixed $params, $context = array(), $absolute = false)
   {
     if (!$this->compiled)
     {

@@ -27,10 +27,9 @@ interface Swift_CharacterReader
    * @param string $string
    * @param int $startOffset
    * @param array $currentMap
-   * @param mixed $ignoredChars
    * @return int
    */
-  public function getCharPositions($string, $startOffset, &$currentMap, &$ignoredChars);
+  public function getCharPositions($string, $startOffset, &$currentMap, mixed &$ignoredChars);
   
   /**
    * Returns mapType

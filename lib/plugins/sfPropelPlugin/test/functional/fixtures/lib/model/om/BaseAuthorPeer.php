@@ -304,7 +304,7 @@ abstract class BaseAuthorPeer {
 	 *
 	 * @param      mixed $value A Author object or a primary key value.
 	 */
-	public static function removeInstanceFromPool($value)
+	public static function removeInstanceFromPool(mixed $value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
 			if (is_object($value) && $value instanceof Author) {
@@ -458,7 +458,7 @@ abstract class BaseAuthorPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doInsert($values, PropelPDO $con = null)
+	public static function doInsert(mixed $values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
     foreach (sfMixer::getCallables('BaseAuthorPeer:doInsert:pre') as $sf_hook)
@@ -516,7 +516,7 @@ abstract class BaseAuthorPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doUpdate($values, PropelPDO $con = null)
+	public static function doUpdate(mixed $values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
     foreach (sfMixer::getCallables('BaseAuthorPeer:doUpdate:pre') as $sf_hook)
@@ -598,7 +598,7 @@ abstract class BaseAuthorPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	 public static function doDelete($values, PropelPDO $con = null)
+	 public static function doDelete(mixed $values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
 			$con = Propel::getConnection(AuthorPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
@@ -657,7 +657,7 @@ abstract class BaseAuthorPeer {
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Author $obj, $cols = null)
+	public static function doValidate(Author $obj, mixed $cols = null)
 	{
 		$columns = array();
 

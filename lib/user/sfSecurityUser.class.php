@@ -25,7 +25,7 @@ interface sfSecurityUser
    *
    * @param mixed $credential Credential data.
    */
-  public function addCredential($credential);
+  public function addCredential(mixed $credential);
 
   /**
    * Clear all credentials associated with this user.
@@ -39,7 +39,7 @@ interface sfSecurityUser
    *
    * @return bool true, if this user has the credential, otherwise false.
    */
-  public function hasCredential($credential);
+  public function hasCredential(mixed $credential);
 
   /**
    * Indicates whether or not this user is authenticated.
@@ -53,7 +53,7 @@ interface sfSecurityUser
    *
    * @param mixed $credential  Credential data.
    */
-  public function removeCredential($credential);
+  public function removeCredential(mixed $credential);
 
   /**
    * Set the authenticated status of this user.

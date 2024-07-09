@@ -119,11 +119,10 @@ class ManifestTask extends Task
 
     /**
      * The setter for the attribute "checksum"
-     * 
-     * @param mixed $mixed
+     *
      * @return void
      */
-    public function setChecksum($mixed)
+    public function setChecksum(mixed $mixed)
     {
     	if(is_string($mixed)) {
     		$data = array(strtolower($mixed));

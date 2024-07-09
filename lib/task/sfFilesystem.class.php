@@ -103,7 +103,7 @@ class sfFilesystem
    *
    * @param mixed $files  The filename, or an array of filenames
    */
-  public function touch($files)
+  public function touch(mixed $files)
   {
     if (!is_array($files))
     {
@@ -123,7 +123,7 @@ class sfFilesystem
    *
    * @param mixed $files  A filename or an array of files to remove
    */
-  public function remove($files)
+  public function remove(mixed $files)
   {
     if (!is_array($files))
     {

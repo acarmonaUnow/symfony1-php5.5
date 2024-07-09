@@ -304,7 +304,7 @@ abstract class BaseAuthorArticlePeer {
 	 *
 	 * @param      mixed $value A AuthorArticle object or a primary key value.
 	 */
-	public static function removeInstanceFromPool($value)
+	public static function removeInstanceFromPool(mixed $value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
 			if (is_object($value) && $value instanceof AuthorArticle) {
@@ -1139,7 +1139,7 @@ abstract class BaseAuthorArticlePeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doInsert($values, PropelPDO $con = null)
+	public static function doInsert(mixed $values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
     foreach (sfMixer::getCallables('BaseAuthorArticlePeer:doInsert:pre') as $sf_hook)
@@ -1193,7 +1193,7 @@ abstract class BaseAuthorArticlePeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doUpdate($values, PropelPDO $con = null)
+	public static function doUpdate(mixed $values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
     foreach (sfMixer::getCallables('BaseAuthorArticlePeer:doUpdate:pre') as $sf_hook)
@@ -1278,7 +1278,7 @@ abstract class BaseAuthorArticlePeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	 public static function doDelete($values, PropelPDO $con = null)
+	 public static function doDelete(mixed $values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
 			$con = Propel::getConnection(AuthorArticlePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
@@ -1345,7 +1345,7 @@ abstract class BaseAuthorArticlePeer {
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(AuthorArticle $obj, $cols = null)
+	public static function doValidate(AuthorArticle $obj, mixed $cols = null)
 	{
 		$columns = array();
 

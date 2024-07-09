@@ -70,7 +70,7 @@ abstract class Doctrine_Configurable extends Doctrine_Locator_Injectable
      * @throws Doctrine_Exception           if the value is invalid
      * @return void
      */
-    public function setAttribute($attribute, $value)
+    public function setAttribute(mixed $attribute, mixed $value)
     {
         switch ($attribute) {
             case Doctrine_Core::ATTR_LISTENER:

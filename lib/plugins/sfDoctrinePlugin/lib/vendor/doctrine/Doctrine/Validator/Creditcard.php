@@ -36,10 +36,9 @@ class Doctrine_Validator_Creditcard extends Doctrine_Validator_Driver
      * checks if given value is a valid credit card number
      *
      * @link http://www.owasp.org/index.php/OWASP_Validation_Regex_Repository
-     * @param mixed $value
      * @return boolean
      */
-    public function validate($value)
+    public function validate(mixed $value)
     {
         if (is_null($value)) {
             return true;

@@ -444,7 +444,7 @@ abstract class sfTestFunctionalBase
    * @param string $errfile  Error file
    * @param mixed  $errline  Error line
    */
-  static public function handlePhpError($errno, $errstr, $errfile, $errline)
+  static public function handlePhpError(mixed $errno, $errstr, $errfile, mixed $errline)
   {
     if (($errno & error_reporting()) == 0)
     {

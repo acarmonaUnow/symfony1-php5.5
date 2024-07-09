@@ -1412,7 +1412,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      * @param mixed $value                  mixed value to be mapped
      * @return void
      */
-    public function mapValue($name, $value = null)
+    public function mapValue($name, mixed $value = null)
     {
         $this->_values[$name] = $value;
     }
@@ -2169,7 +2169,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      * @param mixed $fieldName   name of the property or reference
      * @return boolean
      */
-    public function hasRelation($fieldName)
+    public function hasRelation(mixed $fieldName)
     {
         if (isset($this->_data[$fieldName]) || isset($this->_id[$fieldName])) {
             return true;
@@ -2249,7 +2249,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      * @param mixed $id     a key value or an array of keys
      * @return void
      */
-    public function assignIdentifier($id = false)
+    public function assignIdentifier(mixed $id = false)
     {
         if ($id === false) {
             $this->_id       = array();

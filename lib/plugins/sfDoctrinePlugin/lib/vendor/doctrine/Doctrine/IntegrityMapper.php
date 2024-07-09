@@ -117,16 +117,12 @@ class Doctrine_IntegrityMapper
     }
 
     /**
-     * buildIntegrityRelations 
-     * 
-     * @param Doctrine_Table $table 
-     * @param mixed $aliases 
-     * @param mixed $fields 
-     * @param mixed $indexes 
-     * @param mixed $components 
+     * buildIntegrityRelations
+     *
+     * @param Doctrine_Table $table
      * @return void
      */
-    public function buildIntegrityRelations(Doctrine_Table $table, &$aliases, &$fields, &$indexes, &$components)
+    public function buildIntegrityRelations(Doctrine_Table $table, mixed &$aliases, mixed &$fields, mixed &$indexes, mixed &$components)
     {
         $deleteActions = Doctrine_Manager::getInstance()
                          ->getDeleteActions($table->getComponentName());

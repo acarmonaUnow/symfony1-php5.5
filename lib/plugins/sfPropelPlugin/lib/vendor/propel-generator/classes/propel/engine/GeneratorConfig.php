@@ -39,7 +39,7 @@ class GeneratorConfig {
    * Construct a new GeneratorConfig.
    * @param      mixed $props Array or Iterator
    */
-  public function __construct($props = null)
+  public function __construct(mixed $props = null)
   {
     if ($props) $this->setBuildProperties($props);
   }
@@ -61,7 +61,7 @@ class GeneratorConfig {
    *
    * @param      mixed $props Array or Iterator
    */
-  public function setBuildProperties($props)
+  public function setBuildProperties(mixed $props)
   {
     $this->buildProperties = array();
 
@@ -94,9 +94,8 @@ class GeneratorConfig {
    * Sets a specific propel (renamed) property from the build.
    *
    * @param      string $name
-   * @param      mixed $value
    */
-  public function setBuildProperty($name, $value)
+  public function setBuildProperty($name, mixed $value)
   {
     $this->buildProperties[$name] = $value;
   }

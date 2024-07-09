@@ -40,7 +40,7 @@ class sfCommandOption
    * @param string  $help     A help text
    * @param mixed   $default  The default value (must be null for self::PARAMETER_REQUIRED or self::PARAMETER_NONE)
    */
-  public function __construct($name, $shortcut = null, $mode = null, $help = '', $default = null)
+  public function __construct($name, $shortcut = null, $mode = null, $help = '', mixed $default = null)
   {
     if (str_starts_with($name, '--'))
     {
@@ -142,7 +142,7 @@ class sfCommandOption
    *
    * @param mixed $default The default value
    */
-  public function setDefault($default = null)
+  public function setDefault(mixed $default = null)
   {
     if (self::PARAMETER_NONE === (self::PARAMETER_NONE & $this->mode) && null !== $default)
     {

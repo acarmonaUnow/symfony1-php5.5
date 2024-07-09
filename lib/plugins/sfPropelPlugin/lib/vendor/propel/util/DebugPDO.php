@@ -437,7 +437,7 @@ class DebugPDO extends PropelPDO
 	 * @param      mixed $defaultValue Default value to apply if config item hasn't been set.
 	 * @return     mixed
 	 */
-	protected function getLoggingConfig($key, $defaultValue)
+	protected function getLoggingConfig($key, mixed $defaultValue)
 	{
 		return Propel::getConfiguration(PropelConfiguration::TYPE_OBJECT)->getParameter("debugpdo.logging.$key", $defaultValue);
 	}

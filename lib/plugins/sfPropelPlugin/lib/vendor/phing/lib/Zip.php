@@ -154,7 +154,7 @@ class Archive_Zip
     * @return mixed An array of file description on success,
 	*               an error code on error
     */
-    function create($p_filelist, $p_params=0)
+    function create(mixed $p_filelist, mixed $p_params=0)
     {
         $this->_errorReset();
 
@@ -225,7 +225,7 @@ class Archive_Zip
     * @return mixed An array of file description on success,
 	*               0 on an unrecoverable failure, an error code is logged.
     */
-    function add($p_filelist, $p_params=0)
+    function add(mixed $p_filelist, mixed $p_params=0)
     {
         $this->_errorReset();
 
@@ -376,7 +376,7 @@ class Archive_Zip
     * @return mixed An array of file description on success,
 	*               0 on an unrecoverable failure, an error code is logged.
     */
-    function extract($p_params=0)
+    function extract(mixed $p_params=0)
     {
 
         $this->_errorReset();
@@ -439,7 +439,7 @@ class Archive_Zip
     * @return mixed An array of file description on success,
 	*               0 on an unrecoverable failure, an error code is logged.
     */
-    function delete($p_params)
+    function delete(mixed $p_params)
     {
         $this->_errorReset();
 
@@ -546,7 +546,7 @@ class Archive_Zip
 	*                            the filename of a valid zip archive.
     * @return integer 1 on success, 0 on failure.
     */
-    function duplicate($p_archive)
+    function duplicate(mixed $p_archive)
     {
         $this->_errorReset();
 
@@ -593,7 +593,7 @@ class Archive_Zip
 	*                                 the filename of a valid zip archive.
     * @return integer 1 on success, 0 on failure.
     */
-    function merge($p_archive_to_add)
+    function merge(mixed $p_archive_to_add)
     {
         $v_result = 1;
         $this->_errorReset();

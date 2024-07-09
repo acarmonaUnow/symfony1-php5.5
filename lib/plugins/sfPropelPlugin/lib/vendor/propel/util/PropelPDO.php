@@ -203,7 +203,7 @@ class PropelPDO extends PDO {
 	 * @param      int $attribute The attribute to set (e.g. PropelPDO::PROPEL_ATTR_CACHE_PREPARES).
 	 * @param      mixed $value The attribute value.
 	 */
-	public function setAttribute($attribute, $value)
+	public function setAttribute($attribute, mixed $value)
 	{
 		switch($attribute) {
 			case self::PROPEL_ATTR_CACHE_PREPARES:

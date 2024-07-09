@@ -131,10 +131,9 @@ class Doctrine_Column extends Doctrine_Access implements IteratorAggregate, Coun
      * enumIndex
      *
      * @param string $field
-     * @param mixed $value
      * @return mixed
      */
-    public function enumIndex($field, $value)
+    public function enumIndex($field, mixed $value)
     {
         $values = $this->getEnumValues();
 

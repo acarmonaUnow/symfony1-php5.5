@@ -772,7 +772,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * @param string $type
      * @return string
      */
-    public function quote($input, $type = null)
+    public function quote(mixed $input, $type = null)
     {
         return $this->formatter->quote($input, $type);
     }
@@ -1096,10 +1096,9 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * hasTable
      * whether or not this connection has table $name initialized
      *
-     * @param mixed $name
      * @return boolean
      */
-    public function hasTable($name)
+    public function hasTable(mixed $name)
     {
         return isset($this->tables[$name]);
     }

@@ -753,7 +753,7 @@ class sfForm implements ArrayAccess, Iterator, Countable, \Stringable
    *
    * @return sfForm The current form instance
    */
-  public function setOption($name, $value)
+  public function setOption($name, mixed $value)
   {
     $this->options[$name] = $value;
 
@@ -768,7 +768,7 @@ class sfForm implements ArrayAccess, Iterator, Countable, \Stringable
    *
    * @param mixed  The default value
    */
-  public function getOption($name, $default = null)
+  public function getOption($name, mixed $default = null)
   {
     return isset($this->options[$name]) ? $this->options[$name] : $default;
   }
@@ -781,7 +781,7 @@ class sfForm implements ArrayAccess, Iterator, Countable, \Stringable
    *
    * @return sfForm The current form instance
    */
-  public function setDefault($name, $default)
+  public function setDefault($name, mixed $default)
   {
     $this->defaults[$name] = $default;
 

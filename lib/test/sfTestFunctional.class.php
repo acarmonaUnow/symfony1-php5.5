@@ -43,7 +43,7 @@ class sfTestFunctional extends sfTestFunctionalBase
    *
    * @return sfTestFunctional The current sfTestFunctional instance
    */
-  public function isForwardedTo($moduleName, $actionName, $position = 'last')
+  public function isForwardedTo($moduleName, $actionName, mixed $position = 'last')
   {
     $actionStack = $this->browser->getContext()->getActionStack();
 

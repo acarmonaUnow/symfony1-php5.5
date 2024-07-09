@@ -391,7 +391,7 @@ abstract class BaseArticle extends BaseObject  implements Persistent {
 	 *						be treated as NULL for temporal objects.
 	 * @return     Article The current object (for fluent API support)
 	 */
-	public function setCreatedAt($v)
+	public function setCreatedAt(mixed $v)
 	{
 		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
 		// -- which is unexpected, to say the least.
@@ -440,7 +440,7 @@ abstract class BaseArticle extends BaseObject  implements Persistent {
 	 *						be treated as NULL for temporal objects.
 	 * @return     Article The current object (for fluent API support)
 	 */
-	public function setEndDate($v)
+	public function setEndDate(mixed $v)
 	{
 		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
 		// -- which is unexpected, to say the least.
@@ -874,7 +874,7 @@ abstract class BaseArticle extends BaseObject  implements Persistent {
 	 * @see        doValidate()
 	 * @see        getValidationFailures()
 	 */
-	public function validate($columns = null)
+	public function validate(mixed $columns = null)
 	{
 		$res = $this->doValidate($columns);
 		if ($res === true) {
@@ -1028,7 +1028,7 @@ abstract class BaseArticle extends BaseObject  implements Persistent {
 	 *                     BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM
 	 * @return     void
 	 */
-	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
+	public function setByName($name, mixed $value, $type = BasePeer::TYPE_PHPNAME)
 	{
 		$pos = ArticlePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
@@ -1042,7 +1042,7 @@ abstract class BaseArticle extends BaseObject  implements Persistent {
 	 * @param      mixed $value field value
 	 * @return     void
 	 */
-	public function setByPosition($pos, $value)
+	public function setByPosition($pos, mixed $value)
 	{
 		switch($pos) {
 			case 0:

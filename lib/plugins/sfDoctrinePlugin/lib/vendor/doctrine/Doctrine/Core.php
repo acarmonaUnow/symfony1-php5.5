@@ -784,7 +784,7 @@ class Doctrine_Core
      * @param   mixed   $class Can be a string named after the class, an instance of the class, or an instance of the class reflected
      * @return  boolean
      */
-    public static function isValidModelClass($class)
+    public static function isValidModelClass(mixed $class)
     {
         if ($class instanceof Doctrine_Record) {
             $class = $class::class;
@@ -1198,7 +1198,7 @@ class Doctrine_Core
      * @param string $indent    indention string
      * @return void|string
      */
-    public static function dump($var, $output = true, $indent = "")
+    public static function dump(mixed $var, $output = true, $indent = "")
     {
         $ret = array();
         switch (gettype($var)) {

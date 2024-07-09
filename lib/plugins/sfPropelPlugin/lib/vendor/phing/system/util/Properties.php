@@ -115,7 +115,7 @@ class Properties {
      * @param mixed $val The property value (may be boolean, etc.)
      * @return string
      */
-    protected function outVal($val) {
+    protected function outVal(mixed $val) {
         if ($val === true) {
             $val = "true";
         } elseif ($val === false) {
@@ -210,10 +210,9 @@ class Properties {
      * Set the value for a property.
      *
      * @param string $key
-     * @param mixed $value
      * @return mixed Old property value or NULL if none was set.
      */
-    function setProperty($key, $value) {
+    function setProperty($key, mixed $value) {
     	$oldValue = null;
     	if (isset($this->properties[$key])) {
     		$oldValue = $this->properties[$key];
@@ -228,9 +227,8 @@ class Properties {
      * interface for properties.
      *
      * @param string $key
-     * @param mixed $value
      */
-    function put($key, $value) {
+    function put($key, mixed $value) {
         return $this->setProperty($key, $value);
     }
     

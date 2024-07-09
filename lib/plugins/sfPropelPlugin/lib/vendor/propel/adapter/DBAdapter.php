@@ -301,6 +301,6 @@ abstract class DBAdapter {
 	 *
 	 * @param      mixed $seed (optional) seed value for databases that support this
 	 */
-	public abstract function random($seed = null);
+	public abstract function random(mixed $seed = null);
 
 }

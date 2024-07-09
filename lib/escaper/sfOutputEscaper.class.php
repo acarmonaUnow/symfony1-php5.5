@@ -72,7 +72,7 @@ abstract class sfOutputEscaper
    *
    * @throws InvalidArgumentException If the escaping fails
    */
-  public static function escape($escapingMethod, $value)
+  public static function escape($escapingMethod, mixed $value)
   {
     if (null === $value)
     {
@@ -136,7 +136,7 @@ abstract class sfOutputEscaper
    *
    * @throws InvalidArgumentException If the escaping fails
    */
-  static public function unescape($value)
+  static public function unescape(mixed $value)
   {
     if (null === $value || is_bool($value))
     {

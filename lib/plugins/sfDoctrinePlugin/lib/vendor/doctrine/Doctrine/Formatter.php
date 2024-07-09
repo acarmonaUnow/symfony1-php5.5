@@ -159,7 +159,7 @@ class Doctrine_Formatter extends Doctrine_Connection_Module
      * @param string $type
      * @return string
      */
-    public function quote($input, $type = null)
+    public function quote(mixed $input, $type = null)
     {
         if ($type == null) {
             $type = gettype($input);

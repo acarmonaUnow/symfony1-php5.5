@@ -57,7 +57,7 @@ class Swift_Plugins_DecoratorPlugin
    * 
    * @param mixed $replacements Array or Swift_Plugins_Decorator_Replacements
    */
-  public function __construct($replacements)
+  public function __construct(mixed $replacements)
   {
     $this->setReplacements($replacements);
   }
@@ -69,7 +69,7 @@ class Swift_Plugins_DecoratorPlugin
    *
    * @see __construct()
    */
-  public function setReplacements($replacements)
+  public function setReplacements(mixed $replacements)
   {
     if (!($replacements instanceof \Swift_Plugins_Decorator_Replacements))
     {

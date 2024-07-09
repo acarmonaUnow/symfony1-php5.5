@@ -50,9 +50,8 @@ class sfDoctrineConnectionProfiler extends Doctrine_Connection_Profiler
    * Sets an option value.
    *
    * @param string $name
-   * @param mixed  $value
    */
-  public function setOption($name, $value)
+  public function setOption($name, mixed $value)
   {
     $this->options[$name] = $value;
   }

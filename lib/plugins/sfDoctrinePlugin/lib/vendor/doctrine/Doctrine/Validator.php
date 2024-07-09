@@ -151,7 +151,7 @@ class Doctrine_Validator extends Doctrine_Locator_Injectable
      * @param  string $type  Type of the variable expected
      * @return boolean
      */
-     public static function isValidType($var, $type)
+     public static function isValidType(mixed $var, $type)
      {
          if ($var instanceof Doctrine_Expression) {
              return true;

@@ -121,7 +121,7 @@ class Doctrine_Locator implements Countable, IteratorAggregate
      * @param mixed $value      the value of the resource
      * @return Sensei_Locator   this object
      */
-    public function bind($name, $value)
+    public function bind($name, mixed $value)
     {
         $this->_resources[$name] = $value;
         

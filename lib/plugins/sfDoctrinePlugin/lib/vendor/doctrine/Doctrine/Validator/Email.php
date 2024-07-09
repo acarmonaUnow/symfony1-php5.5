@@ -36,10 +36,9 @@ class Doctrine_Validator_Email extends Doctrine_Validator_Driver
      * checks if given value is a valid email address
      *
      * @link http://iamcal.com/publish/articles/php/parsing_email/pdf/
-     * @param mixed $value
      * @return boolean
      */
-    public function validate($value)
+    public function validate(mixed $value)
     {
         if (is_null($value)) {
             return true;

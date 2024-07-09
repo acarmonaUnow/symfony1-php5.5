@@ -264,7 +264,7 @@ function use_javascript($js, $position = '', $options = array())
  *
  * @param mixed $layout The layout name or path or false to disable the layout
  */
-function decorate_with($layout)
+function decorate_with(mixed $layout)
 {
   if (false === $layout)
   {

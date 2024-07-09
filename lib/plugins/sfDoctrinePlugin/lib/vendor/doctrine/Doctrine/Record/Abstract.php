@@ -175,11 +175,9 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
      * sets or retrieves an option
      *
      * @see Doctrine_Core::ATTR_* constants   availible attributes
-     * @param mixed $attr
-     * @param mixed $value
      * @return mixed
      */
-    public function attribute($attr, $value)
+    public function attribute(mixed $attr, mixed $value)
     {
         if ($value == null) {
             if (is_array($attr)) {
@@ -203,7 +201,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
      * @param mixed $value              options value
      * @return mixed
      */
-    public function option($name, $value = null)
+    public function option(mixed $name, mixed $value = null)
     {
         if ($value === null) {
             if (is_array($name)) {
@@ -254,10 +252,9 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
      * @param string $name
      * @param string $type
      * @param integer $length
-     * @param mixed $options
      * @return void
      */
-    public function hasColumn($name, $type = null, $length = null, $options = array())
+    public function hasColumn($name, $type = null, $length = null, mixed $options = array())
     {
         $this->_table->setColumn($name, $type, $length, $options);
     }
@@ -346,7 +343,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
      * @throws Doctrine_Record_Exception    if $tpl is neither an instance of Doctrine_Template subclass or a valid class name, that could be instantiated.
      * @return Doctrine_Record  this object; provides a fluent interface.
      */
-    public function actAs($tpl, array $options = array())
+    public function actAs(mixed $tpl, array $options = array())
     {
         if ( ! is_object($tpl)) {
             $className = 'Doctrine_Template_' . $tpl;
@@ -385,7 +382,7 @@ abstract class Doctrine_Record_Abstract extends Doctrine_Access
      * @param string $name          optional constraint name. Not used if $constraint is an array.
      * @return Doctrine_Record      this object
      */
-    public function check($constraint, $name = null)
+    public function check(mixed $constraint, $name = null)
     {
         if (is_array($constraint)) {
             foreach ($constraint as $name => $def) {

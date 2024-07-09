@@ -45,7 +45,7 @@ class sfFunctionCache
    *
    * @return mixed The result of the function/method
    */
-  public function call($callable, $arguments = array())
+  public function call(mixed $callable, $arguments = array())
   {
     // Generate a cache id
     $key = $this->computeCacheKey($callable, $arguments);
@@ -105,7 +105,7 @@ class sfFunctionCache
    *
    * @return string The associated cache key
    */
-  public function computeCacheKey($callable, $arguments = array())
+  public function computeCacheKey(mixed $callable, $arguments = array())
   {
     return md5(serialize($callable).serialize($arguments));
   }

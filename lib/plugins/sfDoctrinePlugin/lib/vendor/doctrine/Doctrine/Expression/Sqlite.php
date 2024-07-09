@@ -35,10 +35,9 @@ class Doctrine_Expression_Sqlite extends Doctrine_Expression_Driver
     /**
      * Returns the md5 sum of the data that SQLite's md5() function receives.
      *
-     * @param mixed $data
      * @return string
      */
-    public static function md5Impl($data)
+    public static function md5Impl(mixed $data)
     {
         return md5($data);
     }

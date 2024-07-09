@@ -122,7 +122,7 @@ class sfTesterRequest extends sfTester
    *
    * @return sfTestFunctionalBase|sfTester
    */
-  public function isCookie($name, $value)
+  public function isCookie($name, mixed $value)
   {
     if (!array_key_exists($name, $_COOKIE))
     {

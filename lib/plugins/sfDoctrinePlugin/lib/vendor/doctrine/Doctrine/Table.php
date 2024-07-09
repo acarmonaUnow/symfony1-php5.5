@@ -844,7 +844,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      *                      Otherwise it is indexed numerically.
      * @return void
      */
-    public function addCheckConstraint($definition, $name)
+    public function addCheckConstraint($definition, mixed $name)
     {
         if (is_string($name)) {
             $this->_options['checks'][$name] = $definition;
@@ -1051,7 +1051,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @param mixed $value              the value of the option
      * @return Doctrine_Table           this object
      */
-    public function setOption($name, $value)
+    public function setOption($name, mixed $value)
     {
         switch ($name) {
             case 'name':
@@ -1261,13 +1261,12 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @param string $name      column physical name
      * @param string $type      type of data
      * @param integer $length   maximum length
-     * @param mixed $options
      * @param boolean $prepend  Whether to prepend or append the new column to the column list.
      *                          By default the column gets appended.
      * @throws Doctrine_Table_Exception     if trying use wrongly typed parameter
      * @return void
      */
-    public function setColumn($name, $type = null, $length = null, $options = array(), $prepend = false)
+    public function setColumn($name, $type = null, $length = null, mixed $options = array(), $prepend = false)
     {
         if (is_string($options)) {
             $options = explode('|', $options);
@@ -1999,7 +1998,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @param mixed $value          value of the enum considered
      * @return integer              can be string if native enums are used.
      */
-    public function enumIndex($fieldName, $value)
+    public function enumIndex($fieldName, mixed $value)
     {
         $values = $this->getEnumValues($fieldName);
 
@@ -2574,10 +2573,9 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * Every query created by this table will have this part set by default.
      *
      * @param string $queryPart
-     * @param mixed $value
      * @return Doctrine_Record          this object
      */
-    public function bindQueryPart($queryPart, $value)
+    public function bindQueryPart($queryPart, mixed $value)
     {
         $this->_options['queryParts'][$queryPart] = $value;
 
@@ -2802,7 +2800,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @param mixed $identifier         An associateve array containing identifier column-value pairs.
      * @return integer                  the number of affected rows. Boolean false if empty value array was given,
      */
-    public function delete($identifier)
+    public function delete(mixed $identifier)
     {
         return $this->getConnection()->delete($this, (array) $identifier);
     }
@@ -2828,7 +2826,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @param mixed $identifier         An associateve array containing identifier column-value pairs.
      * @return integer                  the number of affected rows. Boolean false if empty value array was given,
      */
-    public function update(array $fields, $identifier)
+    public function update(array $fields, mixed $identifier)
     {
         return $this->getConnection()->update($this, $fields, (array) $identifier);
     }
@@ -2865,7 +2863,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @throws PDOException                         if something fails at PDO level
      * @ return integer                              number of rows affected
      */
-    public function replace(array $fields, $keys)
+    public function replace(array $fields, mixed $keys)
     {
         return $this->getConnection()->replace($this, $fields, (array) $keys);
     }

@@ -55,7 +55,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
      * @param mixed $value      option value
      * @return boolean          TRUE on success, FALSE on failure
      */
-    public function setOption($option, $value)
+    public function setOption(mixed $option, mixed $value)
     {
         if (isset($this->_options[$option])) {
             $this->_options[$option] = $value;
@@ -70,7 +70,7 @@ abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
      * @param mixed $option     the option name
      * @return mixed            option value
      */
-    public function getOption($option)
+    public function getOption(mixed $option)
     {
         if ( ! isset($this->_options[$option])) {
             return null;

@@ -713,7 +713,7 @@ class PhingFile implements \Stringable {
 	 * Sets the owner of the file.
 	 * @param mixed $user User name or number.
 	 */
-	public function setUser($user) {
+	public function setUser(mixed $user) {
 		$fs = FileSystem::getFileSystem();
 		return $fs->chown($this->getPath(), $user);
     }

@@ -111,7 +111,7 @@ abstract class sfFormObject extends BaseForm
    *
    * @throws sfValidatorError If the form is not valid
    */
-  public function save($con = null)
+  public function save(mixed $con = null)
   {
     if (!$this->isValid())
     {
@@ -148,7 +148,7 @@ abstract class sfFormObject extends BaseForm
    *
    * @param mixed $con An optional connection object
    */
-  protected function doSave($con = null)
+  protected function doSave(mixed $con = null)
   {
     if (null === $con)
     {
@@ -224,7 +224,7 @@ abstract class sfFormObject extends BaseForm
    * @param mixed $con   An optional connection object
    * @param array $forms An array of forms
    */
-  public function saveEmbeddedForms($con = null, $forms = null)
+  public function saveEmbeddedForms(mixed $con = null, $forms = null)
   {
     if (null === $con)
     {

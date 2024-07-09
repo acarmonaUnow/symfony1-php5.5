@@ -89,7 +89,7 @@ abstract class sfTask
    *
    * @return integer 0 if everything went fine, or an error code
    */
-  public function runFromCLI(sfCommandManager $commandManager, $options = null)
+  public function runFromCLI(sfCommandManager $commandManager, mixed $options = null)
   {
     $commandManager->getArgumentSet()->addArguments($this->getArguments());
     $commandManager->getOptionSet()->addOptions($this->getOptions());
@@ -381,7 +381,7 @@ abstract class sfTask
    *
    * @param mixed $messages  The message as an array of lines of a single string
    */
-  public function log($messages)
+  public function log(mixed $messages)
   {
     if (!is_array($messages))
     {

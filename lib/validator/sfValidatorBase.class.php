@@ -193,7 +193,7 @@ abstract class sfValidatorBase
    *
    * @return sfValidatorBase The current validator instance
    */
-  public function addOption($name, $value = null)
+  public function addOption($name, mixed $value = null)
   {
     $this->options[$name] = $value;
 
@@ -208,7 +208,7 @@ abstract class sfValidatorBase
    *
    * @return sfValidatorBase The current validator instance
    */
-  public function setOption($name, $value)
+  public function setOption($name, mixed $value)
   {
     if (!in_array($name, array_merge(array_keys($this->options), $this->requiredOptions)))
     {
@@ -303,7 +303,7 @@ abstract class sfValidatorBase
    *
    * @throws sfValidatorError
    */
-  public function clean($value)
+  public function clean(mixed $value)
   {
     $clean = $value;
 
@@ -338,7 +338,7 @@ abstract class sfValidatorBase
    *
    * @throws sfValidatorError
    */
-  abstract protected function doClean($value);
+  abstract protected function doClean(mixed $value);
 
   /**
    * Sets the charset to use when validating strings.
@@ -367,7 +367,7 @@ abstract class sfValidatorBase
    *
    * @return bool true if the value is empty, false otherwise
    */
-  protected function isEmpty($value)
+  protected function isEmpty(mixed $value)
   {
     return in_array($value, array(null, '', array()), true);
   }

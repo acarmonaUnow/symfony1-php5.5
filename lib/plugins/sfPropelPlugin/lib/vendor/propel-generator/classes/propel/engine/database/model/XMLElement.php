@@ -77,7 +77,7 @@ abstract class XMLElement implements \Stringable {
 	 * @param      mixed $defaultValue The default value to use in case the attribute is not set.
 	 * @return     mixed The value of the attribute or $defaultValue if not set.
 	 */
-	public function getAttribute($name, $defaultValue = null)
+	public function getAttribute($name, mixed $defaultValue = null)
 	{
 		$name = strtolower($name);
 		if (isset($this->attributes[$name])) {
@@ -113,7 +113,7 @@ abstract class XMLElement implements \Stringable {
 	 * @param      mixed $data VendorInfo object or XML attrib data (array)
 	 * @return     VendorInfo
 	 */
-	public function addVendorInfo($data)
+	public function addVendorInfo(mixed $data)
 	{
 		if ($data instanceof VendorInfo) {
 			$vi = $data;

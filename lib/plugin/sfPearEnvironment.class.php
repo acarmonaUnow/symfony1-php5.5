@@ -136,7 +136,7 @@ class sfPearEnvironment
    * @param string $name  The configuration name
    * @param mixed  $value The configuration value
    */
-  public function setOption($name, $value)
+  public function setOption($name, mixed $value)
   {
     $this->options[$name] = $value;
   }

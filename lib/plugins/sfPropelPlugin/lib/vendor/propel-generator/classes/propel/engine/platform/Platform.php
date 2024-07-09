@@ -164,7 +164,7 @@ interface Platform {
 	 * @param      mixed $tf A boolean or string representation of boolean ('y', 'true').
 	 * @return     mixed
 	 */
-	public function getBooleanString($tf);
+	public function getBooleanString(mixed $tf);
 
 	/**
 	 * Whether the underlying PDO driver for this platform returns BLOB columns as streams (instead of strings).

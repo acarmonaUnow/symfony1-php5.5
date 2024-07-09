@@ -78,7 +78,7 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
    *
    * @return array The new key/value array
    */
-  protected function getValues($prefix, $category, $keys)
+  protected function getValues($prefix, $category, mixed $keys)
   {
     if (!is_array($keys))
     {

@@ -105,7 +105,7 @@ class sfTesterForm extends sfTester
    *
    * @return sfTestFunctionalBase|sfTester
    */
-  public function hasGlobalError($value = true)
+  public function hasGlobalError(mixed $value = true)
   {
     return $this->isError(null, $value);
   }
@@ -118,7 +118,7 @@ class sfTesterForm extends sfTester
    *
    * @return sfTestFunctionalBase|sfTester
    */
-  public function isError($field, $value = true)
+  public function isError($field, mixed $value = true)
   {
     if (null === $this->form)
     {

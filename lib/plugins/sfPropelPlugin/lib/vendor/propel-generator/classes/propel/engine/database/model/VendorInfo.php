@@ -97,7 +97,7 @@ class VendorInfo extends XMLElement {
 	 * @param      string $name
 	 * @param      mixed $value The value for the parameter.
 	 */
-	public function setParameter($name, $value)
+	public function setParameter($name, mixed $value)
 	{
 		$this->parameters[$name] = $value;
 	}

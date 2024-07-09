@@ -210,7 +210,7 @@ abstract class sfCommandApplication
    *
    * @return integer 0 if everything went fine, or an error code
    */
-  public function run($options = null)
+  public function run(mixed $options = null)
   {
     $this->handleOptions($options);
     $arguments = $this->commandManager->getArgumentValues();
@@ -322,7 +322,7 @@ abstract class sfCommandApplication
    *
    * @param mixed $options The command line options
    */
-  protected function handleOptions($options = null)
+  protected function handleOptions(mixed $options = null)
   {
     $this->commandManager->process($options);
     $this->commandOptions = $options;
@@ -632,7 +632,7 @@ abstract class sfCommandApplication
    *
    * @return Boolean true if the stream supports colorization, false otherwise
    */
-  protected function isStreamSupportsColors($stream)
+  protected function isStreamSupportsColors(mixed $stream)
   {
     if (DIRECTORY_SEPARATOR == '\\')
     {
@@ -651,7 +651,7 @@ abstract class sfCommandApplication
    *
    * @return sfFormatter A formatter instance
    */
-  protected function guessBestFormatter($stream)
+  protected function guessBestFormatter(mixed $stream)
   {
     return $this->isStreamSupportsColors($stream) ? new sfAnsiColorFormatter() : new sfFormatter();
   }

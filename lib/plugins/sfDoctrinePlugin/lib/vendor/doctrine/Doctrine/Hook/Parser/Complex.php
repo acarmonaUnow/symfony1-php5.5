@@ -67,7 +67,7 @@ abstract class Doctrine_Hook_Parser_Complex extends Doctrine_Hook_Parser
      * @param mixed $value      the value of the field
      * @return void
      */
-    public function parseClause($alias, $field, $value)
+    public function parseClause($alias, $field, mixed $value)
     {
         $parts = $this->_tokenizer->quoteExplode($value, ' AND ');
 
@@ -103,5 +103,5 @@ abstract class Doctrine_Hook_Parser_Complex extends Doctrine_Hook_Parser
      * @param mixed $value      the value of the field
      * @return void
      */
-    abstract public function parseSingle($alias, $field, $value);
+    abstract public function parseSingle($alias, $field, mixed $value);
 }

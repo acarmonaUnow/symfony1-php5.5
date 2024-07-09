@@ -84,7 +84,7 @@ class sfValidatorChoice extends sfValidatorBase
    *
    * @return array The cleaned value
    */
-  protected function cleanMultiple($value, $choices)
+  protected function cleanMultiple(mixed $value, $choices)
   {
     if (!is_array($value))
     {
@@ -122,7 +122,7 @@ class sfValidatorChoice extends sfValidatorBase
    *
    * @return Boolean
    */
-  static protected function inChoices($value, array $choices = array())
+  static protected function inChoices(mixed $value, array $choices = array())
   {
     foreach ($choices as $choice)
     {

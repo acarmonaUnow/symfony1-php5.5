@@ -75,7 +75,7 @@ abstract class Doctrine_Hydrator_Abstract extends Doctrine_Locator_Injectable
      *                              or an instance of the hydration class
      * @return void
      */
-    public function setHydrationMode($hydrationMode)
+    public function setHydrationMode(mixed $hydrationMode)
     {
         $this->_hydrationMode = $hydrationMode;
     }
@@ -114,8 +114,7 @@ abstract class Doctrine_Hydrator_Abstract extends Doctrine_Locator_Injectable
      * The key idea is the loop over the rowset only once doing all the needed operations
      * within this massive loop.
      *
-     * @param mixed $stmt
      * @return mixed
      */
-    abstract public function hydrateResultSet($stmt);
+    abstract public function hydrateResultSet(mixed $stmt);
 }

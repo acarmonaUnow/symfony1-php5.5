@@ -362,7 +362,7 @@ class sfToolkit
    * @param mixed $search        subject to search
    * @param array $replacePairs  array of search => replace pairs
    */
-  public static function pregtr($search, $replacePairs)
+  public static function pregtr(mixed $search, $replacePairs)
   {
     return preg_replace(array_keys($replacePairs), array_values($replacePairs), $search);
   }
@@ -374,7 +374,7 @@ class sfToolkit
    * @param mixed $search        subject to search
    * @param array $replacePairs  array of search => replace callback pairs
    */
-  public static function pregtrcb($search, $replacePairs)
+  public static function pregtrcb(mixed $search, $replacePairs)
   {
     foreach( $replacePairs as $pattern=>$callback )
     {
@@ -600,7 +600,7 @@ class sfToolkit
    *
    * @return  string The old include path
    */
-  static public function addIncludePath($path, $position = 'front')
+  static public function addIncludePath(mixed $path, $position = 'front')
   {
     if (is_array($path))
     {

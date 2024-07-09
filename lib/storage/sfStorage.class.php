@@ -122,5 +122,5 @@ abstract class sfStorage
    *
    * @throws <b>sfStorageException</b> If an error occurs while writing to this storage
    */
-  abstract public function write($key, $data);
+  abstract public function write($key, mixed $data);
 }

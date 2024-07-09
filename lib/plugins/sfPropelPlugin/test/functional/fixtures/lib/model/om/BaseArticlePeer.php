@@ -332,7 +332,7 @@ abstract class BaseArticlePeer {
 	 *
 	 * @param      mixed $value A Article object or a primary key value.
 	 */
-	public static function removeInstanceFromPool($value)
+	public static function removeInstanceFromPool(mixed $value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
 			if (is_object($value) && $value instanceof Article) {
@@ -1167,7 +1167,7 @@ abstract class BaseArticlePeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doInsert($values, PropelPDO $con = null)
+	public static function doInsert(mixed $values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
     foreach (sfMixer::getCallables('BaseArticlePeer:doInsert:pre') as $sf_hook)
@@ -1225,7 +1225,7 @@ abstract class BaseArticlePeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doUpdate($values, PropelPDO $con = null)
+	public static function doUpdate(mixed $values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
     foreach (sfMixer::getCallables('BaseArticlePeer:doUpdate:pre') as $sf_hook)
@@ -1307,7 +1307,7 @@ abstract class BaseArticlePeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	 public static function doDelete($values, PropelPDO $con = null)
+	 public static function doDelete(mixed $values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
 			$con = Propel::getConnection(ArticlePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
@@ -1366,7 +1366,7 @@ abstract class BaseArticlePeer {
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Article $obj, $cols = null)
+	public static function doValidate(Article $obj, mixed $cols = null)
 	{
 		$columns = array();
 

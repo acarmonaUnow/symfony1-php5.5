@@ -228,7 +228,7 @@ class PDOSQLExecTask extends PDOTask {
      * Sets the fetch mode to use for the PDO resultset.
      * @param mixed $mode The PDO fetchmode integer or constant name.
      */
-    public function setFetchmode($mode) {
+    public function setFetchmode(mixed $mode) {
     	if (is_numeric($mode)) {
     		$this->fetchMode = (int) $mode;
     	} else {

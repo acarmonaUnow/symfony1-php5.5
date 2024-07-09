@@ -175,7 +175,7 @@ class sfClassManipulator
    * @param string $method   The method name
    * @param mixed  $callable A PHP callable that accepts and returns one line of PHP code
    */
-  public function filterMethod($method, $callable)
+  public function filterMethod($method, mixed $callable)
   {
     $line = '';
     $code = '';

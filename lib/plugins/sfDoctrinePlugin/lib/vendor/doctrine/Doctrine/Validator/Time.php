@@ -37,10 +37,9 @@ class Doctrine_Validator_Time extends Doctrine_Validator_Driver
      *
      * checks if given value is a valid time
      *
-     * @param mixed $value
      * @return boolean
      */
-    public function validate($value)
+    public function validate(mixed $value)
     {
         if (is_null($value)) {
             return true;

@@ -483,7 +483,7 @@ class Column extends XMLElement {
    * parent column of the inheritance to the current column
    * @param      mixed $inhdata Inheritance or XML data.
    */
-  public function addInheritance($inhdata)
+  public function addInheritance(mixed $inhdata)
   {
     if ($inhdata instanceof Inheritance) {
       $inh = $inhdata;

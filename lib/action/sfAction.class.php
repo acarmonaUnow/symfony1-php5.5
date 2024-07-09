@@ -382,7 +382,7 @@ abstract class sfAction extends sfComponent
    *
    * @return mixed
    */
-  public function getSecurityValue($name, $default = null)
+  public function getSecurityValue($name, mixed $default = null)
   {
     $actionName = strtolower($this->getActionName());
 
@@ -461,7 +461,7 @@ abstract class sfAction extends sfComponent
    *
    * @param mixed $name Layout name or false to de-activate the layout
    */
-  public function setLayout($name)
+  public function setLayout(mixed $name)
   {
     if (sfConfig::get('sf_logging_enabled'))
     {

@@ -566,7 +566,7 @@ class Table extends XMLElement implements IDMethod {
    * @return     Validator The added Validator.
    * @throws     EngineException
    */
-  public function addValidator($data)
+  public function addValidator(mixed $data)
   {
     if ($data instanceof Validator) {
       $validator = $data;
@@ -1171,7 +1171,7 @@ class Table extends XMLElement implements IDMethod {
    * Returns true if the table contains a specified column
    * @param      mixed $col Column or column name.
    */
-  public function containsColumn($col)
+  public function containsColumn(mixed $col)
   {
     if ($col instanceof Column) {
       return in_array($col, $this->columnList);

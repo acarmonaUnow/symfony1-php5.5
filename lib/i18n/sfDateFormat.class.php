@@ -81,7 +81,7 @@ class sfDateFormat
    * @param mixed $formatInfo either, null, a sfCultureInfo instance, a DateTimeFormatInfo instance, or a locale.
    * @return sfDateFormat instance
    */
-  function __construct($formatInfo = null)
+  function __construct(mixed $formatInfo = null)
   {
     if (null === $formatInfo)
     {
@@ -111,7 +111,7 @@ class sfDateFormat
    * @param string $pattern the input pattern; default is sql date or timestamp
    * @return array same array as the getdate function
    */
-  public function getDate($time, $pattern = null)
+  public function getDate(mixed $time, $pattern = null)
   {
     if (null === $time)
     {
@@ -214,7 +214,7 @@ class sfDateFormat
    * @param string  $charset        the charset
    * @return string formatted date time.
    */
-  public function format($time, $pattern = 'F', $inputPattern = null, $charset = 'UTF-8')
+  public function format(mixed $time, $pattern = 'F', $inputPattern = null, $charset = 'UTF-8')
   {
     $date = $this->getDate($time, $inputPattern);
 
@@ -284,7 +284,7 @@ class sfDateFormat
    * @return string a pattern.
    * @see DateTimeFormatInfo::formatDateTime()
    */
-  public function getPattern($pattern)
+  public function getPattern(mixed $pattern)
   {
     if (is_array($pattern) && count($pattern) == 2)
     {

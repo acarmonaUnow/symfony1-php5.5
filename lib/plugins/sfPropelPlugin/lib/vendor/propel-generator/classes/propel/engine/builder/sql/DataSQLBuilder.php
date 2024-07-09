@@ -147,7 +147,7 @@ abstract class DataSQLBuilder extends DataModelBuilder {
 	 * @param      mixed $blob Blob object or string data.
 	 * @return     string
 	 */
-	protected function getBlobSql($blob)
+	protected function getBlobSql(mixed $blob)
 	{
 		// they took magic __toString() out of PHP5.0.0; this sucks
 		if (is_object($blob)) {
@@ -162,7 +162,7 @@ abstract class DataSQLBuilder extends DataModelBuilder {
 	 * @param      mixed $clob Clob object or string data.
 	 * @return     string
 	 */
-	protected function getClobSql($clob)
+	protected function getClobSql(mixed $clob)
 	{
 		// they took magic __toString() out of PHP5.0.0; this sucks
 		if (is_object($clob)) {

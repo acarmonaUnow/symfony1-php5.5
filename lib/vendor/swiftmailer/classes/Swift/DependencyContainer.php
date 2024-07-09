@@ -143,10 +143,9 @@ class Swift_DependencyContainer
    * Specify the previously registered item as a literal value.
    * {@link register()} must be called before this will work.
    *
-   * @param mixed $value
    * @return Swift_DependencyContainer
    */
-  public function asValue($value)
+  public function asValue(mixed $value)
   {
     $endPoint =& $this->_getEndPoint();
     $endPoint['lookupType'] = self::TYPE_VALUE;
@@ -221,12 +220,11 @@ class Swift_DependencyContainer
   /**
    * Specify a literal (non looked up) value for the constructor of the
    * previously registered item.
-   * 
-   * @param mixed $value
+   *
    * @return Swift_DependencyContainer
    * @see withDependencies(), addConstructorLookup()
    */
-  public function addConstructorValue($value)
+  public function addConstructorValue(mixed $value)
   {
     $endPoint =& $this->_getEndPoint();
     if (!isset($endPoint['args']))

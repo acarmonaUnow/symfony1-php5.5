@@ -97,13 +97,11 @@ class sfTesterUser extends sfTester
   /**
    * Tests if the user has some credentials.
    *
-   * @param  mixed $credentials
    * @param  bool  $boolean      Whether to check if the user have some credentials or not
    * @param  bool  $useAnd       specify the mode, either AND or OR
-   *
    * @return sfTestFunctionalBase|sfTester
    */
-  public function hasCredential($credentials, $boolean = true, $useAnd = true)
+  public function hasCredential(mixed $credentials, $boolean = true, $useAnd = true)
   {
     $this->tester->is($this->user->hasCredential($credentials, $useAnd), $boolean, sprintf('user has %sthe right credentials', $boolean ? '' : 'not '));
 

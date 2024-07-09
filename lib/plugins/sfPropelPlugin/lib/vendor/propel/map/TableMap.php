@@ -288,7 +288,7 @@ class TableMap {
    * @param      boolean $normalize Normalize the column name (if column name not like FIRST_NAME)
    * @return     boolean True if the table contains the column.
    */
-  public function hasColumn($name, $normalize = true)
+  public function hasColumn(mixed $name, $normalize = true)
   {
     if ($name instanceof ColumnMap) {
       $name = $name->getColumnName();
@@ -533,7 +533,7 @@ class TableMap {
    * @param      boolean $normalize Normalize the column name (if column name not like FIRST_NAME)
    * @return     boolean True if the table contains the column.
    */
-  public function containsColumn($name, $normalize = true)
+  public function containsColumn(mixed $name, $normalize = true)
   {
     return $this->hasColumn($name, $normalize);
   }

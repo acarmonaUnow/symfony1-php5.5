@@ -64,7 +64,7 @@ class sfTesterResponse extends sfTester
    *
    * @return sfTestFunctionalBase|sfTester
    */
-  public function checkElement($selector, $value = true, $options = array())
+  public function checkElement($selector, mixed $value = true, $options = array())
   {
     if (null === $this->dom)
     {
@@ -171,7 +171,7 @@ class sfTesterResponse extends sfTester
    *
    * @throws LogicException If the response is neither XML nor (X)HTML
    */
-  public function isValid($checkDTD = false)
+  public function isValid(mixed $checkDTD = false)
   {
     if (preg_match('/(x|ht)ml/i', $this->response->getContentType()))
     {

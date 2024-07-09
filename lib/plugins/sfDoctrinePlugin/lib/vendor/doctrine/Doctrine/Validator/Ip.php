@@ -35,10 +35,9 @@ class Doctrine_Validator_Ip extends Doctrine_Validator_Driver
     /**
      * checks if given value is valid ip address
      *
-     * @param mixed $value
      * @return boolean
      */
-    public function validate($value)
+    public function validate(mixed $value)
     {
         return is_null($value) ? true : (bool) filter_var($value, FILTER_VALIDATE_IP);
     }

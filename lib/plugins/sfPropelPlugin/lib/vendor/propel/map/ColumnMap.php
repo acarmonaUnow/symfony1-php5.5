@@ -289,7 +289,7 @@ class ColumnMap {
    * @param      mixed $defaultValue the default value for the column
    * @return     void
    */
-  public function setDefaultValue($defaultValue)
+  public function setDefaultValue(mixed $defaultValue)
   {
     $this->defaultValue = $defaultValue;
   }

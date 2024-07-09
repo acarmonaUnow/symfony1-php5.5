@@ -308,7 +308,7 @@ abstract class BaseMovieI18nPeer {
 	 *
 	 * @param      mixed $value A MovieI18n object or a primary key value.
 	 */
-	public static function removeInstanceFromPool($value)
+	public static function removeInstanceFromPool(mixed $value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
 			if (is_object($value) && $value instanceof MovieI18n) {
@@ -720,7 +720,7 @@ abstract class BaseMovieI18nPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doInsert($values, PropelPDO $con = null)
+	public static function doInsert(mixed $values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
     foreach (sfMixer::getCallables('BaseMovieI18nPeer:doInsert:pre') as $sf_hook)
@@ -774,7 +774,7 @@ abstract class BaseMovieI18nPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doUpdate($values, PropelPDO $con = null)
+	public static function doUpdate(mixed $values, PropelPDO $con = null)
 	{
     // symfony_behaviors behavior
     foreach (sfMixer::getCallables('BaseMovieI18nPeer:doUpdate:pre') as $sf_hook)
@@ -859,7 +859,7 @@ abstract class BaseMovieI18nPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	 public static function doDelete($values, PropelPDO $con = null)
+	 public static function doDelete(mixed $values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
 			$con = Propel::getConnection(MovieI18nPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
@@ -926,7 +926,7 @@ abstract class BaseMovieI18nPeer {
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(MovieI18n $obj, $cols = null)
+	public static function doValidate(MovieI18n $obj, mixed $cols = null)
 	{
 		$columns = array();
 

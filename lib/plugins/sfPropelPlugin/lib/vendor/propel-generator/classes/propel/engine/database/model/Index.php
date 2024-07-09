@@ -170,7 +170,7 @@ class Index extends XMLElement {
 	 * Adds a new column to an index.
 	 * @param      mixed $data Column or attributes from XML.
 	 */
-	public function addColumn($data)
+	public function addColumn(mixed $data)
 	{
 		if ($data instanceof Column) {
 			$column = $data;

@@ -64,7 +64,7 @@ class Doctrine_Migration_Diff
      * @param mixed  $migration Instance of Doctrine_Migration or path to migration classes
      * @return void
      */
-    public function __construct($from, $to, $migration)
+    public function __construct($from, $to, mixed $migration)
     {
         $this->_from = $from;
         $this->_to = $to;
@@ -309,7 +309,7 @@ class Doctrine_Migration_Diff
      * @param  mixed $info  Either array or string to clean of prefixes
      * @return mixed $info  Cleaned value which is either an array or string
      */
-    protected function _cleanModelInformation($info)
+    protected function _cleanModelInformation(mixed $info)
     {
         if (is_array($info)) {
             foreach ($info as $key => $value) {
@@ -366,7 +366,7 @@ class Doctrine_Migration_Diff
      * @return string $path    The path where the models were generated
      * @throws Doctrine_Migration_Exception $e
      */
-    protected function _generateModels($prefix, $item)
+    protected function _generateModels($prefix, mixed $item)
     {
         $path = $this->_tmpPath . DIRECTORY_SEPARATOR . strtolower($prefix) . '_doctrine_tmp_dirs';
         $options = array(

@@ -75,7 +75,7 @@ class sfParameterHolder implements Serializable
    *
    * @return mixed A parameter value, if the parameter exists, otherwise null
    */
-  public function & get($name, $default = null)
+  public function & get($name, mixed $default = null)
   {
     if (array_key_exists($name, $this->parameters))
     {
@@ -129,7 +129,7 @@ class sfParameterHolder implements Serializable
    *
    * @return string A parameter value, if the parameter was removed, otherwise null
    */
-  public function remove($name, $default = null)
+  public function remove($name, mixed $default = null)
   {
     $retval = $default;
 
@@ -150,7 +150,7 @@ class sfParameterHolder implements Serializable
    * @param string $name   A parameter name
    * @param mixed  $value  A parameter value
    */
-  public function set($name, $value)
+  public function set($name, mixed $value)
   {
     $this->parameters[$name] = $value;
   }
@@ -163,7 +163,7 @@ class sfParameterHolder implements Serializable
    * @param string $name   A parameter name
    * @param mixed  $value  A reference to a parameter value
    */
-  public function setByRef($name, & $value)
+  public function setByRef($name, mixed & $value)
   {
     $this->parameters[$name] =& $value;
   }

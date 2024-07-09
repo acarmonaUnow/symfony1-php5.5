@@ -63,5 +63,5 @@ interface Doctrine_Tree_Interface {
      * @param integer $fetchmode                One of the Doctrine_Core::HYDRATE_* constants.
      * @return iterator                         instance of Doctrine_Node_<Implementation>_PreOrderIterator
      */
-    public function fetchBranch($pk, $options = array(), $hydrationMode = null);
+    public function fetchBranch(mixed $pk, $options = array(), $hydrationMode = null);
 }

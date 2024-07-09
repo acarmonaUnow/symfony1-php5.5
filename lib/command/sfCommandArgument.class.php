@@ -39,7 +39,7 @@ class sfCommandArgument
    *
    * @throws sfCommandException
    */
-  public function __construct($name, $mode = null, $help = '', $default = null)
+  public function __construct($name, $mode = null, $help = '', mixed $default = null)
   {
     if (null === $mode)
     {
@@ -94,7 +94,7 @@ class sfCommandArgument
    *
    * @throws sfCommandException
    */
-  public function setDefault($default = null)
+  public function setDefault(mixed $default = null)
   {
     if (self::REQUIRED === $this->mode && null !== $default)
     {

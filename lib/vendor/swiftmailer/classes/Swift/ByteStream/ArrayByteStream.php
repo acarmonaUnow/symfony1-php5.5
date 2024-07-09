@@ -48,7 +48,7 @@ class Swift_ByteStream_ArrayByteStream
    * If $stack is given the stream will be populated with the bytes it contains.
    * @param mixed $stack of bytes in string or array form, optional
    */
-  public function __construct($stack = null)
+  public function __construct(mixed $stack = null)
   {
     if (is_array($stack))
     {

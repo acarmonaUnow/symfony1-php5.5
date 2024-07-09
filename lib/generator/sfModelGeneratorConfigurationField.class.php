@@ -53,7 +53,7 @@ class sfModelGeneratorConfigurationField
    *
    * @return mixed The configuration value associated with the key
    */
-  public function getConfig($key = null, $default = null, $escaped = false)
+  public function getConfig($key = null, mixed $default = null, $escaped = false)
   {
     if (null === $key)
     {
@@ -150,7 +150,7 @@ class sfModelGeneratorConfigurationField
    *
    * @param mixed $renderer A PHP callable
    */
-  public function setRenderer($renderer)
+  public function setRenderer(mixed $renderer)
   {
     $this->config['renderer'] = $renderer;
   }

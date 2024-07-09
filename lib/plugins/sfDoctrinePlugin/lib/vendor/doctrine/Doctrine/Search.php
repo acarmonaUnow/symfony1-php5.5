@@ -183,13 +183,11 @@ class Doctrine_Search extends Doctrine_Record_Generator
     }
 
     /**
-     * readTableData 
-     * 
-     * @param mixed $limit 
-     * @param mixed $offset 
+     * readTableData
+     *
      * @return Doctrine_Collection The collection of results
      */
-    public function readTableData($limit = null, $offset = null)
+    public function readTableData(mixed $limit = null, mixed $offset = null)
     {
         $this->initialize($this->_options['table']);
 
@@ -212,13 +210,11 @@ class Doctrine_Search extends Doctrine_Record_Generator
     }
 
     /**
-     * batchUpdateIndex 
-     * 
-     * @param mixed $limit 
-     * @param mixed $offset 
+     * batchUpdateIndex
+     *
      * @return void
      */
-    public function batchUpdateIndex($limit = null, $offset = null, $encoding = null)
+    public function batchUpdateIndex(mixed $limit = null, mixed $offset = null, $encoding = null)
     {
         $table = $this->_options['table'];
 

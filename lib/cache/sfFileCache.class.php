@@ -226,7 +226,7 @@ class sfFileCache extends sfCache
   *
   * @throws sfCacheException
   */
-  protected function read($path, $type = self::READ_DATA)
+  protected function read($path, mixed $type = self::READ_DATA)
   {
     if (!$fp = @fopen($path, 'rb'))
     {

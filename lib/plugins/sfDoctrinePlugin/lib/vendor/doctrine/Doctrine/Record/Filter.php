@@ -55,7 +55,7 @@ abstract class Doctrine_Record_Filter
      *
      * @param mixed $name                       name of the property or related component
      */
-    abstract public function filterSet(Doctrine_Record $record, $name, $value);
+    abstract public function filterSet(Doctrine_Record $record, mixed $name, $value);
 
     /**
      * filterGet
@@ -63,5 +63,5 @@ abstract class Doctrine_Record_Filter
      *
      * @param mixed $name                       name of the property or related component
      */
-    abstract public function filterGet(Doctrine_Record $record, $name);
+    abstract public function filterGet(Doctrine_Record $record, mixed $name);
 }

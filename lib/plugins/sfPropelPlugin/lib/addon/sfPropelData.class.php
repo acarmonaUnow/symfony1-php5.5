@@ -33,7 +33,7 @@ class sfPropelData extends sfData
    *
    * @throws Exception If the database throws an error, rollback transaction and rethrows exception
    */
-  public function loadData($directoryOrFile = null, $connectionName = 'propel')
+  public function loadData(mixed $directoryOrFile = null, $connectionName = 'propel')
   {
     $files = $this->getFiles($directoryOrFile);
 
@@ -289,7 +289,7 @@ class sfPropelData extends sfData
    * @param mixed  $tables            The name or names of tables to dump (or all to dump all tables)
    * @param string $connectionName    The connection name (default to propel)
    */
-  public function dumpData($directoryOrFile, $tables = 'all', $connectionName = 'propel')
+  public function dumpData($directoryOrFile, mixed $tables = 'all', $connectionName = 'propel')
   {
     $dumpData = $this->getData($tables, $connectionName);
 
@@ -321,7 +321,7 @@ class sfPropelData extends sfData
    *
    * @return array  An array of database data
    */
-  public function getData($tables = 'all', $connectionName = 'propel')
+  public function getData(mixed $tables = 'all', $connectionName = 'propel')
   {
     $this->loadMapBuilders($connectionName);
     $this->con = Propel::getConnection($connectionName);

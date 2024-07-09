@@ -485,7 +485,7 @@ class PropelSchemaReverseTask extends PDOTask {
 	 * @param      string $type The type (string) for validator (e.g. 'required').
 	 * @param      mixed $value The value for the validator (if applicable)
 	 */
-	protected function getValidatorRule(Column $column, $type, $value = null)
+	protected function getValidatorRule(Column $column, $type, mixed $value = null)
 	{
 		$rule = new Rule();
 		$rule->setName($type);
@@ -497,13 +497,12 @@ class PropelSchemaReverseTask extends PDOTask {
 	}
 
 	/**
-	 * Gets the message for a specified rule.
-	 *
-	 * @param      Column $column
-	 * @param      string $type
-	 * @param      mixed $value
-	 */
-	protected function getRuleMessage(Column $column, $type, $value)
+  * Gets the message for a specified rule.
+  *
+  * @param      Column $column
+  * @param      string $type
+  */
+ protected function getRuleMessage(Column $column, $type, mixed $value)
 	{
 		// create message
 		$colName = $column->getName();

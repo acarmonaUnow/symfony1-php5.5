@@ -473,7 +473,7 @@ abstract class BaseMovieI18n extends BaseObject  implements Persistent, \Stringa
 	 * @see        doValidate()
 	 * @see        getValidationFailures()
 	 */
-	public function validate($columns = null)
+	public function validate(mixed $columns = null)
 	{
 		$res = $this->doValidate($columns);
 		if ($res === true) {
@@ -593,7 +593,7 @@ abstract class BaseMovieI18n extends BaseObject  implements Persistent, \Stringa
 	 *                     BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM
 	 * @return     void
 	 */
-	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
+	public function setByName($name, mixed $value, $type = BasePeer::TYPE_PHPNAME)
 	{
 		$pos = MovieI18nPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
@@ -607,7 +607,7 @@ abstract class BaseMovieI18n extends BaseObject  implements Persistent, \Stringa
 	 * @param      mixed $value field value
 	 * @return     void
 	 */
-	public function setByPosition($pos, $value)
+	public function setByPosition($pos, mixed $value)
 	{
 		switch($pos) {
 			case 0:

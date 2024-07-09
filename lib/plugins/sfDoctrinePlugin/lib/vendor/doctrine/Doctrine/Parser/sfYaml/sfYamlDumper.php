@@ -29,7 +29,7 @@ class sfYamlDumper
    *
    * @return string  The YAML representation of the PHP value
    */
-  public function dump($input, $inline = 0, $indent = 0)
+  public function dump(mixed $input, $inline = 0, $indent = 0)
   {
     $output = '';
     $prefix = $indent ? str_repeat(' ', $indent) : '';

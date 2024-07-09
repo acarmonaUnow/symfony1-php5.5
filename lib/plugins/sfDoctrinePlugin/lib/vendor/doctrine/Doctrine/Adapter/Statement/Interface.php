@@ -42,7 +42,7 @@ interface Doctrine_Adapter_Statement_Interface
      * @param integer $type         Data type of the parameter, specified by the Doctrine_Core::PARAM_* constants.
      * @return boolean              Returns TRUE on success or FALSE on failure
      */
-    public function bindColumn($column, $param, $type = null);
+    public function bindColumn(mixed $column, $param, $type = null);
 
     /**
      * Binds a value to a corresponding named or question mark 
@@ -57,16 +57,16 @@ interface Doctrine_Adapter_Statement_Interface
      *
      * @return boolean              Returns TRUE on success or FALSE on failure.
      */
-    public function bindValue($param, $value, $type = null);
+    public function bindValue(mixed $param, mixed $value, $type = null);
 
     /**
-     * Binds a PHP variable to a corresponding named or question mark placeholder in the 
+     * Binds a PHP variable to a corresponding named or question mark placeholder in the
      * SQL statement that was use to prepare the statement. Unlike Doctrine_Adapter_Statement_Interface->bindValue(),
-     * the variable is bound as a reference and will only be evaluated at the time 
+     * the variable is bound as a reference and will only be evaluated at the time
      * that Doctrine_Adapter_Statement_Interface->execute() is called.
      *
-     * Most parameters are input parameters, that is, parameters that are 
-     * used in a read-only fashion to build up the query. Some drivers support the invocation 
+     * Most parameters are input parameters, that is, parameters that are
+     * used in a read-only fashion to build up the query. Some drivers support the invocation
      * of stored procedures that return data as output parameters, and some also as input/output
      * parameters that both send in data and are updated to receive it.
      *
@@ -82,10 +82,9 @@ interface Doctrine_Adapter_Statement_Interface
      *
      * @param integer $length       Length of the data type. To indicate that a parameter is an OUT parameter
      *                              from a stored procedure, you must explicitly set the length.
-     * @param mixed $driverOptions
      * @return boolean              Returns TRUE on success or FALSE on failure.
      */
-    public function bindParam($column, &$variable, $type = null, $length = null, $driverOptions = array());
+    public function bindParam($column, mixed &$variable, $type = null, $length = null, mixed $driverOptions = array());
 
     /**
      * Closes the cursor, enabling the statement to be executed again.
@@ -264,7 +263,7 @@ interface Doctrine_Adapter_Statement_Interface
      * @param mixed $value                  the value of given attribute
      * @return boolean                      Returns TRUE on success or FALSE on failure.
      */
-    public function setAttribute($attribute, $value);
+    public function setAttribute($attribute, mixed $value);
 
     /**
      * Set the default fetch mode for this statement 

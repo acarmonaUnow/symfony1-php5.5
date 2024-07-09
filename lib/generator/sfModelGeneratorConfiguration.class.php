@@ -276,7 +276,7 @@ abstract class sfModelGeneratorConfiguration
    *
    * @return mixed The configuration value
    */
-  public function getValue($key, $default = null, $escaped = false)
+  public function getValue($key, mixed $default = null, $escaped = false)
   {
     if (preg_match('/^(?P<context>[^\.]+)\.fields\.(?P<field>[^\.]+)\.(?P<key>.+)$/', $key, $matches))
     {
@@ -426,7 +426,7 @@ abstract class sfModelGeneratorConfiguration
    *
    * @return mixed The key value
    */
-  static public function getFieldConfigValue($config, $key, $default = null)
+  static public function getFieldConfigValue($config, $key, mixed $default = null)
   {
     $ref   =& $config;
     $parts =  explode('.', $key);
@@ -472,12 +472,10 @@ abstract class sfModelGeneratorConfiguration
   /**
    * Gets a new form object.
    *
-   * @param  mixed $object
    * @param  array $options An array of options to merge with the options returned by getFormOptions()
-   *
    * @return sfForm
    */
-  public function getForm($object = null, $options = array())
+  public function getForm(mixed $object = null, $options = array())
   {
     $class = $this->getFormClass();
 

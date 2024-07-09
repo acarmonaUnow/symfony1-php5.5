@@ -72,7 +72,7 @@ abstract class sfConfigHandler
    *
    * @return string|mixed|array The new value
    */
-  static public function replaceConstants($value)
+  static public function replaceConstants(mixed $value)
   {
     if (is_array($value))
     {

@@ -57,7 +57,7 @@ class sfFormatter
    *
    * @return string The formatted text
    */
-  public function format($text = '', $parameters = array())
+  public function format($text = '', mixed $parameters = array())
   {
     return $text;
   }

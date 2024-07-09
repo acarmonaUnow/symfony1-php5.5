@@ -558,10 +558,9 @@ class Doctrine_Collection extends Doctrine_Access implements Countable, Iterator
     /**
      * Load all relationships or the named relationship passed
      *
-     * @param mixed $name
      * @return boolean
      */
-    public function loadRelated($name = null)
+    public function loadRelated(mixed $name = null)
     {
         $list = array();
         $query = $this->_table->createQuery();

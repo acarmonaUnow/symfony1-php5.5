@@ -55,7 +55,7 @@ class Doctrine_Hydrator
      *                              a string representing the name of the hydration mode or
      *                              or an instance of the hydration class
      */
-    public function setHydrationMode($hydrationMode)
+    public function setHydrationMode(mixed $hydrationMode)
     {
         $this->_hydrationMode = $hydrationMode;
     }
