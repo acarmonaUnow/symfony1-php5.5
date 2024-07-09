@@ -42,21 +42,6 @@ class Domain extends XMLElement {
 	private $description;
 
 	/**
-	 * @var        int Size
-	 */
-	private $size;
-
-	/**
-	 * @var        int Scale
-	 */
-	private $scale;
-
-	/**
-	 * @var        int Propel type from schema
-	 */
-	private $propelType;
-
-	/**
 	 * @var        string The SQL type to use for this column
 	 */
 	private $sqlType;
@@ -72,20 +57,17 @@ class Domain extends XMLElement {
 	private $database;
 
 	/**
-	 * Creates a new Domain object.
-	 * If this domain needs a name, it must be specified manually.
-	 *
-	 * @param      string $type Propel type.
-	 * @param      string $sqlType SQL type.
-	 * @param      string $size
-	 * @param      string $scale
-	 */
-	public function __construct($type = null, $sqlType = null, $size = null, $scale = null)
+  * Creates a new Domain object.
+  * If this domain needs a name, it must be specified manually.
+  *
+  * @param string $propelType Propel type.
+  * @param      string $sqlType SQL type.
+  * @param      string $size
+  * @param      string $scale
+  */
+ public function __construct(private $propelType = null, $sqlType = null, private $size = null, private $scale = null)
 	{
-		$this->propelType = $type;
-		$this->sqlType = ($sqlType !== null) ? $sqlType : $type;
-		$this->size = $size;
-		$this->scale = $scale;
+		$this->sqlType = ($sqlType !== null) ? $sqlType : $this->propelType;
 	}
 
 	/**

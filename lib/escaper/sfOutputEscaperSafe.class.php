@@ -18,21 +18,16 @@
  */
 class sfOutputEscaperSafe extends ArrayIterator implements \Stringable
 {
-  protected
-    $value = null;
-
   /**
    * Constructor.
    *
    * @param mixed $value  The value to mark as safe
    */
-  public function __construct($value)
+  public function __construct(protected $value)
   {
-    $this->value = $value;
-
-    if (is_array($value) || is_object($value))
+    if (is_array($this->value) || is_object($this->value))
     {
-      parent::__construct($value);
+      parent::__construct($this->value);
     }
   }
 

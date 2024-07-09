@@ -32,34 +32,11 @@ require_once 'phing/parser/AbstractHandler.php';
 class XmlToDataSQL extends AbstractHandler {
 
 	/**
-	 * The GeneratorConfig associated with the build.
-	 *
-	 * @var        GeneratorConfig
-	 */
-	private $generatorConfig;
-
-	/**
-	 * The database.
-	 *
-	 * @var        Database
-	 */
-	private $database;
-
-	/**
 	 * The output writer for the SQL file.
 	 *
 	 * @var        Writer
 	 */
 	private $sqlWriter;
-
-	/**
-	 * The database (and output SQL file) encoding.
-	 *
-	 * Values will be converted to this encoding in the output file.
-	 *
-	 * @var        string
-	 */
-	private $encoding;
 
 	/**
 	 * The classname of the static class that will perform the building.
@@ -98,21 +75,33 @@ class XmlToDataSQL extends AbstractHandler {
 	const DEBUG = false;
 
 	/**
-	 * Construct new XmlToDataSQL class.
-	 *
-	 * This class is passed the Database object so that it knows what to expect from
-	 * the XML file.
-	 *
-	 * @param      Database $database
-	 * @param      GeneratorConfig $config
-	 * @param      string $encoding Database encoding
-	 */
-	public function __construct(Database $database, GeneratorConfig $config, $encoding = 'iso-8859-1')
-	{
-		$this->database = $database;
-		$this->generatorConfig = $config;
-		$this->encoding = $encoding;
-	}
+  * Construct new XmlToDataSQL class.
+  *
+  * This class is passed the Database object so that it knows what to expect from
+  * the XML file.
+  *
+  * @param      Database $database
+  * @param GeneratorConfig $generatorConfig
+  * @param      string $encoding Database encoding
+  */
+ public function __construct(
+     /**
+      * The database.
+      */
+     private Database $database,
+     /**
+      * The GeneratorConfig associated with the build.
+      */
+     private GeneratorConfig $generatorConfig,
+     /**
+      * The database (and output SQL file) encoding.
+      *
+      * Values will be converted to this encoding in the output file.
+      */
+     private $encoding = 'iso-8859-1'
+ )
+ {
+ }
 
 	/**
 	 * Transform the data dump input file into SQL and writes it to the output stream.
@@ -229,14 +218,9 @@ class XmlToDataSQL extends AbstractHandler {
  */
 class DataRow
 {
-	private $table;
-	private $columnValues;
-
-	public function __construct(Table $table, $columnValues)
-	{
-		$this->table = $table;
-		$this->columnValues = $columnValues;
-	}
+	public function __construct(private Table $table, private $columnValues)
+ {
+ }
 
 	public function getTable()
 	{
@@ -255,14 +239,9 @@ class DataRow
  */
 class ColumnValue {
 
-	private $col;
-	private $val;
-
-	public function __construct(Column $col, $val)
-	{
-		$this->col = $col;
-		$this->val = $val;
-	}
+	public function __construct(private Column $col, private $val)
+ {
+ }
 
 	public function getColumn()
 	{

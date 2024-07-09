@@ -26,20 +26,18 @@ class Swift_KeyCache_ArrayKeyCache implements Swift_KeyCache
   private $_contents = array();
   
   /**
-   * An InputStream for cloning.
-   * @var Swift_KeyCache_KeyCacheInputStream
-   * @access private
-   */
-  private $_stream;
-  
-  /**
    * Create a new ArrayKeyCache with the given $stream for cloning to make
    * InputByteStreams.
-   * @param Swift_KeyCache_KeyCacheInputStream $stream
+   * @param Swift_KeyCache_KeyCacheInputStream $_stream
    */
-  public function __construct(Swift_KeyCache_KeyCacheInputStream $stream)
+  public function __construct(
+      /**
+       * An InputStream for cloning.
+       * @access private
+       */
+      private Swift_KeyCache_KeyCacheInputStream $_stream
+  )
   {
-    $this->_stream = $stream;
   }
   
   /**

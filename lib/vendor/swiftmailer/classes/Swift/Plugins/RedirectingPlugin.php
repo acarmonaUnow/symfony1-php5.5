@@ -18,19 +18,17 @@ class Swift_Plugins_RedirectingPlugin
   implements Swift_Events_SendListener
 {
   /**
-   * The recipient who will receive all messages.
-   * @var string
-   * @access private
-   */
-  private $_recipient;
-  
-  /**
    * Create a new RedirectingPlugin.
-   * @param int $recipient
+   * @param int $_recipient
    */
-  public function __construct($recipient)
+  public function __construct(
+      /**
+       * The recipient who will receive all messages.
+       * @access private
+       */
+      private $_recipient
+  )
   {
-    $this->_recipient = $recipient;
   }
   
   /**

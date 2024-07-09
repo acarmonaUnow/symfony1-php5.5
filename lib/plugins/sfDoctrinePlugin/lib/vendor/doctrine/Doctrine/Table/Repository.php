@@ -35,11 +35,6 @@
 class Doctrine_Table_Repository implements Countable, IteratorAggregate
 {
     /**
-     * @var object Doctrine_Table $table
-     */
-    private $table;
-
-    /**
      * @var array $registry
      * an array of all records
      * keys representing record object identifiers
@@ -51,9 +46,8 @@ class Doctrine_Table_Repository implements Countable, IteratorAggregate
      *
      * @param Doctrine_Table $table
      */
-    public function __construct(Doctrine_Table $table)
+    public function __construct(private Doctrine_Table $table)
     {
-        $this->table = $table;
     }
 
     /**

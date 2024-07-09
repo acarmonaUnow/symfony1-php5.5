@@ -20,9 +20,6 @@
 class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet, \Stringable
 {
   
-  /** HeaderFactory */
-  private $_factory;
-  
   /** Collection of set Headers */
   private $_headers = array();
   
@@ -37,14 +34,13 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet, \Stringable
   
   /**
    * Create a new SimpleHeaderSet with the given $factory.
-   * 
-   * @param Swift_Mime_HeaderFactory $factory
+   *
+   * @param Swift_Mime_HeaderFactory $_factory
    * @param string $charset
    */
-  public function __construct(Swift_Mime_HeaderFactory $factory,
+  public function __construct(private Swift_Mime_HeaderFactory $_factory,
     $charset = null)
   {
-    $this->_factory = $factory;
     if (isset($charset))
     {
       $this->setCharset($charset);

@@ -17,21 +17,13 @@
 class Swift_StreamFilters_StringReplacementFilter implements Swift_StreamFilter
 {
   
-  /** The needle(s) to search for */
-  private $_search;
-  
-  /** The replacement(s) to make */
-  private $_replace;
-  
   /**
    * Create a new StringReplacementFilter with $search and $replace.
-   * @param string|array $search
-   * @param string|array $replace
+   * @param string|array $_search
+   * @param string|array $_replace
    */
-  public function __construct($search, $replace)
+  public function __construct(private $_search, private $_replace)
   {
-    $this->_search = $search;
-    $this->_replace = $replace;
   }
   
   /**

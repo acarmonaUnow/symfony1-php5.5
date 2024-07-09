@@ -27,40 +27,11 @@ class Swift_Plugins_ThrottlerPlugin
   const MESSAGES_PER_MINUTE = 0x10;
   
   /**
-   * The Sleeper instance for sleeping.
-   * @var Swift_Plugins_Sleeper
-   * @access private
-   */
-  private $_sleeper;
-  
-  /**
-   * The Timer instance which provides the timestamp.
-   * @var Swift_Plugins_Timer
-   * @access private
-   */
-  private $_timer;
-  
-  /**
    * The time at which the first email was sent.
    * @var int
    * @access private
    */
   private $_start;
-  
-  /**
-   * The rate at which messages should be sent.
-   * @var int
-   * @access private
-   */
-  private $_rate;
-  
-  /**
-   * The mode for throttling.
-   * This is {@link BYTES_PER_MINUTE} or {@link MESSAGES_PER_MINUTE}
-   * @var int
-   * @access private
-   */
-  private $_mode;
   
   /**
    * An internal counter of the number of messages sent.
@@ -71,18 +42,35 @@ class Swift_Plugins_ThrottlerPlugin
   
   /**
    * Create a new ThrottlerPlugin.
-   * @param int $rate
-   * @param int $mode, defaults to {@link BYTES_PER_MINUTE}
-   * @param Swift_Plugins_Sleeper $sleeper (only needed in testing)
-   * @param Swift_Plugins_Timer $timer (only needed in testing)
+   * @param int $_rate
+   * @param int $_mode , defaults to {@link BYTES_PER_MINUTE}
+   * @param Swift_Plugins_Sleeper $_sleeper (only needed in testing)
+   * @param Swift_Plugins_Timer $_timer (only needed in testing)
    */
-  public function __construct($rate, $mode = self::BYTES_PER_MINUTE,
-    Swift_Plugins_Sleeper $sleeper = null, Swift_Plugins_Timer $timer = null)
+  public function __construct(
+      /**
+       * The rate at which messages should be sent.
+       * @access private
+       */
+      private $_rate,
+      /**
+       * The mode for throttling.
+       * This is {@link BYTES_PER_MINUTE} or {@link MESSAGES_PER_MINUTE}
+       * @access private
+       */
+      private $_mode = self::BYTES_PER_MINUTE,
+      /**
+       * The Sleeper instance for sleeping.
+       * @access private
+       */
+      private ?\Swift_Plugins_Sleeper $_sleeper = null,
+      /**
+       * The Timer instance which provides the timestamp.
+       * @access private
+       */
+      private ?\Swift_Plugins_Timer $_timer = null
+  )
   {
-    $this->_rate = $rate;
-    $this->_mode = $mode;
-    $this->_sleeper = $sleeper;
-    $this->_timer = $timer;
   }
   
   /**

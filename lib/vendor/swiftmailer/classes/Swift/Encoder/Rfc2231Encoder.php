@@ -19,19 +19,17 @@ class Swift_Encoder_Rfc2231Encoder implements Swift_Encoder
 {
   
   /**
-   * A character stream to use when reading a string as characters instead of bytes.
-   * @var Swift_CharacterStream
-   * @access private
-   */
-  private $_charStream;
-  
-  /**
    * Creates a new Rfc2231Encoder using the given character stream instance.
    * @param Swift_CharacterStream
    */
-  public function __construct(Swift_CharacterStream $charStream)
+  public function __construct(
+      /**
+       * A character stream to use when reading a string as characters instead of bytes.
+       * @access private
+       */
+      private Swift_CharacterStream $_charStream
+  )
   {
-    $this->_charStream = $charStream;
   }
   
   /**

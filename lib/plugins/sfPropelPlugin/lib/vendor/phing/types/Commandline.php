@@ -373,10 +373,9 @@ class Commandline implements \Stringable {
 class CommandlineArgument {
 
     private $parts = array();
-    private $outer;
     
-    public function __construct(Commandline $outer) {
-        $this->outer = $outer;
+    public function __construct(private Commandline $outer)
+    {
     }
     
     /**
@@ -438,13 +437,11 @@ class CommandlineArgument {
 // whether there might be additional use cases.</p> --SB
 class CommandlineMarker {
 
-    private $position;
     private $realPos = -1;
     private $outer;
     
-    public function __construct(Comandline $outer, $position) {
+    public function __construct(Comandline $outer, private $position) {
         $this->outer = $outer;
-        $this->position = $position;
     }
 
     /**

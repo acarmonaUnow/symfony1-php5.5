@@ -35,8 +35,6 @@ class Index extends XMLElement {
 
 	/** enables debug output */
 	const DEBUG = false;
-
-	private $indexName;
 	private $parentTable;
 
 	/** @var        array string[] */
@@ -46,14 +44,13 @@ class Index extends XMLElement {
 	private $indexColumnSizes = array();
 
 	/**
-	 * Creates a new Index instance.
-	 *
-	 * @param      string $name
-	 */
-	public function __construct($name=null)
-	{
-		$this->indexName = $name;
-	}
+  * Creates a new Index instance.
+  *
+  * @param string $indexName
+  */
+ public function __construct(private $indexName=null)
+ {
+ }
 
 	private function createName()
 	{

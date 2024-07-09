@@ -36,27 +36,15 @@
  */
 class ValidationFailed implements \Stringable {
 
-	/** Column name in tablename.COLUMN_NAME format */
-	private $colname;
-
-	/** Message to display to user. */
-	private $message;
-
-	/** Validator object that caused this to fail. */
-	private $validator;
-
 	/**
 	 * Construct a new ValidationFailed object.
 	 * @param      string $colname Column name.
 	 * @param      string $message Message to display to user.
 	 * @param      object $validator The Validator that caused this column to fail.
 	 */
-	public function __construct($colname, $message, $validator = null)
-	{
-		$this->colname = $colname;
-		$this->message = $message;
-		$this->validator = $validator;
-	}
+	public function __construct(private $colname, private $message, private $validator = null)
+ {
+ }
 
 	/**
 	 * Set the column name.

@@ -18,17 +18,13 @@
 class Swift_Mailer
 {
   
-  /** The Transport used to send messages */
-  private $_transport;
-  
   /**
    * Create a new Mailer using $transport for delivery.
-   * 
-   * @param Swift_Transport $transport
+   *
+   * @param Swift_Transport $_transport
    */
-  public function __construct(Swift_Transport $transport)
+  public function __construct(private Swift_Transport $_transport)
   {
-    $this->_transport = $transport;
   }
 
   /**

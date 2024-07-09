@@ -18,9 +18,6 @@
  */
 class sfMessageSource_Aggregate extends sfMessageSource
 {
-  protected
-    $messageSources = array();
-
   /**
    * Constructor.
    *
@@ -31,9 +28,8 @@ class sfMessageSource_Aggregate extends sfMessageSource
    *
    * @see   MessageSource::factory();
    */
-  function __construct($messageSources)
+  function __construct(protected $messageSources)
   {
-    $this->messageSources = $messageSources;
   }
 
   public function setCulture($culture)

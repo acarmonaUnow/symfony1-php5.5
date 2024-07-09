@@ -38,11 +38,6 @@ class Doctrine_Node implements IteratorAggregate
     protected $record;
 
     /**
-     * @param array     $options
-     */
-    protected $options;
-
-    /**
      * @param string     $iteratorType  (Pre | Post | Level)
      */
     protected $iteratorType;
@@ -65,10 +60,9 @@ class Doctrine_Node implements IteratorAggregate
      * @param object $record                    instance of Doctrine_Record
      * @param array $options                    options
      */
-    public function __construct(Doctrine_Record $record, $options)
+    public function __construct(Doctrine_Record $record, protected $options)
     {
         $this->record = $record;
-        $this->options = $options;
         
         // Make sure that the tree object of the root class is used in the case
         // of column aggregation inheritance (single table inheritance).

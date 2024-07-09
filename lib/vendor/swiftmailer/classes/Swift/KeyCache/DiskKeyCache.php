@@ -28,20 +28,6 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
   const POSITION_CURRENT = 2;
 
   /**
-   * An InputStream for cloning.
-   * @var Swift_KeyCache_KeyCacheInputStream
-   * @access private
-   */
-  private $_stream;
-
-  /**
-   * A path to write to.
-   * @var string
-   * @access private
-   */
-  private $_path;
-
-  /**
    * Stored keys.
    * @var array
    * @access private
@@ -58,14 +44,19 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
   /**
    * Create a new DiskKeyCache with the given $stream for cloning to make
    * InputByteStreams, and the given $path to save to.
-   * @param Swift_KeyCache_KeyCacheInputStream $stream
-   * @param string $path to save to
+   * @param Swift_KeyCache_KeyCacheInputStream $_stream
+   * @param string $_path to save to
    */
-  public function __construct(Swift_KeyCache_KeyCacheInputStream $stream, $path)
+  public function __construct(/**
+   * An InputStream for cloning.
+   * @access private
+   */
+  private Swift_KeyCache_KeyCacheInputStream $_stream, /**
+   * A path to write to.
+   * @access private
+   */
+  private $_path)
   {
-    $this->_stream = $stream;
-    $this->_path = $path;
-
     if (function_exists('get_magic_quotes_runtime') && @get_magic_quotes_runtime() == 1)
     {
       $this->_quotes = true;

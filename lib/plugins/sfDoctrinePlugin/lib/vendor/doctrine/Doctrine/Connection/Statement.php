@@ -39,23 +39,17 @@ class Doctrine_Connection_Statement implements Doctrine_Adapter_Statement_Interf
     protected $_conn;
 
     /**
-     * @var mixed $_stmt                    PDOStatement object, boolean false or Doctrine_Adapter_Statement object
-     */
-    protected $_stmt;
-
-    /**
      * constructor
      *
      * @param Doctrine_Connection $conn     Doctrine_Connection object, every connection
      *                                      statement holds an instance of Doctrine_Connection
-     * @param mixed $stmt
+     * @param mixed $_stmt
      */
-    public function __construct(Doctrine_Connection $conn, $stmt)
+    public function __construct(Doctrine_Connection $conn, protected $_stmt)
     {
         $this->_conn = $conn;
-        $this->_stmt = $stmt;
 
-        if ($stmt === false) {
+        if ($this->_stmt === false) {
             throw new Doctrine_Exception('Unknown statement object given.');
         }
     }

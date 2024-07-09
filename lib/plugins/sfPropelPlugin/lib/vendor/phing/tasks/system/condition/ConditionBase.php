@@ -161,12 +161,12 @@ class ConditionEnumeration implements Iterator {
     
     /** Current element number */
     private $num = 0;
-    
-    /** "Outer" ConditionBase class. */
-    private $outer;
 
-    function __construct(ConditionBase $outer) {
-        $this->outer = $outer;
+    function __construct(
+        /** "Outer" ConditionBase class. */
+        private ConditionBase $outer
+    )
+    {
     }
     
     public function valid() {

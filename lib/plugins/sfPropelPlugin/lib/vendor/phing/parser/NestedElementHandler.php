@@ -53,22 +53,10 @@ class NestedElementHandler extends AbstractHandler {
     private $child;
 
     /**
-     *  Reference to the parent wrapper object
-     *  @var object
-     */
-    private $parentWrapper;
-
-    /**
      *  Reference to the child wrapper object
      *  @var object
      */
     private $childWrapper;
-
-    /**
-     *  Reference to the related target object
-     *  @var object the target instance
-     */
-    private $target;
 
     /**
      *  Constructs a new NestedElement handler and sets up everything.
@@ -81,16 +69,21 @@ class NestedElementHandler extends AbstractHandler {
      *  @param  object  the target object this task is contained in
      *  @access public
      */
-    function __construct($parser, $parentHandler, $configurator, $parent, $parentWrapper, $target) {
+    function __construct($parser, $parentHandler, $configurator, $parent, /**
+     *  Reference to the parent wrapper object
+     */
+    private $parentWrapper, /**
+     *  Reference to the related target object
+     *  @var object the target instance
+     */
+    private $target) {
         parent::__construct($parser, $parentHandler);
         $this->configurator = $configurator;
         if ($parent instanceof TaskAdapter) {
             $this->parent = $parent->getProxy();
         } else {
             $this->parent = $parent;
-        }
-        $this->parentWrapper = $parentWrapper;
-        $this->target = $target;        
+        }        
     }
 
     /**

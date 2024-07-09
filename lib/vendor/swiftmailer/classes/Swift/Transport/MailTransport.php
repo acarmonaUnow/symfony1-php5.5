@@ -30,21 +30,17 @@ class Swift_Transport_MailTransport implements Swift_Transport
   /** Addtional parameters to pass to mail() */
   private $_extraParams = '-f%s';
   
-  /** The event dispatcher from the plugin API */
-  private $_eventDispatcher;
-  
-  /** An invoker that calls the mail() function */
-  private $_invoker;
-  
   /**
    * Create a new MailTransport with the $log.
    * @param Swift_Transport_Log $log
    */
-  public function __construct(Swift_Transport_MailInvoker $invoker,
-    Swift_Events_EventDispatcher $eventDispatcher)
+  public function __construct(
+      /** An invoker that calls the mail() function */
+      private Swift_Transport_MailInvoker $_invoker,
+      /** The event dispatcher from the plugin API */
+      private Swift_Events_EventDispatcher $_eventDispatcher
+  )
   {
-    $this->_invoker = $invoker;
-    $this->_eventDispatcher = $eventDispatcher;
   }
   
   /**

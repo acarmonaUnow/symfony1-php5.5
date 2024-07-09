@@ -32,24 +32,17 @@ include_once 'phing/system/io/Reader.php';
 */
 class BufferedReader extends Reader {
 
-    private $bufferSize = 0;
     private $buffer     = null;
     private $bufferPos  = 0;
     
     /**
-     * The Reader we are buffering for.
-     */
-    private $in;
-    
-    /**
-     * 
-     * @param object $reader The reader (e.g. FileReader).
-     * @param integer $buffsize The size of the buffer we should use for reading files.
+     *
+     * @param object $in The reader (e.g. FileReader).
+     * @param integer $bufferSize The size of the buffer we should use for reading files.
      *                             A large buffer ensures that most files (all scripts?) are parsed in 1 buffer.
-     */     
-    function __construct(Reader $reader, $buffsize = 65536) {
-        $this->in = $reader;
-        $this->bufferSize = $buffsize;
+     */
+    function __construct(private Reader $in, private $bufferSize = 65536)
+    {
     }
 
     /**

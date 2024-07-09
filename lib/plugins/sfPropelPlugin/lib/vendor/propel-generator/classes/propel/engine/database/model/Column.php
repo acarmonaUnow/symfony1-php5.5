@@ -44,8 +44,6 @@ class Column extends XMLElement {
   const DEFAULT_TYPE = "VARCHAR";
   const DEFAULT_VISIBILITY = 'public';
   public static $valid_visibilities = array('public', 'protected', 'private');
-
-  private $name;
   private $description;
   private $phpName = null;
   private $phpNamingMethod;
@@ -110,9 +108,8 @@ class Column extends XMLElement {
    *
    * @param      name column name
    */
-  public function __construct($name = null)
+  public function __construct(private $name = null)
   {
-    $this->name = $name;
   }
 
   /**

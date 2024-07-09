@@ -48,19 +48,17 @@ class Doctrine_Validator_ErrorStack extends Doctrine_Access implements Countable
     protected $_validators = array();
 
     /**
-     * Get model class name for the error stack
-     *
-     * @var string
-     */
-    protected $_className;
-
-    /**
      * Constructor
      *
+     * @param string $className
      */
-    public function __construct($className)
+    public function __construct(
+        /**
+         * Get model class name for the error stack
+         */
+        protected $_className
+    )
     {
-        $this->_className = $className;
     }
 
     /**

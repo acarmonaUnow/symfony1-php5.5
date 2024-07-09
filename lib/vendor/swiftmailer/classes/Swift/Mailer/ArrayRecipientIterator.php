@@ -20,19 +20,17 @@ class Swift_Mailer_ArrayRecipientIterator
 {
   
   /**
-   * The list of recipients.
-   * @var array
-   * @access private
-   */
-  private $_recipients = array();
-  
-  /**
    * Create a new ArrayRecipientIterator from $recipients.
-   * @param array $recipients
+   * @param array $_recipients
    */
-  public function __construct(array $recipients)
+  public function __construct(
+      /**
+       * The list of recipients.
+       * @access private
+       */
+      private array $_recipients
+  )
   {
-    $this->_recipients = $recipients;
   }
   
   /**

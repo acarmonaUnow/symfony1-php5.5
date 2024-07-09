@@ -58,9 +58,6 @@ class XmlToAppData extends AbstractHandler {
 	private $isForReferenceOnly;
 	private $currentPackage;
 	private $currentXmlFile;
-	private $defaultPackage;
-
-	private $encoding;
 
 	/** two-dimensional array,
 		first dimension is for schemas(key is the path to the schema file),
@@ -76,13 +73,11 @@ class XmlToAppData extends AbstractHandler {
 	 * @param      string $defaultPackage the default PHP package used for the om
 	 * @param      string $encoding The database encoding.
 	 */
-	public function __construct(Platform $platform, $defaultPackage, $encoding = 'iso-8859-1')
+	public function __construct(Platform $platform, private $defaultPackage, private $encoding = 'iso-8859-1')
 	{
 		$this->app = new AppData($platform);
 		$this->platform = $platform;
-		$this->defaultPackage = $defaultPackage;
 		$this->firstPass = true;
-		$this->encoding = $encoding;
 	}
 
 	/**

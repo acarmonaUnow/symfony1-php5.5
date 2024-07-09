@@ -24,7 +24,6 @@
  */
 class sfNamespacedParameterHolder extends sfParameterHolder
 {
-  protected $default_namespace = null;
   protected $parameters = array();
 
   /**
@@ -37,9 +36,8 @@ class sfNamespacedParameterHolder extends sfParameterHolder
    * ?>
    * </code>
    */
-  public function __construct($namespace = 'symfony/default')
+  public function __construct(protected $default_namespace = 'symfony/default')
   {
-    $this->default_namespace = $namespace;
   }
 
     /**

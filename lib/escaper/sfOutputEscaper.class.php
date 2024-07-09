@@ -18,21 +18,6 @@
  */
 abstract class sfOutputEscaper
 {
-  /**
-   * The value that is to be escaped.
-   *
-   * @var mixed
-   */
-  protected $value;
-
-  /**
-   * The escaping method that is going to be applied to the value and its
-   * children. This is actually the name of a PHP callable.
-   *
-   * @var string
-   */
-  protected $escapingMethod;
-
   static protected $safeClasses = array();
 
   /**
@@ -44,10 +29,18 @@ abstract class sfOutputEscaper
    * @param string $escapingMethod  Escaping method
    * @param string $value           Escaping value
    */
-  public function __construct($escapingMethod, $value)
+  public function __construct(
+      /**
+       * The escaping method that is going to be applied to the value and its
+       * children. This is actually the name of a PHP callable.
+       */
+      protected $escapingMethod,
+      /**
+       * The value that is to be escaped.
+       */
+      protected $value
+  )
   {
-    $this->value          = $value;
-    $this->escapingMethod = $escapingMethod;
   }
 
   /**

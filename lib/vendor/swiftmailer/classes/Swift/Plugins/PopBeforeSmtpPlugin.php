@@ -24,15 +24,6 @@ class Swift_Plugins_PopBeforeSmtpPlugin
   /** A delegate connection to use (mostly a test hook) */
   private $_connection;
   
-  /** Hostname of the POP3 server */
-  private $_host;
-  
-  /** Port number to connect on */
-  private $_port;
-  
-  /** Encryption type to use (if any) */
-  private $_crypto;
-  
   /** Username to use (if any) */
   private $_username;
   
@@ -50,16 +41,18 @@ class Swift_Plugins_PopBeforeSmtpPlugin
   
   /**
    * Create a new PopBeforeSmtpPlugin for $host and $port.
-   * 
-   * @param string $host
-   * @param int $port
+   *
+   * @param string $_host
+   * @param int $_port
    * @param string $cypto as "tls" or "ssl"
    */
-  public function __construct($host, $port = 110, $crypto = null)
+  public function __construct(
+      private $_host,
+      private $_port = 110,
+      /** Encryption type to use (if any) */
+      private $_crypto = null
+  )
   {
-    $this->_host = $host;
-    $this->_port = $port;
-    $this->_crypto = $crypto;
   }
   
   /**

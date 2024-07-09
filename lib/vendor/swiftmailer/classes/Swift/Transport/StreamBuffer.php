@@ -32,20 +32,15 @@ class Swift_Transport_StreamBuffer
   /** Buffer initialization parameters */
   private $_params = array();
   
-  /** The ReplacementFilterFactory */
-  private $_replacementFactory;
-  
   /** Translations performed on data being streamed into the buffer */
   private $_translations = array();
   
   /**
    * Create a new StreamBuffer using $replacementFactory for transformations.
-   * @param Swift_ReplacementFilterFactory $replacementFactory
+   * @param Swift_ReplacementFilterFactory $_replacementFactory
    */
-  public function __construct(
-    Swift_ReplacementFilterFactory $replacementFactory)
+  public function __construct(private Swift_ReplacementFilterFactory $_replacementFactory)
   {
-    $this->_replacementFactory = $replacementFactory;
   }
   
   /**

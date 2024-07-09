@@ -35,15 +35,13 @@ require_once 'phing/util/ExtendedFileStream.php';
  */
 class CoverageReportTransformer
 {
-	private $task = NULL;
 	private $styleDir = "";
 	private $toDir = "";
 	private $document = NULL;
 
-	function __construct(Task $task)
-	{
-		$this->task = $task;
-	}
+	function __construct(private Task $task)
+ {
+ }
 
 	function setStyleDir($styleDir)
 	{

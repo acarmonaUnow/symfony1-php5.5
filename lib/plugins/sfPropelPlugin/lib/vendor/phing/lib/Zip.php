@@ -92,13 +92,6 @@
 class Archive_Zip
 {
     /**
-    * The filename of the zip archive.
-    *
-    * @var string Name of the Zip file
-    */
-    public $_zipname='';
-
-    /**
     * File descriptor of the opened Zip file.
     *
     * @var int Internal zip file descriptor
@@ -117,23 +110,23 @@ class Archive_Zip
 
     // {{{ constructor
     /**
-    * Archive_Zip Class constructor. This flavour of the constructor only
-    * declare a new Archive_Zip object, identifying it by the name of the
-    * zip file.
-    *
-    * @param    string  $p_zipname  The name of the zip archive to create
-    * @access public
-    */
-    function __construct($p_zipname)
+     * Archive_Zip Class constructor. This flavour of the constructor only
+     * declare a new Archive_Zip object, identifying it by the name of the
+     * zip file.
+     *
+     * @param string $_zipname The name of the zip archive to create
+     * @access public
+     */
+    function __construct(/**
+     * The filename of the zip archive.
+     */
+    public $_zipname)
     {
       if (!extension_loaded('zlib')) {
           throw new Exception("The extension 'zlib' couldn't be found.\n".
               "Please make sure your version of PHP was built ".
               "with 'zlib' support.");
       }
-
-      // ----- Set the attributes
-      $this->_zipname = $p_zipname;
       $this->_zip_fd = 0;
     }
     // }}}

@@ -29,13 +29,10 @@
  */
 class NestedSetRecursiveIterator implements RecursiveIterator
 {
-	protected $topNode = null;
-
 	protected $curNode = null;
 
-	public function __construct($node) {
-		$this->topNode = $node;
-		$this->curNode = $node;
+	public function __construct(protected $topNode) {
+		$this->curNode = $this->topNode;
 	}
 
 	public function rewind() {

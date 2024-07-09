@@ -18,17 +18,13 @@
 class Swift_Plugins_Loggers_EchoLogger implements Swift_Plugins_Logger
 {
   
-  /** Whether or not HTML should be output */
-  private $_isHtml;
-  
   /**
    * Create a new EchoLogger.
-   * 
-   * @param boolean $isHtml
+   *
+   * @param boolean $_isHtml
    */
-  public function __construct($isHtml = true)
+  public function __construct(private $_isHtml = true)
   {
-    $this->_isHtml = $isHtml;
   }
   
   /**

@@ -34,11 +34,6 @@
 abstract class Doctrine_Collection_Iterator implements Iterator
 {
     /**
-     * @var Doctrine_Collection $collection
-     */
-    protected $collection;
-
-    /**
      * @var array $keys
      */
     protected $keys;
@@ -61,10 +56,10 @@ abstract class Doctrine_Collection_Iterator implements Iterator
     /**
      * constructor
      * @var Doctrine_Collection $collection
+     * @param \Doctrine_Collection $collection
      */
-    public function __construct($collection)
+    public function __construct(protected $collection)
     {
-        $this->collection = $collection;
         $this->keys       = $this->collection->getKeys();
         $this->count      = $this->collection->count();
     }

@@ -20,19 +20,17 @@ class Swift_CharacterReader_GenericFixedWidthReader
   implements Swift_CharacterReader
 {
   /**
-   * The number of bytes in a single character.
-   * @var int
-   * @access private
-   */
-  private $_width;
-
-  /**
    * Creates a new GenericFixedWidthReader using $width bytes per character.
-   * @param int $width
+   * @param int $_width
    */
-  public function __construct($width)
+  public function __construct(
+      /**
+       * The number of bytes in a single character.
+       * @access private
+       */
+      private $_width
+  )
   {
-    $this->_width = $width;
   }
 
   /**

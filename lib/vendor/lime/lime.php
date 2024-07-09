@@ -1067,14 +1067,11 @@ class lime_coverage extends lime_registration
   public $files = array();
   public $extension = '.php';
   public $base_dir = '';
-  public $harness = null;
   public $verbose = false;
   protected $coverage = array();
 
-  public function __construct($harness)
+  public function __construct(public $harness)
   {
-    $this->harness = $harness;
-
     if (!function_exists('xdebug_start_code_coverage'))
     {
       throw new Exception('You must install and enable xdebug before using lime coverage.');

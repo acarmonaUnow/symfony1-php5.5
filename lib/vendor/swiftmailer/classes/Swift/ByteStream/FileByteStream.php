@@ -23,9 +23,6 @@ class Swift_ByteStream_FileByteStream
   /** The internal pointer offset */
   private $_offset = 0;
   
-  /** The path to the file */
-  private $_path;
-  
   /** The mode this file is opened in for writing */
   private $_mode;
   
@@ -43,12 +40,11 @@ class Swift_ByteStream_FileByteStream
   
   /**
    * Create a new FileByteStream for $path.
-   * @param string $path
+   * @param string $_path
    * @param string $writable if true
    */
-  public function __construct($path, $writable = false)
+  public function __construct(private $_path, $writable = false)
   {
-    $this->_path = $path;
     $this->_mode = $writable ? 'w+b' : 'rb';
     
     if (function_exists('get_magic_quotes_runtime') && @get_magic_quotes_runtime() == 1)

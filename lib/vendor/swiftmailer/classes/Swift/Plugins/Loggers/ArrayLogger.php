@@ -25,19 +25,18 @@ class Swift_Plugins_Loggers_ArrayLogger implements Swift_Plugins_Logger
   private $_log = array();
   
   /**
-   * Max size of the log.
-   * @var int
-   * @access private
-   */
-  private $_size = 0;
-  
-  /**
    * Create a new ArrayLogger with a maximum of $size entries.
    * @var int $size
+   * @param int $size
    */
-  public function __construct($size = 50)
+  public function __construct(
+      /**
+       * Max size of the log.
+       * @access private
+       */
+      private $_size = 50
+  )
   {
-    $this->_size = $size;
   }
   
   /**

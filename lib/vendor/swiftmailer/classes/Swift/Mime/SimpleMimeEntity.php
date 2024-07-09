@@ -18,17 +18,11 @@
 class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity, \Stringable
 {
   
-  /** A collection of Headers for this mime entity */
-  private $_headers;
-  
   /** The body as a string, or a stream */
   private $_body;
   
   /** The encoder that encodes the body into a streamable format */
   private $_encoder;
-
-  /** The grammar to use for id validation */
-  private $_grammar;
   
   /** A mime bounary, if any is used */
   private $_boundary;
@@ -45,9 +39,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity, \Stringable
     
   /** The nesting level of this entity */
   private $_nestingLevel = self::LEVEL_ALTERNATIVE;
-  
-  /** A KeyCache instance used during encoding and streaming */
-  private $_cache;
   
   /** Direct descendants of this entity */
   private $_immediateChildren = array();
@@ -75,19 +66,16 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity, \Stringable
   
   /**
    * Create a new SimpleMimeEntity with $headers, $encoder and $cache.
-   * @param Swift_Mime_HeaderSet $headers
+   * @param Swift_Mime_HeaderSet $_headers
    * @param Swift_Mime_ContentEncoder $encoder
-   * @param Swift_KeyCache $cache
-   * @param Swift_Mime_Grammar $grammar
+   * @param Swift_KeyCache $_cache
+   * @param Swift_Mime_Grammar $_grammar
    */
-  public function __construct(Swift_Mime_HeaderSet $headers,
-    Swift_Mime_ContentEncoder $encoder, Swift_KeyCache $cache,
-    Swift_Mime_Grammar $grammar)
+  public function __construct(private Swift_Mime_HeaderSet $_headers,
+    Swift_Mime_ContentEncoder $encoder, private Swift_KeyCache $_cache,
+    private Swift_Mime_Grammar $_grammar)
   {
     $this->_cacheKey = uniqid();
-    $this->_cache = $cache;
-    $this->_headers = $headers;
-    $this->_grammar = $grammar;
     $this->setEncoder($encoder);
     $this->_headers->defineOrdering(
       array('Content-Type', 'Content-Transfer-Encoding')

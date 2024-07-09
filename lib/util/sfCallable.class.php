@@ -18,17 +18,13 @@
  */
 class sfCallable
 {
-  protected
-    $callable = null;
-
   /**
    * Constructor.
    *
    * @param mixed $callable  A valid PHP callable (must be valid when calling the call() method)
    */
-  public function __construct($callable)
+  public function __construct(protected $callable)
   {
-    $this->callable = $callable;
   }
 
   /**

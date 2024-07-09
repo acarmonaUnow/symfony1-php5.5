@@ -36,11 +36,6 @@ class Doctrine_Tree
      * @param object $table   reference to associated Doctrine_Table instance
      */
     protected $table;
-
-    /**
-     * @param array $options
-     */
-    protected $options = array();
     
     protected $_baseComponent;
 
@@ -50,10 +45,9 @@ class Doctrine_Tree
      * @param object $table                     instance of Doctrine_Table
      * @param array $options                    options
      */
-    public function __construct(Doctrine_Table $table, $options)
+    public function __construct(Doctrine_Table $table, protected $options)
     {
         $this->table = $table;
-        $this->options = $options;
         $this->_baseComponent = $table->getComponentName();
         $class = $this->_baseComponent;
         if ($table->getOption('inheritanceMap')) {

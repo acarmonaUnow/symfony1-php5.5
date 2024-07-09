@@ -41,12 +41,6 @@ class AppData {
 	private $dbList = array();
 
 	/**
-	 * The platform class for our database(s).
-	 * @var        string
-	 */
-	private $platform;
-
-	/**
 	 * Name of the database. Only one database definition
 	 * is allowed in one XML descriptor.
 	 */
@@ -63,10 +57,14 @@ class AppData {
 	 *
 	 * @param      Platform $platform The platform object to use for any databases added to this application model.
 	 */
-	public function __construct(Platform $platform)
-	{
-		$this->platform = $platform;
-	}
+	public function __construct(
+     /**
+      * The platform class for our database(s).
+      */
+     private Platform $platform
+ )
+ {
+ }
   
 	/**
 	 * Gets the platform object to use for any databases added to this application model. 

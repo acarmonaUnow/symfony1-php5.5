@@ -32,12 +32,9 @@ require_once 'phing/tasks/ext/dbdeploy/DbmsSyntax.php';
 
 class DbmsSyntaxFactory
 {
-	private $dbms;
-	
-	public function __construct($dbms)
-	{
-		$this->dbms = $dbms;
-	}
+	public function __construct(private $dbms)
+ {
+ }
 	
 	public function getDbmsSyntax()
 	{

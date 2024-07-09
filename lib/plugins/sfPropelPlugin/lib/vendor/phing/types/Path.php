@@ -430,10 +430,9 @@ class Path extends DataType implements \Stringable {
 class PathElement {
 
     private $parts = array();
-    private $outer;
 
-    public function __construct(Path $outer) {
-        $this->outer = $outer;
+    public function __construct(private Path $outer)
+    {
     }
 
     public function setDir(PhingFile $loc) {

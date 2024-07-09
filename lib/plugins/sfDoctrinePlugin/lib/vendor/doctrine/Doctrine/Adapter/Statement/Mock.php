@@ -33,13 +33,6 @@
 class Doctrine_Adapter_Statement_Mock implements Doctrine_Adapter_Statement_Interface
 {
     /**
-     * Variable which stores instance of Doctrine_Adapter_Mock
-     *
-     * @var Doctrine_Adapter_Mock
-     */
-    private $_mock;
-
-    /**
      * queryString
      *
      * @var string
@@ -49,11 +42,15 @@ class Doctrine_Adapter_Statement_Mock implements Doctrine_Adapter_Statement_Inte
     /**
      * Constructor for mock adapter statements. Accepts instance of Doctrine_Adapter_Mock
      *
-     * @param Doctrine_Adapter_Mock $mock
+     * @param Doctrine_Adapter_Mock $_mock
      */
-    public function __construct($mock)
+    public function __construct(
+        /**
+         * Variable which stores instance of Doctrine_Adapter_Mock
+         */
+        private $_mock
+    )
     {
-        $this->_mock  = $mock;
     }
 
     /**

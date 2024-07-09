@@ -23,17 +23,13 @@ class Swift_Plugins_LoggerPlugin
   Swift_Plugins_Logger
 {
   
-  /** The logger which is delegated to */
-  private $_logger;
-  
   /**
    * Create a new LoggerPlugin using $logger.
-   * 
-   * @param Swift_Plugins_Logger $logger
+   *
+   * @param Swift_Plugins_Logger $_logger
    */
-  public function __construct(Swift_Plugins_Logger $logger)
+  public function __construct(private Swift_Plugins_Logger $_logger)
   {
-    $this->_logger = $logger;
   }
   
   /**

@@ -33,7 +33,6 @@ require_once 'propel/engine/database/model/XMLElement.php';
 class ForeignKey extends XMLElement {
 
 	private $foreignTableName;
-	private $name;
 	private $phpName;
 	private $refPhpName;
 	private $onUpdate;
@@ -55,10 +54,9 @@ class ForeignKey extends XMLElement {
 	 *
 	 * @param      string $name
 	 */
-	public function __construct($name=null)
-	{
-		$this->name = $name;
-	}
+	public function __construct(private $name=null)
+ {
+ }
 
 	/**
 	 * Sets up the ForeignKey object based on the attributes that were passed to loadFromXML().

@@ -80,27 +80,6 @@ class Doctrine_Event
     protected $_sequence;
 
     /**
-     * @var mixed $_invoker             the handler which invoked this event
-     */
-    protected $_invoker;
-
-    /**
-     * @var string $_query              the sql query associated with this event (if any)
-     */
-    protected $_query;
-
-    /**
-     * @var string $_params             the parameters associated with the query (if any)
-     */
-    protected $_params;
-
-    /**
-     * @see Doctrine_Event constants
-     * @var integer $_code              the event code
-     */
-    protected $_code;
-
-    /**
      * @var integer $_startedMicrotime  the time point in which this event was started
      */
     protected $_startedMicrotime;
@@ -116,20 +95,25 @@ class Doctrine_Event
     protected $_options = array();
 
     /**
-     * constructor
-     *
-     * @param Doctrine_Connection|Doctrine_Connection_Statement|
-              Doctrine_Connection_UnitOfWork|Doctrine_Transaction $invoker   the handler which invoked this event
-     * @param integer $code                                                  the event code
-     * @param string $query                                                  the sql query associated with this event (if any)
+    * constructor
+    *
+    * @param Doctrine_Connection|Doctrine_Connection_Statement|
+             Doctrine_Connection_UnitOfWork|Doctrine_Transaction $invoker   the handler which invoked this event
+     * @param integer $_code the event code
+     * @param string $_query the sql query associated with this event (if any)
+    */
+    public function __construct(/**
+     * @var mixed $_invoker             the handler which invoked this event
      */
-    public function __construct($invoker, $code, $query = null, $params = array())
+    protected $_invoker, /**
+     * @see Doctrine_Event constants
+     */
+    protected $_code, protected $_query = null, /**
+     * @var string $_params             the parameters associated with the query (if any)
+     */
+    protected $_params = array())
     {
         $this->_sequence = self::$_nextSequence++;
-        $this->_invoker  = $invoker;
-        $this->_code     = $code;
-        $this->_query    = $query;
-        $this->_params   = $params;
     }
 
     /**

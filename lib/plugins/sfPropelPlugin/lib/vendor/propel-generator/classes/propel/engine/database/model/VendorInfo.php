@@ -32,13 +32,6 @@ include_once 'propel/engine/EngineException.php';
 class VendorInfo extends XMLElement {
 
 	/**
-	 * The vendor RDBMS type.
-	 *
-	 * @var        string
-	 */
-	private $type;
-
-	/**
 	 * Vendor parameters.
 	 *
 	 * @var        array
@@ -50,10 +43,14 @@ class VendorInfo extends XMLElement {
 	 *
 	 * @param      string $type RDBMS type (optional)
 	 */
-	public function __construct($type = null)
-	{
-		$this->type = $type;
-	}
+	public function __construct(
+     /**
+      * The vendor RDBMS type.
+      */
+     private $type = null
+ )
+ {
+ }
 
 	/**
 	 * Sets up this object based on the attributes that were passed to loadFromXML().

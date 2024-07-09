@@ -32,15 +32,12 @@ class SourceFileScanner {
 
     /** Instance of FileUtils */
     private $fileUtils;
-    
-    /** Task this class is working for -- for logging purposes. */
-    private $task;
 
     /**
      * @param task The task we should log messages through
      */
-    function __construct($task) {
-        $this->task = $task;
+    function __construct(/** Task this class is working for -- for logging purposes. */
+    private $task) {
         $this->fileUtils = new FileUtils();
     }
 

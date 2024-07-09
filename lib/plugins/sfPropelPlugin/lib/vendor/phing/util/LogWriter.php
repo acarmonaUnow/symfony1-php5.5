@@ -32,18 +32,12 @@
 	 */
 	class LogWriter extends Writer
 	{
-		private $task = NULL;
-		
-		private $level = NULL;
-		
 		/**
 		 * Constructs a new LogWriter object
 		 */
-		function __construct(Task $task, $level = Project::MSG_INFO)
-		{
-			$this->task = $task;
-			$this->level = $level;
-		}
+		function __construct(private Task $task, private $level = Project::MSG_INFO)
+  {
+  }
 		
 		/**
 		 * @see Writer::write()

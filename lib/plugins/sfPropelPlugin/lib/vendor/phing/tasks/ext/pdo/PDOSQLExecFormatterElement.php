@@ -102,18 +102,12 @@ class PDOSQLExecFormatterElement
 	private $formatterParams = array();
 
 	/**
-	 * @var PDOSQLExecTask 
-	 */
-	private $parentTask;
-
-	/**
 	 * Construct a new PDOSQLExecFormatterElement with parent task.
 	 * @param  PDOSQLExecTask $parentTask
 	 */
-	public function __construct(PDOSQLExecTask $parentTask)
-	{
-		$this->parentTask = $parentTask;
-	}
+	public function __construct(private PDOSQLExecTask $parentTask)
+ {
+ }
 
     /**
      * Supports nested <param> element (for custom formatter classes).

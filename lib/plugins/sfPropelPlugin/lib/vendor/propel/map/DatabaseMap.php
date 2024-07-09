@@ -39,9 +39,6 @@
 class DatabaseMap
 {
 
-  /** @var string Name of the database. */
-  protected $name;
-
   /** @var array TableMap[] Tables in the database, using table name as key */ 
   protected $tables = array();
   
@@ -53,9 +50,8 @@ class DatabaseMap
    *
    * @param      string $name Name of the database.
    */
-  public function __construct($name)
+  public function __construct(protected $name)
   {
-    $this->name = $name;
   }
   
   /**

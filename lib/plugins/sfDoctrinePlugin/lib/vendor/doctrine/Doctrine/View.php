@@ -50,11 +50,6 @@ class Doctrine_View
     const SELECT = 'SELECT * FROM %s';
 
     /**
-     * @var string $name                the name of the view
-     */
-    protected $_name;
-
-    /**
      * @var Doctrine_Query $query       the DQL query object this view is hooked into
      */
     protected $_query;
@@ -78,10 +73,13 @@ class Doctrine_View
      * constructor
      *
      * @param Doctrine_Query $query
+     * @param string $viewName
      */
-    public function __construct(Doctrine_Query $query, $viewName)
+    public function __construct(Doctrine_Query $query, /**
+     * @var string $name                the name of the view
+     */
+    protected $_name)
     {
-        $this->_name  = $viewName;
         $this->_query = $query;
         $this->_query->setView($this);
         $this->_conn   = $query->getConnection();

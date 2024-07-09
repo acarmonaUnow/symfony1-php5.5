@@ -95,13 +95,6 @@ class Table extends XMLElement implements IDMethod {
   private $idMethodParameters = array();
 
   /**
-   * Table name.
-   *
-   * @var        string
-   */
-  private $name;
-
-  /**
    * Table description.
    *
    * @var        string
@@ -296,9 +289,13 @@ class Table extends XMLElement implements IDMethod {
    *
    * @param      string $name table name
    */
-  public function __construct($name = null)
+  public function __construct(
+      /**
+       * Table name.
+       */
+      private $name = null
+  )
   {
-    $this->name = $name;
   }
 
   /**

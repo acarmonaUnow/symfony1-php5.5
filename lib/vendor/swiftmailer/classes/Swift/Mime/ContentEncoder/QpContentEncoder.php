@@ -19,18 +19,15 @@ class Swift_Mime_ContentEncoder_QpContentEncoder extends Swift_Encoder_QpEncoder
   implements Swift_Mime_ContentEncoder
 {
 
-  protected $_dotEscape;
-
   /**
    * Creates a new QpContentEncoder for the given CharacterStream.
    * @param Swift_CharacterStream $charStream to use for reading characters
    * @param Swift_StreamFilter $filter if canonicalization should occur
-   * @param boolean $dotEscape if dot stuffing workaround must be enabled
+   * @param boolean $_dotEscape if dot stuffing workaround must be enabled
    */
   public function __construct(Swift_CharacterStream $charStream,
-    Swift_StreamFilter $filter = null, $dotEscape=false)
+    Swift_StreamFilter $filter = null, protected $_dotEscape=false)
   {
-    $this->_dotEscape = $dotEscape;
     parent::__construct($charStream, $filter);
   }
 

@@ -35,11 +35,6 @@
 class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_Interface
 {
     /**
-     * @var string $queryString         actual query string
-     */
-    public $queryString;
-    
-    /**
      * @var resource $connection        OCI connection handler
      */
     protected $connection;
@@ -48,11 +43,6 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
      * @var resource $statement         OCI prepared statement
      */
     protected $statement;
-    
-    /**
-     * @var integer $executeMode        OCI statement execution mode
-     */
-    protected $executeMode = OCI_COMMIT_ON_SUCCESS;
 
     /**
      * @var array $bindParams          Array of parameters bounded to a statement
@@ -71,16 +61,14 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
     
     /**
      * the constructor
-     * 
+     *
      * @param Doctrine_Adapter_Oracle $connection
-     * @param string $query  Query string to be executed
+     * @param string $queryString Query string to be executed
      * @param integer $executeMode  OCI execute mode
      */
-    public function __construct( Doctrine_Adapter_Oracle $connection, $query, $executeMode)
+    public function __construct( Doctrine_Adapter_Oracle $connection, public $queryString, protected $executeMode)
     {
         $this->connection  = $connection->getConnection();
-        $this->queryString  = $query;
-        $this->executeMode = $executeMode;
         $this->attributes[Doctrine_Core::ATTR_ERRMODE] = $connection->getAttribute(Doctrine_Core::ATTR_ERRMODE);
 
         $this->parseQuery();

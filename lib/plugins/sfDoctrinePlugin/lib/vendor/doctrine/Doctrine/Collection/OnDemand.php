@@ -33,17 +33,11 @@
  */
 class Doctrine_Collection_OnDemand implements Iterator
 {
-    protected $_stmt;
     protected $_current;
-    protected $_tableAliasMap;
-    protected $_hydrator;
     protected $index;
 
-    public function __construct($stmt, $hydrator, $tableAliasMap)
+    public function __construct(protected $_stmt, protected $_hydrator, protected $_tableAliasMap)
     {
-        $this->_stmt = $stmt;
-        $this->_hydrator = $hydrator;
-        $this->_tableAliasMap = $tableAliasMap;
         $this->_current = null;
         $this->index = 0;
 

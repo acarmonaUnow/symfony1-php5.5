@@ -30,19 +30,17 @@ include_once 'phing/system/io/Writer.php';
  */
 class BufferedWriter extends Writer {
     
-    /**
-     * The size of the buffer in kb.
-     */
-    private $bufferSize    = 0;
-    
-    /**
-     * @var Writer The Writer we are buffering output to.
-     */
-    private $out;
-
-    public function __construct(Writer $writer, $buffsize = 8192) {
-        $this->out = $writer;
-        $this->bufferSize = $buffsize;
+    public function __construct(
+        /**
+         * @var Writer The Writer we are buffering output to.
+         */
+        private Writer $out,
+        /**
+         * The size of the buffer in kb.
+         */
+        private $bufferSize = 8192
+    )
+    {
     }
 
     public function write($buf, $off = null, $len = null) {

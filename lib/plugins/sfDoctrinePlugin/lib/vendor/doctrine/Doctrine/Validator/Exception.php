@@ -33,16 +33,10 @@
 class Doctrine_Validator_Exception extends Doctrine_Exception implements Countable, IteratorAggregate
 {
     /**
-     * @var array $invalid
-     */
-    private $invalid = array();
-
-    /**
      * @param Doctrine_Validator $validator
      */
-    public function __construct(array $invalid)
+    public function __construct(private array $invalid)
     {
-        $this->invalid = $invalid;
         parent::__construct($this->generateMessage());
     }
 

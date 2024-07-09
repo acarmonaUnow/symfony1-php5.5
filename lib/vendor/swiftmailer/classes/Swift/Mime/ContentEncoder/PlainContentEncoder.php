@@ -20,28 +20,23 @@ class Swift_Mime_ContentEncoder_PlainContentEncoder
 {
   
   /**
-   * The name of this encoding scheme (probably 7bit or 8bit).
-   * @var string
-   * @access private
-   */
-  private $_name;
-  
-  /**
-   * True if canonical transformations should be done.
-   * @var boolean
-   * @access private
-   */
-  private $_canonical;
-  
-  /**
    * Creates a new PlainContentEncoder with $name (probably 7bit or 8bit).
-   * @param string $name
-   * @param boolean $canonical If canonicalization transformation should be done.
+   * @param string $_name
+   * @param boolean $_canonical If canonicalization transformation should be done.
    */
-  public function __construct($name, $canonical = false)
+  public function __construct(
+      /**
+       * The name of this encoding scheme (probably 7bit or 8bit).
+       * @access private
+       */
+      private $_name,
+      /**
+       * True if canonical transformations should be done.
+       * @access private
+       */
+      private $_canonical = false
+  )
   {
-    $this->_name = $name;
-    $this->_canonical = $canonical;
   }
   
   /**

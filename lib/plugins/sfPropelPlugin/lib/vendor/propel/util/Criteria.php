@@ -1220,13 +1220,11 @@ class Criteria implements IteratorAggregate {
 class CriterionIterator implements Iterator {
 
 	private $idx = 0;
-	private $criteria;
 	private $criteriaKeys;
 	private $criteriaSize;
 
-	public function __construct(Criteria $criteria) {
-		$this->criteria = $criteria;
-		$this->criteriaKeys = $criteria->keys();
+	public function __construct(private Criteria $criteria) {
+		$this->criteriaKeys = $this->criteria->keys();
 		$this->criteriaSize = count($this->criteriaKeys);
 	}
 
@@ -1269,9 +1267,6 @@ class Criterion  {
 	const UND = " AND ";
 	const ODER = " OR ";
 
-	/** Value of the CO. */
-	private $value;
-
 	/** Comparison value.
 	 * @var        SqlEnum
 	 */
@@ -1312,9 +1307,8 @@ class Criterion  {
 	 * @param      mixed $value
 	 * @param      string $comparison
 	 */
-	public function __construct(Criteria $outer, $column, $value, $comparison = null)
+	public function __construct(Criteria $outer, $column, private $value, $comparison = null)
 	{
-		$this->value = $value;
 		$dotPos = strrpos($column,'.');
 		if ($dotPos === false) {
 			// no dot => aliased column

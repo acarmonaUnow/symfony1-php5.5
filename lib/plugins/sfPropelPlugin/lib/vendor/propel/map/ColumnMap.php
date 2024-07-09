@@ -61,9 +61,6 @@ class ColumnMap {
   // The TableMap for this column
   protected $table;
 
-  // The name of the column
-  protected $columnName;
-
   // The php name of the column
   protected $phpName;
 
@@ -73,12 +70,11 @@ class ColumnMap {
   /**
    * Constructor.
    *
-   * @param      string $name The name of the column.
+   * @param string $columnName The name of the column.
    * @param      TableMap containingTable TableMap of the table this column is in.
    */
-  public function __construct($name, TableMap $containingTable)
+  public function __construct(protected $columnName, TableMap $containingTable)
   {
-    $this->columnName = $name;
     $this->table = $containingTable;
   }
 

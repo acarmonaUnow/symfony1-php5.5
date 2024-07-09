@@ -31,12 +31,6 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
   const RESULT_FAILED = 0x1000;
   
   /**
-   * The Message being sent.
-   * @var Swift_Mime_Message
-   */
-  private $_message;
-  
-  /**
    * Any recipients which failed after sending.
    * @var string[]
    */
@@ -51,13 +45,15 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
   /**
    * Create a new SendEvent for $source and $message.
    * @param Swift_Transport $source
-   * @param Swift_Mime_Message $message
+   * @param Swift_Mime_Message $_message
    */
   public function __construct(Swift_Transport $source,
-    Swift_Mime_Message $message)
+    /**
+     * The Message being sent.
+     */
+    private Swift_Mime_Message $_message)
   {
     parent::__construct($source);
-    $this->_message = $message;
     $this->_result = self::RESULT_PENDING;
   }
   

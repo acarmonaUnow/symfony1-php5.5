@@ -673,13 +673,10 @@ class PropelSQLExecTransaction {
 
 	private $tSrcFile = null;
 	private $tSqlCommand = "";
-	private $parent;
 
-	function __construct($parent)
-	{
-		// Parent is required so that we can log things ...
-		$this->parent = $parent;
-	}
+	function __construct(private $parent)
+ {
+ }
 
 	public function setSrc(PhingFile $src)
 	{

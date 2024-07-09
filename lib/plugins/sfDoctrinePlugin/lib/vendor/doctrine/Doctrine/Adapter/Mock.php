@@ -33,13 +33,6 @@
 class Doctrine_Adapter_Mock implements Doctrine_Adapter_Interface, Countable
 {
     /**
-     * Name of the dbms to mock
-     *
-     * @var string
-     */
-    private $_name;
-
-    /**
      * Array of queries executed through this instance of the mock adapter
      *
      * @var array $queries
@@ -67,12 +60,16 @@ class Doctrine_Adapter_Mock implements Doctrine_Adapter_Interface, Countable
      * $conn = new Doctrine_Adapter_Mock('mysql');
      * </code>
      *
-     * @param string $name 
+     * @param string $_name
      * @return void
      */
-    public function __construct($name = null)
+    public function __construct(
+        /**
+         * Name of the dbms to mock
+         */
+        private $_name = null
+    )
     {
-        $this->_name = $name;
     }
 
     /**

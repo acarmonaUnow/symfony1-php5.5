@@ -743,11 +743,8 @@ class sfGlobToRegex
  */
 class sfNumberCompare
 {
-  protected $test = '';
-
-  public function __construct($test)
+  public function __construct(protected $test)
   {
-    $this->test = $test;
   }
 
   public function test($number)

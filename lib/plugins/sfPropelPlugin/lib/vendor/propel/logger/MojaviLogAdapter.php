@@ -29,20 +29,14 @@
 class MojaviLogAdapter implements BasicLogger {
 
 	/**
-	 * Instance of mojavi logger
-	 */
-	private $logger = null;
-
-	/**
 	 * constructor for setting up Mojavi log adapter
 	 *
 	 * @param      ErrorLog   $logger   instance of Mojavi error log obtained by
 	 *                               calling LogManager::getLogger();
 	 */
-	public function __construct($logger = null)
-	{
-		$this->logger = $logger;
-	}
+	public function __construct(private $logger = null)
+ {
+ }
 
 	/**
 	 * A convenience function for logging an alert event.

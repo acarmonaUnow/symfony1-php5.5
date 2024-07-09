@@ -15,15 +15,14 @@
  */
 class Swift_Transport_NullTransport implements Swift_Transport
 {
-  /** The event dispatcher from the plugin API */
-  private $_eventDispatcher;
-
   /**
    * Constructor.
    */
-  public function __construct(Swift_Events_EventDispatcher $eventDispatcher)
+  public function __construct(
+      /** The event dispatcher from the plugin API */
+      private Swift_Events_EventDispatcher $_eventDispatcher
+  )
   {
-    $this->_eventDispatcher = $eventDispatcher;
   }
   
   /**

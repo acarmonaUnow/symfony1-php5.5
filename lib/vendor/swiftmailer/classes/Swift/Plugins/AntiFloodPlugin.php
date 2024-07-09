@@ -41,24 +41,20 @@ class Swift_Plugins_AntiFloodPlugin
   private $_counter = 0;
   
   /**
-   * The Sleeper instance for sleeping.
-   * @var Swift_Plugins_Sleeper
-   * @access private
-   */
-  private $_sleeper;
-  
-  /**
    * Create a new AntiFloodPlugin with $threshold and $sleep time.
    * @param int $threshold
    * @param int $sleep time
-   * @param Swift_Plugins_Sleeper $sleeper (not needed really)
+   * @param Swift_Plugins_Sleeper $_sleeper (not needed really)
    */
   public function __construct($threshold = 99, $sleep = 0,
-    Swift_Plugins_Sleeper $sleeper = null)
+    /**
+     * The Sleeper instance for sleeping.
+     * @access private
+     */
+    private ?\Swift_Plugins_Sleeper $_sleeper = null)
   {
     $this->setThreshold($threshold);
     $this->setSleepTime($sleep);
-    $this->_sleeper = $sleeper;
   }
   
   /**

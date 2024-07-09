@@ -34,18 +34,18 @@
 abstract class Doctrine_Cache_Driver implements Doctrine_Cache_Interface
 {
     /**
-     * @var array $_options      an array of options
-     */
-    protected $_options = array();
-
-    /**
      * Configure cache driver with an array of options
      *
      * @param array $_options      an array of options
+     * @param mixed[] $options
      */
-    public function __construct($options = array())
+    public function __construct(
+        /**
+         * @var array $_options      an array of options
+         */
+        protected $_options = array()
+    )
     {
-        $this->_options = $options;
     }
 
     /**

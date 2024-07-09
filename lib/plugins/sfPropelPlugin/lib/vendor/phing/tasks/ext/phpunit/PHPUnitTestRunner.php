@@ -40,23 +40,13 @@ class PHPUnitTestRunner
 	const SKIPPED = 4;
 
 	private $test = NULL;
-	private $suite = NULL;
 	private $retCode = 0;
 	private $formatters = array();
 	
 	private $codecoverage = false;
-	
-	private $project = NULL;
 
-	private $groups = array();
-	private $excludeGroups = array();
-
-	function __construct($suite, Project $project, $groups = array(), $excludeGroups = array())
+	function __construct(private $suite, private Project $project, private $groups = array(), private $excludeGroups = array())
 	{
-		$this->suite = $suite;
-		$this->project = $project;
-		$this->groups = $groups;
-		$this->excludeGroups = $excludeGroups;
 		$this->retCode = self::SUCCESS;
 	}
 	

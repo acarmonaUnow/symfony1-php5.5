@@ -26,11 +26,6 @@
 class StringReader extends Reader {
     
 	/**
-	 * @var string
-	 */
-    private $_string;
-    
-    /**
      * @var int
      */
     private $mark = 0;
@@ -40,8 +35,11 @@ class StringReader extends Reader {
      */
     private $currPos = 0;
     
-    function __construct($string) {
-        $this->_string = $string;
+    /**
+     * @param string $string
+     */
+    function __construct(private $_string)
+    {
     }
 
     function skip($n) {}

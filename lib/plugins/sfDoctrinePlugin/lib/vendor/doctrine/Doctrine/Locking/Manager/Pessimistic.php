@@ -37,13 +37,6 @@
 class Doctrine_Locking_Manager_Pessimistic
 {
     /**
-     * The conn that is used by the locking manager
-     *
-     * @var Doctrine_Connection object
-     */
-    private $conn;
-
-    /**
      * The database table name for the lock tracking
      */
     private $_lockTable = 'doctrine_lock_tracking';
@@ -56,10 +49,11 @@ class Doctrine_Locking_Manager_Pessimistic
      *
      * @param Doctrine_Connection $conn The database connection to use
      */
-    public function __construct(Doctrine_Connection $conn)
+    public function __construct(/**
+     * The conn that is used by the locking manager
+     */
+    private Doctrine_Connection $conn)
     {
-        $this->conn = $conn;
-
         if ($this->conn->getAttribute(Doctrine_Core::ATTR_EXPORT) & Doctrine_Core::EXPORT_TABLES) {
             $columns = array();
             $columns['object_type']        = array('type'    => 'string',

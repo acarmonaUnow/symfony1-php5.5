@@ -16,9 +16,6 @@
  */
 class Swift_FileSpool extends Swift_ConfigurableSpool
 {
-  /** The spool directory */
-  private $_path;
-  
   /**
    * File WriteRetry Limit
    * @var int
@@ -27,13 +24,11 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
   
   /**
    * Create a new FileSpool.
-   * @param string $path
+   * @param string $_path
    * @throws Swift_IoException
    */
-  public function __construct($path)
+  public function __construct(private $_path)
   {
-    $this->_path = $path;
-    
     if (!file_exists($this->_path))
     {
       if (!mkdir($this->_path, 0777, true))

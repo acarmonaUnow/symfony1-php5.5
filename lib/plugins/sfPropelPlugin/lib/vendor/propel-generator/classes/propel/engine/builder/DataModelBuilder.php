@@ -38,12 +38,6 @@
 abstract class DataModelBuilder {
 
 	/**
-	 * The current table.
-	 * @var        Table
-	 */
-	private $table;
-
-	/**
 	 * The generator config object holding build properties, etc.
 	 *
 	 * @var        GeneratorConfig
@@ -151,10 +145,14 @@ abstract class DataModelBuilder {
 	 * Creates new instance of DataModelBuilder subclass.
 	 * @param      Table $table The Table which we are using to build [OM, DDL, etc.].
 	 */
-	public function __construct(Table $table)
-	{
-		$this->table = $table;
-	}
+	public function __construct(
+     /**
+      * The current table.
+      */
+     private Table $table
+ )
+ {
+ }
 
 	/**
 	 * Returns new or existing Peer builder class for this table.

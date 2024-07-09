@@ -46,9 +46,6 @@ class ExpatParser extends AbstractSAXParser {
     /** @var resource */
     private $parser;
     
-    /** @var Reader */
-    private $reader;
-    
     private $file;
     
     private $buffer = 4096;
@@ -71,9 +68,8 @@ class ExpatParser extends AbstractSAXParser {
      * @param string $filename Filename to read.
      * @throws Exception if the given argument is not a PhingFile object
      */
-    function __construct(Reader $reader, $filename=null) {
+    function __construct(private Reader $reader, $filename=null) {
 
-        $this->reader = $reader;
         if ($filename !== null) {
             $this->file = new PhingFile($filename);
         }

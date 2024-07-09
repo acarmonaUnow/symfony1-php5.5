@@ -35,9 +35,6 @@ class BatchTest
 	/** the list of filesets containing the testcase filename rules */
 	private $filesets = array();
 
-	/** the reference to the project */
-	private $project = NULL;
-
 	/** the classpath to use with Phing::__import() calls */
 	private $classpath = NULL;
 	
@@ -49,10 +46,12 @@ class BatchTest
 	 *
 	 * @param Project the project it depends on.
 	 */
-	function __construct(Project $project)
-	{
-		$this->project = $project;
-	}
+	function __construct(
+     /** the reference to the project */
+     private Project $project
+ )
+ {
+ }
 	
 	/**
 	 * Sets the classes to exclude

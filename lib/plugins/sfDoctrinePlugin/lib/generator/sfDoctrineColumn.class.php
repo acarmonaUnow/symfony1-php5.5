@@ -56,24 +56,22 @@ class sfDoctrineColumn implements ArrayAccess
   protected $table = null;
 
   /**
-   * Field name of the column
-   *
-   * @var string
-   */
-  protected $name = null;
-
-  /**
    * Definition of the column
    *
    * @var array $definition
    */
   protected $definition = array();
 
-  public function __construct($name, Doctrine_Table $table)
+  /**
+   * @param string $name
+   */
+  public function __construct(/**
+   * Field name of the column
+   */
+  protected $name, Doctrine_Table $table)
   {
-    $this->name = $name;
     $this->table = $table;
-    $this->definition = $table->getDefinitionOf($name);
+    $this->definition = $table->getDefinitionOf($this->name);
   }
 
   /**

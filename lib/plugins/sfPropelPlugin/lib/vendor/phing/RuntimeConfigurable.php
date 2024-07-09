@@ -33,17 +33,14 @@
  */
 class RuntimeConfigurable {
 
-    private $elementTag = null;
     private $children = array();
-    private $wrappedObject = null;
     private $attributes = array();
     private $characters = "";
 
 
     /** @param proxy The element to wrap. */
-    function __construct($proxy, $elementTag) {
-        $this->wrappedObject = $proxy;
-        $this->elementTag = $elementTag;
+    function __construct(private $wrappedObject, private $elementTag)
+    {
     }
 
     function setProxy($proxy) {

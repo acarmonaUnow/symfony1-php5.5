@@ -44,7 +44,6 @@ class Database extends XMLElement {
 	private $platform;
 	private $tableList = array();
 	private $curColumn;
-	private $name;
 	private $pkg;
 	private $baseClass;
 	private $basePeer;
@@ -70,10 +69,9 @@ class Database extends XMLElement {
 	 *
 	 * @param      string $name
 	 */
-	public function __construct($name = null)
-	{
-		$this->name = $name;
-	}
+	public function __construct(private $name = null)
+ {
+ }
 
 	/**
 	 * Sets up the Database object based on the attributes that were passed to loadFromXML().
