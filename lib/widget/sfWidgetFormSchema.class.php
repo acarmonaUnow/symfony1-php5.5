@@ -20,7 +20,7 @@
  */
 class sfWidgetFormSchema extends sfWidgetForm implements ArrayAccess
 {
-  const
+  public const
     FIRST  = 'first',
     LAST   = 'last',
     BEFORE = 'before',

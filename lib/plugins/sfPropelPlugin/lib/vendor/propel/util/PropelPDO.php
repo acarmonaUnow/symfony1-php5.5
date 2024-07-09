@@ -44,7 +44,7 @@ class PropelPDO extends PDO {
 	/**
 	 * Attribute to use to set whether to cache prepared statements.
 	 */
-	const PROPEL_ATTR_CACHE_PREPARES = -1;
+	public const PROPEL_ATTR_CACHE_PREPARES = -1;
 
 	/**
 	 * The current transaction depth.

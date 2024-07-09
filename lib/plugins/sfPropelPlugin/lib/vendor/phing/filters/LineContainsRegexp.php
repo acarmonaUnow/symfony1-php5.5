@@ -52,7 +52,7 @@ class LineContainsRegexp extends BaseParamFilterReader implements ChainableReade
      * Parameter name for regular expression.
      * @var string
      */ 
-    const REGEXP_KEY = "regexp";
+    public const REGEXP_KEY = "regexp";
     
     /**
      * Regular expressions that are applied against lines.

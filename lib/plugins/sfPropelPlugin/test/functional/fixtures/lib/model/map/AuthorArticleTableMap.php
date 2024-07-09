@@ -22,7 +22,7 @@ class AuthorArticleTableMap extends TableMap {
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.AuthorArticleTableMap';
+	public const CLASS_NAME = 'lib.model.map.AuthorArticleTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators

@@ -61,7 +61,7 @@ abstract class BaseMovieI18n extends BaseObject  implements Persistent, \Stringa
 
 	// symfony behavior
 
-	const PEER = 'MovieI18nPeer';
+	public const PEER = 'MovieI18nPeer';
 
 	/**
 	 * Get the [id] column value.

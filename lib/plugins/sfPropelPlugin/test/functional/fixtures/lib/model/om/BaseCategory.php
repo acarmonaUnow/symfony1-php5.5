@@ -60,7 +60,7 @@ abstract class BaseCategory extends BaseObject  implements Persistent {
 
 	// symfony behavior
 
-	const PEER = 'CategoryPeer';
+	public const PEER = 'CategoryPeer';
 
 	/**
 	 * Get the [id] column value.

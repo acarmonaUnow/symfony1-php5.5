@@ -62,10 +62,10 @@ class sfNumberFormatInfo
    */
   protected $pattern = array();
 
-  const DECIMAL = 0;
-  const CURRENCY = 1;
-  const PERCENTAGE = 2;
-  const SCIENTIFIC = 3;
+  public const DECIMAL = 0;
+  public const CURRENCY = 1;
+  public const PERCENTAGE = 2;
+  public const SCIENTIFIC = 3;
 
   /**
    * Allows functions that begins with 'set' to be called directly

@@ -32,17 +32,17 @@ interface Platform {
 	/**
 	 * Constant for auto-increment id method.
 	 */
-	const IDENTITY = "identity";
+	public const IDENTITY = "identity";
 
 	/**
 	 * Constant for sequence id method.
 	 */
-	const SEQUENCE = "sequence";
+	public const SEQUENCE = "sequence";
 
 	/**
 	 * Constant for serial id method (postgresql).
 	 */
-	const SERIAL = "serial";
+	public const SERIAL = "serial";
 
 	/**
 	 * Sets a database connection to use (for quoting, etc.).

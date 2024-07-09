@@ -18,8 +18,8 @@
  */
 abstract class sfPropelBaseTask extends sfBaseTask
 {
-  const CHECK_SCHEMA = true;
-  const DO_NOT_CHECK_SCHEMA = false;
+  public const CHECK_SCHEMA = true;
+  public const DO_NOT_CHECK_SCHEMA = false;
 
   static protected $done = false;
 

@@ -41,10 +41,10 @@
 abstract class FileSystem {    
 
     /* properties for simple boolean attributes */
-    const BA_EXISTS    = 0x01;
-    const BA_REGULAR   = 0x02;
-    const BA_DIRECTORY = 0x04;
-    const BA_HIDDEN    = 0x08;
+    public const BA_EXISTS    = 0x01;
+    public const BA_REGULAR   = 0x02;
+    public const BA_DIRECTORY = 0x04;
+    public const BA_HIDDEN    = 0x08;
     
     /** Instance for getFileSystem() method. */
     private static $fs;

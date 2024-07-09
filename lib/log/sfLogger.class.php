@@ -28,14 +28,14 @@
  */
 abstract class sfLogger
 {
-  const EMERG   = 0; // System is unusable
-  const ALERT   = 1; // Immediate action required
-  const CRIT    = 2; // Critical conditions
-  const ERR     = 3; // Error conditions
-  const WARNING = 4; // Warning conditions
-  const NOTICE  = 5; // Normal but significant
-  const INFO    = 6; // Informational
-  const DEBUG   = 7; // Debug-level messages
+  public const EMERG   = 0; // System is unusable
+  public const ALERT   = 1; // Immediate action required
+  public const CRIT    = 2; // Critical conditions
+  public const ERR     = 3; // Error conditions
+  public const WARNING = 4; // Warning conditions
+  public const NOTICE  = 5; // Normal but significant
+  public const INFO    = 6; // Informational
+  public const DEBUG   = 7; // Debug-level messages
 
   protected
     $dispatcher = null,

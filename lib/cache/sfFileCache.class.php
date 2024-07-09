@@ -18,11 +18,11 @@
  */
 class sfFileCache extends sfCache
 {
-  const READ_DATA = 1;
-  const READ_TIMEOUT = 2;
-  const READ_LAST_MODIFIED = 4;
+  public const READ_DATA = 1;
+  public const READ_TIMEOUT = 2;
+  public const READ_LAST_MODIFIED = 4;
 
-  const EXTENSION = '.cache';
+  public const EXTENSION = '.cache';
 
  /**
   * Initializes this sfCache instance.

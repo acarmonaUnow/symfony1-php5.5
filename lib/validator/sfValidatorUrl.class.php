@@ -18,7 +18,7 @@
  */
 class sfValidatorUrl extends sfValidatorRegex
 {
-  const REGEX_URL_FORMAT = '~^
+  public const REGEX_URL_FORMAT = '~^
       (%s)://                                 # protocol
       (
         ([a-z0-9-]+\.)+[a-z]{2,6}             # a domain name

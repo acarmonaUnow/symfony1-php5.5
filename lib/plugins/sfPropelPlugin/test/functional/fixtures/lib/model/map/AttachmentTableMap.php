@@ -22,7 +22,7 @@ class AttachmentTableMap extends TableMap {
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.AttachmentTableMap';
+	public const CLASS_NAME = 'lib.model.map.AttachmentTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators

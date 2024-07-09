@@ -57,7 +57,7 @@ class LineContains extends BaseParamFilterReader implements ChainableReader {
      * The parameter name for the string to match on.
      * @var string
      */ 
-    const CONTAINS_KEY = "contains";
+    public const CONTAINS_KEY = "contains";
 
     /**
      * Array of Contains objects.

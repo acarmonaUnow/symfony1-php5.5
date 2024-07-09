@@ -17,7 +17,7 @@
  */
 class lime_test
 {
-  const EPSILON = 0.0000000001;
+  public const EPSILON = 0.0000000001;
 
   protected $test_nb = 0;
   protected $output  = null;

@@ -14,31 +14,31 @@
 abstract class BaseCategoryPeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'category';
+	public const TABLE_NAME = 'category';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Category';
+	public const OM_CLASS = 'Category';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Category';
+	public const CLASS_DEFAULT = 'lib.model.Category';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'CategoryTableMap';
+	public const TM_CLASS = 'CategoryTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	public const NUM_COLUMNS = 2;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'category.ID';
+	public const ID = 'category.ID';
 
 	/** the column name for the NAME field */
-	const NAME = 'category.NAME';
+	public const NAME = 'category.NAME';
 
 	/**
 	 * An identiy map to hold any loaded instances of Category objects.
@@ -54,7 +54,7 @@ abstract class BaseCategoryPeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = false;
+	public const IS_I18N = false;
 
 	/**
 	 * holds an array of fieldnames

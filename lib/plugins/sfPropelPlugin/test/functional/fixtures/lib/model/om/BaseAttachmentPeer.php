@@ -14,37 +14,37 @@
 abstract class BaseAttachmentPeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'attachment';
+	public const TABLE_NAME = 'attachment';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Attachment';
+	public const OM_CLASS = 'Attachment';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Attachment';
+	public const CLASS_DEFAULT = 'lib.model.Attachment';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'AttachmentTableMap';
+	public const TM_CLASS = 'AttachmentTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	public const NUM_COLUMNS = 4;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'attachment.ID';
+	public const ID = 'attachment.ID';
 
 	/** the column name for the ARTICLE_ID field */
-	const ARTICLE_ID = 'attachment.ARTICLE_ID';
+	public const ARTICLE_ID = 'attachment.ARTICLE_ID';
 
 	/** the column name for the NAME field */
-	const NAME = 'attachment.NAME';
+	public const NAME = 'attachment.NAME';
 
 	/** the column name for the FILE field */
-	const FILE = 'attachment.FILE';
+	public const FILE = 'attachment.FILE';
 
 	/**
 	 * An identiy map to hold any loaded instances of Attachment objects.
@@ -60,7 +60,7 @@ abstract class BaseAttachmentPeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = false;
+	public const IS_I18N = false;
 
 	/**
 	 * holds an array of fieldnames

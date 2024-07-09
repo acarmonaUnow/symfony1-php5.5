@@ -66,7 +66,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent, \Stringabl
 
 	// symfony behavior
 
-	const PEER = 'ProductPeer';
+	public const PEER = 'ProductPeer';
 
 	// symfony_i18n behavior
 

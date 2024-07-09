@@ -39,7 +39,7 @@
 class Join
 {
   // default comparison type
-	const EQUAL = "=";
+	public const EQUAL = "=";
 	
 	// the left parts of the join condition
 	protected $left = array();

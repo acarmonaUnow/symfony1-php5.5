@@ -56,7 +56,7 @@ include_once 'phing/filters/ChainableReader.php';
 class StripLineComments extends BaseParamFilterReader implements ChainableReader {
     
     /** Parameter name for the comment prefix. */
-    const COMMENTS_KEY = "comment";
+    public const COMMENTS_KEY = "comment";
     
     /** Array that holds the comment prefixes. */
     private $_comments = array();

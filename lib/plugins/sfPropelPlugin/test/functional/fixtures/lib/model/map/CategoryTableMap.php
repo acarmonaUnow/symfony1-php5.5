@@ -22,7 +22,7 @@ class CategoryTableMap extends TableMap {
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.CategoryTableMap';
+	public const CLASS_NAME = 'lib.model.map.CategoryTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators

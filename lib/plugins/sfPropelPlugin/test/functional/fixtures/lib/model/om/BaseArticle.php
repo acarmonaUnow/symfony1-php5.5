@@ -122,7 +122,7 @@ abstract class BaseArticle extends BaseObject  implements Persistent {
 
 	// symfony behavior
 
-	const PEER = 'ArticlePeer';
+	public const PEER = 'ArticlePeer';
 
 	/**
 	 * Get the [id] column value.

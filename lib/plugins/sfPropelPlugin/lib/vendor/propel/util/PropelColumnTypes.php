@@ -30,31 +30,31 @@
  */
 class PropelColumnTypes {
 
-	const CHAR = "CHAR";
-	const VARCHAR = "VARCHAR";
-	const LONGVARCHAR = "LONGVARCHAR";
-	const CLOB = "CLOB";
-	const NUMERIC = "NUMERIC";
-	const DECIMAL = "DECIMAL";
-	const TINYINT = "TINYINT";
-	const SMALLINT = "SMALLINT";
-	const INTEGER = "INTEGER";
-	const BIGINT = "BIGINT";
-	const REAL = "REAL";
-	const FLOAT = "FLOAT";
-	const DOUBLE = "DOUBLE";
-	const BINARY = "BINARY";
-	const VARBINARY = "VARBINARY";
-	const LONGVARBINARY = "LONGVARBINARY";
-	const BLOB = "BLOB";
-	const DATE = "DATE";
-	const TIME = "TIME";
-	const TIMESTAMP = "TIMESTAMP";
+	public const CHAR = "CHAR";
+	public const VARCHAR = "VARCHAR";
+	public const LONGVARCHAR = "LONGVARCHAR";
+	public const CLOB = "CLOB";
+	public const NUMERIC = "NUMERIC";
+	public const DECIMAL = "DECIMAL";
+	public const TINYINT = "TINYINT";
+	public const SMALLINT = "SMALLINT";
+	public const INTEGER = "INTEGER";
+	public const BIGINT = "BIGINT";
+	public const REAL = "REAL";
+	public const FLOAT = "FLOAT";
+	public const DOUBLE = "DOUBLE";
+	public const BINARY = "BINARY";
+	public const VARBINARY = "VARBINARY";
+	public const LONGVARBINARY = "LONGVARBINARY";
+	public const BLOB = "BLOB";
+	public const DATE = "DATE";
+	public const TIME = "TIME";
+	public const TIMESTAMP = "TIMESTAMP";
 
-	const BU_DATE = "BU_DATE";
-	const BU_TIMESTAMP = "BU_TIMESTAMP";
+	public const BU_DATE = "BU_DATE";
+	public const BU_TIMESTAMP = "BU_TIMESTAMP";
 
-	const BOOLEAN = "BOOLEAN";
+	public const BOOLEAN = "BOOLEAN";
 
 	private static $propelToPdoMap = array(
 		self::CHAR 			=> PDO::PARAM_STR,

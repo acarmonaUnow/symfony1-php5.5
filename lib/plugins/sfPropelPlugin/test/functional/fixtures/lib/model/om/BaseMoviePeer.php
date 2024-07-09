@@ -14,31 +14,31 @@
 abstract class BaseMoviePeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'movie';
+	public const TABLE_NAME = 'movie';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Movie';
+	public const OM_CLASS = 'Movie';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Movie';
+	public const CLASS_DEFAULT = 'lib.model.Movie';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'MovieTableMap';
+	public const TM_CLASS = 'MovieTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	public const NUM_COLUMNS = 2;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'movie.ID';
+	public const ID = 'movie.ID';
 
 	/** the column name for the DIRECTOR field */
-	const DIRECTOR = 'movie.DIRECTOR';
+	public const DIRECTOR = 'movie.DIRECTOR';
 
 	/**
 	 * An identiy map to hold any loaded instances of Movie objects.
@@ -54,7 +54,7 @@ abstract class BaseMoviePeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = true;
+	public const IS_I18N = true;
 
 	/**
 	 * holds an array of fieldnames

@@ -22,7 +22,7 @@ class ProductTableMap extends TableMap {
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.ProductTableMap';
+	public const CLASS_NAME = 'lib.model.map.ProductTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators

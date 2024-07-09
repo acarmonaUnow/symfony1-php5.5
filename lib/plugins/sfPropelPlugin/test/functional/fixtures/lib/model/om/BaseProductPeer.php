@@ -14,34 +14,34 @@
 abstract class BaseProductPeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'product';
+	public const TABLE_NAME = 'product';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Product';
+	public const OM_CLASS = 'Product';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Product';
+	public const CLASS_DEFAULT = 'lib.model.Product';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'ProductTableMap';
+	public const TM_CLASS = 'ProductTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 3;
+	public const NUM_COLUMNS = 3;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'product.ID';
+	public const ID = 'product.ID';
 
 	/** the column name for the PRICE field */
-	const PRICE = 'product.PRICE';
+	public const PRICE = 'product.PRICE';
 
 	/** the column name for the A_PRIMARY_STRING field */
-	const A_PRIMARY_STRING = 'product.A_PRIMARY_STRING';
+	public const A_PRIMARY_STRING = 'product.A_PRIMARY_STRING';
 
 	/**
 	 * An identiy map to hold any loaded instances of Product objects.
@@ -57,7 +57,7 @@ abstract class BaseProductPeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = true;
+	public const IS_I18N = true;
 
 	/**
 	 * holds an array of fieldnames

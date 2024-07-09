@@ -34,8 +34,8 @@ class ContainsSelector extends BaseExtendSelector {
 
     private $contains = null;
     private $casesensitive = true;
-    const CONTAINS_KEY = "text";
-    const CASE_KEY = "casesensitive";
+    public const CONTAINS_KEY = "text";
+    public const CASE_KEY = "casesensitive";
 
     public function toString() {
         $buf = "{containsselector text: ";

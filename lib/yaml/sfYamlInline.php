@@ -20,7 +20,7 @@ require_once dirname(__FILE__).'/sfYaml.php';
  */
 class sfYamlInline
 {
-  const REGEX_QUOTED_STRING = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\']*(?:\'\'[^\']*)*)\')';
+  public const REGEX_QUOTED_STRING = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\']*(?:\'\'[^\']*)*)\')';
 
   /**
    * Convert a YAML string to a PHP array.

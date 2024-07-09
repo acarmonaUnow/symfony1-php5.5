@@ -64,7 +64,7 @@ include_once 'phing/system/util/Register.php';
 class Phing {
 
 	/** The default build file name */
-	const DEFAULT_BUILD_FILENAME = "build.xml";
+	public const DEFAULT_BUILD_FILENAME = "build.xml";
 
 	/** Our current message output status. Follows Project::MSG_XXX */
 	private static $msgOutputLevel = Project::MSG_INFO;

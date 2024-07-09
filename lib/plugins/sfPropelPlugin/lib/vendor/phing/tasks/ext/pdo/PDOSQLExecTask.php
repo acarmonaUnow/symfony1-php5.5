@@ -66,8 +66,8 @@ class PDOSQLExecTask extends PDOTask {
 	 */
 	private $totalSql = 0;
 
-	const DELIM_ROW = "row";
-	const DELIM_NORMAL = "normal";
+	public const DELIM_ROW = "row";
+	public const DELIM_NORMAL = "normal";
 
     /**
      * Database connection

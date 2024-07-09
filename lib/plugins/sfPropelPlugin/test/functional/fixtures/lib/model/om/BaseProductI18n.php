@@ -61,7 +61,7 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent, \Strin
 
 	// symfony behavior
 
-	const PEER = 'ProductI18nPeer';
+	public const PEER = 'ProductI18nPeer';
 
 	/**
 	 * Get the [id] column value.

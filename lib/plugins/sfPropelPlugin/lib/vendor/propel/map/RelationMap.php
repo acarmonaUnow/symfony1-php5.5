@@ -36,7 +36,7 @@
  */
 class RelationMap {
 
-  const
+  public const
     MANY_TO_ONE = 1,
     ONE_TO_MANY = 2,
     ONE_TO_ONE = 3;

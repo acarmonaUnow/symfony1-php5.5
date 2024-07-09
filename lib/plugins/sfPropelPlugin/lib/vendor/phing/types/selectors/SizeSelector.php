@@ -34,9 +34,9 @@ class SizeSelector extends BaseExtendSelector {
     private $multiplier = 1;
     private $sizelimit = -1;
     private $cmp = 2;
-    const SIZE_KEY = "value";
-    const UNITS_KEY = "units";
-    const WHEN_KEY = "when";
+    public const SIZE_KEY = "value";
+    public const UNITS_KEY = "units";
+    public const WHEN_KEY = "when";
 
     private static $sizeComparisons =  array("less", "more", "equal");
     private static $byteUnits = array("K", "k", "kilo", "KILO",

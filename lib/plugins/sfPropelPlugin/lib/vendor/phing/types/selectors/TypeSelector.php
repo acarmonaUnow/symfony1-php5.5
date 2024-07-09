@@ -35,7 +35,7 @@ class TypeSelector extends BaseExtendSelector {
     private $type;
 
     /** Key to used for parameterized custom selector */
-    const TYPE_KEY = "type";
+    public const TYPE_KEY = "type";
     
     /** Valid types */
     private static $types = array('file', 'dir');

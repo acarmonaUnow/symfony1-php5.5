@@ -48,7 +48,7 @@ class TailFilter extends BaseParamFilterReader implements ChainableReader {
      * Parameter name for the number of lines to be returned.
      * @var string
      */
-    const LINES_KEY = "lines";
+    public const LINES_KEY = "lines";
     
     
     /**

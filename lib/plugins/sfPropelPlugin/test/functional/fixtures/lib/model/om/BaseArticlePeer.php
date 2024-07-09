@@ -14,52 +14,52 @@
 abstract class BaseArticlePeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'article';
+	public const TABLE_NAME = 'article';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Article';
+	public const OM_CLASS = 'Article';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Article';
+	public const CLASS_DEFAULT = 'lib.model.Article';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'ArticleTableMap';
+	public const TM_CLASS = 'ArticleTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 9;
+	public const NUM_COLUMNS = 9;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'article.ID';
+	public const ID = 'article.ID';
 
 	/** the column name for the TITLE field */
-	const TITLE = 'article.TITLE';
+	public const TITLE = 'article.TITLE';
 
 	/** the column name for the BODY field */
-	const BODY = 'article.BODY';
+	public const BODY = 'article.BODY';
 
 	/** the column name for the ONLINE field */
-	const ONLINE = 'article.ONLINE';
+	public const ONLINE = 'article.ONLINE';
 
 	/** the column name for the EXCERPT field */
-	const EXCERPT = 'article.EXCERPT';
+	public const EXCERPT = 'article.EXCERPT';
 
 	/** the column name for the CATEGORY_ID field */
-	const CATEGORY_ID = 'article.CATEGORY_ID';
+	public const CATEGORY_ID = 'article.CATEGORY_ID';
 
 	/** the column name for the CREATED_AT field */
-	const CREATED_AT = 'article.CREATED_AT';
+	public const CREATED_AT = 'article.CREATED_AT';
 
 	/** the column name for the END_DATE field */
-	const END_DATE = 'article.END_DATE';
+	public const END_DATE = 'article.END_DATE';
 
 	/** the column name for the BOOK_ID field */
-	const BOOK_ID = 'article.BOOK_ID';
+	public const BOOK_ID = 'article.BOOK_ID';
 
 	/**
 	 * An identiy map to hold any loaded instances of Article objects.
@@ -75,7 +75,7 @@ abstract class BaseArticlePeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = false;
+	public const IS_I18N = false;
 
 	/**
 	 * holds an array of fieldnames

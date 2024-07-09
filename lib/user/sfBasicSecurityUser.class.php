@@ -20,9 +20,9 @@
  */
 class sfBasicSecurityUser extends sfUser implements sfSecurityUser
 {
-  const LAST_REQUEST_NAMESPACE = 'symfony/user/sfUser/lastRequest';
-  const AUTH_NAMESPACE = 'symfony/user/sfUser/authenticated';
-  const CREDENTIAL_NAMESPACE = 'symfony/user/sfUser/credentials';
+  public const LAST_REQUEST_NAMESPACE = 'symfony/user/sfUser/lastRequest';
+  public const AUTH_NAMESPACE = 'symfony/user/sfUser/authenticated';
+  public const CREDENTIAL_NAMESPACE = 'symfony/user/sfUser/credentials';
 
   protected $lastRequest = null;
 

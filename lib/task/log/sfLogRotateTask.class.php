@@ -19,10 +19,10 @@
 class sfLogRotateTask extends sfBaseTask
 {
   /** the default period to rotate logs in days */
-  const DEF_PERIOD = 7;
+  public const DEF_PERIOD = 7;
 
   /** the default number of log historys to store, one history is created for every period */
-  const DEF_HISTORY = 10;
+  public const DEF_HISTORY = 10;
 
   /**
    * @see sfTask

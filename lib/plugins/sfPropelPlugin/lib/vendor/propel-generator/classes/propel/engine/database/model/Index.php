@@ -34,7 +34,7 @@ include_once 'propel/engine/EngineException.php';
 class Index extends XMLElement {
 
 	/** enables debug output */
-	const DEBUG = false;
+	public const DEBUG = false;
 	private $parentTable;
 
 	/** @var        array string[] */

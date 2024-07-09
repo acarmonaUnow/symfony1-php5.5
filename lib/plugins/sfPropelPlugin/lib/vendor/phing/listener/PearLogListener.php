@@ -46,7 +46,7 @@ class PearLogListener implements BuildListener {
      *  Size of the left column in output. The default char width is 12.
      *  @var int
      */
-    const LEFT_COLUMN_SIZE = 12;
+    public const LEFT_COLUMN_SIZE = 12;
 
     /**
      *  Time that the build started

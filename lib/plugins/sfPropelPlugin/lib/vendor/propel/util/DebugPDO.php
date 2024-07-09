@@ -118,8 +118,8 @@
  */
 class DebugPDO extends PropelPDO
 {
-	const DEFAULT_SLOW_THRESHOLD        = 0.1;
-	const DEFAULT_ONLYSLOW_ENABLED      = false;
+	public const DEFAULT_SLOW_THRESHOLD        = 0.1;
+	public const DEFAULT_ONLYSLOW_ENABLED      = false;
 	
 	/**
 	 * Count of queries performed.

@@ -50,7 +50,7 @@ class Table extends XMLElement implements IDMethod {
   /**
    * Enables some debug printing.
    */
-  const DEBUG = false;
+  public const DEBUG = false;
 
   /**
    * Columns for this table.

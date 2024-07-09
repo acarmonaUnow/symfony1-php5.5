@@ -31,9 +31,9 @@ require_once 'phing/tasks/ext/simpletest/SimpleTestResultFormatter.php';
  */
 class SimpleTestCountResultFormatter extends SimpleTestResultFormatter
 {
-	const SUCCESS = 0;
-	const FAILURES = 1;
-	const ERRORS = 2;
+	public const SUCCESS = 0;
+	public const FAILURES = 1;
+	public const ERRORS = 2;
 	
 	function getRetCode()
 	{

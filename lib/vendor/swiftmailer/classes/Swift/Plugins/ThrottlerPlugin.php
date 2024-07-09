@@ -21,10 +21,10 @@ class Swift_Plugins_ThrottlerPlugin
 {
   
   /** Flag for throttling in bytes per minute */
-  const BYTES_PER_MINUTE = 0x01;
+  public const BYTES_PER_MINUTE = 0x01;
   
   /** Flag for throttling in emails per minute */
-  const MESSAGES_PER_MINUTE = 0x10;
+  public const MESSAGES_PER_MINUTE = 0x10;
   
   /**
    * The time at which the first email was sent.

@@ -22,7 +22,7 @@ class MovieTableMap extends TableMap {
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.MovieTableMap';
+	public const CLASS_NAME = 'lib.model.map.MovieTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators

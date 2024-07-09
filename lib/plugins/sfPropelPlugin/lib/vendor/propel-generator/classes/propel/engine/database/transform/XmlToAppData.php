@@ -41,7 +41,7 @@ include_once 'phing/system/io/FileReader.php';
 class XmlToAppData extends AbstractHandler {
 
 	/** enables debug output */
-	const DEBUG = false;
+	public const DEBUG = false;
 
 	private $app;
 	private $platform;

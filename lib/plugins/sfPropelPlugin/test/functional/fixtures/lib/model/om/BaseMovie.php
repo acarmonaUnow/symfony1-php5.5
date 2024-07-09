@@ -60,7 +60,7 @@ abstract class BaseMovie extends BaseObject  implements Persistent, \Stringable 
 
 	// symfony behavior
 
-	const PEER = 'MoviePeer';
+	public const PEER = 'MoviePeer';
 
 	// symfony_i18n behavior
 

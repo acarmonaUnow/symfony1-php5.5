@@ -51,31 +51,31 @@ class BasePeer
 	 * phpname type
 	 * e.g. 'AuthorId'
 	 */
-	const TYPE_PHPNAME = 'phpName';
+	public const TYPE_PHPNAME = 'phpName';
 
 	/**
 	 * studlyphpname type
 	 * e.g. 'authorId'
 	 */
-	const TYPE_STUDLYPHPNAME = 'studlyPhpName';
+	public const TYPE_STUDLYPHPNAME = 'studlyPhpName';
 
 	/**
 	 * column (peer) name type
 	 * e.g. 'book.AUTHOR_ID'
 	 */
-	const TYPE_COLNAME = 'colName';
+	public const TYPE_COLNAME = 'colName';
 
 	/**
 	 * column fieldname type
 	 * e.g. 'author_id'
 	 */
-	const TYPE_FIELDNAME = 'fieldName';
+	public const TYPE_FIELDNAME = 'fieldName';
 
 	/**
 	 * num type
 	 * simply the numerical array index, e.g. 4
 	 */
-	const TYPE_NUM = 'num';
+	public const TYPE_NUM = 'num';
 
 	static public function getFieldnames ($classname, $type = self::TYPE_PHPNAME) {
 

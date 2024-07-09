@@ -60,7 +60,7 @@ abstract class BaseAuthorArticle extends BaseObject  implements Persistent {
 
 	// symfony behavior
 
-	const PEER = 'AuthorArticlePeer';
+	public const PEER = 'AuthorArticlePeer';
 
 	/**
 	 * Get the [author_id] column value.

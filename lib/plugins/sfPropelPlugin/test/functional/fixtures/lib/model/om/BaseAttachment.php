@@ -67,7 +67,7 @@ abstract class BaseAttachment extends BaseObject  implements Persistent {
 
 	// symfony behavior
 
-	const PEER = 'AttachmentPeer';
+	public const PEER = 'AttachmentPeer';
 
 	/**
 	 * Get the [id] column value.

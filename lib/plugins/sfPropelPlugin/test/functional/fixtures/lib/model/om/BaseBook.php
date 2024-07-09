@@ -60,7 +60,7 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 
 	// symfony behavior
 
-	const PEER = 'BookPeer';
+	public const PEER = 'BookPeer';
 
 	/**
 	 * Get the [id] column value.

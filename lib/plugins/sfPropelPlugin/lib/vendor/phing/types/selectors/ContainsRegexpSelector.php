@@ -45,9 +45,9 @@ class ContainsRegexpSelector extends BaseExtendSelector {
     /** @var RegularExpression */
     private $myRegExp;
     
-    const EXPRESSION_KEY = "expression";
+    public const EXPRESSION_KEY = "expression";
     
-    const CASE_KEY = "casesensitive";
+    public const CASE_KEY = "casesensitive";
     
     public function toString() {
         $buf = "{containsregexpselector expression: ";

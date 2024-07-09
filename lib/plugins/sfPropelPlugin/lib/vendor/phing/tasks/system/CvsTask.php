@@ -44,7 +44,7 @@ class CvsTask extends Task {
      * Default compression level to use, if compression is enabled via
      * setCompression( true ). 
      */
-    const DEFAULT_COMPRESSION_LEVEL = 3;
+    public const DEFAULT_COMPRESSION_LEVEL = 3;
 
     private $cmd;
 

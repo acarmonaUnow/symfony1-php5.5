@@ -33,8 +33,8 @@ include_once 'propel/engine/database/model/Rule.php';
  */
 class Validator extends XMLElement {
 
-	const TRANSLATE_NONE = "none";
-	const TRANSLATE_GETTEXT = "gettext";
+	public const TRANSLATE_NONE = "none";
+	public const TRANSLATE_GETTEXT = "gettext";
 
 	/**
 	 * The column this validator applies to.

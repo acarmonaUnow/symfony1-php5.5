@@ -55,7 +55,7 @@ class Commandline implements \Stringable {
      */
     public $executable; // public so "inner" class can access
 
-    const DISCLAIMER = "The ' characters around the executable and arguments are not part of the command.";
+    public const DISCLAIMER = "The ' characters around the executable and arguments are not part of the command.";
 
     public function __construct($to_process = null) {
         if ($to_process !== null) {                 

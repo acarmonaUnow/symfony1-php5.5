@@ -14,31 +14,31 @@
 abstract class BaseAuthorArticlePeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'author_article';
+	public const TABLE_NAME = 'author_article';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'AuthorArticle';
+	public const OM_CLASS = 'AuthorArticle';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.AuthorArticle';
+	public const CLASS_DEFAULT = 'lib.model.AuthorArticle';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'AuthorArticleTableMap';
+	public const TM_CLASS = 'AuthorArticleTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	public const NUM_COLUMNS = 2;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the AUTHOR_ID field */
-	const AUTHOR_ID = 'author_article.AUTHOR_ID';
+	public const AUTHOR_ID = 'author_article.AUTHOR_ID';
 
 	/** the column name for the ARTICLE_ID field */
-	const ARTICLE_ID = 'author_article.ARTICLE_ID';
+	public const ARTICLE_ID = 'author_article.ARTICLE_ID';
 
 	/**
 	 * An identiy map to hold any loaded instances of AuthorArticle objects.
@@ -54,7 +54,7 @@ abstract class BaseAuthorArticlePeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = false;
+	public const IS_I18N = false;
 
 	/**
 	 * holds an array of fieldnames

@@ -20,7 +20,7 @@
  */
 class sfWebResponse extends sfResponse
 {
-  const
+  public const
     FIRST  = 'first',
     MIDDLE = '',
     LAST   = 'last',

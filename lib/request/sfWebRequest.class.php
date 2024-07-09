@@ -22,7 +22,7 @@
  */
 class sfWebRequest extends sfRequest
 {
-  const
+  public const
     PORT_HTTP  = 80,
     PORT_HTTPS = 443;
 

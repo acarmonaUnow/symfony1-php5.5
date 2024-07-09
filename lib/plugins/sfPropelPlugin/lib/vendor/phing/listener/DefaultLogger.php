@@ -40,7 +40,7 @@ class DefaultLogger implements StreamRequiredBuildLogger {
      *  Size of the left column in output. The default char width is 12.
      *  @var int
      */
-    const LEFT_COLUMN_SIZE = 12;
+    public const LEFT_COLUMN_SIZE = 12;
 
     /**
      *  The message output level that should be used. The default is

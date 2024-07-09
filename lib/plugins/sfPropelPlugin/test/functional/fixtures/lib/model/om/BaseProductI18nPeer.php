@@ -14,34 +14,34 @@
 abstract class BaseProductI18nPeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'product_i18n';
+	public const TABLE_NAME = 'product_i18n';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'ProductI18n';
+	public const OM_CLASS = 'ProductI18n';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.ProductI18n';
+	public const CLASS_DEFAULT = 'lib.model.ProductI18n';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'ProductI18nTableMap';
+	public const TM_CLASS = 'ProductI18nTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 3;
+	public const NUM_COLUMNS = 3;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'product_i18n.ID';
+	public const ID = 'product_i18n.ID';
 
 	/** the column name for the CULTURE field */
-	const CULTURE = 'product_i18n.CULTURE';
+	public const CULTURE = 'product_i18n.CULTURE';
 
 	/** the column name for the NAME field */
-	const NAME = 'product_i18n.NAME';
+	public const NAME = 'product_i18n.NAME';
 
 	/**
 	 * An identiy map to hold any loaded instances of ProductI18n objects.
@@ -57,7 +57,7 @@ abstract class BaseProductI18nPeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = false;
+	public const IS_I18N = false;
 
 	/**
 	 * holds an array of fieldnames

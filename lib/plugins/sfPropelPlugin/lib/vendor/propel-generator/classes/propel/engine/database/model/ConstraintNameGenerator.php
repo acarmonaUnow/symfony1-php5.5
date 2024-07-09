@@ -35,7 +35,7 @@ class ConstraintNameGenerator implements NameGenerator {
 	/**
 	 * Conditional compilation flag.
 	 */
-	const DEBUG = false;
+	public const DEBUG = false;
 
 	/**
 	 * First element of <code>inputs</code> should be of type {@link Database}, second

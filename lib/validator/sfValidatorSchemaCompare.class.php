@@ -18,14 +18,14 @@
  */
 class sfValidatorSchemaCompare extends sfValidatorSchema
 {
-  const EQUAL              = '==';
-  const NOT_EQUAL          = '!=';
-  const IDENTICAL          = '===';
-  const NOT_IDENTICAL      = '!==';
-  const LESS_THAN          = '<';
-  const LESS_THAN_EQUAL    = '<=';
-  const GREATER_THAN       = '>';
-  const GREATER_THAN_EQUAL = '>=';
+  public const EQUAL              = '==';
+  public const NOT_EQUAL          = '!=';
+  public const IDENTICAL          = '===';
+  public const NOT_IDENTICAL      = '!==';
+  public const LESS_THAN          = '<';
+  public const LESS_THAN_EQUAL    = '<=';
+  public const GREATER_THAN       = '>';
+  public const GREATER_THAN_EQUAL = '>=';
 
   /**
    * Constructor.

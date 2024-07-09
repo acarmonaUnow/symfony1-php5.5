@@ -14,31 +14,31 @@
 abstract class BaseAuthorPeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'author';
+	public const TABLE_NAME = 'author';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Author';
+	public const OM_CLASS = 'Author';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Author';
+	public const CLASS_DEFAULT = 'lib.model.Author';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'AuthorTableMap';
+	public const TM_CLASS = 'AuthorTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	public const NUM_COLUMNS = 2;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'author.ID';
+	public const ID = 'author.ID';
 
 	/** the column name for the NAME field */
-	const NAME = 'author.NAME';
+	public const NAME = 'author.NAME';
 
 	/**
 	 * An identiy map to hold any loaded instances of Author objects.
@@ -54,7 +54,7 @@ abstract class BaseAuthorPeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = false;
+	public const IS_I18N = false;
 
 	/**
 	 * holds an array of fieldnames

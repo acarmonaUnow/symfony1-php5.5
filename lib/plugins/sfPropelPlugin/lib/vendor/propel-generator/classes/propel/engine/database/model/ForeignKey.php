@@ -42,12 +42,12 @@ class ForeignKey extends XMLElement {
 	private $foreignColumns = array();
 
 	// the uppercase equivalent of the onDelete/onUpdate values in the dtd
-	const NONE     = "";            // No "ON [ DELETE | UPDATE]" behaviour specified.
-	const NOACTION  = "NO ACTION";
-	const CASCADE  = "CASCADE";
-	const RESTRICT = "RESTRICT";
-	const SETDEFAULT  = "SET DEFAULT";
-	const SETNULL  = "SET NULL";
+	public const NONE     = "";            // No "ON [ DELETE | UPDATE]" behaviour specified.
+	public const NOACTION  = "NO ACTION";
+	public const CASCADE  = "CASCADE";
+	public const RESTRICT = "RESTRICT";
+	public const SETDEFAULT  = "SET DEFAULT";
+	public const SETNULL  = "SET NULL";
 
 	/**
 	 * Constructs a new ForeignKey object.

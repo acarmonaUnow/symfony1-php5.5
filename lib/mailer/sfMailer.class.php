@@ -20,7 +20,7 @@
  */
 class sfMailer extends Swift_Mailer
 {
-  const
+  public const
     REALTIME       = 'realtime',
     SPOOL          = 'spool',
     SINGLE_ADDRESS = 'single_address',

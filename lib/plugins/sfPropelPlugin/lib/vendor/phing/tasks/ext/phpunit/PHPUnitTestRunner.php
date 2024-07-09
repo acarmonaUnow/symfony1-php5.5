@@ -33,11 +33,11 @@ require_once 'phing/system/util/Timer.php';
  */
 class PHPUnitTestRunner
 {
-	const SUCCESS = 0;
-	const FAILURES = 1;
-	const ERRORS = 2;
-	const INCOMPLETES = 3;
-	const SKIPPED = 4;
+	public const SUCCESS = 0;
+	public const FAILURES = 1;
+	public const ERRORS = 2;
+	public const INCOMPLETES = 3;
+	public const SKIPPED = 4;
 
 	private $test = NULL;
 	private $retCode = 0;

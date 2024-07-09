@@ -14,34 +14,34 @@
 abstract class BaseMovieI18nPeer {
 
 	/** the default database name for this class */
-	const DATABASE_NAME = 'propel';
+	public const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'movie_i18n';
+	public const TABLE_NAME = 'movie_i18n';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'MovieI18n';
+	public const OM_CLASS = 'MovieI18n';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.MovieI18n';
+	public const CLASS_DEFAULT = 'lib.model.MovieI18n';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'MovieI18nTableMap';
+	public const TM_CLASS = 'MovieI18nTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 3;
+	public const NUM_COLUMNS = 3;
 
 	/** The number of lazy-loaded columns. */
-	const NUM_LAZY_LOAD_COLUMNS = 0;
+	public const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'movie_i18n.ID';
+	public const ID = 'movie_i18n.ID';
 
 	/** the column name for the CULTURE field */
-	const CULTURE = 'movie_i18n.CULTURE';
+	public const CULTURE = 'movie_i18n.CULTURE';
 
 	/** the column name for the TITLE field */
-	const TITLE = 'movie_i18n.TITLE';
+	public const TITLE = 'movie_i18n.TITLE';
 
 	/**
 	 * An identiy map to hold any loaded instances of MovieI18n objects.
@@ -57,7 +57,7 @@ abstract class BaseMovieI18nPeer {
 	/**
 	 * Indicates whether the current model includes I18N.
 	 */
-	const IS_I18N = false;
+	public const IS_I18N = false;
 
 	/**
 	 * holds an array of fieldnames
