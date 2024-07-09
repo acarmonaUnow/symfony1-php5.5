@@ -45,7 +45,7 @@ class Swift_Transport_Esmtp_Auth_LoginAuthenticator
       $agent->executeCommand(sprintf("%s\r\n", base64_encode($password)), array(235));
       return true;
     }
-    catch (Swift_TransportException $e)
+    catch (Swift_TransportException)
     {
       $agent->executeCommand("RSET\r\n", array(250));
       return false;

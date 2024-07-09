@@ -152,7 +152,7 @@ class Swift_CharacterStream_ArrayCharacterStream
     $chars = false;
     foreach ($arrays as $array)
     {
-      $chars .= implode('', array_map('chr', $array));
+      $chars .= implode('', array_map(chr(...), $array));
     }
     return $chars;
   }
@@ -180,7 +180,7 @@ class Swift_CharacterStream_ArrayCharacterStream
       $arrays[] = $this->_array[$i];
     }
     $this->_offset += ($i - $this->_offset); // Limit function calls
-    return call_user_func_array('array_merge', $arrays);
+    return call_user_func_array(array_merge(...), $arrays);
   }
 
   /**

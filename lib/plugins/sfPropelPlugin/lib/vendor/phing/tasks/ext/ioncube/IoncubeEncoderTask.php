@@ -455,21 +455,10 @@ class IoncubeEncoderTask extends Task
 		
 		if (!empty($this->targetOption))
 		{
-			switch ($this->targetOption)
-			{
-				case "replace":
-				case "merge":
-				case "update":
-				case "rename":
-				{
-					$arguments.= "--" . $this->targetOption . "-target ";
-				} break;
-				
-				default:
-				{
-					throw new BuildException("Unknown target option '" . $this->targetOption . "'");
-				} break;
-			}
+			match ($this->targetOption) {
+       "replace", "merge", "update", "rename" => $arguments.= "--" . $this->targetOption . "-target ",
+       default => throw new BuildException("Unknown target option '" . $this->targetOption . "'"),
+   };
 		}
 		
 		if ($this->fromDir != '')

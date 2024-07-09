@@ -272,7 +272,7 @@ class TranslateGettext extends BaseParamFilterReader implements ChainableReader 
                     case self::DIR_KEY:
                         $this->setDir($this->project->resolveFile($param->getValue()));
                         break;
-                        
+
                     case self::LOCALE_KEY:
                         $this->setLocale($param->getValue());
                         break;                

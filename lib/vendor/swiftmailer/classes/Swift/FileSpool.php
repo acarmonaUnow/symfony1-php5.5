@@ -125,7 +125,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     {
       $file = $file->getRealPath();
 
-      if (substr($file, -16)=='.message.sending')
+      if (str_ends_with($file, '.message.sending'))
       {
         $lockedtime=filectime($file);
         if ((time()-$lockedtime)>$timeout) 
@@ -158,7 +158,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     {
       $file = $file->getRealPath();
 
-      if (substr($file, -8) != '.message')
+      if (!str_ends_with($file, '.message'))
       {
         continue;
       }
@@ -203,7 +203,7 @@ class Swift_FileSpool extends Swift_ConfigurableSpool
     $strlen=strlen($base);
     for ($i=0; $i<$count; ++$i) 
     {
-      $ret.=$base[((int)rand(0,$strlen-1))];
+      $ret.=$base[((int)random_int(0,$strlen-1))];
     }
     return $ret;
   }

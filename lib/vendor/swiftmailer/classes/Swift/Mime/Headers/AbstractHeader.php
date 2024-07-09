@@ -14,7 +14,7 @@
  * @subpackage Mime
  * @author Chris Corbyn
  */
-abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
+abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header, \Stringable
 {
   
   /**
@@ -201,7 +201,7 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
    *
    * @see toString()
    */
-  public function __toString()
+  public function __toString(): string
   {
     return $this->toString();
   }
@@ -289,13 +289,13 @@ abstract class Swift_Mime_Headers_AbstractHeader implements Swift_Mime_Header
             $value .= $firstChar;
             $token = substr($token, 1);
         }
-        
+
         if (-1 == $usedLength)
         {
           $usedLength = strlen($header->getFieldName() . ': ') + strlen($value);
         }
         $value .= $this->getTokenAsEncodedWord($token, $usedLength);
-        
+
         $header->setMaxLineLength(998); //Forefully override
       }
       else

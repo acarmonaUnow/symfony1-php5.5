@@ -147,7 +147,7 @@ class sfMessageSource_MySQL extends sfMessageSource_Database
     }
     else
     {
-      $dbhost = $dsninfo['hostspec'] ? $dsninfo['hostspec'] : 'localhost';
+      $dbhost = $dsninfo['hostspec'] ?: 'localhost';
       if (!empty($dsninfo['port']))
       {
         $dbhost .= ':'.$dsninfo['port'];
@@ -353,7 +353,7 @@ class sfMessageSource_MySQL extends sfMessageSource_Database
 
     if ($details)
     {
-      list($cat_id, $variant, $count) = $details;
+      [$cat_id, $variant, $count] = $details;
     }
     else
     {
@@ -398,7 +398,7 @@ class sfMessageSource_MySQL extends sfMessageSource_Database
     $details = $this->getCatalogueDetails($catalogue);
     if ($details)
     {
-      list($cat_id, $variant, $count) = $details;
+      [$cat_id, $variant, $count] = $details;
     }
     else
     {
@@ -434,7 +434,7 @@ class sfMessageSource_MySQL extends sfMessageSource_Database
     $details = $this->getCatalogueDetails($catalogue);
     if ($details)
     {
-      list($cat_id, $variant, $count) = $details;
+      [$cat_id, $variant, $count] = $details;
     }
     else
     {

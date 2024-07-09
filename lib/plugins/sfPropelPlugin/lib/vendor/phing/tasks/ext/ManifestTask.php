@@ -50,7 +50,7 @@ require_once 'phing/system/io/PhingFile.php';
  */
 class ManifestTask extends Task
 {
-	var $taskname = 'manifest';
+	public $taskname = 'manifest';
 	
 	/**
 	 * Action
@@ -244,7 +244,7 @@ class ManifestTask extends Task
     /**
      * @todo implement
      */
-    private function read()
+    private function read(): never
     {
     	throw new BuildException("Checking against manifest not yet supported.");
     }
@@ -280,15 +280,11 @@ class ManifestTask extends Task
 			
 			}
 		}
-		
-		switch(strtolower($algo)) {
-			case 'md5':
-				return md5($this->salt.$msg);
-			case 'crc32':
-				return abs(crc32($this->salt.$msg));
-		}
-		
-		return false;
+     return match (strtolower($algo)) {
+         'md5' => md5($this->salt.$msg),
+         'crc32' => abs(crc32($this->salt.$msg)),
+         default => false,
+     };
     }
     
     /**

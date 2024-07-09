@@ -80,7 +80,7 @@ class sfWidgetFormChoice extends sfWidgetFormChoiceBase
     {
       $attributes['multiple'] = 'multiple';
 
-      if ('[]' != substr($name, -2))
+      if (!str_ends_with($name, '[]'))
       {
         $name .= '[]';
       }
@@ -128,7 +128,7 @@ class sfWidgetFormChoice extends sfWidgetFormChoiceBase
     }
 
     $options = $this->options['renderer_options'];
-    $options['choices'] = new sfCallable(array($this, 'getChoices'));
+    $options['choices'] = new sfCallable($this->getChoices(...));
 
     $renderer = new $class($options, $this->getAttributes());
 

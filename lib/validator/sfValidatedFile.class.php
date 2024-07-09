@@ -16,7 +16,7 @@
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @version    SVN: $Id: sfValidatedFile.class.php 30915 2010-09-15 17:10:37Z Kris.Wallsmith $
  */
-class sfValidatedFile
+class sfValidatedFile implements \Stringable
 {
   protected
     $originalName = '',
@@ -47,9 +47,9 @@ class sfValidatedFile
   /**
    * Returns the name of the saved file.
    */
-  public function __toString()
+  public function __toString(): string
   {
-    return null === $this->savedName ? '' : $this->savedName;
+    return (string) (null === $this->savedName ? '' : $this->savedName);
   }
 
   /**
@@ -131,7 +131,7 @@ class sfValidatedFile
    */
   public function generateFilename()
   {
-    return sha1($this->getOriginalName().rand(11111, 99999)).$this->getExtension($this->getOriginalExtension());
+    return sha1($this->getOriginalName().random_int(11111, 99999)).$this->getExtension($this->getOriginalExtension());
   }
 
   /**

@@ -284,12 +284,12 @@ class Phing {
 		// Note: The order in which these are executed is important (if multiple of these options are specified)
 
 		if (in_array('-help', $args) || in_array('-h', $args)) {
-			$this->printUsage();
+			static::printUsage();
 			return;
 		}
 
 		if (in_array('-version', $args) || in_array('-v', $args)) {
-			$this->printVersion();
+			static::printVersion();
 			return;
 		}
 
@@ -393,7 +393,7 @@ class Phing {
 				} else {
 					$this->searchForThis = self::DEFAULT_BUILD_FILENAME;
 				}
-			} elseif (substr($arg,0,1) == "-") {
+			} elseif (str_starts_with($arg, "-")) {
 				// we don't have any more args
 				self::$err->write("Unknown argument: $arg" . PHP_EOL);
 				self::printUsage();
@@ -505,7 +505,7 @@ class Phing {
 			throw $exc;
 		}
 
-		$project->setUserProperty("phing.version", $this->getPhingVersion());
+		$project->setUserProperty("phing.version", static::getPhingVersion());
 
 		$e = self::$definedProps->keys();
 		while (count($e)) {
@@ -549,7 +549,7 @@ class Phing {
 		// if help is requested print it
 		if ($this->projectHelp) {
 			try {
-				$this->printDescription($project);
+				static::printDescription($project);
 				$this->printTargets($project);
 			} catch (Exception $exc) {
 				$project->fireBuildFinished($exc);
@@ -584,7 +584,7 @@ class Phing {
 		foreach($this->listeners as $listenerClassname) {
 			try {
 				$clz = Phing::import($listenerClassname);
-			} catch (Exception $x) {
+			} catch (Exception) {
 				$msg = "Unable to instantiate specified listener "
 				. "class " . $listenerClassname . " : "
 				. $e->getMessage();
@@ -705,23 +705,11 @@ class Phing {
 				$message = '[PHP Error] ' . $message;
 				$message .= ' [line ' . $line . ' of ' . $file . ']';
 
-				switch ($level) {
-
-					case E_STRICT:
-					case E_NOTICE:
-					case E_USER_NOTICE:
-						self::log($message, Project::MSG_VERBOSE);
-						break;
-					case E_WARNING:
-					case E_USER_WARNING:
-						self::log($message, Project::MSG_WARN);
-						break;
-					case E_ERROR:
-					case E_USER_ERROR:
-					default:
-						self::log($message, Project::MSG_ERR);
-
-				} // switch
+				match ($level) {
+        E_STRICT, E_NOTICE, E_USER_NOTICE => self::log($message, Project::MSG_VERBOSE),
+        E_WARNING, E_USER_WARNING => self::log($message, Project::MSG_WARN),
+        default => self::log($message, Project::MSG_ERR),
+    }; // switch
 
 			} // if phpErrorCapture
 
@@ -814,7 +802,7 @@ class Phing {
 			$buffer = trim($buffer);
 			//$buffer = "PHING version 1.0, Released 2002-??-??";
 			$phingVersion = $buffer;
-		} catch (IOException $iox) {
+		} catch (IOException) {
 			throw new ConfigurationException("Can't read version information file");
 		}
 		return $phingVersion;
@@ -1049,7 +1037,7 @@ class Phing {
 		// This is a bit of a hack, but works better than previous solution of assuming
 		// data_dir is on the include_path.
 		$dataDir = '@DATA-DIR@';
-		if ($dataDir{0} != '@') { // if we're using PEAR then the @ DATA-DIR @ token will have been substituted.
+		if ($dataDir[0] != '@') { // if we're using PEAR then the @ DATA-DIR @ token will have been substituted.
 			$testPath = $dataDir . DIRECTORY_SEPARATOR . $path;
 			if (file_exists($testPath)) {
 				return $testPath;
@@ -1210,7 +1198,7 @@ class Phing {
 	}
 
 	public static function currentTimeMillis() {
-		list($usec, $sec) = explode(" ",microtime());
+		[$usec, $sec] = explode(" ",microtime());
 		return ((float)$usec + (float)$sec);
 	}
 
@@ -1272,13 +1260,10 @@ class Phing {
 	private static function restoreIni()
 	{
 		foreach(self::$origIniSettings as $settingName => $settingValue) {
-			switch($settingName) {
-				case 'error_reporting':
-					error_reporting($settingValue);
-					break;
-				default:
-					ini_set($settingName, $settingValue);
-			}
+			match ($settingName) {
+       'error_reporting' => error_reporting($settingValue),
+       default => ini_set($settingName, $settingValue),
+   };
 		}
 	}
 

@@ -83,7 +83,7 @@ class Doctrine_Locking_Manager_Pessimistic
             $options = array('primary' => array('object_type', 'object_key'));
             try {
                 $this->conn->export->createTable($this->_lockTable, $columns, $options);
-            } catch(Exception $e) {
+            } catch(Exception) {
 
             }
         }
@@ -129,7 +129,7 @@ class Doctrine_Locking_Manager_Pessimistic
                 $gotLock = true;
 
             // we catch an Exception here instead of PDOException since we might also be catching Doctrine_Exception
-            } catch(Exception $pkviolation) {
+            } catch(Exception) {
                 // PK violation occured => existing lock!
             }
 

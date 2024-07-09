@@ -52,7 +52,7 @@ class Swift_Transport_SendmailTransport
    */
   public function start()
   {
-    if (false !== strpos($this->getCommand(), ' -bs'))
+    if (str_contains($this->getCommand(), ' -bs'))
     {
       parent::start();
     }
@@ -99,7 +99,7 @@ class Swift_Transport_SendmailTransport
     $command = $this->getCommand();
     $buffer = $this->getBuffer();
     
-    if (false !== strpos($command, ' -t'))
+    if (str_contains($command, ' -t'))
     {
       if ($evt = $this->_eventDispatcher->createSendEvent($this, $message))
       {
@@ -110,14 +110,14 @@ class Swift_Transport_SendmailTransport
         }
       }
       
-      if (false === strpos($command, ' -f'))
+      if (!str_contains($command, ' -f'))
       {
         $command .= ' -f' . $this->_getReversePath($message);
       }
       
       $buffer->initialize(array_merge($this->_params, array('command' => $command)));
       
-      if (false === strpos($command, ' -i') && false === strpos($command, ' -oi'))
+      if (!str_contains($command, ' -i') && !str_contains($command, ' -oi'))
       {
         $buffer->setWriteTranslations(array("\r\n" => "\n", "\n." => "\n.."));
       }
@@ -144,7 +144,7 @@ class Swift_Transport_SendmailTransport
       
       $message->generateId();
     }
-    elseif (false !== strpos($command, ' -bs'))
+    elseif (str_contains($command, ' -bs'))
     {
       $count = parent::send($message, $failedRecipients);
     }

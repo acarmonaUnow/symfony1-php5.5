@@ -44,7 +44,7 @@ class Swift_Transport_Esmtp_Auth_PlainAuthenticator
       $agent->executeCommand(sprintf("AUTH PLAIN %s\r\n", $message), array(235));
       return true;
     }
-    catch (Swift_TransportException $e)
+    catch (Swift_TransportException)
     {
       $agent->executeCommand("RSET\r\n", array(250));
       return false;

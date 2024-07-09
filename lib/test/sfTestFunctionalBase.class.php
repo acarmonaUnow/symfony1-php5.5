@@ -55,8 +55,8 @@ abstract class sfTestFunctionalBase
     register_shutdown_function(array($this, 'shutdown'));
 
     // register our error/exception handlers
-    set_error_handler(array($this, 'handlePhpError'));
-    set_exception_handler(array($this, 'handleException'));
+    set_error_handler($this->handlePhpError(...));
+    set_exception_handler($this->handleException(...));
   }
 
   /**
@@ -289,17 +289,17 @@ abstract class sfTestFunctionalBase
   {
     if ($name instanceof DOMElement)
     {
-      list($uri, $method, $parameters) = $this->doClickElement($name, $arguments, $options);
+      [$uri, $method, $parameters] = $this->doClickElement($name, $arguments, $options);
     }
     else
     {
       try
       {
-        list($uri, $method, $parameters) = $this->doClick($name, $arguments, $options);
+        [$uri, $method, $parameters] = $this->doClick($name, $arguments, $options);
       }
-      catch (InvalidArgumentException $e)
+      catch (InvalidArgumentException)
       {
-        list($uri, $method, $parameters) = $this->doClickCssSelector($name, $arguments, $options);
+        [$uri, $method, $parameters] = $this->doClickCssSelector($name, $arguments, $options);
       }
     }
 
@@ -480,7 +480,7 @@ abstract class sfTestFunctionalBase
    *
    * @param Exception $exception The exception
    */
-  function handleException(Exception $exception)
+  function handleException(\Throwable $exception)
   {
     $this->test()->error(sprintf('%s: %s', get_class($exception), $exception->getMessage()));
 

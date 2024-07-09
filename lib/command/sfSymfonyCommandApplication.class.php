@@ -111,7 +111,7 @@ class sfSymfonyCommandApplication extends sfCommandApplication
     }
 
     // register local autoloader for tasks
-    spl_autoload_register(array($this, 'autoloadTask'));
+    spl_autoload_register($this->autoloadTask(...));
 
     // require tasks
     foreach ($this->taskFiles as $task => $file)
@@ -121,7 +121,7 @@ class sfSymfonyCommandApplication extends sfCommandApplication
     }
 
     // unregister local autoloader
-    spl_autoload_unregister(array($this, 'autoloadTask'));
+    spl_autoload_unregister($this->autoloadTask(...));
   }
 
   /**

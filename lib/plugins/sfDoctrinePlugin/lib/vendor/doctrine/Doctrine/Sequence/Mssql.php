@@ -62,7 +62,7 @@ class Doctrine_Sequence_Mssql extends Doctrine_Sequence
                 // sequence at 2
                 try {
                     $result = $this->conn->export->createSequence($seqName, 2);
-                } catch(Doctrine_Exception $e) {
+                } catch(Doctrine_Exception) {
                     throw new Doctrine_Sequence_Exception('on demand sequence ' . $seqName . ' could not be created');
                 }
                 

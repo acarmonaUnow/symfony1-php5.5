@@ -56,16 +56,10 @@ class Swift_Transport_StreamBuffer
   public function initialize(array $params)
   {
     $this->_params = $params;
-    switch ($params['type'])
-    {
-      case self::TYPE_PROCESS:
-        $this->_establishProcessConnection();
-        break;
-      case self::TYPE_SOCKET:
-      default:
-        $this->_establishSocketConnection();
-        break;
-    }
+    match ($params['type']) {
+        self::TYPE_PROCESS => $this->_establishProcessConnection(),
+        default => $this->_establishSocketConnection(),
+    };
   }
   
   /**

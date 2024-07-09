@@ -17,7 +17,7 @@
  * @version    SVN: $Id: DateHelper.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 
-function format_daterange($start_date, $end_date, $format = 'd', $full_text, $start_text, $end_text, $culture = null, $charset = null)
+function format_daterange($start_date, $end_date, $full_text, $start_text, $end_text, $format = 'd', $culture = null, $charset = null)
 {
   if ($start_date != '' && $end_date != '')
   {
@@ -67,7 +67,7 @@ function format_datetime($date, $format = 'F', $culture = null, $charset = null)
 
 function distance_of_time_in_words($from_time, $to_time = null, $include_seconds = false)
 {
-  $to_time = $to_time ? $to_time: time();
+  $to_time = $to_time ?: time();
 
   $distance_in_minutes = floor(abs($to_time - $from_time) / 60);
   $distance_in_seconds = floor(abs($to_time - $from_time));

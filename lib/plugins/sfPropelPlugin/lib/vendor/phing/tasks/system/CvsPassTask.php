@@ -66,8 +66,7 @@ class CVSPassTask extends Task {
      */
     public function __construct() {
         $this->passFile = new PhingFile(
-            Phing::getProperty("cygwin.user.home",
-                Phing::getProperty("user.home"))
+            Phing::getProperty("cygwin.user.home")
             . DIRECTORY_SEPARATOR . ".cvspass");
     }
 
@@ -122,13 +121,13 @@ class CVSPassTask extends Task {
             if ($reader) {
                 try {
                     $reader->close();
-                } catch (Exception $e) {}                
+                } catch (Exception) {}                
             }
             
             if ($writer) {
                 try {
                     $writer->close();
-                } catch (Exception $e) {}                
+                } catch (Exception) {}                
             }
             
             throw new BuildException($e);
@@ -138,10 +137,10 @@ class CVSPassTask extends Task {
     /**
      * "Encode" the password.
      */
-    private final function mangle($password){
+    private function mangle($password){
         $buf = "";
         for ($i = 0, $plen = strlen($password); $i < $plen; $i++) {
-            $buf .= chr(self::$shifts[ord($password{$i})]);
+            $buf .= chr(self::$shifts[ord($password[$i])]);
         }
         return $buf;
     }

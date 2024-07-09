@@ -92,7 +92,7 @@ EOF;
     // update propel.ini
     if (
       null === $options['app'] &&
-      false !== strpos($options['class'], 'Propel') &&
+      str_contains($options['class'], 'Propel') &&
       'all' == $options['env']
     )
     {

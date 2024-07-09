@@ -368,7 +368,7 @@ class Doctrine_Relation_Parser
         foreach ($classes as $class) {
             try {
                 $table   = $conn->getTable($class);
-            } catch (Doctrine_Table_Exception $e) {
+            } catch (Doctrine_Table_Exception) {
                 continue;
             }
             $columns = $this->getIdentifiers($table);
@@ -457,7 +457,7 @@ class Doctrine_Relation_Parser
                     $def['localKey'] = true;
                     try {
                         $def['local'] = $this->guessColumns($foreignClasses, $this->_table);
-                    } catch (Doctrine_Relation_Exception $e) {
+                    } catch (Doctrine_Relation_Exception) {
                         $def['local'] = $localIdColumnName;
                     }
                 } else {

@@ -41,7 +41,7 @@ class sfContext implements ArrayAccess
    *
    * @return sfContext                  An sfContext instance
    */
-  static public function createInstance(sfApplicationConfiguration $configuration, $name = null, $class = __CLASS__)
+  static public function createInstance(sfApplicationConfiguration $configuration, $name = null, $class = self::class)
   {
     if (null === $name)
     {
@@ -85,7 +85,7 @@ class sfContext implements ArrayAccess
       sfException::createFromException($e)->printStackTrace();
     }
 
-    $this->dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
+    $this->dispatcher->connect('template.filter_parameters', $this->filterTemplateParameters(...));
 
     // register our shutdown function
     register_shutdown_function(array($this, 'shutdown'));
@@ -99,7 +99,7 @@ class sfContext implements ArrayAccess
    *
    * @return sfContext An sfContext implementation instance.
    */
-  static public function getInstance($name = null, $class = __CLASS__)
+  static public function getInstance($name = null, $class = self::class)
   {
     if (null === $name)
     {

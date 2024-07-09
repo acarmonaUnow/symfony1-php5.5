@@ -48,7 +48,7 @@ class Swift_Transport_Esmtp_Auth_CramMd5Authenticator
       $agent->executeCommand(sprintf("%s\r\n", $message), array(235));
       return true;
     }
-    catch (Swift_TransportException $e)
+    catch (Swift_TransportException)
     {
       $agent->executeCommand("RSET\r\n", array(250));
       return false;

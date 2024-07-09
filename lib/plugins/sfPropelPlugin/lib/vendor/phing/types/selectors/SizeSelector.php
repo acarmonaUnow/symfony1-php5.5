@@ -160,7 +160,7 @@ class SizeSelector extends BaseExtendSelector {
                     case self::SIZE_KEY:
                         try {
                             $this->setValue($parameters[$i]->getValue());
-                           } catch (Exception $nfe) {
+                           } catch (Exception) {
                                $this->setError("Invalid size setting "
                                 . $parameters[$i]->getValue());
                            }

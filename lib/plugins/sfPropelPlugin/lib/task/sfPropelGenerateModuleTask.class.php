@@ -96,8 +96,8 @@ EOF;
     $method = $options['generate-in-cache'] ? 'executeInit' : 'executeGenerate';
 
     // for backwarads compatibility symfony uses the model name as singular and plural form if none specified (#5640)
-    $options['singular']  = $options['singular'] ? $options['singular'] : $arguments['model'];
-    $options['plural']  = $options['plural'] ? $options['plural'] : $arguments['model'].'s';
+    $options['singular']  = $options['singular'] ?: $arguments['model'];
+    $options['plural']  = $options['plural'] ?: $arguments['model'].'s';
 
     $this->$method($arguments, $options);
   }
@@ -105,7 +105,7 @@ EOF;
   protected function executeGenerate($arguments = array(), $options = array())
   {
     // generate module
-    $tmpDir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.md5(uniqid(rand(), true));
+    $tmpDir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.md5(uniqid(random_int(0, mt_getrandmax()), true));
     $generatorManager = new sfGeneratorManager($this->configuration, $tmpDir);
     $generatorManager->generate('sfPropelGenerator', array(
       'model_class'           => $arguments['model'],
@@ -215,10 +215,10 @@ EOF
       $options['theme'],
       $options['non-verbose-templates'] ? 'true' : 'false',
       $options['with-show'] ? 'true' : 'false',
-      $options['singular'] ? $options['singular'] : '~',
-      $options['plural'] ? $options['plural'] : '~',
-      $options['route-prefix'] ? $options['route-prefix'] : '~',
-      $options['with-propel-route'] ? $options['with-propel-route'] : 'false',
+      $options['singular'] ?: '~',
+      $options['plural'] ?: '~',
+      $options['route-prefix'] ?: '~',
+      $options['with-propel-route'] ?: 'false',
       $options['actions-base-class']
     );
     $this->getFilesystem()->replaceTokens($finder->in($moduleDir), '##', '##', $this->constants);

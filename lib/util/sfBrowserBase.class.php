@@ -232,7 +232,7 @@ abstract class sfBrowserBase
       $this->stackPosition = count($this->stack) - 1;
     }
 
-    list($path, $queryString) = false !== ($pos = strpos($uri, '?')) ? array(substr($uri, 0, $pos), substr($uri, $pos + 1)) : array($uri, '');
+    [$path, $queryString] = false !== ($pos = strpos($uri, '?')) ? array(substr($uri, 0, $pos), substr($uri, $pos + 1)) : array($uri, '');
     $queryString = html_entity_decode($queryString);
 
     // remove anchor
@@ -655,17 +655,17 @@ abstract class sfBrowserBase
   {
     if ($name instanceof DOMElement)
     {
-      list($uri, $method, $parameters) = $this->doClickElement($name, $arguments, $options);
+      [$uri, $method, $parameters] = $this->doClickElement($name, $arguments, $options);
     }
     else
     {
       try
       {
-        list($uri, $method, $parameters) = $this->doClick($name, $arguments, $options);
+        [$uri, $method, $parameters] = $this->doClick($name, $arguments, $options);
       }
-      catch (InvalidArgumentException $e)
+      catch (InvalidArgumentException)
       {
-        list($uri, $method, $parameters) = $this->doClickCssSelector($name, $arguments, $options);
+        [$uri, $method, $parameters] = $this->doClickCssSelector($name, $arguments, $options);
       }
     }
 
@@ -690,7 +690,7 @@ abstract class sfBrowserBase
    */
   public function doClick($name, $arguments = array(), $options = array())
   {
-    if (false !== strpos($name, '[') || false !== strpos($name, ']'))
+    if (str_contains($name, '[') || str_contains($name, ']'))
     {
       throw new InvalidArgumentException(sprintf('The name "%s" is not valid', $name));
     }
@@ -799,7 +799,7 @@ abstract class sfBrowserBase
     {
       $url = $this->stack[$this->stackPosition]['uri'];
     }
-    $method = strtolower(isset($options['method']) ? $options['method'] : ($item->getAttribute('method') ? $item->getAttribute('method') : 'get'));
+    $method = strtolower(isset($options['method']) ? $options['method'] : ($item->getAttribute('method') ?: 'get'));
 
     // merge form default values and arguments
     $defaults = array();
@@ -907,7 +907,7 @@ abstract class sfBrowserBase
     else
     {
       $queryString = http_build_query($arguments, '', '&');
-      $sep = false === strpos($url, '?') ? '?' : '&';
+      $sep = !str_contains($url, '?') ? '?' : '&';
 
       return array($url.($queryString ? $sep.$queryString : ''), 'get', array());
     }
@@ -925,12 +925,12 @@ abstract class sfBrowserBase
     if (false !== $pos = strpos($name, '['))
     {
       $var = &$vars;
-      $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name), function($s) { return $s !== ""; });
+      $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name), fn($s) => $s !== "");
       foreach ($tmps as $tmp)
       {
         $var = &$var[$tmp];
       }
-      if ($var && '[]' === substr($name, -2))
+      if ($var && str_ends_with($name, '[]'))
       {
         if (!is_array($var))
         {
@@ -986,10 +986,10 @@ abstract class sfBrowserBase
   public function fixUri($uri)
   {
     // remove absolute information if needed (to be able to do follow redirects, click on links, ...)
-    if (0 === strpos($uri, 'http'))
+    if (str_starts_with($uri, 'http'))
     {
       // detect secure request
-      if (0 === strpos($uri, 'https'))
+      if (str_starts_with($uri, 'https'))
       {
         $this->defaultServerArray['HTTPS'] = 'on';
       }
@@ -1018,6 +1018,6 @@ abstract class sfBrowserBase
    */
   protected function newSession()
   {
-    $this->defaultServerArray['session_id'] = $_SERVER['session_id'] = md5(uniqid(rand(), true));
+    $this->defaultServerArray['session_id'] = $_SERVER['session_id'] = md5(uniqid(random_int(0, mt_getrandmax()), true));
   }
 }

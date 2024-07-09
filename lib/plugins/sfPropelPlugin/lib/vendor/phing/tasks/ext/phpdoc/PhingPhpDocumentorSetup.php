@@ -52,7 +52,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup {
         $_phpDocumentor_phpfile_exts = $GLOBALS['_phpDocumentor_phpfile_exts'];
 		$_phpDocumentor_cvsphpfile_exts = $GLOBALS['_phpDocumentor_cvsphpfile_exts'];
 
-		if (tokenizer_ext) {
+		if (\TOKENIZER_EXT) {
             $this->parse = new phpDocumentorTParser();
         } else {
             $this->parse = new Parser();
@@ -101,7 +101,7 @@ class PhingPhpDocumentorSetup extends phpDocumentor_setup {
 	public function setIgnoreTags($tags) {
 		global $_phpDocumentor_setting; 
 		$ignoretags = explode(',', $tags);
-		$ignoretags = array_map('trim', $ignoretags);
+		$ignoretags = array_map(trim(...), $ignoretags);
 		$tags = array();
 		foreach($ignoretags as $tag) {
 		    if (!in_array($tag,array('@global', '@access', '@package', '@ignore', '@name', '@param', '@return', '@staticvar', '@var')))

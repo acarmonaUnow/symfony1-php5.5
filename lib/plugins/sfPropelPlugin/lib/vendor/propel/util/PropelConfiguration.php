@@ -132,16 +132,12 @@ class PropelConfiguration implements ArrayAccess
 	 */
 	public function getParameters($type = PropelConfiguration::TYPE_ARRAY)
 	{
-		switch ($type) {
-			case PropelConfiguration::TYPE_ARRAY:
-				return $this->parameters;
-			case PropelConfiguration::TYPE_ARRAY_FLAT:
-				return $this->toFlatArray();
-			case PropelConfiguration::TYPE_OBJECT:
-				return $this;
-			default:
-				throw new PropelException('Unknown configuration type: '. var_export($type, true));
-		}
+		return match ($type) {
+      PropelConfiguration::TYPE_ARRAY => $this->parameters,
+      PropelConfiguration::TYPE_ARRAY_FLAT => $this->toFlatArray(),
+      PropelConfiguration::TYPE_OBJECT => $this,
+      default => throw new PropelException('Unknown configuration type: '. var_export($type, true)),
+  };
 
 	}
 

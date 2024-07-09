@@ -11,7 +11,7 @@
  *
  * @package    lib.model.om
  */
-abstract class BaseProductI18n extends BaseObject  implements Persistent {
+abstract class BaseProductI18n extends BaseObject  implements Persistent, \Stringable {
 
 
 	/**
@@ -60,7 +60,7 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	// symfony behavior
-	
+
 	const PEER = 'ProductI18nPeer';
 
 	/**
@@ -288,7 +288,7 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 		if ($con === null) {
 			$con = Propel::getConnection(ProductI18nPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-		
+
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
@@ -298,7 +298,7 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 			  if (call_user_func($callable, $this, $con))
 			  {
 			    $con->commit();
-			
+
 			    return;
 			  }
 			}
@@ -345,7 +345,7 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 		if ($con === null) {
 			$con = Propel::getConnection(ProductI18nPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-		
+
 		$con->beginTransaction();
 		$isInsert = $this->isNew();
 		try {
@@ -356,7 +356,7 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 			  if (is_integer($affectedRows = call_user_func($callable, $this, $con)))
 			  {
 			    $con->commit();
-			
+
 			    return $affectedRows;
 			  }
 			}
@@ -553,20 +553,12 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 	 */
 	public function getByPosition($pos)
 	{
-		switch($pos) {
-			case 0:
-				return $this->getId();
-				break;
-			case 1:
-				return $this->getCulture();
-				break;
-			case 2:
-				return $this->getName();
-				break;
-			default:
-				return null;
-				break;
-		} // switch()
+		return match ($pos) {
+      0 => $this->getId(),
+      1 => $this->getCulture(),
+      2 => $this->getName(),
+      default => null,
+  }; // switch()
 	}
 
 	/**
@@ -850,7 +842,7 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 	}
 
 	// symfony_behaviors behavior
-	
+
 	/**
 	 * Calls methods defined via {@link sfMixer}.
 	 */
@@ -860,9 +852,9 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 	  {
 	    throw new sfException(sprintf('Call to undefined method BaseProductI18n::%s', $method));
 	  }
-	
+
 	  array_unshift($arguments, $this);
-	
+
 	  return call_user_func_array($callable, $arguments);
 	}
 
@@ -871,7 +863,7 @@ abstract class BaseProductI18n extends BaseObject  implements Persistent {
 	 *
 	 * @return string The value of the 'name' column
 	 */
-  public function __toString()
+  public function __toString(): string
   {
     return (string) $this->getName();
   }

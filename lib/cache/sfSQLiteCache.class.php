@@ -81,7 +81,7 @@ class sfSQLiteCache extends sfCache
    */
   public function set($key, $data, $lifetime = null)
   {
-    if ($this->getOption('automatic_cleaning_factor') > 0 && rand(1, $this->getOption('automatic_cleaning_factor')) == 1)
+    if ($this->getOption('automatic_cleaning_factor') > 0 && random_int(1, $this->getOption('automatic_cleaning_factor')) == 1)
     {
       $this->clean(sfCache::OLD);
     }
@@ -168,7 +168,7 @@ class sfSQLiteCache extends sfCache
       throw new sfCacheException(sprintf('Unable to connect to SQLite database: %s.', $errmsg));
     }
 
-    $this->dbh->createFunction('regexp', array($this, 'removePatternRegexpCallback'), 2);
+    $this->dbh->createFunction('regexp', $this->removePatternRegexpCallback(...), 2);
 
     if ($new)
     {
@@ -189,7 +189,7 @@ class sfSQLiteCache extends sfCache
    */
   public function getMany($keys)
   {
-    $rows = $this->dbh->arrayQuery(sprintf("SELECT key, data FROM cache WHERE key IN ('%s') AND timeout > %d", implode('\', \'', array_map('sqlite_escape_string', $keys)), time()));
+    $rows = $this->dbh->arrayQuery(sprintf("SELECT key, data FROM cache WHERE key IN ('%s') AND timeout > %d", implode('\', \'', array_map(sqlite_escape_string(...), $keys)), time()));
 
     $data = array();
     foreach ($rows as $row)

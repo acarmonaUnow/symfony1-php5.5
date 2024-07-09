@@ -31,8 +31,8 @@ class sfWebDebugPanelView extends sfWebDebugPanel
   {
     parent::__construct($webDebug);
 
-    $this->webDebug->getEventDispatcher()->connect('controller.change_action', array($this, 'listenForChangeAction'));
-    $this->webDebug->getEventDispatcher()->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
+    $this->webDebug->getEventDispatcher()->connect('controller.change_action', $this->listenForChangeAction(...));
+    $this->webDebug->getEventDispatcher()->connect('template.filter_parameters', $this->filterTemplateParameters(...));
   }
 
   /**
@@ -338,7 +338,7 @@ class sfWebDebugPanelView extends sfWebDebugPanel
 
     foreach ($parameters as $name => $value)
     {
-      if (0 !== strpos($name, 'sf_'))
+      if (!str_starts_with($name, 'sf_'))
       {
         $filtered[$name] = $value;
       }

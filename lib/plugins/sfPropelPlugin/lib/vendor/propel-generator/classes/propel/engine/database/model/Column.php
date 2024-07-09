@@ -203,7 +203,7 @@ class Column extends XMLElement {
       $this->isNestedSetRightKey = $this->booleanValue($this->getAttribute("nestedSetRightKey"));
       $this->isTreeScopeKey = $this->booleanValue($this->getAttribute("treeScopeKey"));
 
-      $this->isNotNull = ($this->booleanValue($this->getAttribute("required"), false) || $this->isPrimaryKey); // primary keys are required
+      $this->isNotNull = ($this->booleanValue($this->getAttribute("required")) || $this->isPrimaryKey); // primary keys are required
 
       //AutoIncrement/Sequences
       $this->isAutoIncrement = $this->booleanValue($this->getAttribute("autoIncrement"));
@@ -1090,17 +1090,17 @@ class Column extends XMLElement {
       $this->size = $size;
     }
 
-    if (strpos($tn, "CHAR") !== false) {
+    if (str_contains($tn, "CHAR")) {
       $this->domain->setType(PropelTypes::VARCHAR);
-    } elseif (strpos($tn, "INT") !== false) {
+    } elseif (str_contains($tn, "INT")) {
       $this->domain->setType(PropelTypes::INTEGER);
-    } elseif (strpos($tn, "FLOAT") !== false) {
+    } elseif (str_contains($tn, "FLOAT")) {
       $this->domain->setType(PropelTypes::FLOAT);
-    } elseif (strpos($tn, "DATE") !== false) {
+    } elseif (str_contains($tn, "DATE")) {
       $this->domain->setType(PropelTypes::DATE);
-    } elseif (strpos($tn, "TIME") !== false) {
+    } elseif (str_contains($tn, "TIME")) {
       $this->domain->setType(PropelTypes::TIMESTAMP);
-    } else if (strpos($tn, "BINARY") !== false) {
+    } else if (str_contains($tn, "BINARY")) {
       $this->domain->setType(PropelTypes::LONGVARBINARY);
     } else {
       $this->domain->setType(PropelTypes::VARCHAR);

@@ -350,7 +350,7 @@ class AbstractFileSet extends DataType implements SelectorContainer {
             return $this->getRef($this->getProject())->hasPatterns();            
         }
 
-        if ($this->defaultPatterns->hasPatterns($this->getProject())) {
+        if ($this->defaultPatterns->hasPatterns()) {
             return true;
         }
 

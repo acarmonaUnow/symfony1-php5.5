@@ -336,18 +336,11 @@ class CreoleSQLExecTask extends CreoleTask {
                     if ($out) $out->close();
                     throw $e;
                 } 
-            } catch (IOException $e) {
+            } catch (IOException|SQLException $e) {
                 if (!$this->isAutocommit() && $this->conn !== null && $this->onError == "abort") {
                     try {
                         $this->conn->rollback();
-                    } catch (SQLException $ex) {}
-                }
-                throw new BuildException($e->getMessage(), $this->location);
-            } catch (SQLException $e){
-                if (!$this->isAutocommit() && $this->conn !== null && $this->onError == "abort") {
-                    try {
-                        $this->conn->rollback();
-                    } catch (SQLException $ex) {}
+                    } catch (SQLException) {}
                 }
                 throw new BuildException($e->getMessage(), $this->location);
             }
@@ -413,7 +406,7 @@ class CreoleSQLExecTask extends CreoleTask {
                 // SQL defines "--" as a comment to EOL
                 // and in Oracle it may contain a hint
                 // so we cannot just remove it, instead we must end it
-                if (strpos($line, "--") !== false) {
+                if (str_contains($line, "--")) {
                     $sql .= "\n";
                 }
 
@@ -479,16 +472,16 @@ class CreoleSQLExecTask extends CreoleTask {
             $rs = $this->statement->getResultSet();
             
             if ($rs !== null) {
-            
+
                 $this->log("Processing new result set.", Project::MSG_VERBOSE);            
-    
+
                 $line = "";
 
                 $colsprinted = false;
-                
+
                 while ($rs->next()) {
                     $fields = $rs->getRow();
-                    
+
                     if (!$colsprinted && $this->showheaders) {
                         $first = true;
                         foreach($fields as $fieldName => $ignore) {
@@ -504,10 +497,10 @@ class CreoleSQLExecTask extends CreoleTask {
                         $line = "";
                         $colsprinted = true;
                     } // if show headers
-                    
+
                     $first = true;
                     foreach($fields as $columnValue) {
-                        
+
                         if ($columnValue != null) {
                             $columnValue = trim($columnValue);
                         }
@@ -519,7 +512,7 @@ class CreoleSQLExecTask extends CreoleTask {
                         }
                         $line .= $columnValue;
                     }
-                    
+
                     if ($out !== null) {
                         $out->write($line);
                         $out->newLine();
@@ -527,7 +520,7 @@ class CreoleSQLExecTask extends CreoleTask {
                         print($line . PHP_EOL);
                     }
                     $line = "";
-                    
+
                 } // while rs->next()
             }
         } while ($this->statement->getMoreResults());

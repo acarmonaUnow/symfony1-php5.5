@@ -122,13 +122,13 @@ function url_for()
 {
   // for BC with 1.1
   $arguments = func_get_args();
-  if (is_array($arguments[0]) || '@' == substr($arguments[0], 0, 1) || false !== strpos($arguments[0], '/'))
+  if (is_array($arguments[0]) || str_starts_with($arguments[0], '@') || str_contains($arguments[0], '/'))
   {
-    return call_user_func_array('url_for1', $arguments);
+    return call_user_func_array(url_for1(...), $arguments);
   }
   else
   {
-    return call_user_func_array('url_for2', $arguments);
+    return call_user_func_array(url_for2(...), $arguments);
   }
 }
 
@@ -175,9 +175,9 @@ function link_to()
 {
   // for BC with 1.1
   $arguments = func_get_args();
-  if (empty($arguments[1]) || is_array($arguments[1]) || '@' == substr($arguments[1], 0, 1) || false !== strpos($arguments[1], '/'))
+  if (empty($arguments[1]) || is_array($arguments[1]) || str_starts_with($arguments[1], '@') || str_contains($arguments[1], '/'))
   {
-    return call_user_func_array('link_to1', $arguments);
+    return call_user_func_array(link_to1(...), $arguments);
   }
   else
   {
@@ -185,7 +185,7 @@ function link_to()
     {
       $arguments[2] = array();
     }
-    return call_user_func_array('link_to2', $arguments);
+    return call_user_func_array(link_to2(...), $arguments);
   }
 }
 
@@ -243,13 +243,13 @@ function form_tag_for(sfForm $form, $routePrefix, $attributes = array())
 function link_to_if()
 {
   $arguments = func_get_args();
-  if (empty($arguments[2]) || '@' == substr($arguments[2], 0, 1) || false !== strpos($arguments[2], '/'))
+  if (empty($arguments[2]) || str_starts_with($arguments[2], '@') || str_contains($arguments[2], '/'))
   {
-    list($condition, $name, $params, $options) = array_pad($arguments, 4, null);
+    [$condition, $name, $params, $options] = array_pad($arguments, 4, null);
   }
   else
   {
-    list($condition, $name, $routeName, $params, $options) = array_pad($arguments, 5, null);
+    [$condition, $name, $routeName, $params, $options] = array_pad($arguments, 5, null);
     $params = array_merge(array('sf_route' => $routeName), is_object($params) ? array('sf_subject' => $params) : (array) $params);
   }
 
@@ -307,7 +307,7 @@ function link_to_unless()
 {
   $arguments = func_get_args();
   $arguments[0] = !$arguments[0];
-  return call_user_func_array('link_to_if', $arguments);
+  return call_user_func_array(link_to_if(...), $arguments);
 }
 
 /**
@@ -336,7 +336,7 @@ function public_path($path, $absolute = false)
     $source = $root;
   }
 
-  if (substr($path, 0, 1) != '/')
+  if (!str_starts_with($path, '/'))
   {
     $path = '/'.$path;
   }
@@ -633,7 +633,7 @@ function _encodeText($text)
   for ($i = 0; $i < strlen($text); $i++)
   {
     $char = $text[$i];
-    $r = rand(0, 100);
+    $r = random_int(0, 100);
 
     # roughly 10% raw, 45% hex, 45% dec
     # '@' *must* be encoded. I insist.

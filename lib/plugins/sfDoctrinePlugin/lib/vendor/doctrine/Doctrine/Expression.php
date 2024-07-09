@@ -33,7 +33,7 @@
  * @version     $Revision: 7490 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-class Doctrine_Expression
+class Doctrine_Expression implements \Stringable
 {
     protected $_expression;
     protected $_conn;
@@ -99,7 +99,7 @@ class Doctrine_Expression
     public function parseExpression($expr)
     {
         $pos  = strpos($expr, '(');
-        $quoted = (substr($expr, 0, 1) === "'" && substr($expr, -1) === "'");
+        $quoted = (str_starts_with($expr, "'") && str_ends_with($expr, "'"));
         if ($pos === false || $quoted) {
             return $expr;
         }
@@ -151,7 +151,7 @@ class Doctrine_Expression
      * 
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getSql();
     }

@@ -232,12 +232,12 @@ class Swift_Transport_EsmtpTransport
     foreach ($this->_handlers as $handler)
     {
       if (in_array(strtolower($method),
-        array_map('strtolower', (array) $handler->exposeMixinMethods())
+        array_map(strtolower(...), (array) $handler->exposeMixinMethods())
         ))
       {
         $return = call_user_func_array(array($handler, $method), $args);
         //Allow fluid method calls
-        if (is_null($return) && substr($method, 0, 3) == 'set')
+        if (is_null($return) && str_starts_with($method, 'set'))
         {
           return $this;
         }
@@ -289,7 +289,7 @@ class Swift_Transport_EsmtpTransport
             sprintf("EHLO %s\r\n", $this->_domain), array(250)
             );
         }
-        catch (Swift_TransportException $e)
+        catch (Swift_TransportException)
         {
           return parent::_doHeloCommand();
         }

@@ -101,7 +101,7 @@ EOF;
   protected function executeGenerate($arguments = array(), $options = array())
   {
     // generate module
-    $tmpDir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.md5(uniqid(rand(), true));
+    $tmpDir = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.md5(uniqid(random_int(0, mt_getrandmax()), true));
     $generatorManager = new sfGeneratorManager($this->configuration, $tmpDir);
     $generatorManager->generate('sfDoctrineGenerator', array(
       'model_class'           => $arguments['model'],
@@ -109,8 +109,8 @@ EOF;
       'theme'                 => $options['theme'],
       'non_verbose_templates' => $options['non-verbose-templates'],
       'with_show'             => $options['with-show'],
-      'singular'              => $options['singular'] ? $options['singular'] : sfInflector::underscore($arguments['model']),
-      'plural'                => $options['plural'] ? $options['plural'] : sfInflector::underscore($arguments['model'].'s'),
+      'singular'              => $options['singular'] ?: sfInflector::underscore($arguments['model']),
+      'plural'                => $options['plural'] ?: sfInflector::underscore($arguments['model'].'s'),
       'route_prefix'          => $options['route-prefix'],
       'with_doctrine_route'   => $options['with-doctrine-route'],
       'actions_base_class'    => $options['actions-base-class'],
@@ -211,9 +211,9 @@ EOF
       $options['theme'],
       $options['non-verbose-templates'] ? 'true' : 'false',
       $options['with-show'] ? 'true' : 'false',
-      $options['singular'] ? $options['singular'] : '~',
-      $options['plural'] ? $options['plural'] : '~',
-      $options['route-prefix'] ? $options['route-prefix'] : '~',
+      $options['singular'] ?: '~',
+      $options['plural'] ?: '~',
+      $options['route-prefix'] ?: '~',
       $options['with-doctrine-route'] ? 'true' : 'false',
       $options['actions-base-class']
     );

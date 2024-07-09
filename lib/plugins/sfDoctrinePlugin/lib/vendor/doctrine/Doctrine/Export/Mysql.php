@@ -179,7 +179,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         // attach all primary keys
         if (isset($options['primary']) && ! empty($options['primary'])) {
             $keyColumns = array_values($options['primary']);
-            $keyColumns = array_map(array($this->conn, 'quoteIdentifier'), $keyColumns);
+            $keyColumns = array_map($this->conn->quoteIdentifier(...), $keyColumns);
             $queryFields .= ', PRIMARY KEY(' . implode(', ', $keyColumns) . ')';
         }
 
@@ -524,7 +524,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         try {
             $query  = 'CREATE TABLE ' . $sequenceName
                     . ' (' . $seqcolName . ' BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY ('
-                    . $seqcolName . ')) ' . implode($optionsStrings, ' ');
+                    . $seqcolName . ')) ' . implode(' ', $optionsStrings);
 
             $res    = $this->conn->exec($query);
         } catch(Doctrine_Connection_Exception $e) {
@@ -545,7 +545,7 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         // Handle error
         try {
             $result = $this->conn->exec('DROP TABLE ' . $sequenceName);
-        } catch(Doctrine_Connection_Exception $e) {
+        } catch(Doctrine_Connection_Exception) {
             throw new Doctrine_Export_Exception('could not drop inconsistent sequence table');
         }
 
@@ -595,16 +595,12 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         $name   = $this->conn->quoteIdentifier($name);
         $type   = '';
         if (isset($definition['type'])) {
-            switch (strtolower($definition['type'])) {
-                case 'fulltext':
-                case 'unique':
-                    $type = strtoupper($definition['type']) . ' ';
-                break;
-                default:
-                    throw new Doctrine_Export_Exception(
-                        'Unknown type ' . $definition['type'] . ' for index ' . $name . ' in table ' . $table
-                    );
-            }
+            $type = match (strtolower($definition['type'])) {
+                'fulltext', 'unique' => strtoupper($definition['type']) . ' ',
+                default => throw new Doctrine_Export_Exception(
+                    'Unknown type ' . $definition['type'] . ' for index ' . $name . ' in table ' . $table
+                ),
+            };
         }
         $query  = 'CREATE ' . $type . 'INDEX ' . $name . ' ON ' . $table;
         $query .= ' (' . $this->getIndexFieldDeclarationList($definition['fields']) . ')';
@@ -634,14 +630,14 @@ class Doctrine_Export_Mysql extends Doctrine_Export
                     $field['default'] = ' ';
                 }
             }
-    
+
             // Proposed patch:
             if ($field['type'] == 'enum' && $this->conn->getAttribute(Doctrine_Core::ATTR_USE_NATIVE_ENUM)) {
                 $fieldType = 'varchar';
             } else {
                 $fieldType = $field['type'];
             }
-            
+
             $default = ' DEFAULT ' . (is_null($field['default'])
                 ? 'NULL' 
                 : $this->conn->quote($field['default'], $fieldType));
@@ -664,16 +660,12 @@ class Doctrine_Export_Mysql extends Doctrine_Export
         $name   = $this->conn->formatter->getIndexName($name);
         $type   = '';
         if (isset($definition['type'])) {
-            switch (strtolower($definition['type'])) {
-                case 'fulltext':
-                case 'unique':
-                    $type = strtoupper($definition['type']) . ' ';
-                break;
-                default:
-                    throw new Doctrine_Export_Exception(
-                        'Unknown type ' . $definition['type'] . ' for index ' . $name
-                    );
-            }
+            $type = match (strtolower($definition['type'])) {
+                'fulltext', 'unique' => strtoupper($definition['type']) . ' ',
+                default => throw new Doctrine_Export_Exception(
+                    'Unknown type ' . $definition['type'] . ' for index ' . $name
+                ),
+            };
         }
         
         if ( ! isset($definition['fields'])) {
@@ -711,14 +703,10 @@ class Doctrine_Export_Mysql extends Doctrine_Export
 
                 if (isset($field['sorting'])) {
                     $sort = strtoupper($field['sorting']);
-                    switch ($sort) {
-                        case 'ASC':
-                        case 'DESC':
-                            $fieldString .= ' ' . $sort;
-                            break;
-                        default:
-                            throw new Doctrine_Export_Exception('Unknown index sorting option given.');
-                    }
+                    match ($sort) {
+                        'ASC', 'DESC' => $fieldString .= ' ' . $sort,
+                        default => throw new Doctrine_Export_Exception('Unknown index sorting option given.'),
+                    };
                 }
             } else {
                 $fieldString = $this->conn->quoteIdentifier($field);

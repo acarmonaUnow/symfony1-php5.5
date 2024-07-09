@@ -24,7 +24,7 @@
  * 
  * @package   phing.system.io
  */
-class OutputStream {
+class OutputStream implements \Stringable {
 	
 	/**
 	 * @var resource The configured PHP stream.
@@ -101,7 +101,7 @@ class OutputStream {
      * Returns a string representation of the attached PHP stream.
      * @return string
      */
-    public function __toString() {
+    public function __toString(): string {
         return (string) $this->stream;
     }
 }

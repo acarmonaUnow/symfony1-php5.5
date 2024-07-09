@@ -286,7 +286,7 @@ class PropelSQLExec extends Task {
 
 		try {
 			$map->load($this->getSqlDbMap());
-		} catch (IOException $ioe) {
+		} catch (IOException) {
 			throw new BuildException("Cannot open and process the sqldbmap!");
 		}
 
@@ -304,7 +304,7 @@ class PropelSQLExec extends Task {
 
 			// We want to make sure that the base schemas
 			// are inserted first.
-			if (strpos($sqlfile, "schema.sql") !== false) {
+			if (str_contains($sqlfile, "schema.sql")) {
 				// add to the beginning of the array
 				array_unshift($databases[$database], $sqlfile);
 			} else {
@@ -382,7 +382,7 @@ class PropelSQLExec extends Task {
 						$this->conn->commit();
 					}
 				}
-			} catch (Exception $e) {
+			} catch (Exception) {
 				if ($out) $out->close();
 			}
 
@@ -391,7 +391,7 @@ class PropelSQLExec extends Task {
 			if (!$this->autocommit && $this->conn !== null && $this->onError == "abort") {
 				try {
 					$this->conn->rollBack();
-				} catch (PDOException $ex) {
+				} catch (PDOException) {
 					// do nothing.
 					System::println("Rollback failed.");
 				}
@@ -402,7 +402,7 @@ class PropelSQLExec extends Task {
 			if (!$this->autocommit && $this->conn !== null && $this->onError == "abort") {
 				try {
 					$this->conn->rollBack();
-				} catch (PDOException $ex) {
+				} catch (PDOException) {
 					// do nothing.
 					System::println("Rollback failed");
 				}
@@ -472,7 +472,7 @@ class PropelSQLExec extends Task {
 			// SQL defines "--" as a comment to EOL
 			// and in Oracle it may contain a hint
 			// so we cannot just remove it, instead we must end it
-			if (strpos($line, "--") !== false) {
+			if (str_contains($line, "--")) {
 				$sql .= PHP_EOL;
 			}
 

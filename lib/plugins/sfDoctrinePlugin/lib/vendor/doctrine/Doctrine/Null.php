@@ -33,14 +33,14 @@
  * @version     $Revision: 7490 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-final class Doctrine_Null
+final class Doctrine_Null implements \Stringable
 { 
     public function exists()
     {
         return false;    
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return '';
     }

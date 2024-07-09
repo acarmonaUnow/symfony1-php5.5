@@ -121,7 +121,7 @@ class Index extends XMLElement {
 			try {
 				// generate an index name if we don't have a supplied one
 				$this->createName();
-			} catch (EngineException $e) {
+			} catch (EngineException) {
 				// still no name
 			}
 		}
@@ -222,10 +222,7 @@ class Index extends XMLElement {
 	 */
 	public function getColumnSize($name)
 	{
-		if (isset($this->indexColumnSizes[$name])) {
-			return $this->indexColumnSizes[$name];
-		}
-		return null; // just to be explicit
+		return $this->indexColumnSizes[$name] ?? null; // just to be explicit
 	}
 
 	/**

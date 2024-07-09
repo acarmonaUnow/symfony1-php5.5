@@ -56,7 +56,7 @@ class sfWidgetFormSelect extends sfWidgetFormChoiceBase
     {
       $attributes['multiple'] = 'multiple';
 
-      if ('[]' != substr($name, -2))
+      if (!str_ends_with($name, '[]'))
       {
         $name .= '[]';
       }

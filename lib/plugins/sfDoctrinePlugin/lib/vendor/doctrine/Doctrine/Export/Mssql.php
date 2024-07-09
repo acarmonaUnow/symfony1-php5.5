@@ -50,7 +50,7 @@ class Doctrine_Export_Mssql extends Doctrine_Export
             $query.= $this->conn->options['database_size'] ? '=' .
                      $this->conn->options['database_size'] : '';
         }
-        return $this->conn->standaloneQuery($query, array(), true);
+        return $this->conn->standaloneQuery($query, array());
     }
 
     /**
@@ -62,7 +62,7 @@ class Doctrine_Export_Mssql extends Doctrine_Export
     public function dropDatabase($name)
     {
         $name = $this->conn->quoteIdentifier($name, true);
-        return $this->conn->standaloneQuery('DROP DATABASE ' . $name, array(), true);
+        return $this->conn->standaloneQuery('DROP DATABASE ' . $name, array());
     }
 
     /**
@@ -358,7 +358,7 @@ class Doctrine_Export_Mssql extends Doctrine_Export
             $query = 'SET IDENTITY_INSERT ' . $sequenceName . ' ON ' .
                      'INSERT INTO ' . $sequenceName . ' (' . $seqcolName . ') VALUES ( ' . $start . ')';
             $res = $this->conn->exec($query);
-        } catch (Exception $e) {
+        } catch (Exception) {
             $result = $this->conn->exec('DROP TABLE ' . $sequenceName);
         }
         return true;
@@ -434,7 +434,7 @@ class Doctrine_Export_Mssql extends Doctrine_Export
         $queryFields = $this->getFieldDeclarationList($fields);
 
         if (isset($options['primary']) && ! empty($options['primary'])) {
-            $primaryKeys = array_map(array($this->conn, 'quoteIdentifier'), array_values($options['primary']));
+            $primaryKeys = array_map($this->conn->quoteIdentifier(...), array_values($options['primary']));
             $queryFields .= ', PRIMARY KEY(' . implode(', ', $primaryKeys) . ')';
         }
 

@@ -513,7 +513,7 @@ class DirectoryScanner implements SelectorScanner {
      */
     protected function isIncluded($_name) {
         for ($i=0, $_i=count($this->includes); $i < $_i; $i++) {
-            if (DirectoryScanner::matchPath($this->includes[$i], $_name, $this->isCaseSensitive)) {
+            if ((new DirectoryScanner())->matchPath($this->includes[$i], $_name, $this->isCaseSensitive)) {
                 return true;
             }
         }
@@ -529,7 +529,7 @@ class DirectoryScanner implements SelectorScanner {
      */
     protected function couldHoldIncluded($_name) {
         for ($i = 0; $i < count($this->includes); $i++) {
-            if (DirectoryScanner::matchPatternStart($this->includes[$i], $_name, $this->isCaseSensitive)) {
+            if ((new DirectoryScanner())->matchPatternStart($this->includes[$i], $_name, $this->isCaseSensitive)) {
                 return true;
             }
         }
@@ -545,7 +545,7 @@ class DirectoryScanner implements SelectorScanner {
      */
     protected function isExcluded($_name) {
         for ($i = 0; $i < count($this->excludes); $i++) {
-            if (DirectoryScanner::matchPath($this->excludes[$i], $_name, $this->isCaseSensitive)) {
+            if ((new DirectoryScanner())->matchPath($this->excludes[$i], $_name, $this->isCaseSensitive)) {
                 return true;
             }
         }

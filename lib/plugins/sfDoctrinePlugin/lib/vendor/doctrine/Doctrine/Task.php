@@ -83,8 +83,8 @@ abstract class Doctrine_Task
         $nameParts = explode('\\', $className);
 
         foreach ($nameParts as &$namePart) {
-            $prefix = __CLASS__ . '_';
-            $baseName = strpos($namePart, $prefix) === 0 ? substr($namePart, strlen($prefix)) : $namePart;
+            $prefix = self::class . '_';
+            $baseName = str_starts_with($namePart, $prefix) ? substr($namePart, strlen($prefix)) : $namePart;
             $namePart = str_replace('_', '-', Doctrine_Inflector::tableize($baseName));
         }
 
@@ -119,7 +119,7 @@ abstract class Doctrine_Task
     {
         $args = func_get_args();
         
-        call_user_func_array(array($this, 'notify'), $args);
+        call_user_func_array($this->notify(...), $args);
         
         $answer = strtolower(trim(fgets(STDIN)));
         

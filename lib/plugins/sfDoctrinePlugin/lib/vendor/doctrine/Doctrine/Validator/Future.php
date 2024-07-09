@@ -50,14 +50,10 @@ class Doctrine_Validator_Future extends Doctrine_Validator_Driver
         }
         
         if (is_array($this->args) && isset($this->args['timezone'])) {
-            switch (strtolower($this->args['timezone'])) {
-                case 'gmt':
-                    $now = gmdate("U") - date("Z");
-                    break;
-                default:
-                    $now = getdate();
-                    break;
-            }
+            $now = match (strtolower($this->args['timezone'])) {
+                'gmt' => gmdate("U") - date("Z"),
+                default => getdate(),
+            };
         } else {
             $now = getdate();
         }

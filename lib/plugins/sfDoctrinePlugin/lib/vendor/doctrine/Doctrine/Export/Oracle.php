@@ -44,7 +44,7 @@ class Doctrine_Export_Oracle extends Doctrine_Export
     {
         if ($this->conn->getAttribute(Doctrine_Core::ATTR_EMULATE_DATABASE)) {
             $username   = $name;
-            $password   = $this->conn->dsn['password'] ? $this->conn->dsn['password'] : $name;
+            $password   = $this->conn->dsn['password'] ?: $name;
 
             $tablespace = $this->conn->options['default_tablespace']
                         ? ' DEFAULT TABLESPACE '.$this->conn->options['default_tablespace'] : '';
@@ -55,7 +55,7 @@ class Doctrine_Export_Oracle extends Doctrine_Export
             try {
                 $query = 'GRANT CREATE SESSION, CREATE TABLE, UNLIMITED TABLESPACE, CREATE SEQUENCE, CREATE TRIGGER TO ' . $username;
                 $result = $this->conn->exec($query);
-            } catch (Exception $e) {
+            } catch (Exception) {
                 $this->dropDatabase($username);
             }
         }

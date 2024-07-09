@@ -7,7 +7,7 @@
  *
  * @package lib.model
  */
-class Category extends BaseCategory
+class Category extends BaseCategory implements \Stringable
 {
 	/**
 	 * Initializes internal state of Category object.
@@ -20,7 +20,7 @@ class Category extends BaseCategory
 		parent::__construct();
 	}
 
-  public function __toString()
+  public function __toString(): string
   {
     return $this->getName();
   }

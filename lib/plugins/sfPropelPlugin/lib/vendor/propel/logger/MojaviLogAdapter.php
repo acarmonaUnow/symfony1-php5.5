@@ -134,26 +134,13 @@ class MojaviLogAdapter implements BasicLogger {
 		if (is_null($this->logger))
 			$this->logger = LogManager::getLogger('propel');
 
-		switch($severity)
-		{
-			case 'crit':
-				$method = 'fatal';
-				break;
-			case 'err':
-				$method = 'error';
-				break;
-			case 'alert':
-			case 'warning':
-				$method = 'warning';
-				break;
-			case 'notice':
-			case 'info':
-				$method = 'info';
-				break;
-			case 'debug':
-			default:
-				$method = 'debug';
-		}
+		$method = match ($severity) {
+      'crit' => 'fatal',
+      'err' => 'error',
+      'alert', 'warning' => 'warning',
+      'notice', 'info' => 'info',
+      default => 'debug',
+  };
 
 		// get a backtrace to pass class, function, file, & line to Mojavi logger
 		$trace = debug_backtrace();

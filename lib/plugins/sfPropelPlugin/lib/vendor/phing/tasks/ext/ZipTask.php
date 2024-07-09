@@ -219,20 +219,20 @@ class ZipFileSet extends FileSet {
     public function getFiles(Project $p, $includeEmpty = true) {
     
         if ($this->files === null) {
-        
+
             $ds = $this->getDirectoryScanner($p);
             $this->files = $ds->getIncludedFiles();
-            
+
             if ($includeEmpty) {
-            
+
 	            // first any empty directories that will not be implicitly added by any of the files
 				$implicitDirs = array();
 				foreach($this->files as $file) {
 					$implicitDirs[] = dirname($file);
 				} 
-				
+
 				$incDirs = $ds->getIncludedDirectories();
-				
+
 				// we'll need to add to that list of implicit dirs any directories
 				// that contain other *directories* (and not files), since otherwise
 				// we get duplicate directories in the resulting tar
@@ -243,12 +243,12 @@ class ZipFileSet extends FileSet {
 						}
 					}
 				}
-				
+
 				$implicitDirs = array_unique($implicitDirs);
-				
+
 				// Now add any empty dirs (dirs not covered by the implicit dirs)
 				// to the files array. 
-				
+
 				foreach($incDirs as $dir) { // we cannot simply use array_diff() since we want to disregard empty/. dirs
 					if ($dir != "" && $dir != "." && !in_array($dir, $implicitDirs)) {
 						// it's an empty dir, so we'll add it.

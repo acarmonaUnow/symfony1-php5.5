@@ -203,7 +203,7 @@ class sfWebRequest extends sfRequest
   {
     $pathArray = $this->getPathInfoArray();
 
-    return isset($pathArray['REQUEST_URI']) ? 0 === strpos($pathArray['REQUEST_URI'], 'http') : false;
+    return isset($pathArray['REQUEST_URI']) ? str_starts_with($pathArray['REQUEST_URI'], 'http') : false;
   }
 
   /**
@@ -221,9 +221,9 @@ class sfWebRequest extends sfRequest
     $port = null;
 
     // extract port from host or environment variable
-    if (false !== strpos($host, ':'))
+    if (str_contains($host, ':'))
     {
-      list($host, $port) = explode(':', $host, 2);
+      [$host, $port] = explode(':', $host, 2);
     }
     else if (isset($this->options[$protocol.'_port']))
     {
@@ -460,7 +460,7 @@ class sfWebRequest extends sfRequest
     $languages = $this->splitHttpAcceptHeader($_SERVER['HTTP_ACCEPT_LANGUAGE']);
     foreach ($languages as $lang)
     {
-      if (false !== strpos($lang, '-'))
+      if (str_contains($lang, '-'))
       {
         $codes = explode('-', $lang);
         if ($codes[0] == 'i')
@@ -705,16 +705,10 @@ class sfWebRequest extends sfRequest
     if (!$this->pathInfoArray)
     {
       // parse PATH_INFO
-      switch ($this->options['path_info_array'])
-      {
-        case 'SERVER':
-          $this->pathInfoArray =& $_SERVER;
-          break;
-
-        case 'ENV':
-        default:
-          $this->pathInfoArray =& $_ENV;
-      }
+      match ($this->options['path_info_array']) {
+          'SERVER' => $this->pathInfoArray =& $_SERVER,
+          default => $this->pathInfoArray =& $_ENV,
+      };
     }
 
     return $this->pathInfoArray;

@@ -51,7 +51,7 @@ class Doctrine_Sequence_Pgsql extends Doctrine_Sequence
             if ($onDemand && $e->getPortableCode() == Doctrine_Core::ERR_NOSUCHTABLE) {
                 try {
                     $result = $this->conn->export->createSequence($seqName);
-                } catch(Doctrine_Exception $e) {
+                } catch(Doctrine_Exception) {
                     throw new Doctrine_Sequence_Exception('on demand sequence ' . $seqName . ' could not be created');
                 }
 

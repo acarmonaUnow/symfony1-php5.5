@@ -59,7 +59,7 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	// symfony behavior
-	
+
 	const PEER = 'BookPeer';
 
 	/**
@@ -251,7 +251,7 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 		if ($con === null) {
 			$con = Propel::getConnection(BookPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-		
+
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
@@ -261,7 +261,7 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 			  if (call_user_func($callable, $this, $con))
 			  {
 			    $con->commit();
-			
+
 			    return;
 			  }
 			}
@@ -308,7 +308,7 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 		if ($con === null) {
 			$con = Propel::getConnection(BookPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-		
+
 		$con->beginTransaction();
 		$isInsert = $this->isNew();
 		try {
@@ -319,7 +319,7 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 			  if (is_integer($affectedRows = call_user_func($callable, $this, $con)))
 			  {
 			    $con->commit();
-			
+
 			    return $affectedRows;
 			  }
 			}
@@ -513,17 +513,11 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 	 */
 	public function getByPosition($pos)
 	{
-		switch($pos) {
-			case 0:
-				return $this->getId();
-				break;
-			case 1:
-				return $this->getName();
-				break;
-			default:
-				return null;
-				break;
-		} // switch()
+		return match ($pos) {
+      0 => $this->getId(),
+      1 => $this->getName(),
+      default => null,
+  }; // switch()
 	}
 
 	/**
@@ -958,7 +952,7 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 	}
 
 	// symfony_behaviors behavior
-	
+
 	/**
 	 * Calls methods defined via {@link sfMixer}.
 	 */
@@ -968,9 +962,9 @@ abstract class BaseBook extends BaseObject  implements Persistent {
 	  {
 	    throw new sfException(sprintf('Call to undefined method BaseBook::%s', $method));
 	  }
-	
+
 	  array_unshift($arguments, $this);
-	
+
 	  return call_user_func_array($callable, $arguments);
 	}
 

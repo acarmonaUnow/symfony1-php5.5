@@ -108,9 +108,7 @@ class sfCommandManager
     else if (!is_array($arguments))
     {
       // hack to split arguments with spaces : --test="with some spaces"
-      $arguments = preg_replace_callback('/(\'|")(.+?)\\1/', function ($matches) {
-          return str_replace(' ', '=PLACEHOLDER=', $matches[2]);
-        },
+      $arguments = preg_replace_callback('/(\'|")(.+?)\\1/', fn($matches) => str_replace(' ', '=PLACEHOLDER=', $matches[2]),
         $arguments
       );
       $arguments = preg_split('/\s+/', $arguments);
@@ -132,7 +130,7 @@ class sfCommandManager
         break;
       }
 
-      if ('--' == substr($argument, 0, 2))
+      if (str_starts_with($argument, '--'))
       {
         $this->parseLongOption(substr($argument, 2));
       }
@@ -330,9 +328,9 @@ class sfCommandManager
    */
   protected function parseLongOption($argument)
   {
-    if (false !== strpos($argument, '='))
+    if (str_contains($argument, '='))
     {
-      list($name, $value) = explode('=', $argument, 2);
+      [$name, $value] = explode('=', $argument, 2);
 
       if (!$this->optionSet->hasOption($name))
       {

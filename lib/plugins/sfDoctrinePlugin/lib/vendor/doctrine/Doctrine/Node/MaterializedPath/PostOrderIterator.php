@@ -41,27 +41,27 @@ class Doctrine_Node_MaterializedPath_PostOrderIterator implements Iterator
         throw new Doctrine_Exception('Not yet implemented');
     }
 
-    public function rewind()
+    public function rewind(): never
     {
         throw new Doctrine_Exception('Not yet implemented');
     }
 
-    public function valid()
+    public function valid(): never
     {
         throw new Doctrine_Exception('Not yet implemented');
     }
 
-    public function current()
+    public function current(): never
     {
         throw new Doctrine_Exception('Not yet implemented');
     }
 
-    public function key()
+    public function key(): never
     {
         throw new Doctrine_Exception('Not yet implemented');
     }
 
-    public function next()
+    public function next(): never
     {
         throw new Doctrine_Exception('Not yet implemented');
     }

@@ -56,7 +56,7 @@ class sfPropelRoute extends sfObjectRoute
           $constant = call_user_func(array($className, 'translateFieldName'), $variable, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME);
           $criteria->add($constant, $parameters[$variable]);
         }
-        catch (Exception $e)
+        catch (Exception)
         {
           // don't add Criteria if the variable cannot be mapped to a column
         }
@@ -104,7 +104,7 @@ class sfPropelRoute extends sfObjectRoute
       {
         $method = 'get'.call_user_func(array($className, 'translateFieldName'), $variable, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
       }
-      catch (Exception $e)
+      catch (Exception)
       {
         $method = 'get'.sfInflector::camelize($variable);
       }

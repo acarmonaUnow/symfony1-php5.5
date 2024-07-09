@@ -61,7 +61,7 @@ class sfViewCacheManager
 
     if (sfConfig::get('sf_web_debug'))
     {
-      $this->dispatcher->connect('view.cache.filter_content', array($this, 'decorateContentWithDebug'));
+      $this->dispatcher->connect('view.cache.filter_content', $this->decorateContentWithDebug(...));
     }
 
     // empty configuration
@@ -129,7 +129,7 @@ class sfViewCacheManager
       return call_user_func($callable, $internalUri, $hostName, $vary, $contextualPrefix, $this);
     }
 
-    if (strpos($internalUri, '@') === 0 && strpos($internalUri, '@sf_cache_partial') === false)
+    if (str_starts_with($internalUri, '@') && !str_contains($internalUri, '@sf_cache_partial'))
     {
       throw new sfException('A cache key cannot be generated for an internal URI using the @rule syntax');
     }
@@ -141,7 +141,7 @@ class sfViewCacheManager
       // Contextual partial
       if (!$contextualPrefix)
       {
-        list($route_name, $params) = $this->controller->convertUrlStringToParameters($this->routing->getCurrentInternalUri());
+        [$route_name, $params] = $this->controller->convertUrlStringToParameters($this->routing->getCurrentInternalUri());
 
         // if there is no module/action, it means that we have a 404 and the user is trying to cache it
         if (!isset($params['module']) || !isset($params['action']))
@@ -155,13 +155,13 @@ class sfViewCacheManager
       {
         $cacheKey = $contextualPrefix;
       }
-      list($route_name, $params) = $this->controller->convertUrlStringToParameters($internalUri);
+      [$route_name, $params] = $this->controller->convertUrlStringToParameters($internalUri);
       $cacheKey .= sprintf('/%s/%s/%s', $params['module'], $params['action'], isset($params['sf_cache_key']) ? $params['sf_cache_key'] : '');
     }
     else
     {
       // Regular action or non-contextual partial
-      list($route_name, $params) = $this->controller->convertUrlStringToParameters($internalUri);
+      [$route_name, $params] = $this->controller->convertUrlStringToParameters($internalUri);
       if ($route_name == 'sf_cache_partial')
       {
         $cacheKey = 'sf_cache_partial/';
@@ -183,13 +183,13 @@ class sfViewCacheManager
     }
 
     // normalize to a leading slash
-    if (0 !== strpos($cacheKey, '/'))
+    if (!str_starts_with($cacheKey, '/'))
     {
       $cacheKey = '/'.$cacheKey;
     }
 
     // distinguish multiple slashes
-    while (false !== strpos($cacheKey, '//'))
+    while (str_contains($cacheKey, '//'))
     {
       $cacheKey = str_replace('//', '/'.substr(sha1($cacheKey), 0, 7).'/', $cacheKey);
     }
@@ -410,7 +410,7 @@ class sfViewCacheManager
    */
   protected function getCacheConfig($internalUri, $key, $defaultValue = null)
   {
-    list($route_name, $params) = $this->controller->convertUrlStringToParameters($internalUri);
+    [$route_name, $params] = $this->controller->convertUrlStringToParameters($internalUri);
 
     if (!isset($params['module']))
     {
@@ -452,7 +452,7 @@ class sfViewCacheManager
       return false;
     }
 
-    list($route_name, $params) = $this->controller->convertUrlStringToParameters($internalUri);
+    [$route_name, $params] = $this->controller->convertUrlStringToParameters($internalUri);
 
     if (!isset($params['module']))
     {
@@ -586,7 +586,7 @@ class sfViewCacheManager
     {
       $ret = $this->cache->set($this->generateCacheKey($internalUri), $data, $this->getLifeTime($internalUri));
     }
-    catch (Exception $e)
+    catch (Exception)
     {
       return false;
     }
@@ -682,7 +682,7 @@ class sfViewCacheManager
     }
 
     // add cache config to cache manager
-    list($route_name, $params) = $this->controller->convertUrlStringToParameters($internalUri);
+    [$route_name, $params] = $this->controller->convertUrlStringToParameters($internalUri);
     $this->addCache($params['module'], $params['action'], array('withLayout' => false, 'lifeTime' => $lifeTime, 'clientLifeTime' => $clientLifeTime, 'vary' => $vary));
 
     // get data from cache if available
@@ -717,7 +717,7 @@ class sfViewCacheManager
     {
       $this->set($data, $internalUri.(strpos($internalUri, '?') ? '&' : '?').'_sf_cache_key='.$name);
     }
-    catch (Exception $e)
+    catch (Exception)
     {
     }
 
@@ -1005,7 +1005,7 @@ class sfViewCacheManager
 
     if ($getParameters = $this->request->getGetParameters())
     {
-      $cacheKey .= false === strpos($cacheKey, '?') ? '?' : '&';
+      $cacheKey .= !str_contains($cacheKey, '?') ? '?' : '&';
       $cacheKey .= http_build_query($getParameters, null, '&');
     }
 
@@ -1023,7 +1023,7 @@ class sfViewCacheManager
   public function decorateContentWithDebug(sfEvent $event, $content)
   {
     // don't decorate if not html or if content is null
-    if (!$content || false === strpos($event['response']->getContentType(), 'html'))
+    if (!$content || !str_contains($event['response']->getContentType(), 'html'))
     {
       return $content;
     }

@@ -275,14 +275,13 @@ class Doctrine_Connection_Statement implements Doctrine_Adapter_Statement_Interf
             //fix a possible "ORA-01000: maximum open cursors exceeded" when many non-SELECTs are executed and the profiling is enabled
             if ('Oracle' == $this->getConnection()->getDriverName()) {
                 $queryBeginningSubstring = strtoupper(substr(ltrim($this->_stmt->queryString), 0, 6));
-                if ($queryBeginningSubstring != 'SELECT' && substr($queryBeginningSubstring, 0, 4) != 'WITH' ){
+                if ($queryBeginningSubstring != 'SELECT' && !str_starts_with($queryBeginningSubstring, 'WITH') ){
                     $this->closeCursor();
                 }
             }
 
             return $result;
-        } catch (PDOException $e) {
-        } catch (Doctrine_Adapter_Exception $e) {
+        } catch (PDOException|Doctrine_Adapter_Exception $e) {
         }
 
         $this->_conn->rethrowException($e, $this);

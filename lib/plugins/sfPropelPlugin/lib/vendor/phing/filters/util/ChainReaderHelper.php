@@ -141,12 +141,12 @@ class ChainReaderHelper {
                 $filter = $finalFilters[$i];
                 
                 if ( $filter instanceof PhingFilterReader ) {
-                
+
                     // This filter reader is an external class.
                     $className = $filter->getClassName();
                     $classpath = $filter->getClasspath();
                     $project   = $filter->getProject();
-                    
+
                     if ( $className !== null ) {
                         $cls = Phing::import($className, $classpath);
                         $impl = new $cls();                        
@@ -155,14 +155,14 @@ class ChainReaderHelper {
                     if ( !($impl instanceof FilterReader) ) {
                         throw new Exception($className." does not extend phing.system.io.FilterReader");
                     }
-                    
+
                     $impl->setReader($instream); // chain
                     $impl->setProject($this->getProject()); // what about $project above ?
 
                     if ( $impl instanceof Parameterizable ) {
                         $impl->setParameters($filter->getParams());
                     }
-                    
+
                     $instream = $impl; // now that it's been chained
                                                             
                 } elseif (($filter instanceof ChainableReader) && ($filter instanceof Reader)) {                   

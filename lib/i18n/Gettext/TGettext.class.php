@@ -164,7 +164,7 @@ class TGettext
         $array = array();
         foreach (explode("\n", $meta) as $info) {
             if ($info = trim($info)) {
-                list($key, $value) = explode(':', $info, 2);
+                [$key, $value] = explode(':', $info, 2);
                 $array[trim($key)] = trim($value);
             }
         }
@@ -231,7 +231,7 @@ class TGettext
     	    if (count($array) != 2) {
                 return false;
     	    } else {
-    	        list($this->meta, $this->strings) = $array;
+    	        [$this->meta, $this->strings] = $array;
             }
     	} else {
             $this->meta = @$array['meta'];

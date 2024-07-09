@@ -22,10 +22,10 @@ $article->title = 'fr test';
 $t->is($article->Translation['fr']->title, 'fr test');
 
 $t->is($article->getTitle(), $article->title);
-$article->setTitle('test');
+$article->setTitle();
 $t->is($article->getTitle(), 'test');
 
-$article->setTestColumn('test');
+$article->setTestColumn();
 $t->is($article->getTestColumn(), 'test');
 $t->is($article->Translation['fr']['test_column'], 'test');
 

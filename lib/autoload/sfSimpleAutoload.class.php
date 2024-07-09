@@ -147,7 +147,7 @@ class sfSimpleAutoload
       return;
     }
 
-    list($this->classes, $this->dirs, $this->files) = unserialize(file_get_contents($this->cacheFile));
+    [$this->classes, $this->dirs, $this->files] = unserialize(file_get_contents($this->cacheFile));
 
     $this->cacheLoaded = true;
     $this->cacheChanged = false;

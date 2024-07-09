@@ -193,7 +193,7 @@ class sfNumberFormat
       // now for the integer groupings
       for ($i = 0; $i < $len; $i++)
       {
-        $char = $string{$len - $i - 1};
+        $char = $string[$len - $i - 1];
 
         if ($multiGroup && $count == 0)
         {
@@ -294,41 +294,26 @@ class sfNumberFormat
    */
   protected function setPattern($pattern)
   {
-    switch ($pattern)
-    {
-      case 'c':
-      case 'C':
-        $this->formatInfo->setPattern(sfNumberFormatInfo::CURRENCY);
-        break;
-      case 'd':
-      case 'D':
-        $this->formatInfo->setPattern(sfNumberFormatInfo::DECIMAL);
-        break;
-      case 'e':
-      case 'E':
-        $this->formatInfo->setPattern(sfNumberFormatInfo::SCIENTIFIC);
-        break;
-      case 'p':
-      case 'P':
-        $this->formatInfo->setPattern(sfNumberFormatInfo::PERCENTAGE);
-        break;
-      default:
-        $this->formatInfo->setPattern($pattern);
-        break;
-    }
+    match ($pattern) {
+        'c', 'C' => $this->formatInfo->setPattern(sfNumberFormatInfo::CURRENCY),
+        'd', 'D' => $this->formatInfo->setPattern(sfNumberFormatInfo::DECIMAL),
+        'e', 'E' => $this->formatInfo->setPattern(sfNumberFormatInfo::SCIENTIFIC),
+        'p', 'P' => $this->formatInfo->setPattern(sfNumberFormatInfo::PERCENTAGE),
+        default => $this->formatInfo->setPattern($pattern),
+    };
   }
 
   protected function fixFloat($float)
   {
     $string = (string) $float;
 
-    if (false === strstr($float, 'E'))
+    if (!str_contains($float, 'E'))
     {
       return $string;
     }
 
-    list($significand, $exp) = explode('E', $string);
-    list(, $decimal) = explode('.', $significand);
+    [$significand, $exp] = explode('E', $string);
+    [, $decimal] = explode('.', $significand);
     if ('-' === $exp[0]) {
         $exp = str_replace('-', '', $exp);
 

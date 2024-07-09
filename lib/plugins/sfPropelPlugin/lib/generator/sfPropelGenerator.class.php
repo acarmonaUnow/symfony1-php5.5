@@ -155,7 +155,7 @@ class sfPropelGenerator extends sfModelGenerator
     {
       $getter = 'get'.call_user_func(array(constant($this->getModelClass().'::PEER'), 'translateFieldName'), $column, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME);
     }
-    catch (PropelException $e)
+    catch (PropelException)
     {
       // not a real column
       $getter = 'get'.sfInflector::camelize($column);
@@ -183,18 +183,12 @@ class sfPropelGenerator extends sfModelGenerator
       return 'ForeignKey';
     }
 
-    switch ($column->getType())
-    {
-      case PropelColumnTypes::BOOLEAN:
-        return 'Boolean';
-      case PropelColumnTypes::DATE:
-      case PropelColumnTypes::TIMESTAMP:
-        return 'Date';
-      case PropelColumnTypes::TIME:
-        return 'Time';
-      default:
-        return 'Text';
-    }
+    return match ($column->getType()) {
+        PropelColumnTypes::BOOLEAN => 'Boolean',
+        PropelColumnTypes::DATE, PropelColumnTypes::TIMESTAMP => 'Date',
+        PropelColumnTypes::TIME => 'Time',
+        default => 'Text',
+    };
   }
 
   /**

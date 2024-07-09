@@ -284,10 +284,7 @@ class Database extends XMLElement {
 	 */
 	public function getTable($name)
 	{
-		if (isset($this->tablesByName[$name])) {
-			return $this->tablesByName[$name];
-		}
-		return null; // just to be explicit
+		return $this->tablesByName[$name] ?? null; // just to be explicit
 	}
 
 	/**
@@ -297,10 +294,7 @@ class Database extends XMLElement {
 	 */
 	public function getTableByPhpName($phpName)
 	{
-		if (isset($this->tablesByPhpName[$phpName])) {
-			return $this->tablesByPhpName[$phpName];
-		}
-		return null; // just to be explicit
+		return $this->tablesByPhpName[$phpName] ?? null; // just to be explicit
 	}
 
 	/**
@@ -370,10 +364,7 @@ class Database extends XMLElement {
 	 */
 	public function getDomain($domainName)
 	{
-		if (isset($this->domainMap[$domainName])) {
-			return $this->domainMap[$domainName];
-		}
-		return null; // just to be explicit
+		return $this->domainMap[$domainName] ?? null; // just to be explicit
 	}
 
   public function getGeneratorConfig()

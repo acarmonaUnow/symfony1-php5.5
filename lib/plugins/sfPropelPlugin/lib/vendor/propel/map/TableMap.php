@@ -247,7 +247,7 @@ class TableMap {
     $col = new ColumnMap($name, $this);
 
     if ($fkTable && $fkColumn) {
-      if (strpos($fkColumn, '.') > 0 && strpos($fkColumn, $fkTable) !== false) {
+      if (strpos($fkColumn, '.') > 0 && str_contains($fkColumn, $fkTable)) {
         $fkColumn = substr($fkColumn, strlen($fkTable) + 1);
       }
       $col->setForeignKey($fkTable, $fkColumn);
@@ -603,7 +603,7 @@ class TableMap {
    */
   protected function hasPrefix($data)
   {
-    return (strpos($data, $this->prefix) === 0);
+    return (str_starts_with($data, $this->prefix));
   }
 
   /**

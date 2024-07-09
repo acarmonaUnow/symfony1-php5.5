@@ -114,7 +114,7 @@ class sfPropelData extends sfData
 
         foreach ($data as $name => $value)
         {
-          if (is_array($value) && 's' == substr($name, -1))
+          if (is_array($value) && str_ends_with($name, 's'))
           {
             // many to many relationship
             $this->loadMany2Many($obj, substr($name, 0, -1), $value);
@@ -127,7 +127,7 @@ class sfPropelData extends sfData
           {
             $column = $tableMap->getColumn($name);
           }
-          catch (PropelException $e)
+          catch (PropelException)
           {
             $isARealColumn = false;
           }

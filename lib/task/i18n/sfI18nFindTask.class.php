@@ -104,7 +104,7 @@ EOF;
               $nodes[] = $node->childNodes->item($i);
             }
           }
-          else if ('DOMProcessingInstruction' == get_class($node) && 'php' == $node->target)
+          else if ('DOMProcessingInstruction' == ($node !== null ? get_class($node) : self::class) && 'php' == $node->target)
           {
             // processing instruction node
             $tokens = token_get_all('<?php '.$node->nodeValue);
@@ -112,7 +112,7 @@ EOF;
             {
               if (is_array($token))
               {
-                list($id, $text) = $token;
+                [$id, $text] = $token;
 
                 if (T_CONSTANT_ENCAPSED_STRING === $id)
                 {

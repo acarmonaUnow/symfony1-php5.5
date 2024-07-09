@@ -158,7 +158,7 @@ class DatabaseMap
    */  
   public function getColumn($qualifiedColumnName)
   {
-    list($tableName, $columnName) = explode('.', $qualifiedColumnName);
+    [$tableName, $columnName] = explode('.', $qualifiedColumnName);
     return $this->getTable($tableName)->getColumn($columnName, false);
   }
   

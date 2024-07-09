@@ -353,9 +353,7 @@ class sfToolkit
       return $value;
     }
 
-    return preg_replace_callback('/%(.+?)%/', function ($v) {
-      return sfConfig::has(strtolower($v[1])) ? sfConfig::get(strtolower($v[1])) : '%'.$v[1].'%';
-    }, $value);
+    return preg_replace_callback('/%(.+?)%/', fn($v) => sfConfig::has(strtolower($v[1])) ? sfConfig::get(strtolower($v[1])) : '%'.$v[1].'%', $value);
   }
 
   /**
@@ -529,7 +527,7 @@ class sfToolkit
    */
   public static function getPhpCli()
   {
-    $path = getenv('PATH') ? getenv('PATH') : getenv('Path');
+    $path = getenv('PATH') ?: getenv('Path');
     $suffixes = DIRECTORY_SEPARATOR == '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : array('.exe', '.bat', '.cmd', '.com')) : array('');
     foreach (array('php5', 'php') as $phpCli)
     {
@@ -617,7 +615,7 @@ class sfToolkit
     $paths = explode(PATH_SEPARATOR, get_include_path());
 
     // remove what's already in the include_path
-    if (false !== $key = array_search(realpath($path), array_map('realpath', $paths)))
+    if (false !== $key = array_search(realpath($path), array_map(realpath(...), $paths)))
     {
       unset($paths[$key]);
     }

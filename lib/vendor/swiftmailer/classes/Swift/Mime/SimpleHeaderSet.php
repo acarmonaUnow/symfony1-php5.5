@@ -17,7 +17,7 @@
  * 
  * @author Chris Corbyn
  */
-class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
+class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet, \Stringable
 {
   
   /** HeaderFactory */
@@ -261,7 +261,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
    */
   public function defineOrdering(array $sequence)
   {
-    $this->_order = array_flip(array_map('strtolower', $sequence));
+    $this->_order = array_flip(array_map(strtolower(...), $sequence));
   }
   
   /**
@@ -273,7 +273,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
    */
   public function setAlwaysDisplayed(array $names)
   {
-    $this->_required = array_flip(array_map('strtolower', $names));
+    $this->_required = array_flip(array_map(strtolower(...), $names));
   }
 
   /**
@@ -319,7 +319,7 @@ class Swift_Mime_SimpleHeaderSet implements Swift_Mime_HeaderSet
    *
    * @see toString()
    */
-  public function __toString()
+  public function __toString(): string
   {
     return $this->toString();
   }

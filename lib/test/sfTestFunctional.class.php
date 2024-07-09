@@ -47,17 +47,11 @@ class sfTestFunctional extends sfTestFunctionalBase
   {
     $actionStack = $this->browser->getContext()->getActionStack();
 
-    switch ($position)
-    {
-      case 'first':
-        $entry = $actionStack->getFirstEntry();
-        break;
-      case 'last':
-        $entry = $actionStack->getLastEntry();
-        break;
-      default:
-        $entry = $actionStack->getEntry($position);
-    }
+    $entry = match ($position) {
+        'first' => $actionStack->getFirstEntry(),
+        'last' => $actionStack->getLastEntry(),
+        default => $actionStack->getEntry($position),
+    };
 
     $this->test()->is($entry->getModuleName(), $moduleName, sprintf('request is forwarded to the "%s" module (%s)', $moduleName, $position));
     $this->test()->is($entry->getActionName(), $actionName, sprintf('request is forwarded to the "%s" action (%s)', $actionName, $position));

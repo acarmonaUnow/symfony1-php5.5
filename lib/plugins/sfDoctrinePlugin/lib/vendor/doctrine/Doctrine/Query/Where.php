@@ -47,7 +47,7 @@ class Doctrine_Query_Where extends Doctrine_Query_Condition
         $terms = $this->_tokenizer->sqlExplode($where);  
 
         if (count($terms) > 1) {
-            if (substr($where, 0, 6) == 'EXISTS') {
+            if (str_starts_with($where, 'EXISTS')) {
                 return $this->parseExists($where, true);
             } elseif (preg_match('/^NOT\s+EXISTS\b/i', $where) !== 0) {
                 return $this->parseExists($where, false);
@@ -63,7 +63,7 @@ class Doctrine_Query_Where extends Doctrine_Query_Condition
             $rightExpr = array_pop($terms);
             $operator = trim(substr($where, strlen($leftExpr), -strlen($rightExpr)));
 
-            if (strpos($leftExpr, "'") === false && strpos($leftExpr, '(') === false) {
+            if (!str_contains($leftExpr, "'") && !str_contains($leftExpr, '(')) {
                 // normal field reference found
                 $a = explode('.', $leftExpr);
                 $fieldname = array_pop($a); // Discard the field name (not needed!)
@@ -125,7 +125,7 @@ class Doctrine_Query_Where extends Doctrine_Query_Condition
         $isInX = ($op == 'in' || $op == 'not in');
 
         // Check if we are not dealing with "obj.field IN :named"
-        if (substr($rightExpr, 0 , 1) == ':' && $isInX) {
+        if (str_starts_with($rightExpr, ':') && $isInX) {
             throw new Doctrine_Query_Exception(
                 'Cannot use ' . $operator . ' with a named parameter in "' .
                 $leftExprOriginal . ' ' . $operator . ' ' . $rightExpr . '"'

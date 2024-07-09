@@ -54,7 +54,7 @@ class PHP5PeerBuilder extends PeerBuilder {
 			$colConstants[] = $this->getColumnName($col);
 		}
 
-		$reservedConstants = array_map('strtoupper', ClassTools::getPhpReservedWords());
+		$reservedConstants = array_map(strtoupper(...), ClassTools::getPhpReservedWords());
 
 		$intersect = array_intersect($reservedConstants, $colConstants);
 		if (!empty($intersect)) {
@@ -134,7 +134,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	{
 	  // apply behaviors
     $this->applyBehaviorModifier('staticMethods', $script, "	");
-		
+
 		$script .= "
 } // " . $this->getClassname() . "
 ";
@@ -162,7 +162,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
   {
     return $this->getTablePhpName() . 'TableMap';
   }
-  
+
   public function getTablePhpName()
   {
   	return ($this->getTable()->isAbstract() ? '' : $this->getStubObjectBuilder()->getClassname());
@@ -193,7 +193,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 	/** the related TableMap class for this table */
 	const TM_CLASS = '".$this->getTableMapClass()."';
-	
+
 	/** The total number of columns. */
 	const NUM_COLUMNS = ".$this->getTable()->getNumColumns().";
 
@@ -216,7 +216,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 		// apply behaviors
     $this->applyBehaviorModifier('staticAttributes', $script, "	");
-		
+
 		$this->addFieldNamesAttribute($script);
 		$this->addFieldKeysAttribute($script);
 	}
@@ -529,10 +529,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		if (\$con === null) {
 			\$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_READ);
 		}";
-		
+
 		// apply behaviors
     $this->applyBehaviorModifier('preSelect', $script);
-    
+
 		$script .= "
 		// BasePeer returns a PDOStatement
 		\$stmt = ".$this->basePeerClassname."::doCount(\$criteria, \$con);
@@ -1873,7 +1873,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		}
 		return $script;
   }
-  
+
 	/**
 	 * Adds the doSelectJoin*() methods.
 	 * @param      string &$script The script will be modified in this method.
@@ -1929,10 +1929,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
 
             $script .= $this->addCriteriaJoin($fk, $table, $joinTable, $joinedTablePeerBuilder);
-        		
+
             // apply behaviors
             $this->applyBehaviorModifier('preSelect', $script);
-						
+
             $script .= "
 		\$stmt = ".$this->basePeerClassname."::doSelect(\$criteria, \$con);
 		\$results = array();
@@ -1982,7 +1982,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 					\$obj2->hydrate(\$row, \$startcol);
 					".$joinedTablePeerBuilder->getPeerClassname()."::addInstanceToPool(\$obj2, \$key2);
 				} // if obj2 already loaded
-				
+
 				// Add the \$obj1 (".$this->getObjectClassname().") to \$obj2 (".$joinedTablePeerBuilder->getObjectClassname().")";
 					if ($fk->isLocalPrimaryKey()) {
 						$script .= "
@@ -2064,9 +2064,9 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		if (!\$criteria->hasSelectClause()) {
 			".$this->getPeerClassname()."::addSelectColumns(\$criteria);
 		}
-		
+
 		\$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-		
+
 		// Set the correct dbName
 		\$criteria->setDbName(self::DATABASE_NAME);
 
@@ -2075,10 +2075,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		}
 ";
             $script .= $this->addCriteriaJoin($fk, $table, $joinTable, $joinedTablePeerBuilder);
-         		
+
             // apply behaviors
             $this->applyBehaviorModifier('preSelect', $script);
-            
+
             $script .= "
 		\$stmt = ".$this->basePeerClassname."::doCount(\$criteria, \$con);
 
@@ -2161,10 +2161,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         $script .= $this->addCriteriaJoin($fk, $table, $joinTable, $joinedTablePeerBuilder);
 			}
 		}
-		
+
 		// apply behaviors
     $this->applyBehaviorModifier('preSelect', $script);
-		
+
     $script .= "
 		\$stmt = ".$this->basePeerClassname."::doSelect(\$criteria, \$con);
 		\$results = array();
@@ -2305,9 +2305,9 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		if (!\$criteria->hasSelectClause()) {
 			".$this->getPeerClassname()."::addSelectColumns(\$criteria);
 		}
-		
+
 		\$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-		
+
 		// Set the correct dbName
 		\$criteria->setDbName(self::DATABASE_NAME);
 
@@ -2324,10 +2324,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         $script .= $this->addCriteriaJoin($fk, $table, $joinTable, $joinedTablePeerBuilder);
 			} // if fk->getForeignTableName != table->getName
 		} // foreach [sub] foreign keys
-		
+
 		// apply behaviors
     $this->applyBehaviorModifier('preSelect', $script);
-		
+
     $script .= "
 		\$stmt = ".$this->basePeerClassname."::doCount(\$criteria, \$con);
 
@@ -2431,10 +2431,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 					}
 				}
 			} // foreach fkeys
-			
+
 			// apply behaviors
       $this->applyBehaviorModifier('preSelect', $script);
-			
+
       $script .= "
 
 		\$stmt = ".$this->basePeerClassname ."::doSelect(\$criteria, \$con);
@@ -2580,7 +2580,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
 		\$criteria->setPrimaryTableName(".$this->getPeerClassname()."::TABLE_NAME);
-		
+
 		if (\$distinct && !in_array(Criteria::DISTINCT, \$criteria->getSelectModifiers())) {
 			\$criteria->setDistinct();
 		}
@@ -2588,9 +2588,9 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		if (!\$criteria->hasSelectClause()) {
 			".$this->getPeerClassname()."::addSelectColumns(\$criteria);
 		}
-		
+
 		\$criteria->clearOrderByColumns(); // ORDER BY should not affect count
-		
+
 		// Set the correct dbName
 		\$criteria->setDbName(self::DATABASE_NAME);
 
@@ -2612,10 +2612,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 					}
 				}
 			} // foreach fkeys
-			
+
 			// apply behaviors
       $this->applyBehaviorModifier('preSelect', $script);
-			
+
       $script .= "
 		\$stmt = ".$this->basePeerClassname."::doCount(\$criteria, \$con);
 

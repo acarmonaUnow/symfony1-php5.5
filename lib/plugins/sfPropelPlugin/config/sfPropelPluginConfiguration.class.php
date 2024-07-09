@@ -52,7 +52,7 @@ class sfPropelPluginConfiguration extends sfPluginConfiguration
 
     if (sfConfig::get('sf_test'))
     {
-      $this->dispatcher->connect('context.load_factories', array($this, 'clearAllInstancePools'));
+      $this->dispatcher->connect('context.load_factories', $this->clearAllInstancePools(...));
     }
   }
 

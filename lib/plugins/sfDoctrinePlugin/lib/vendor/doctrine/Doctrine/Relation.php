@@ -31,7 +31,7 @@
  * @version     $Revision: 7490 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-abstract class Doctrine_Relation implements ArrayAccess
+abstract class Doctrine_Relation implements ArrayAccess, \Stringable
 {
     /**
      * RELATION CONSTANTS
@@ -184,11 +184,7 @@ abstract class Doctrine_Relation implements ArrayAccess
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        if (isset($this->definition[$offset])) {
-            return $this->definition[$offset];
-        }
-        
-        return null;
+        return $this->definition[$offset] ?? null;
     }
 
     /**
@@ -388,10 +384,7 @@ abstract class Doctrine_Relation implements ArrayAccess
      */
     public function getForeignKeyName()
     {
-        if (isset($this->definition['foreignKeyName'])) {
-            return $this->definition['foreignKeyName'];
-        }
-        return $this['localTable']->getConnection()->generateUniqueRelationForeignKeyName($this);
+        return $this->definition['foreignKeyName'] ?? $this['localTable']->getConnection()->generateUniqueRelationForeignKeyName($this);
     }
 
     /**
@@ -457,7 +450,7 @@ abstract class Doctrine_Relation implements ArrayAccess
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $r[] = "<pre>";
         foreach ($this->definition as $k => $v) {

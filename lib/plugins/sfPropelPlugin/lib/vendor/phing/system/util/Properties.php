@@ -45,7 +45,7 @@ class Properties {
      */
     function load(PhingFile $file) {
         if ($file->canRead()) {
-            $this->parse($file->getPath(), false);                    
+            $this->parse($file->getPath());                    
         } else {
             throw new IOException("Can not read file ".$file->getPath());
         }
@@ -66,22 +66,22 @@ class Properties {
         // load() already made sure that file is readable                
         // but we'll double check that when reading the file into 
         // an array
-        
+
         if (($lines = @file($filePath)) === false) {
             throw new IOException("Unable to parse contents of $filePath");
         }
-        
+
         $this->properties = array();
         $sec_name = "";
-        
+
         foreach($lines as $line) {
-            
+
             $line = trim($line);
-    
+
             if($line == "")
                 continue;
-                    
-            if ($line{0} == '#' or $line{0} == ';') {
+
+            if ($line[0] == '#' or $line[0] == ';') {
                 // it's a comment, so continue to next line
                 continue;
             } else {
@@ -90,7 +90,7 @@ class Properties {
                 $value = trim(substr($line, $pos + 1));                
                 $this->properties[$property] = $this->inVal($value);
             }
-            
+
         } // for each line        
     }
     

@@ -61,27 +61,19 @@ class PhpNameGenerator implements NameGenerator {
 
 		if (count($inputs)>2) {
 			$prefix = $inputs[2];
-			if ($prefix != '' && substr($schemaName, 0, strlen($prefix)) == $prefix) {
+			if ($prefix != '' && str_starts_with($schemaName, $prefix)) {
 				$schemaName = substr($schemaName, strlen($prefix));
 			}
 		}
 
 		$phpName = null;
 
-		switch ($method) {
-			case self::CONV_METHOD_CLEAN:
-				$phpName = $this->cleanMethod($schemaName);
-				break;
-			case self::CONV_METHOD_PHPNAME:
-				$phpName = $this->phpnameMethod($schemaName);
-				break;
-			case self::CONV_METHOD_NOCHANGE:
-				$phpName = $this->nochangeMethod($schemaName);
-				break;
-			case self::CONV_METHOD_UNDERSCORE:
-			default:
-				$phpName = $this->underscoreMethod($schemaName);
-		}
+		$phpName = match ($method) {
+      self::CONV_METHOD_CLEAN => $this->cleanMethod($schemaName),
+      self::CONV_METHOD_PHPNAME => $this->phpnameMethod($schemaName),
+      self::CONV_METHOD_NOCHANGE => $this->nochangeMethod($schemaName),
+      default => $this->underscoreMethod($schemaName),
+  };
 
 		return $phpName;
 	}

@@ -82,7 +82,7 @@ class Doctrine_Parser_Xml extends Doctrine_Parser
             } else if (is_int($key)) {               
                 $xml->addChild($value, 'true');
             } else {
-                $charset = $charset ? $charset : 'utf-8';
+                $charset = $charset ?: 'utf-8';
                 if (strcasecmp($charset, 'utf-8') !== 0 && strcasecmp($charset, 'utf8') !== 0) {
                     $value = iconv($charset, 'UTF-8', $value);
                 }

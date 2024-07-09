@@ -129,7 +129,7 @@ class Doctrine_Migration
      */
     public function loadMigrationClassesFromDirectory($directory = null)
     {
-        $directory = $directory ? $directory:$this->_migrationClassesDirectory;
+        $directory = $directory ?: $this->_migrationClassesDirectory;
 
         $classesToLoad = [];
         $classes = get_declared_classes();
@@ -521,7 +521,7 @@ class Doctrine_Migration
                     $changes = array_reverse($changes);
                 }
                 foreach ($changes as $value) {
-                    list($type, $change) = $value;
+                    [$type, $change] = $value;
                     $funcName = 'process' . Doctrine_Inflector::classify($type);
                     if (method_exists($this->_process, $funcName)) {
                         try {
@@ -561,7 +561,7 @@ class Doctrine_Migration
             $this->_connection->export->createTable($this->_migrationTableName, array('version' => array('type' => 'integer', 'size' => 11)));
 
             return true;
-        } catch(Exception $e) {
+        } catch(Exception) {
             return false;
         }
     }

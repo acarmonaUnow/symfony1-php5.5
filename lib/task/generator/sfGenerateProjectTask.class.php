@@ -110,7 +110,7 @@ EOF;
     $this->installDir(dirname(__FILE__).'/skeleton/project');
 
     // update ProjectConfiguration class (use a relative path when the symfony core is nested within the project)
-    $symfonyCoreAutoload = 0 === strpos(sfConfig::get('sf_symfony_lib_dir'), sfConfig::get('sf_root_dir')) ?
+    $symfonyCoreAutoload = str_starts_with(sfConfig::get('sf_symfony_lib_dir'), sfConfig::get('sf_root_dir')) ?
       sprintf('dirname(__FILE__).\'/..%s/autoload/sfCoreAutoload.class.php\'', str_replace(sfConfig::get('sf_root_dir'), '', sfConfig::get('sf_symfony_lib_dir'))) :
       var_export(sfConfig::get('sf_symfony_lib_dir').'/autoload/sfCoreAutoload.class.php', true);
 

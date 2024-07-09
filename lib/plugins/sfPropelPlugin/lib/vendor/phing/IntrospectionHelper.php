@@ -126,32 +126,32 @@ class IntrospectionHelper {
      * @param string $bean The classname for this IH.
      */
     function __construct($class) {
-    
+
         $this->bean = new ReflectionClass($class);
-        
+
         //$methods = get_class_methods($bean);
         foreach($this->bean->getMethods() as $method) {
-        
+
             if ($method->isPublic()) {                
-            
+
                 // We're going to keep case-insensitive method names
                 // for as long as we're allowed :)  It makes it much
                 // easier to map XML attributes to PHP class method names.
                 $name = strtolower($method->getName());
-                
+
                 // There are a few "reserved" names that might look like attribute setters
                 // but should actually just be skipped.  (Note: this means you can't ever
                 // have an attribute named "location" or "tasktype" or a nested element named "task".)
                 if ($name === "setlocation" || $name === "settasktype" || $name === "addtask") {
                     continue;
                 }
-                
+
                 if ($name === "addtext") {
-                    
+
                     $this->methodAddText = $method;
-                    
-                } elseif (strpos($name, "setlistening") === 0) {
-                    
+
+                } elseif (str_starts_with($name, "setlistening")) {
+
                     // Phing supports something unique called "RegisterSlots"
                     // These are dynamic values that use a basic slot system so that
                     // classes can register to listen to specific slots, and the value
@@ -159,40 +159,40 @@ class IntrospectionHelper {
                     // component).  This is useful for things like tracking the current
                     // file being processed by a filter (e.g. AppendTask sets an append.current_file
                     // slot, which can be ready by the XSLTParam type.)
-                    
+
                     if (count($method->getParameters()) !== 1) {
                         throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() must take exactly one parameter.");
                     }
-                                                
+
                     $this->slotListeners[$name] = $method;
-                    
-                } elseif (strpos($name, "set") === 0) {
-                    
+
+                } elseif (str_starts_with($name, "set")) {
+
                     // A standard attribute setter.
-                    
+
                     if (count($method->getParameters()) !== 1) {
                         throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() must take exactly one parameter.");
                     }
-                    
+
                     $this->attributeSetters[$name] = $method;
-                    
-                } elseif (strpos($name, "create") === 0) {                            
-                    
+
+                } elseif (str_starts_with($name, "create")) {                            
+
                     if (count($method->getParameters()) > 0) {
                         throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() may not take any parameters.");
                     }
-                    
+
                     // Because PHP doesn't support return types, we are going to do
                     // two things here to guess return type:
                     //     1) parse comments for an explicit value
                     //     2) if that fails, assume that the part of the method after "create"
                     //    is the name of the return type (in many cases it is not)
-                    
+
                     // This isn't super important -- i.e. we're not instantaiting classes
                     // based on this information.  It's more just so that IntrospectionHelper
                     // can keep track of all the nested types -- and provide more helpful
                     // exception messages, etc.
-                                
+
                     preg_match('/@return[\s]+([\w]+)/', $method->getDocComment(), $matches);
                     if (!empty($matches[1]) && class_exists($matches[1], false)) {
                         $this->nestedTypes[$name] = $matches[1];
@@ -201,64 +201,64 @@ class IntrospectionHelper {
                         // (that example would be false, of course)                    
                         $this->nestedTypes[$name] = $this->getPropertyName($name, "create");
                     }
-                    
+
                     $this->nestedCreators[$name] = $method;
-                    
-                } elseif (strpos($name, "addconfigured") === 0) {
-                    
+
+                } elseif (str_starts_with($name, "addconfigured")) {
+
                     // *must* use class hints if using addConfigured ...
-                    
+
                     // 1 param only
                     $params = $method->getParameters();
-                    
+
                     if (count($params) < 1) {
                         throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() must take at least one parameter.");
                     }
-                    
-                    if (count($params) > 1) {
-                        $this->warn($method->getDeclaringClass()->getName()."::".$method->getName()."() takes more than one parameter. (IH only uses the first)");
-                    }
-                    
-                    $classname = null;
-                    
-                    if (($hint = $params[0]->getClass()) !== null) { 
-                        $classname = $hint->getName();    
-                    }                    
-                    
-                    if ($classname === null) {
-                        throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() method MUST use a class hint to indicate the class type of parameter.");
-                    }
-                        
-                    $this->nestedTypes[$name] = $classname;
-                
-                    $this->nestedStorers[$name] = $method;
-                    
-                } elseif (strpos($name, "add") === 0) {
-                    
-                    // *must* use class hints if using add ...
-                    
-                    // 1 param only
-                    $params = $method->getParameters();
-                    if (count($params) < 1) {
-                        throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() must take at least one parameter.");
-                    }
-                    
+
                     if (count($params) > 1) {
                         $this->warn($method->getDeclaringClass()->getName()."::".$method->getName()."() takes more than one parameter. (IH only uses the first)");
                     }
 
                     $classname = null;
-                    
+
                     if (($hint = $params[0]->getClass()) !== null) { 
                         $classname = $hint->getName();    
                     }                    
-                    
+
+                    if ($classname === null) {
+                        throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() method MUST use a class hint to indicate the class type of parameter.");
+                    }
+
+                    $this->nestedTypes[$name] = $classname;
+
+                    $this->nestedStorers[$name] = $method;
+
+                } elseif (str_starts_with($name, "add")) {
+
+                    // *must* use class hints if using add ...
+
+                    // 1 param only
+                    $params = $method->getParameters();
+                    if (count($params) < 1) {
+                        throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() must take at least one parameter.");
+                    }
+
+                    if (count($params) > 1) {
+                        $this->warn($method->getDeclaringClass()->getName()."::".$method->getName()."() takes more than one parameter. (IH only uses the first)");
+                    }
+
+                    $classname = null;
+
+                    if (($hint = $params[0]->getClass()) !== null) { 
+                        $classname = $hint->getName();    
+                    }                    
+
                     // we don't use the classname here, but we need to make sure it exists before
                     // we later try to instantiate a non-existant class
                     if ($classname === null) {
                         throw new BuildException($method->getDeclaringClass()->getName()."::".$method->getName()."() method MUST use a class hint to indicate the class type of parameter.");
                     }
-                
+
                     $this->nestedCreators[$name] = $method;
                 } 
             } // if $method->isPublic()        
@@ -280,56 +280,56 @@ class IntrospectionHelper {
         // typing.
         
         if (StringHelper::isSlotVar($value)) {
-            
+
             $as = "setlistening" . strtolower($attributeName);
 
             if (!isset($this->slotListeners[$as])) {
                 $msg = $this->getElementName($project, $element) . " doesn't support a slot-listening '$attributeName' attribute.";
                 throw new BuildException($msg);
             }
-            
+
             $method = $this->slotListeners[$as];
-            
+
             $key = StringHelper::slotVar($value);
             $value = Register::getSlot($key); // returns a RegisterSlot object which will hold current value of that register (accessible using getValue())
             
         } else {
-            
+
             // Traditional value options
-            
+
             $as = "set".strtolower($attributeName);
-            
+
             if (!isset($this->attributeSetters[$as])) {
                 $msg = $this->getElementName($project, $element) . " doesn't support the '$attributeName' attribute.";
                 throw new BuildException($msg);
             }
-            
+
             $method = $this->attributeSetters[$as];            
-            
+
             if ($as == "setrefid") {            
                 $value = new Reference($value);
             } else {
-            
+
                 // decode any html entities in string
                 $value = html_entity_decode($value);                
-                
+
                 // value is a string representation of a boolean type,
                 // convert it to primitive
                 if (StringHelper::isBoolean($value)) {
 
                     $value = StringHelper::booleanValue($value);
                 }
-                
+
                 // does method expect a PhingFile object? if so, then 
                 // pass a project-relative file.
                 $params = $method->getParameters();
 
                 $classname = null;
-                
+
                 if (($hint = $params[0]->getClass()) !== null) { 
                     $classname = $hint->getName();    
                 }
-                
+
                 // there should only be one param; we'll just assume ....
                 if ($classname !== null) {
                     switch(strtolower($classname)) {
@@ -344,9 +344,9 @@ class IntrospectionHelper {
                             break;            
                         // any other object params we want to support should go here ...
                     }
-                    
+
                 } // if hint !== null
-                
+
             } // if not setrefid
             
         } // if is slot-listener

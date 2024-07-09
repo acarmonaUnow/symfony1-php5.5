@@ -72,7 +72,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
      * @param string|null $database
      * @return array
      */
-    public function listTriggers($database = null)
+    public function listTriggers($database = null): never
     {
         throw new Doctrine_Import_Exception(__FUNCTION__ . ' not supported by this driver.');
     }
@@ -98,7 +98,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
      * @param string $table     database table name
      * @return array
      */
-    public function listTableConstraints($table)
+    public function listTableConstraints($table): never
     {
         throw new Doctrine_Import_Exception(__FUNCTION__ . ' not supported by this driver.');
     }
@@ -122,7 +122,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
      * @param string $table     database table name
      * @return array
      */
-    public function listTableRelations($table)
+    public function listTableRelations($table): never
     {
         throw new Doctrine_Import_Exception(__FUNCTION__ . ' not supported by this driver.');
     }
@@ -133,7 +133,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
      * @param string $table     database table name
      * @return array
      */
-    public function listTableColumns($table)
+    public function listTableColumns($table): never
     {
         throw new Doctrine_Import_Exception(__FUNCTION__ . ' not supported by this driver.');
     }
@@ -144,7 +144,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
      * @param string $table     database table name
      * @return array
      */
-    public function listTableIndexes($table)
+    public function listTableIndexes($table): never
     {
         throw new Doctrine_Import_Exception(__FUNCTION__ . ' not supported by this driver.');
     }
@@ -155,7 +155,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
      * @param string|null $database
      * @return array
      */
-    public function listTables($database = null)
+    public function listTables($database = null): never
     {
         throw new Doctrine_Import_Exception(__FUNCTION__ . ' not supported by this driver.');
     }
@@ -166,7 +166,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
      * @param string $table     database table name
      * @return array
      */
-    public function listTableTriggers($table)
+    public function listTableTriggers($table): never
     {
         throw new Doctrine_Import_Exception(__FUNCTION__ . ' not supported by this driver.');
     }
@@ -177,7 +177,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
      * @param string $table     database table name
      * @return array
      */
-    public function listTableViews($table)
+    public function listTableViews($table): never
     {
         throw new Doctrine_Import_Exception(__FUNCTION__ . ' not supported by this driver.');
     }
@@ -407,7 +407,7 @@ class Doctrine_Import extends Doctrine_Connection_Module
                           'foreign' => $relation['foreign']
                       );
                   }
-              } catch (Exception $e) {}
+              } catch (Exception) {}
 
               $definitions[strtolower($definition['className'])] = $definition;
               $classes[] = $definition['className'];

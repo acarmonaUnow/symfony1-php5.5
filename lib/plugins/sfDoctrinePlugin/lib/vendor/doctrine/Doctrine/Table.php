@@ -34,7 +34,7 @@
  * @method mixed findBy*(mixed $value) magic finders; @see __call()
  * @method mixed findOneBy*(mixed $value) magic finders; @see __call()
  */
-class Doctrine_Table extends Doctrine_Configurable implements Countable, Serializable
+class Doctrine_Table extends Doctrine_Configurable implements Countable, Serializable, \Stringable
 {
     /**
      * @var array $data                                 temporary data which is then loaded into Doctrine_Record::$_data
@@ -772,10 +772,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function __get($option)
     {
-        if (isset($this->_options[$option])) {
-            return $this->_options[$option];
-        }
-        return null;
+        return $this->_options[$option] ?? null;
     }
 
     /**
@@ -897,11 +894,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function getIndex($index)
     {
-        if (isset($this->_options['indexes'][$index])) {
-            return $this->_options['indexes'][$index];
-        }
-
-        return false;
+        return $this->_options['indexes'][$index] ?? false;
     }
 
     /**
@@ -1085,10 +1078,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function getOption($name)
     {
-        if (isset($this->_options[$name])) {
-            return $this->_options[$name];
-        }
-        return null;
+        return $this->_options[$name] ?? null;
     }
 
 
@@ -1161,11 +1151,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         // For example in places where Doctrine should support composite foreign/primary keys
         $fieldName = is_array($fieldName) ? $fieldName[0]:$fieldName;
 
-        if (isset($this->_columnNames[$fieldName])) {
-            return $this->_columnNames[$fieldName];
-        }
-
-        return strtolower($fieldName);
+        return $this->_columnNames[$fieldName] ?? strtolower($fieldName);
     }
 
     /**
@@ -1192,10 +1178,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function getFieldName($columnName)
     {
-        if (isset($this->_fieldNames[$columnName])) {
-            return $this->_fieldNames[$columnName];
-        }
-        return $columnName;
+        return $this->_fieldNames[$columnName] ?? $columnName;
     }
 
     /**
@@ -1556,7 +1539,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
     {
         $queryRegistry = Doctrine_Manager::getInstance()->getQueryRegistry();
 
-        if (strpos($queryKey, '/') !== false) {
+        if (str_contains($queryKey, '/')) {
             $e = explode('/', $queryKey);
 
             return $queryRegistry->get($e[1], $e[0]);
@@ -1597,8 +1580,8 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         $m = $name;
 
         // Check for possible cross-access
-        if ( ! is_array($name) && strpos($name, '/') !== false) {
-            list($ns, $m) = explode('/', $name);
+        if ( ! is_array($name) && str_contains($name, '/')) {
+            [$ns, $m] = explode('/', $name);
         }
 
         // Define query to be used
@@ -2130,7 +2113,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
 
         foreach ($this->_uniques as $unique)
         {
-            list($fields, $options) = $unique;
+            [$fields, $options] = $unique;
             $validator->args = $options;
             $validator->field = $fields;
             $values = array();
@@ -2710,7 +2693,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return Doctrine_Lib::getTableAsString($this);
     }
@@ -2723,8 +2706,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     private function isGreaterThan($a, $b)
     {
-        if (strlen($a) == strlen($b)) return 0;
-        return (strlen($a) > strlen($b)) ? 1 : -1;
+        return strlen($a) <=> strlen($b);
     }
 
     public function buildFindByWhere($fieldName)
@@ -2901,10 +2883,10 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
     {
         $lcMethod = strtolower($method);
 
-        if (substr($lcMethod, 0, 6) == 'findby') {
+        if (str_starts_with($lcMethod, 'findby')) {
             $by = substr($method, 6, strlen($method));
             $method = 'findBy';
-        } else if (substr($lcMethod, 0, 9) == 'findoneby') {
+        } else if (str_starts_with($lcMethod, 'findoneby')) {
             $by = substr($method, 9, strlen($method));
             $method = 'findOneBy';
         }
@@ -2941,7 +2923,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         // Forward the method on to the record instance and see if it has anything or one of its behaviors
         try {
             return call_user_func_array(array($this->getRecordInstance(), $method . 'TableProxy'), $arguments);
-        } catch (Doctrine_Record_UnknownPropertyException $e) {}
+        } catch (Doctrine_Record_UnknownPropertyException) {}
 
         throw new Doctrine_Table_Exception(sprintf('Unknown method %s::%s', get_class($this), $method));
     }

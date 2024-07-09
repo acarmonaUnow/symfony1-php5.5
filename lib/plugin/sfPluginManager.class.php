@@ -124,9 +124,9 @@ class sfPluginManager
     $version   = isset($options['version']) ? $options['version'] : null;
 
     $isPackage = true;
-    if (0 === strpos($plugin, 'http://') || file_exists($plugin))
+    if (str_starts_with($plugin, 'http://') || file_exists($plugin))
     {
-      if (0 === strpos($plugin, 'http://plugins.symfony-project.'))
+      if (str_starts_with($plugin, 'http://plugins.symfony-project.'))
       {
         throw new sfPluginException("You try to install a symfony 1.0 plugin.\nPlease read the help message of this task to know how to install a plugin for the current version of symfony.");
       }
@@ -134,9 +134,9 @@ class sfPluginManager
       $download  = $plugin;
       $isPackage = false;
     }
-    else if (false !== strpos($plugin, '/'))
+    else if (str_contains($plugin, '/'))
     {
-      list($channel, $plugin) = explode('/', $plugin);
+      [$channel, $plugin] = explode('/', $plugin);
     }
 
     $this->dispatcher->notify(new sfEvent($this, 'plugin.pre_install', array('channel' => $channel, 'plugin' => $plugin, 'is_package' => $isPackage)));
@@ -269,9 +269,9 @@ class sfPluginManager
    */
   public function uninstallPlugin($plugin, $channel = null)
   {
-    if (false !== strpos($plugin, '/'))
+    if (str_contains($plugin, '/'))
     {
-      list($channel, $plugin) = explode('/', $plugin);
+      [$channel, $plugin] = explode('/', $plugin);
     }
 
     $channel = null === $channel ? $this->environment->getConfig()->get('default_channel') : $channel;
@@ -446,7 +446,7 @@ class sfPluginManager
       {
         $version = $this->getPluginVersion($plugin, $stability);
       }
-      catch (Exception $e)
+      catch (Exception)
       {
         // no release available
         return false;

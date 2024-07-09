@@ -78,7 +78,7 @@ class PhpEvalTask extends Task {
         if ($this->class !== null) {
             // import the classname & unqualify it, if necessary
             $this->class = Phing::import($this->class);
-                        
+
             $user_func = array($this->class, $this->function);
             $h_func = $this->class . '::' . $this->function; // human-readable (for log)
         } else {

@@ -88,7 +88,7 @@ try
   $filter->getQuery();
   $t->pass('->getQuery() does not throw an exception when a value without a query method is passed');
 }
-catch (Exception $e)
+catch (Exception)
 {
   $t->fail('->getQuery() does not throw an exception when a value without a query method is passed');
 }

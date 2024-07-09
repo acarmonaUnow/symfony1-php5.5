@@ -55,8 +55,8 @@ class sfSymfonyPluginManager extends sfPluginManager
     $this->registerSymfonyPackage();
 
     // register callbacks to manage web content
-    $this->dispatcher->connect('plugin.post_install',  array($this, 'listenToPluginPostInstall'));
-    $this->dispatcher->connect('plugin.post_uninstall', array($this, 'listenToPluginPostUninstall'));
+    $this->dispatcher->connect('plugin.post_install',  $this->listenToPluginPostInstall(...));
+    $this->dispatcher->connect('plugin.post_uninstall', $this->listenToPluginPostUninstall(...));
   }
 
   /**
@@ -160,7 +160,7 @@ class sfSymfonyPluginManager extends sfPluginManager
   {
     $this->installWebContent($event['plugin'], isset($event['plugin_dir']) ? $event['plugin_dir'] : $this->environment->getOption('plugin_dir'));
 
-    $this->enablePlugin($event['plugin'], $this->environment->getOption('config_dir'));
+    static::enablePlugin($event['plugin'], $this->environment->getOption('config_dir'));
   }
 
   /**
@@ -172,7 +172,7 @@ class sfSymfonyPluginManager extends sfPluginManager
   {
     $this->uninstallWebContent($event['plugin']);
 
-    $this->disablePlugin($event['plugin'], $this->environment->getOption('config_dir'));
+    static::disablePlugin($event['plugin'], $this->environment->getOption('config_dir'));
   }
 
   /**
@@ -186,9 +186,9 @@ class sfSymfonyPluginManager extends sfPluginManager
     $symfony->setConfig($this->environment->getConfig());
     $symfony->setPackageType('php');
     $symfony->setAPIVersion(preg_replace('/\d+(\-\w+)?$/', '0', SYMFONY_VERSION));
-    $symfony->setAPIStability(false === strpos(SYMFONY_VERSION, 'DEV') ? 'stable' : 'beta');
+    $symfony->setAPIStability(!str_contains(SYMFONY_VERSION, 'DEV') ? 'stable' : 'beta');
     $symfony->setReleaseVersion(preg_replace('/\-\w+$/', '', SYMFONY_VERSION));
-    $symfony->setReleaseStability(false === strpos(SYMFONY_VERSION, 'DEV') ? 'stable' : 'beta');
+    $symfony->setReleaseStability(!str_contains(SYMFONY_VERSION, 'DEV') ? 'stable' : 'beta');
     $symfony->setDate(date('Y-m-d'));
     $symfony->setDescription('symfony');
     $symfony->setSummary('symfony');

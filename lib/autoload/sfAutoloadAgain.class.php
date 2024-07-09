@@ -77,7 +77,7 @@ class sfAutoloadAgain
     }
     else
     {
-      $position  = array_search(array(__CLASS__, 'autoload'), $autoloads, true);
+      $position  = array_search(self::autoload(...), $autoloads, true);
     }
 
     if (isset($autoloads[$position + 1]))
@@ -116,7 +116,7 @@ class sfAutoloadAgain
   {
     if (!$this->isRegistered())
     {
-      spl_autoload_register(array($this, 'autoload'));
+      spl_autoload_register($this->autoload(...));
       $this->registered = true;
     }
   }
@@ -126,7 +126,7 @@ class sfAutoloadAgain
    */
   public function unregister()
   {
-    spl_autoload_unregister(array($this, 'autoload'));
+    spl_autoload_unregister($this->autoload(...));
     $this->registered = false;
   }
 }

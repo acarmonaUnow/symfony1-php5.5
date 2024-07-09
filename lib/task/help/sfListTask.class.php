@@ -154,7 +154,7 @@ EOF;
         $currentNamespace = $task->getNamespace();
         $namespacesXML->appendChild($namespaceArrayXML[$task->getNamespace()] = $dom->createElement('namespace'));
 
-        $namespaceArrayXML[$task->getNamespace()]->setAttribute('id', $task->getNamespace() ? $task->getNamespace() : '_global');
+        $namespaceArrayXML[$task->getNamespace()]->setAttribute('id', $task->getNamespace() ?: '_global');
       }
 
       if (!$namespace)

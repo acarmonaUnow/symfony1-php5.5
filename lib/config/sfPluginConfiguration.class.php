@@ -112,9 +112,9 @@ abstract class sfPluginConfiguration
 
     if (is_readable($file = $this->rootDir.'/config/autoload.yml'))
     {
-      $this->configuration->getEventDispatcher()->connect('autoload.filter_config', array($this, 'filterAutoloadConfig'));
+      $this->configuration->getEventDispatcher()->connect('autoload.filter_config', $this->filterAutoloadConfig(...));
       $autoload->loadConfiguration(array($file));
-      $this->configuration->getEventDispatcher()->disconnect('autoload.filter_config', array($this, 'filterAutoloadConfig'));
+      $this->configuration->getEventDispatcher()->disconnect('autoload.filter_config', $this->filterAutoloadConfig(...));
     }
     else
     {
@@ -164,7 +164,7 @@ abstract class sfPluginConfiguration
    */
   public function connectTests()
   {
-    $this->dispatcher->connect('task.test.filter_test_files', array($this, 'filterTestFiles'));
+    $this->dispatcher->connect('task.test.filter_test_files', $this->filterTestFiles(...));
   }
 
   /**

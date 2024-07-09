@@ -42,7 +42,7 @@
  * @author thomas.haas@softwired-inc.com
  * @author <a href="mailto:stefan.bodewig@epost.de">Stefan Bodewig</a>
  */
-class Commandline {
+class Commandline implements \Stringable {
 
     /**
      * @var array CommandlineArguments[]
@@ -59,7 +59,7 @@ class Commandline {
 
     public function __construct($to_process = null) {
         if ($to_process !== null) {                 
-            $tmp = $this->translateCommandline($to_process);
+            $tmp = static::translateCommandline($to_process);
             if ($tmp) {
                 $this->setExecutable(array_shift($tmp)); // removes first el
                 foreach($tmp as $arg) { // iterate through remaining elements
@@ -142,8 +142,8 @@ class Commandline {
         return $result;
     }
 
-    public function __toString() {
-        return self::toString($this->getCommandline());
+    public function __toString(): string {
+        return (string) self::toString($this->getCommandline());
     }
 
     /**
@@ -157,13 +157,13 @@ class Commandline {
      *                           and double quotes.
      */
     public static function quoteArgument($argument) {
-        if (strpos($argument, "\"") !== false) {
-            if (strpos($argument, "'") !== false) {
+        if (str_contains($argument, "\"")) {
+            if (str_contains($argument, "'")) {
                 throw new BuildException("Can't handle single and double quotes in same argument");
             } else {
                 return escapeshellarg($argument);
             }
-        } elseif (strpos($argument, "'") !== false || strpos($argument, " ") !== false) {
+        } elseif (str_contains($argument, "'") || str_contains($argument, " ")) {
             return escapeshellarg($argument);
             //return '\"' . $argument . '\"';
         } else {

@@ -1231,7 +1231,7 @@ class Doctrine_Import_Builder extends Doctrine_Builder
 
         $fileName = $this->_getFileName($originalClassName, $definition);
 
-        $packagesPath = $this->_packagesPath ? $this->_packagesPath:$this->_path;
+        $packagesPath = $this->_packagesPath ?: $this->_path;
 
         // If this is a main class that either extends from Base or Package class
         if (isset($definition['is_main_class']) && $definition['is_main_class']) {

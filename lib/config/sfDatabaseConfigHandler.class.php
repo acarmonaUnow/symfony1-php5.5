@@ -34,7 +34,7 @@ class sfDatabaseConfigHandler extends sfYamlConfigHandler
    */
   public function execute($configFiles)
   {
-    list($includes, $data) = $this->parse($configFiles);
+    [$includes, $data] = $this->parse($configFiles);
 
     foreach ($includes as $i => $include)
     {
@@ -55,7 +55,7 @@ class sfDatabaseConfigHandler extends sfYamlConfigHandler
 
   public function evaluate($configFiles)
   {
-    list($includes, $data) = $this->parse($configFiles);
+    [$includes, $data] = $this->parse($configFiles);
 
     foreach ($includes as $i => $include)
     {

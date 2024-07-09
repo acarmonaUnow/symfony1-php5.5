@@ -75,18 +75,11 @@ class Doctrine_Expression_Mysql extends Doctrine_Expression_Driver
         if ( ! is_null($operator)) {
             $field = is_null($field) ? '' : $field.' ';
             $operator = strtoupper($operator);
-            switch ($operator) {
-                // case insensitive
-                case 'ILIKE':
-                    $match = $field.'LIKE ';
-                    break;
-                // case sensitive
-                case 'LIKE':
-                    $match = $field.'LIKE BINARY ';
-                    break;
-                default:
-                    throw new Doctrine_Expression_Mysql_Exception('not a supported operator type:'. $operator);
-            }
+            $match = match ($operator) {
+                'ILIKE' => $field.'LIKE ',
+                'LIKE' => $field.'LIKE BINARY ',
+                default => throw new Doctrine_Expression_Mysql_Exception('not a supported operator type:'. $operator),
+            };
         }
         $match.= "'";
         foreach ($pattern as $key => $value) {

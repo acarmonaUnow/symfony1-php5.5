@@ -145,7 +145,7 @@ class CvsTask extends Task {
          // use the same filename.
 
         if ($this->passFile === null) {
-            $defaultPassFile = new PhingFile(Phing::getProperty("cygwin.user.home", Phing::getProperty("user.home")) 
+            $defaultPassFile = new PhingFile(Phing::getProperty("cygwin.user.home") 
                 . DIRECTORY_SEPARATOR . ".cvspass");
             if($defaultPassFile->exists()) {
                 $this->setPassfile($defaultPassFile);
@@ -212,7 +212,7 @@ class CvsTask extends Task {
                                          . "Command line was ["
                                          . $toExecute->describeCommand() . "]", $this->getLocation());
             }
-        } catch (IOException $e) {
+        } catch (IOException|Exception $e) {
             if ($this->failOnError) {
                 throw new BuildException($e, $this->getLocation());
             } else {
@@ -227,12 +227,6 @@ class CvsTask extends Task {
                     $t = $e;
                 }
                 $this->log("Caught exception: " . $t, Project::MSG_WARN);
-            }
-        } catch (Exception $e) {
-            if ($this->failOnError) {
-                throw new BuildException($e, $this->getLocation());
-            } else {
-                $this->log("Caught exception: " . $e, Project::MSG_WARN);
             }
         }
     }

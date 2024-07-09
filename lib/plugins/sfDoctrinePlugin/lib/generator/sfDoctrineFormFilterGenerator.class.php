@@ -123,22 +123,12 @@ class sfDoctrineFormFilterGenerator extends sfDoctrineFormGenerator
    */
   public function getWidgetClassForColumn($column)
   {
-    switch ($column->getDoctrineType())
-    {
-      case 'boolean':
-        $name = 'Choice';
-        break;
-      case 'date':
-      case 'datetime':
-      case 'timestamp':
-        $name = 'FilterDate';
-        break;
-      case 'enum':
-        $name = 'Choice';
-        break;
-      default:
-        $name = 'FilterInput';
-    }
+    $name = match ($column->getDoctrineType()) {
+        'boolean' => 'Choice',
+        'date', 'datetime', 'timestamp' => 'FilterDate',
+        'enum' => 'Choice',
+        default => 'FilterInput',
+    };
 
     if ($column->isForeignKey())
     {
@@ -196,29 +186,14 @@ class sfDoctrineFormFilterGenerator extends sfDoctrineFormGenerator
    */
   public function getValidatorClassForColumn($column)
   {
-    switch ($column->getDoctrineType())
-    {
-      case 'boolean':
-        $name = 'Choice';
-        break;
-      case 'float':
-      case 'decimal':
-        $name = 'Number';
-        break;
-      case 'integer':
-        $name = 'Integer';
-        break;
-      case 'date':
-      case 'datetime':
-      case 'timestamp':
-        $name = 'DateRange';
-        break;
-      case 'enum':
-        $name = 'Choice';
-        break;
-      default:
-        $name = 'Pass';
-    }
+    $name = match ($column->getDoctrineType()) {
+        'boolean' => 'Choice',
+        'float', 'decimal' => 'Number',
+        'integer' => 'Integer',
+        'date', 'datetime', 'timestamp' => 'DateRange',
+        'enum' => 'Choice',
+        default => 'Pass',
+    };
 
     if ($column->isPrimarykey() || $column->isForeignKey())
     {
@@ -298,23 +273,13 @@ class sfDoctrineFormFilterGenerator extends sfDoctrineFormGenerator
       return 'ForeignKey';
     }
 
-    switch ($column->getDoctrineType())
-    {
-      case 'enum':
-        return 'Enum';
-      case 'boolean':
-        return 'Boolean';
-      case 'date':
-      case 'datetime':
-      case 'timestamp':
-        return 'Date';
-      case 'integer':
-      case 'decimal':
-      case 'float':
-        return 'Number';
-      default:
-        return 'Text';
-    }
+    return match ($column->getDoctrineType()) {
+        'enum' => 'Enum',
+        'boolean' => 'Boolean',
+        'date', 'datetime', 'timestamp' => 'Date',
+        'integer', 'decimal', 'float' => 'Number',
+        default => 'Text',
+    };
   }
 
   /**

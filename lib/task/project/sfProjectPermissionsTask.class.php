@@ -72,7 +72,7 @@ EOF;
     {
       $this->logBlock(array_merge(
         array('Permissions on the following file(s) could not be fixed:', ''),
-        array_map(function($f) { return ' - ' . sfDebug::shortenFilePath($f); }, $this->failed)
+        array_map(fn($f) => ' - ' . sfDebug::shortenFilePath($f), $this->failed)
       ), 'ERROR_LARGE');
     }
   }
@@ -97,7 +97,7 @@ EOF;
     }
     else
     {
-      set_error_handler(array($this, 'handleError'));
+      set_error_handler($this->handleError(...));
 
       $this->current = $file;
       @$this->getFilesystem()->chmod($file, $mode, $umask);

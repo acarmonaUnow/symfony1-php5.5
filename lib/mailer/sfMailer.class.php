@@ -89,7 +89,7 @@ class sfMailer extends Swift_Mailer
         {
           foreach ($transport->getExtensionHandlers() as $handler)
           {
-            if (in_array(strtolower($method), array_map('strtolower', (array) $handler->exposeMixinMethods())))
+            if (in_array(strtolower($method), array_map(strtolower(...), (array) $handler->exposeMixinMethods())))
             {
               $transport->$method($value);
             }

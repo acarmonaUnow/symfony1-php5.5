@@ -31,7 +31,7 @@
  * @since       1.0
  * @version     $Revision: 7673 $
  */
-abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Countable, IteratorAggregate, Serializable
+abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Countable, IteratorAggregate, Serializable, \Stringable
 {
     /**
      * STATE CONSTANTS
@@ -1394,7 +1394,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
                 try {
                     $value = $filter->filterGet($this, $fieldName);
                     $success = true;
-                } catch (Doctrine_Exception $e) {}
+                } catch (Doctrine_Exception) {}
             }
             if ($success) {
                 return $value;
@@ -1511,7 +1511,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
                     try {
                         $value = $filter->filterSet($this, $fieldName, $value);
                         $success = true;
-                    } catch (Doctrine_Exception $e) {}
+                    } catch (Doctrine_Exception) {}
                 }
                 if ($success) {
                     return $value;
@@ -1748,7 +1748,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
         try {
             $this->save($conn);
             return true;
-        } catch (Doctrine_Validator_Exception $ignored) {
+        } catch (Doctrine_Validator_Exception) {
             return false;
         }
     }
@@ -2017,7 +2017,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
                     if (is_callable(array($this, $method))) {
                         $this->$method($value);
                     }
-                } catch (Doctrine_Record_Exception $e) {}
+                } catch (Doctrine_Record_Exception) {}
             }
         }
 
@@ -2732,7 +2732,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      * magic method
      * @return string representation of this object
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->_oid;
     }

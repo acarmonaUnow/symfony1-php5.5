@@ -73,11 +73,7 @@ class Doctrine_Record_Listener implements Doctrine_Record_Listener_Interface
      */ 
     public function getOption($name) 
     { 
-        if (isset($this->_options[$name])) { 
-            return $this->_options[$name]; 
-        } 
-
-        return null; 
+        return $this->_options[$name] ?? null; 
     }
 	
     public function preSerialize(Doctrine_Event $event)

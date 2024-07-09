@@ -134,7 +134,7 @@ class FtpDeployTask extends Task
 		if($this->clearFirst) {
 			// TODO change to a loop through all files and directories within current directory
 			$this->log('Clearing directory '.$this->dir, Project::MSG_INFO);
-			$dir = substr($this->dir, -1) == '/' ? $this->dir : $this->dir.'/';
+			$dir = str_ends_with($this->dir, '/') ? $this->dir : $this->dir.'/';
 			$ftp->rm($dir, true);
 			$ftp->mkdir($dir);
 		}

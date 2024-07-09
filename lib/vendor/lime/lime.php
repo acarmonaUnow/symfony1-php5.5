@@ -41,7 +41,7 @@ class lime_test
       'error_reporting' => false,
     ), $options);
 
-    $this->output = $this->options['output'] ? $this->options['output'] : new lime_output($this->options['force_colors']);
+    $this->output = $this->options['output'] ?: new lime_output($this->options['force_colors']);
 
     $caller = $this->find_caller(debug_backtrace());
     self::$all_results[] = array(
@@ -54,8 +54,8 @@ class lime_test
 
     null !== $plan and $this->output->echoln(sprintf("1..%d", $plan));
 
-    set_error_handler(array($this, 'handle_error'));
-    set_exception_handler(array($this, 'handle_exception'));
+    set_error_handler($this->handle_error(...));
+    set_exception_handler($this->handle_exception(...));
   }
 
   static public function reset()
@@ -180,7 +180,7 @@ class lime_test
     }
     $this->results['tests'][$this->test_nb]['message'] = $message;
     $this->results['tests'][$this->test_nb]['status'] = $result;
-    $this->output->echoln(sprintf("%s %d%s", $result ? 'ok' : 'not ok', $this->test_nb, $message = $message ? sprintf('%s %s', 0 === strpos($message, '#') ? '' : ' -', $message) : ''));
+    $this->output->echoln(sprintf("%s %d%s", $result ? 'ok' : 'not ok', $this->test_nb, $message = $message ? sprintf('%s %s', str_starts_with($message, '#') ? '' : ' -', $message) : ''));
 
     if (!$result)
     {
@@ -344,7 +344,7 @@ class lime_test
    */
   public function isa_ok($var, $class, $message = '')
   {
-    $type = is_object($var) ? get_class($var) : gettype($var);
+    $type = get_debug_type($var);
     if (!$result = $this->ok($type == $class, $message))
     {
       $this->set_last_test_errors(array(sprintf("      variable isn't a '%s' it's a '%s'", $class, $type)));
@@ -520,7 +520,7 @@ class lime_test
     ++$this->test_nb;
     ++$this->results['stats']['total'];
 
-    list($this->results['tests'][$this->test_nb]['file'], $this->results['tests'][$this->test_nb]['line']) = $this->find_caller(debug_backtrace());
+    [$this->results['tests'][$this->test_nb]['file'], $this->results['tests'][$this->test_nb]['line']] = $this->find_caller(debug_backtrace());
   }
 
   protected function set_last_test_errors(array $errors)
@@ -554,15 +554,10 @@ class lime_test
       return false;
     }
 
-    switch ($code)
-    {
-      case E_WARNING:
-        $type = 'Warning';
-        break;
-      default:
-        $type = 'Notice';
-        break;
-    }
+    $type = match ($code) {
+        E_WARNING => 'Warning',
+        default => 'Notice',
+    };
 
     $trace = debug_backtrace();
     array_shift($trace); // remove the handle_error() call from the trace
@@ -570,7 +565,7 @@ class lime_test
     $this->error($type.': '.$message, $file, $line, $trace);
   }
 
-  public function handle_exception(Exception $exception)
+  public function handle_exception(\Throwable $exception)
   {
     $this->error(get_class($exception).': '.$exception->getMessage(), $exception->getFile(), $exception->getLine(), $exception->getTrace());
 
@@ -684,10 +679,10 @@ class lime_output
   {
     if ($colorize)
     {
-      $message = preg_replace('/(?:^|\.)((?:not ok|dubious|errors) *\d*)\b/e', '$this->colorizer->colorize(\'$1\', \'ERROR\')', $message);
-      $message = preg_replace('/(?:^|\.)(ok *\d*)\b/e', '$this->colorizer->colorize(\'$1\', \'INFO\')', $message);
-      $message = preg_replace('/"(.+?)"/e', '$this->colorizer->colorize(\'$1\', \'PARAMETER\')', $message);
-      $message = preg_replace('/(\->|\:\:)?([a-zA-Z0-9_]+?)\(\)/e', '$this->colorizer->colorize(\'$1$2()\', \'PARAMETER\')', $message);
+      $message = preg_replace_callback('/(?:^|\.)((?:not ok|dubious|errors) *\d*)\b/', fn($matches) => $this->colorizer->colorize($matches[1], 'ERROR'), $message);
+      $message = preg_replace_callback('/(?:^|\.)(ok *\d*)\b/', fn($matches) => $this->colorizer->colorize($matches[1], 'INFO'), $message);
+      $message = preg_replace_callback('/"(.+?)"/', fn($matches) => $this->colorizer->colorize($matches[1], 'PARAMETER'), $message);
+      $message = preg_replace_callback('/(\->|\:\:)?([a-zA-Z0-9_]+?)\(\)/', fn($matches) => $this->colorizer->colorize($matches[1], 'PARAMETER'), $message);
     }
 
     echo ($colorizer_parameter ? $this->colorizer->colorize($message, $colorizer_parameter) : $message)."\n";
@@ -803,7 +798,7 @@ class lime_harness extends lime_registration
     ), $options);
 
     $this->php_cli = $this->find_php_cli($this->options['php_cli']);
-    $this->output = $this->options['output'] ? $this->options['output'] : new lime_output($this->options['force_colors']);
+    $this->output = $this->options['output'] ?: new lime_output($this->options['force_colors']);
   }
 
   protected function find_php_cli($php_cli = null)
@@ -830,7 +825,7 @@ class lime_harness extends lime_registration
       return $php_cli;
     }
 
-    $path = getenv('PATH') ? getenv('PATH') : getenv('Path');
+    $path = getenv('PATH') ?: getenv('Path');
     $exe_suffixes = DIRECTORY_SEPARATOR == '\\' ? (getenv('PATHEXT') ? explode(PATH_SEPARATOR, getenv('PATHEXT')) : array('.exe', '.bat', '.cmd', '.com')) : array('');
     foreach (array('php5', 'php') as $php_cli)
     {
@@ -1210,7 +1205,7 @@ EOF;
       if (!$total_lines)
       {
         // probably means that the file is not covered at all!
-        $total_lines = count($this->get_php_lines(file_get_contents($file)));
+        $total_lines = count(static::get_php_lines(file_get_contents($file)));
       }
 
       $output = $this->harness->output;
@@ -1282,7 +1277,7 @@ EOF;
         continue;
       }
 
-      list($id, $text) = $token;
+      [$id, $text] = $token;
 
       switch ($id)
       {

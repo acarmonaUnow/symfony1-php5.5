@@ -32,7 +32,7 @@
  * @version     $Revision: 7657 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-class Doctrine_Manager extends Doctrine_Configurable implements Countable, IteratorAggregate
+class Doctrine_Manager extends Doctrine_Configurable implements Countable, IteratorAggregate, \Stringable
 {
     /**
      * @var array $connections          an array containing all the opened connections
@@ -381,7 +381,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
                         unset($e2[0]);
                         $value = implode('=', $e2);
                     } else {
-                        list($key, $value) = $e2;
+                        [$key, $value] = $e2;
                     }
                     $parts[$key] = $value;
                 }
@@ -716,7 +716,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $r[] = "<pre>";
         $r[] = "Doctrine_Manager";

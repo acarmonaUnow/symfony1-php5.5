@@ -287,7 +287,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask {
 								$classMap[$className] = $classPath;
 							}
 						}
-						
+
 						// ------------------------
 						// Create tree Node classes
 						// ------------------------

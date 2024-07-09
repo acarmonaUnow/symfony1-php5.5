@@ -71,7 +71,7 @@ class sfValidatorDate extends sfValidatorBase
     {
       if (!preg_match($regex, $value, $match))
       {
-        throw new sfValidatorError($this, 'bad_format', array('value' => $value, 'date_format' => $this->getOption('date_format_error') ? $this->getOption('date_format_error') : $this->getOption('date_format')));
+        throw new sfValidatorError($this, 'bad_format', array('value' => $value, 'date_format' => $this->getOption('date_format_error') ?: $this->getOption('date_format')));
       }
 
       $value = $match;
@@ -98,7 +98,7 @@ class sfValidatorDate extends sfValidatorBase
         $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
         $clean = $date->format('YmdHis');
       }
-      catch (Exception $e)
+      catch (Exception)
       {
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }

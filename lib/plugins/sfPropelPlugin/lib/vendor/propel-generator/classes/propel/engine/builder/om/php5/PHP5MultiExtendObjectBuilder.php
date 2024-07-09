@@ -56,7 +56,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder {
 	 */
 	public function getPackage()
 	{
-		return ($this->child->getPackage() ? $this->child->getPackage() : parent::getPackage());
+		return ($this->child->getPackage() ?: parent::getPackage());
 	}
 
 	/**

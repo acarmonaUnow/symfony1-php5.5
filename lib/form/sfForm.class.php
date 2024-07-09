@@ -25,7 +25,7 @@
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @version    SVN: $Id: sfForm.class.php 33598 2012-11-25 09:57:29Z fabien $
  */
-class sfForm implements ArrayAccess, Iterator, Countable
+class sfForm implements ArrayAccess, Iterator, Countable, \Stringable
 {
   protected static
     $CSRFSecret        = false,
@@ -80,7 +80,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
    *
    * @see render()
    */
-  public function __toString()
+  public function __toString(): string
   {
     try
     {
@@ -342,7 +342,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
    */
   public function getName()
   {
-    if ('[%s]' != substr($nameFormat = $this->widgetSchema->getNameFormat(), -4))
+    if (!str_ends_with($nameFormat = $this->widgetSchema->getNameFormat(), '[%s]'))
     {
       return false;
     }
@@ -829,7 +829,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
 
     if ($this->isCSRFProtected())
     {
-      $this->setDefault(self::$CSRFFieldName, $this->getCSRFToken($this->localCSRFSecret ? $this->localCSRFSecret : self::$CSRFSecret));
+      $this->setDefault(self::$CSRFFieldName, $this->getCSRFToken($this->localCSRFSecret ?: self::$CSRFSecret));
     }
 
     $this->resetFormFields();
@@ -899,7 +899,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
   {
     if (null === $secret)
     {
-      $secret = $this->localCSRFSecret ? $this->localCSRFSecret : self::$CSRFSecret;
+      $secret = $this->localCSRFSecret ?: self::$CSRFSecret;
     }
 
     return md5($secret.session_id().get_class($this));
@@ -1156,7 +1156,7 @@ class sfForm implements ArrayAccess, Iterator, Countable
     {
       $values = $this->isBound ? $this->taintedValues : $this->defaults + $this->widgetSchema->getDefaults();
 
-      $this->formFieldSchema = new sfFormFieldSchema($this->widgetSchema, null, null, $values, $this->errorSchema);
+      $this->formFieldSchema = new sfFormFieldSchema($this->widgetSchema, null, $values, null, $this->errorSchema);
     }
 
     return $this->formFieldSchema;

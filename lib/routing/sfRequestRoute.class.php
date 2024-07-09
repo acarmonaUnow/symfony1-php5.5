@@ -35,7 +35,7 @@ class sfRequestRoute extends sfRoute
     }
     else
     {
-      $requirements['sf_method'] = array_map('strtolower', (array) $requirements['sf_method']);
+      $requirements['sf_method'] = array_map(strtolower(...), (array) $requirements['sf_method']);
     }
 
     parent::__construct($pattern, $defaults, $requirements, $options);

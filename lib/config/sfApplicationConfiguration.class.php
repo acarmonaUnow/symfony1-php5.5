@@ -110,7 +110,7 @@ abstract class sfApplicationConfiguration extends ProjectConfiguration
     }
 
     // autoloader(s)
-    $this->dispatcher->connect('autoload.filter_config', array($this, 'filterAutoloadConfig'));
+    $this->dispatcher->connect('autoload.filter_config', $this->filterAutoloadConfig(...));
     sfAutoload::getInstance()->register();
     if ($this->isDebug())
     {

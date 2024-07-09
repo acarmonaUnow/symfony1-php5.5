@@ -375,14 +375,13 @@ abstract class Swift_Transport_AbstractSmtpTransport
     }
     elseif (!empty($sender))
     {
-      // Don't use array_keys
-      reset($sender); // Reset Pointer to first pos
-      $path = key($sender); // Get key
+      // Reset Pointer to first pos
+      $path = array_key_first($sender); // Get key
     }
     elseif (!empty($from))
     {
-      reset($from); // Reset Pointer to first pos
-      $path = key($from); // Get key
+      // Reset Pointer to first pos
+      $path = array_key_first($from); // Get key
     }
     return $path;
   }
@@ -407,7 +406,7 @@ abstract class Swift_Transport_AbstractSmtpTransport
   /** Throws an Exception if a response code is incorrect */
   protected function _assertResponseCode($response, $wanted)
   {
-    list($code) = sscanf($response, '%3d');
+    [$code] = sscanf($response, '%3d');
     $valid = (empty($wanted) || in_array($code, $wanted));
     
     if ($evt = $this->_eventDispatcher->createResponseEvent($this, $response,
@@ -438,7 +437,7 @@ abstract class Swift_Transport_AbstractSmtpTransport
         $line = $this->_buffer->readLine($seq);
         $response .= $line;
       }
-      while (null !== $line && false !== $line && ' ' != $line{3});
+      while (null !== $line && false !== $line && ' ' != $line[3]);
     }
     catch (Swift_TransportException $e)
     {
@@ -462,7 +461,7 @@ abstract class Swift_Transport_AbstractSmtpTransport
         $this->_doRcptToCommand($forwardPath);
         $sent++;
       }
-      catch (Swift_TransportException $e)
+      catch (Swift_TransportException)
       {
         $failedRecipients[] = $forwardPath;
       }

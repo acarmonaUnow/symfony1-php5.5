@@ -44,17 +44,11 @@ class sfYamlInline
       mb_internal_encoding('ASCII');
     }
 
-    switch ($value[0])
-    {
-      case '[':
-        $result = self::parseSequence($value);
-        break;
-      case '{':
-        $result = self::parseMapping($value);
-        break;
-      default:
-        $result = self::parseScalar($value);
-    }
+    $result = match ($value[0]) {
+        '[' => self::parseSequence($value),
+        '{' => self::parseMapping($value),
+        default => self::parseScalar($value),
+    };
 
     if (isset($mbEncoding))
     {
@@ -103,7 +97,7 @@ class sfYamlInline
         return is_string($value) ? "'{$value}'" : (int) $value;
       case is_numeric($value) && false === strpbrk($value, "\f\n\r\t\v"):
         return is_infinite($value) ? str_ireplace('INF', '.Inf', (string) $value) : (is_string($value) ? "'{$value}'" : $value);
-      case false !== strpos($value, "\n") || false !== strpos($value, "\r"):
+      case str_contains($value, "\n") || str_contains($value, "\r"):
         return sprintf('"%s"', str_replace(['"', "\n", "\r"], ['\\"', '\n', '\r'], $value));
       case preg_match('/[ \s \' " \: \{ \} \[ \] , & \* \# \?] | \A[ - ? | < > = ! % @ ` ]/x', $value):
         return sprintf("'%s'", str_replace('\'', '\'\'', $value));
@@ -136,7 +130,7 @@ class sfYamlInline
     if (
       (1 == count($keys) && '0' == $keys[0])
       ||
-      (count($keys) > 1 && array_sum(array_map('intval', $keys)) == count($keys) * (count($keys) - 1) / 2))
+      (count($keys) > 1 && array_sum(array_map(intval(...), $keys)) == count($keys) * (count($keys) - 1) / 2))
     {
       $output = array();
       foreach ($value as $val)
@@ -274,14 +268,14 @@ class sfYamlInline
           $isQuoted = in_array($sequence[$i], array('"', "'"));
           $value = self::parseScalar($sequence, array(',', ']'), array('"', "'"), $i);
 
-          if (!$isQuoted && false !== strpos($value, ': '))
+          if (!$isQuoted && str_contains($value, ': '))
           {
             // embedded mapping?
             try
             {
               $value = self::parseMapping('{'.$value.'}');
             }
-            catch (InvalidArgumentException $e)
+            catch (InvalidArgumentException)
             {
               // no, it's not
             }
@@ -393,11 +387,11 @@ class sfYamlInline
       case '' == $scalar:
       case '~' == $scalar:
         return null;
-      case 0 === strpos($scalar, '!str'):
+      case str_starts_with($scalar, '!str'):
         return (string) substr($scalar, 5);
-      case 0 === strpos($scalar, '! '):
+      case str_starts_with($scalar, '! '):
         return (int) self::parseScalar(substr($scalar, 2));
-      case 0 === strpos($scalar, '!!php/object:'):
+      case str_starts_with($scalar, '!!php/object:'):
         return unserialize(substr($scalar, 13));
       case ctype_digit($scalar):
         $raw = $scalar;
@@ -407,7 +401,7 @@ class sfYamlInline
         return true;
       case in_array(strtolower($scalar), $falseValues):
         return false;
-      case 0 === strpos($scalar, '0x'):
+      case str_starts_with($scalar, '0x'):
         return hexdec($scalar);
       case is_numeric($scalar):
         return floatval($scalar);

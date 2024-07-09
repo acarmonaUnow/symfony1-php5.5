@@ -212,7 +212,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
             if ( ! $this->hasSqlTableAlias($e[0])) {
                 try {
                     $this->addComponent($e[0], ucwords($e[0]));
-                } catch (Doctrine_Exception $exception) {
+                } catch (Doctrine_Exception) {
                     throw new Doctrine_RawSql_Exception('The associated component for table alias ' . $e[0] . ' couldn\'t be found.');
                 }
             }
@@ -251,10 +251,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
         if (isset($this->_sqlParts['distinct']) && $this->_sqlParts['distinct'] == true) {
             $q .= 'DISTINCT ';
         }
-
-        // first add the fields of the root component
-        reset($this->_queryComponents);
-        $componentAlias = key($this->_queryComponents);
+        $componentAlias = array_key_first($this->_queryComponents);
         
         $this->_rootAlias = $componentAlias;
 
@@ -295,10 +292,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
      */
 	public function getCountSqlQuery($params = array())
     {
-        //Doing COUNT( DISTINCT rootComponent.id )
-        //This is not correct, if the result is not hydrated by doctrine, but it mimics the behaviour of Doctrine_Query::getCountQuery
-        reset($this->_queryComponents);
-        $componentAlias = key($this->_queryComponents);
+        $componentAlias = array_key_first($this->_queryComponents);
 
         $this->_rootAlias = $componentAlias;
 

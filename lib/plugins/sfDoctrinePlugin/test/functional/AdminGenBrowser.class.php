@@ -21,7 +21,7 @@ class AdminGenBrowser extends sfTestBrowser
     $methods = get_class_methods($this);
     foreach ($methods as $method)
     {
-      if (substr($method, 0, 5) == '_test')
+      if (str_starts_with($method, '_test'))
       {
         $this->$method();
       }
@@ -37,7 +37,7 @@ class AdminGenBrowser extends sfTestBrowser
     $matches = 0;
     foreach ($this->_getQueryExecutionEvents() as $event)
     {
-      if (false !== strpos($event->getQuery(), 'ORDER BY u.username asc'))
+      if (str_contains($event->getQuery(), 'ORDER BY u.username asc'))
       {
         ++$matches;
       }
@@ -70,7 +70,7 @@ class AdminGenBrowser extends sfTestBrowser
       $matches = 0;
       foreach ($this->_getQueryExecutionEvents() as $event)
       {
-        if (false !== strpos($event->getQuery(), 'ORDER BY u.username '.$sortType))
+        if (str_contains($event->getQuery(), 'ORDER BY u.username '.$sortType))
         {
           ++$matches;
         }

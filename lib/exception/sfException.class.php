@@ -109,9 +109,9 @@ class sfException extends Exception
 
     try
     {
-      $this->outputStackTrace($exception);
+      static::outputStackTrace($exception);
     }
-    catch (Exception $e)
+    catch (Exception)
     {
     }
 

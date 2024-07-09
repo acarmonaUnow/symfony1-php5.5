@@ -292,33 +292,16 @@ class sfDoctrineFormGenerator extends sfGenerator
    */
   public function getWidgetClassForColumn($column)
   {
-    switch ($column->getDoctrineType())
-    {
-      case 'string':
-        $widgetSubclass = null === $column->getLength() || $column->getLength() > 255 ? 'Textarea' : 'InputText';
-        break;
-      case 'boolean':
-        $widgetSubclass = 'InputCheckbox';
-        break;
-      case 'blob':
-      case 'clob':
-        $widgetSubclass = 'Textarea';
-        break;
-      case 'date':
-        $widgetSubclass = 'Date';
-        break;
-      case 'time':
-        $widgetSubclass = 'Time';
-        break;
-      case 'timestamp':
-        $widgetSubclass = 'DateTime';
-        break;
-      case 'enum':
-        $widgetSubclass = 'Choice';
-        break;
-      default:
-        $widgetSubclass = 'InputText';
-    }
+    $widgetSubclass = match ($column->getDoctrineType()) {
+        'string' => null === $column->getLength() || $column->getLength() > 255 ? 'Textarea' : 'InputText',
+        'boolean' => 'InputCheckbox',
+        'blob', 'clob' => 'Textarea',
+        'date' => 'Date',
+        'time' => 'Time',
+        'timestamp' => 'DateTime',
+        'enum' => 'Choice',
+        default => 'InputText',
+    };
 
     if ($column->isPrimaryKey())
     {

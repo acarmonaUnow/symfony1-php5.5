@@ -31,7 +31,7 @@
  * @version     $Revision: 7686 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-class Doctrine_Collection extends Doctrine_Access implements Countable, IteratorAggregate, Serializable
+class Doctrine_Collection extends Doctrine_Access implements Countable, IteratorAggregate, Serializable, \Stringable
 {
     /**
      * @var array $data                     an array containing the records of this collection
@@ -913,11 +913,7 @@ class Doctrine_Collection extends Doctrine_Access implements Countable, Iterator
      */
     protected function compareRecords($a, $b)
     {
-        if ($a->getOid() == $b->getOid()) {
-            return 0;
-        }
-        
-        return ($a->getOid() > $b->getOid()) ? 1 : -1;
+        return $a->getOid() <=> $b->getOid();
     }
 
     /**
@@ -1072,7 +1068,7 @@ class Doctrine_Collection extends Doctrine_Access implements Countable, Iterator
      *
      * @return string $string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return Doctrine_Lib::getCollectionAsString($this);
     }

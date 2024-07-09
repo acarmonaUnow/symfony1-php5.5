@@ -251,7 +251,7 @@ Class Swift_CharacterStream_NgCharacterStream
     $read=$this->read($length);
   	if ($read!==false)
   	{
-      $ret = array_map('ord', str_split($read, 1));
+      $ret = array_map(ord(...), str_split($read, 1));
       return $ret;
   	}
   	return false;

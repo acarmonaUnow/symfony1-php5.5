@@ -30,7 +30,7 @@
  * @version     $Revision: 1080 $
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
-class Doctrine_Validator_Driver
+class Doctrine_Validator_Driver implements \Stringable
 {
     /**
      * @var array $_args     an array of plugin specific args
@@ -47,10 +47,7 @@ class Doctrine_Validator_Driver
      */
     public function __get($arg)
     {
-        if (isset($this->args[$arg])) {
-            return $this->args[$arg];
-        }
-        return null;
+        return $this->args[$arg] ?? null;
     }
 
     /**
@@ -116,10 +113,10 @@ class Doctrine_Validator_Driver
         return $this->args;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $className = get_class($this);
-        if (strpos($className, 'Doctrine_Validator_') === 0) { 
+        if (str_starts_with($className, 'Doctrine_Validator_')) { 
             return strtolower(substr($className, 19));
         } else {
             return $className;

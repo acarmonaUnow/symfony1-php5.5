@@ -63,7 +63,7 @@ include_once 'phing/types/FileSet.php';
  * @author Stefan Bodewig <stefan.bodewig@epost.de> (Ant)
  * @package phing.types
  */
-class Path extends DataType {
+class Path extends DataType implements \Stringable {
 
     private $elements = array();
 
@@ -285,7 +285,7 @@ class Path extends DataType {
      * CLASSPATH or PATH environment variable definition.
      * @return string A textual representation of the path.
      */
-    public function __toString() {
+    public function __toString(): string {
 
         $list = $this->listPaths();
 
@@ -317,7 +317,7 @@ class Path extends DataType {
                     self::translateFileSep($element, $i);
                 }
                 $result[] = $element;
-            } catch (BuildException $e) {
+            } catch (BuildException) {
                 $this->project->log("Dropping path element " . $pathElement
                     . " as it is not valid relative to the project",
                     Project::MSG_VERBOSE);
@@ -350,8 +350,8 @@ class Path extends DataType {
      * replacements.
      */
     protected static function translateFileSep(&$buffer, $pos) {
-        if ($buffer{$pos} == '/' || $buffer{$pos} == '\\') {
-            $buffer{$pos} = DIRECTORY_SEPARATOR;
+        if ($buffer[$pos] == '/' || $buffer[$pos] == '\\') {
+            $buffer[$pos] = DIRECTORY_SEPARATOR;
             return true;
         }
         return false;

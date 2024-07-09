@@ -161,7 +161,7 @@ class sfDomCssSelector implements Countable, Iterator
         // Code to deal with attribute selectors
         if (preg_match('/^(\w+|\*)(\[.+\])$/', $token, $matches))
         {
-          $tagName = $matches[1] ? $matches[1] : '*';
+          $tagName = $matches[1] ?: '*';
           preg_match_all('/
             \[
               ([\w\-]+)             # attribute
@@ -187,30 +187,15 @@ class sfDomCssSelector implements Countable, Iterator
               $attrOperator = $match[2];
               $attrValue = $match[4] === '' ? (isset($match[5]) ? $match[5] : '') : $match[4];
 
-              switch ($attrOperator)
-              {
-                case '=': // Equality
-                  $ok = $found->getAttribute($attrName) == $attrValue;
-                  break;
-                case '~': // Match one of space seperated words
-                  $ok = preg_match('/\b'.preg_quote($attrValue, '/').'\b/', $found->getAttribute($attrName));
-                  break;
-                case '|': // Match start with value followed by optional hyphen
-                  $ok = preg_match('/^'.preg_quote($attrValue, '/').'-?/', $found->getAttribute($attrName));
-                  break;
-                case '^': // Match starts with value
-                  $ok = 0 === strpos($found->getAttribute($attrName), $attrValue);
-                  break;
-                case '$': // Match ends with value
-                  $ok = $attrValue == substr($found->getAttribute($attrName), -strlen($attrValue));
-                  break;
-                case '*': // Match ends with value
-                  $ok = false !== strpos($found->getAttribute($attrName), $attrValue);
-                  break;
-                default :
-                  // Just test for existence of attribute
-                  $ok = $found->hasAttribute($attrName);
-              }
+              $ok = match ($attrOperator) {
+                  '=' => $found->getAttribute($attrName) == $attrValue,
+                  '~' => preg_match('/\b'.preg_quote($attrValue, '/').'\b/', $found->getAttribute($attrName)),
+                  '|' => preg_match('/^'.preg_quote($attrValue, '/').'-?/', $found->getAttribute($attrName)),
+                  '^' => str_starts_with($found->getAttribute($attrName), $attrValue),
+                  '$' => str_ends_with($found->getAttribute($attrName), $attrValue),
+                  '*' => str_contains($found->getAttribute($attrName), $attrValue),
+                  default => $found->hasAttribute($attrName),
+              };
 
               if (false == $ok)
               {
@@ -363,7 +348,7 @@ class sfDomCssSelector implements Countable, Iterator
 
     foreach ($tokens as &$token)
     {
-      list($token['name'], $token['selector']) = $this->tokenize_selector_name($token['name']);
+      [$token['name'], $token['selector']] = $this->tokenize_selector_name($token['name']);
     }
 
     return $tokens;
@@ -428,7 +413,7 @@ class sfDomCssSelector implements Countable, Iterator
       switch ($selector['selector'])
       {
         case 'contains':
-          if (false !== strpos($nodes[$i]->textContent, $selector['parameter']))
+          if (str_contains($nodes[$i]->textContent, $selector['parameter']))
           {
             $matchingNodes[] = $nodes[$i];
           }
@@ -540,7 +525,7 @@ class sfDomCssSelector implements Countable, Iterator
     {
       throw new Exception(sprintf('Unable to parse custom selector "%s".', $selector));
     }
-    return array('selector' => $matches[1], 'parameter' => isset($matches[3]) ? ($matches[3] ? $matches[3] : $matches[4]) : '');
+    return array('selector' => $matches[1], 'parameter' => isset($matches[3]) ? ($matches[3] ?: $matches[4]) : '');
   }
 
   protected function nth($cur, $result = 1, $dir = 'nextSibling')

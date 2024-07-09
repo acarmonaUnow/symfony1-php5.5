@@ -277,7 +277,7 @@ class BasePeer
 
 			// add identifiers
 			if ($adapter->useQuoteIdentifier()) {
-				$columns = array_map(array($adapter, 'quoteIdentifier'), $columns);
+				$columns = array_map($adapter->quoteIdentifier(...), $columns);
 			}
 
 			$sql = 'INSERT INTO ' . $tableName
@@ -373,10 +373,10 @@ class BasePeer
 								$rawcvt = '';
 								// parse the $params['raw'] for ? chars
 								for($r=0,$len=strlen($raw); $r < $len; $r++) {
-									if ($raw{$r} == '?') {
+									if ($raw[$r] == '?') {
 										$rawcvt .= ':p'.$p++;
 									} else {
-										$rawcvt .= $raw{$r};
+										$rawcvt .= $raw[$r];
 									}
 								}
 								$sql .= $rawcvt . ', ';
@@ -392,15 +392,15 @@ class BasePeer
 						}
 					}
 				}
-				
+
 				$params = self::buildParams($updateTablesColumns[$tableName], $updateValues);
-				
+
 				foreach ($columns as $colName) {
 					$sb = "";
 					$selectCriteria->getCriterion($colName)->appendPsTo($sb, $params);
 					$whereClause[] = $sb;
 				}
-			
+
 				$sql = substr($sql, 0, -2) . " WHERE " .  implode(" AND ", $whereClause);
 
 				$stmt = $con->prepare($sql);
@@ -834,7 +834,7 @@ class BasePeer
 				$ignoreCase =
 				(($criteria->isIgnoreCase()
 				|| $someCriteria[$i]->isIgnoreCase())
-				&& (strpos($dbMap->getTable($table)->getColumn($someCriteria[$i]->getColumn())->getType(), "VARCHAR") !== false)
+				&& (str_contains($dbMap->getTable($table)->getColumn($someCriteria[$i]->getColumn())->getType(), "VARCHAR"))
 				);
 
 				$someCriteria[$i]->setIgnoreCase($ignoreCase);
@@ -880,7 +880,7 @@ class BasePeer
 				if ($ignoreCase) {
 					$condition .= $db->ignoreCase($conditionDesc['left']) . $conditionDesc['operator'] . $db->ignoreCase($conditionDesc['right']);
 				} else {
-					$condition .= implode($conditionDesc);
+					$condition .= implode('', $conditionDesc);
 				}
 				if ($index + 1 < $join->countConditions()) {
 					$condition .= ' AND ';
@@ -933,7 +933,7 @@ class BasePeer
 
 				// Add function expression as-is.
 
-				if (strpos($orderByColumn, '(') !== false) {
+				if (str_contains($orderByColumn, '(')) {
 					$orderByClause[] = $orderByColumn;
 					continue;
 				}
@@ -988,8 +988,8 @@ class BasePeer
 
 		// from / join tables quoten if it is necessary
 		if ($db->useQuoteIdentifier()) {
-			$fromClause = array_map(array($db, 'quoteIdentifierTable'), $fromClause);
-			$joinClause = $joinClause ? $joinClause : array_map(array($db, 'quoteIdentifierTable'), $joinClause);
+			$fromClause = array_map($db->quoteIdentifierTable(...), $fromClause);
+			$joinClause = $joinClause ?: array_map($db->quoteIdentifierTable(...), $joinClause);
 		}
 
 		// build from-clause

@@ -23,7 +23,7 @@ $category = CategoryPeer::doSelectOne(new Criteria());
 foreach (range(1, 20) as $n)
 {
   $article = new Article();
-  $article->setTitle(sprintf('Article #%s', $n));
+  $article->setTitle();
   $article->setCategory($category);
   $article->save();
 }

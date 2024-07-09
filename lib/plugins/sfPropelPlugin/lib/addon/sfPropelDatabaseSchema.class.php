@@ -970,7 +970,7 @@ class sfPropelDatabaseSchema
     $database = array();
 
     // database
-    list($database_name, $database_attributes) = $this->getNameAndAttributes($schema->attributes());
+    [$database_name, $database_attributes] = $this->getNameAndAttributes($schema->attributes());
     if ($database_name)
     {
       $this->connection_name = $database_name;
@@ -987,7 +987,7 @@ class sfPropelDatabaseSchema
     // tables
     foreach ($schema as $table)
     {
-      list($table_name, $table_attributes) = $this->getNameAndAttributes($table->attributes());
+      [$table_name, $table_attributes] = $this->getNameAndAttributes($table->attributes());
       if ($table_name)
       {
         $database[$table_name] = array();
@@ -1004,7 +1004,7 @@ class sfPropelDatabaseSchema
       // columns
       foreach ($table->xpath('column') as $column)
       {
-        list($column_name, $column_attributes) = $this->getNameAndAttributes($column->attributes());
+        [$column_name, $column_attributes] = $this->getNameAndAttributes($column->attributes());
         if ($column_name)
         {
           $database[$table_name][$column_name] = $column_attributes;
@@ -1238,15 +1238,11 @@ class sfPropelDatabaseSchema
 
   protected function fixXMLBoolean($value)
   {
-    switch (true)
-    {
-      case true === $value:
-        return 'true';
-      case false === $value:
-        return 'false';
-      default:
-        return $value;
-    }
+    return match (true) {
+        true === $value => 'true',
+        false === $value => 'false',
+        default => $value,
+    };
   }
 
   /**

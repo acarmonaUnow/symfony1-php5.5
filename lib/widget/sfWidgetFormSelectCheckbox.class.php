@@ -43,7 +43,7 @@ class sfWidgetFormSelectCheckbox extends sfWidgetFormChoiceBase
     $this->addOption('class', 'checkbox_list');
     $this->addOption('label_separator', '&nbsp;');
     $this->addOption('separator', "\n");
-    $this->addOption('formatter', array($this, 'formatter'));
+    $this->addOption('formatter', $this->formatter(...));
     $this->addOption('template', '%group% %options%');
   }
 
@@ -61,7 +61,7 @@ class sfWidgetFormSelectCheckbox extends sfWidgetFormChoiceBase
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-    if ('[]' != substr($name, -2))
+    if (!str_ends_with($name, '[]'))
     {
       $name .= '[]';
     }

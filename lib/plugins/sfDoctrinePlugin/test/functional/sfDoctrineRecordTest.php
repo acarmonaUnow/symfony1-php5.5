@@ -50,7 +50,7 @@ $t->is($article->getauthor_id(), $article->author_id);
 // Camel case columns
 $camelCase = new CamelCase();
 $camelCase->testCamelCase = 'camel';
-$camelCase->setTestCamelCase('camel');
+$camelCase->setTestCamelCase();
 
 $t->is($camelCase->getTestCamelCase(), 'camel');
 $t->is($camelCase->gettestCamelCase(), 'camel');
@@ -59,7 +59,7 @@ $t->is($camelCase->gettest_camel_case(), 'camel');
 $t->is($camelCase->getTest_camel_case(), 'camel');
 
 // Propel style accessors work with relationships
-$article->setAuthor($author);
+$article->setAuthor();
 $t->is($article->Author, $author);
 $t->is($article->getAuthor(), $author);
 
@@ -74,7 +74,7 @@ $t->is($dateTime->format('m/d/Y'), date('m/d/Y'));
 try {
   $article->getDateTimeObject('author_id');
   $t->fail();
-} catch (Exception $e) {
+} catch (Exception) {
   $t->pass();
 }
 

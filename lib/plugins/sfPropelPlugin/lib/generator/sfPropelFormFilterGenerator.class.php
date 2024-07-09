@@ -115,19 +115,11 @@ class sfPropelFormFilterGenerator extends sfPropelFormGenerator
    */
   public function getWidgetClassForColumn(ColumnMap $column)
   {
-    switch ($column->getType())
-    {
-      case PropelColumnTypes::BOOLEAN:
-        $name = 'Choice';
-        break;
-      case PropelColumnTypes::DATE:
-      case PropelColumnTypes::TIME:
-      case PropelColumnTypes::TIMESTAMP:
-        $name = 'FilterDate';
-        break;
-      default:
-        $name = 'FilterInput';
-    }
+    $name = match ($column->getType()) {
+        PropelColumnTypes::BOOLEAN => 'Choice',
+        PropelColumnTypes::DATE, PropelColumnTypes::TIME, PropelColumnTypes::TIMESTAMP => 'FilterDate',
+        default => 'FilterInput',
+    };
 
     if ($column->isForeignKey())
     {
@@ -187,32 +179,13 @@ class sfPropelFormFilterGenerator extends sfPropelFormGenerator
    */
   public function getValidatorClassForColumn(ColumnMap $column)
   {
-    switch ($column->getType())
-    {
-      case PropelColumnTypes::BOOLEAN:
-        $name = 'Choice';
-        break;
-      case PropelColumnTypes::DOUBLE:
-      case PropelColumnTypes::FLOAT:
-      case PropelColumnTypes::NUMERIC:
-      case PropelColumnTypes::DECIMAL:
-      case PropelColumnTypes::REAL:
-        $name = 'Number';
-        break;
-      case PropelColumnTypes::INTEGER:
-      case PropelColumnTypes::SMALLINT:
-      case PropelColumnTypes::TINYINT:
-      case PropelColumnTypes::BIGINT:
-        $name = 'Integer';
-        break;
-      case PropelColumnTypes::DATE:
-      case PropelColumnTypes::TIME:
-      case PropelColumnTypes::TIMESTAMP:
-        $name = 'DateRange';
-        break;
-      default:
-        $name = 'Pass';
-    }
+    $name = match ($column->getType()) {
+        PropelColumnTypes::BOOLEAN => 'Choice',
+        PropelColumnTypes::DOUBLE, PropelColumnTypes::FLOAT, PropelColumnTypes::NUMERIC, PropelColumnTypes::DECIMAL, PropelColumnTypes::REAL => 'Number',
+        PropelColumnTypes::INTEGER, PropelColumnTypes::SMALLINT, PropelColumnTypes::TINYINT, PropelColumnTypes::BIGINT => 'Integer',
+        PropelColumnTypes::DATE, PropelColumnTypes::TIME, PropelColumnTypes::TIMESTAMP => 'DateRange',
+        default => 'Pass',
+    };
 
     if ($column->isPrimaryKey() || $column->isForeignKey())
     {
@@ -277,26 +250,11 @@ class sfPropelFormFilterGenerator extends sfPropelFormGenerator
       return 'ForeignKey';
     }
 
-    switch ($column->getType())
-    {
-      case PropelColumnTypes::BOOLEAN:
-        return 'Boolean';
-      case PropelColumnTypes::DATE:
-      case PropelColumnTypes::TIME:
-      case PropelColumnTypes::TIMESTAMP:
-        return 'Date';
-      case PropelColumnTypes::DOUBLE:
-      case PropelColumnTypes::FLOAT:
-      case PropelColumnTypes::NUMERIC:
-      case PropelColumnTypes::DECIMAL:
-      case PropelColumnTypes::REAL:
-      case PropelColumnTypes::INTEGER:
-      case PropelColumnTypes::SMALLINT:
-      case PropelColumnTypes::TINYINT:
-      case PropelColumnTypes::BIGINT:
-        return 'Number';
-      default:
-        return 'Text';
-    }
+    return match ($column->getType()) {
+        PropelColumnTypes::BOOLEAN => 'Boolean',
+        PropelColumnTypes::DATE, PropelColumnTypes::TIME, PropelColumnTypes::TIMESTAMP => 'Date',
+        PropelColumnTypes::DOUBLE, PropelColumnTypes::FLOAT, PropelColumnTypes::NUMERIC, PropelColumnTypes::DECIMAL, PropelColumnTypes::REAL, PropelColumnTypes::INTEGER, PropelColumnTypes::SMALLINT, PropelColumnTypes::TINYINT, PropelColumnTypes::BIGINT => 'Number',
+        default => 'Text',
+    };
   }
 }

@@ -165,7 +165,7 @@ class sfPHPView extends sfView
 
       if (null !== $uri)
       {
-        list($content, $decoratorTemplate) = $viewCache->getActionCache($uri);
+        [$content, $decoratorTemplate] = $viewCache->getActionCache($uri);
         if (null !== $content)
         {
           $this->setDecoratorTemplate($decoratorTemplate);

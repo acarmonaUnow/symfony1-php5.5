@@ -218,27 +218,14 @@ class sfPropelFormGenerator extends sfGenerator
    */
   public function getWidgetClassForColumn(ColumnMap $column)
   {
-    switch ($column->getType())
-    {
-      case PropelColumnTypes::BOOLEAN:
-        $name = 'InputCheckbox';
-        break;
-      case PropelColumnTypes::CLOB:
-      case PropelColumnTypes::LONGVARCHAR:
-        $name = 'Textarea';
-        break;
-      case PropelColumnTypes::DATE:
-        $name = 'Date';
-        break;
-      case PropelColumnTypes::TIME:
-        $name = 'Time';
-        break;
-      case PropelColumnTypes::TIMESTAMP:
-        $name = 'DateTime';
-        break;
-      default:
-        $name = 'InputText';
-    }
+    $name = match ($column->getType()) {
+        PropelColumnTypes::BOOLEAN => 'InputCheckbox',
+        PropelColumnTypes::CLOB, PropelColumnTypes::LONGVARCHAR => 'Textarea',
+        PropelColumnTypes::DATE => 'Date',
+        PropelColumnTypes::TIME => 'Time',
+        PropelColumnTypes::TIMESTAMP => 'DateTime',
+        default => 'InputText',
+    };
 
     if ($column->isPrimaryKey())
     {
@@ -286,42 +273,16 @@ class sfPropelFormGenerator extends sfGenerator
    */
   public function getValidatorClassForColumn(ColumnMap $column)
   {
-    switch ($column->getType())
-    {
-      case PropelColumnTypes::BOOLEAN:
-        $name = 'Boolean';
-        break;
-      case PropelColumnTypes::CLOB:
-      case PropelColumnTypes::CHAR:
-      case PropelColumnTypes::VARCHAR:
-      case PropelColumnTypes::LONGVARCHAR:
-        $name = 'String';
-        break;
-      case PropelColumnTypes::DOUBLE:
-      case PropelColumnTypes::FLOAT:
-      case PropelColumnTypes::NUMERIC:
-      case PropelColumnTypes::DECIMAL:
-      case PropelColumnTypes::REAL:
-        $name = 'Number';
-        break;
-      case PropelColumnTypes::INTEGER:
-      case PropelColumnTypes::SMALLINT:
-      case PropelColumnTypes::TINYINT:
-      case PropelColumnTypes::BIGINT:
-        $name = 'Integer';
-        break;
-      case PropelColumnTypes::DATE:
-        $name = 'Date';
-        break;
-      case PropelColumnTypes::TIME:
-        $name = 'Time';
-        break;
-      case PropelColumnTypes::TIMESTAMP:
-        $name = 'DateTime';
-        break;
-      default:
-        $name = 'Pass';
-    }
+    $name = match ($column->getType()) {
+        PropelColumnTypes::BOOLEAN => 'Boolean',
+        PropelColumnTypes::CLOB, PropelColumnTypes::CHAR, PropelColumnTypes::VARCHAR, PropelColumnTypes::LONGVARCHAR => 'String',
+        PropelColumnTypes::DOUBLE, PropelColumnTypes::FLOAT, PropelColumnTypes::NUMERIC, PropelColumnTypes::DECIMAL, PropelColumnTypes::REAL => 'Number',
+        PropelColumnTypes::INTEGER, PropelColumnTypes::SMALLINT, PropelColumnTypes::TINYINT, PropelColumnTypes::BIGINT => 'Integer',
+        PropelColumnTypes::DATE => 'Date',
+        PropelColumnTypes::TIME => 'Time',
+        PropelColumnTypes::TIMESTAMP => 'DateTime',
+        default => 'Pass',
+    };
 
     if ($column->isForeignKey())
     {

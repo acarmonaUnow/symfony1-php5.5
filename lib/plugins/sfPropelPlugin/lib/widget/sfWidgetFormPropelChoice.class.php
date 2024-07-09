@@ -81,7 +81,7 @@ class sfWidgetFormPropelChoice extends sfWidgetFormChoice
     $criteria = null === $this->getOption('criteria') ? new Criteria() : clone $this->getOption('criteria');
     if ($order = $this->getOption('order_by'))
     {
-      $method = sprintf('add%sOrderByColumn', 0 === strpos(strtoupper($order[1]), 'ASC') ? 'Ascending' : 'Descending');
+      $method = sprintf('add%sOrderByColumn', str_starts_with(strtoupper($order[1]), 'ASC') ? 'Ascending' : 'Descending');
       $criteria->$method(call_user_func(array($class, 'translateFieldName'), $order[0], BasePeer::TYPE_PHPNAME, BasePeer::TYPE_COLNAME));
     }
     $objects = call_user_func(array($class, $this->getOption('peer_method')), $criteria, $this->getOption('connection'));
@@ -89,13 +89,13 @@ class sfWidgetFormPropelChoice extends sfWidgetFormChoice
     $methodKey = $this->getOption('key_method');
     if (!method_exists($this->getOption('model'), $methodKey))
     {
-      throw new RuntimeException(sprintf('Class "%s" must implement a "%s" method to be rendered in a "%s" widget', $this->getOption('model'), $methodKey, __CLASS__));
+      throw new RuntimeException(sprintf('Class "%s" must implement a "%s" method to be rendered in a "%s" widget', $this->getOption('model'), $methodKey, self::class));
     }
 
     $methodValue = $this->getOption('method');
     if (!method_exists($this->getOption('model'), $methodValue))
     {
-      throw new RuntimeException(sprintf('Class "%s" must implement a "%s" method to be rendered in a "%s" widget', $this->getOption('model'), $methodValue, __CLASS__));
+      throw new RuntimeException(sprintf('Class "%s" must implement a "%s" method to be rendered in a "%s" widget', $this->getOption('model'), $methodValue, self::class));
     }
 
     foreach ($objects as $object)

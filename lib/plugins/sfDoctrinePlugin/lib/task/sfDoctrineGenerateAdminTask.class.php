@@ -118,7 +118,7 @@ EOF;
     {
       $databaseManager = new sfDatabaseManager($this->configuration);
       $primaryKey = Doctrine_Core::getTable($model)->getIdentifier();
-      $module = $options['module'] ? $options['module'] : $name;
+      $module = $options['module'] ?: $name;
       $content = sprintf(<<<EOF
 %s:
   class: sfDoctrineRouteCollection
@@ -183,12 +183,7 @@ EOF
     $config = new sfRoutingConfigHandler();
     $routes = $config->evaluate($this->configuration->getConfigPaths('config/routing.yml'));
 
-    if (isset($routes[$name]))
-    {
-      return $routes[$name];
-    }
-
-    return false;
+    return $routes[$name] ?? false;
   }
 
   /**

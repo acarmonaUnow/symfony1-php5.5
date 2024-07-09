@@ -32,7 +32,7 @@ abstract class Swift
   public static function autoload($class)
   {
     //Don't interfere with other autoloaders
-    if (0 !== strpos($class, 'Swift_'))
+    if (!str_starts_with($class, 'Swift_'))
     {
       return;
     }

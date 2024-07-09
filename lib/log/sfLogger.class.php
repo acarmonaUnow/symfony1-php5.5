@@ -81,7 +81,7 @@ abstract class sfLogger
       $this->setLogLevel($this->options['level']);
     }
 
-    $dispatcher->connect('application.log', array($this, 'listenToLogEvent'));
+    $dispatcher->connect('application.log', $this->listenToLogEvent(...));
   }
   
   /**

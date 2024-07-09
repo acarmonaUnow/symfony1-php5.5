@@ -11,7 +11,7 @@
  *
  * @package    lib.model.om
  */
-abstract class BaseProduct extends BaseObject  implements Persistent {
+abstract class BaseProduct extends BaseObject  implements Persistent, \Stringable {
 
 
 	/**
@@ -65,16 +65,16 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	// symfony behavior
-	
+
 	const PEER = 'ProductPeer';
 
 	// symfony_i18n behavior
-	
+
 	/**
 	 * @var string The value for the culture field
 	 */
 	protected $culture = null;
-	
+
 	/**
 	 * @var array Current I18N objects
 	 */
@@ -300,7 +300,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 		if ($con === null) {
 			$con = Propel::getConnection(ProductPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-		
+
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
@@ -310,7 +310,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 			  if (call_user_func($callable, $this, $con))
 			  {
 			    $con->commit();
-			
+
 			    return;
 			  }
 			}
@@ -357,7 +357,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 		if ($con === null) {
 			$con = Propel::getConnection(ProductPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-		
+
 		$con->beginTransaction();
 		$isInsert = $this->isNew();
 		try {
@@ -368,7 +368,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 			  if (is_integer($affectedRows = call_user_func($callable, $this, $con)))
 			  {
 			    $con->commit();
-			
+
 			    return $affectedRows;
 			  }
 			}
@@ -562,20 +562,12 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	 */
 	public function getByPosition($pos)
 	{
-		switch($pos) {
-			case 0:
-				return $this->getId();
-				break;
-			case 1:
-				return $this->getPrice();
-				break;
-			case 2:
-				return $this->getAPrimaryString();
-				break;
-			default:
-				return null;
-				break;
-		} // switch()
+		return match ($pos) {
+      0 => $this->getId(),
+      1 => $this->getPrice(),
+      2 => $this->getAPrimaryString(),
+      default => null,
+  }; // switch()
 	}
 
 	/**
@@ -971,7 +963,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	}
 
 	// symfony_behaviors behavior
-	
+
 	/**
 	 * Calls methods defined via {@link sfMixer}.
 	 */
@@ -981,14 +973,14 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	  {
 	    throw new sfException(sprintf('Call to undefined method BaseProduct::%s', $method));
 	  }
-	
+
 	  array_unshift($arguments, $this);
-	
+
 	  return call_user_func_array($callable, $arguments);
 	}
 
 	// symfony_i18n behavior
-	
+
 	/**
 	 * Returns the culture.
 	 *
@@ -998,7 +990,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	{
 	  return $this->culture;
 	}
-	
+
 	/**
 	 * Sets the culture.
 	 *
@@ -1011,7 +1003,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	  $this->culture = $culture;
 	  return $this;
 	}
-	
+
 	/**
 	 * Returns the "name" value from the current {@link ProductI18n}.
 	 */
@@ -1019,7 +1011,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	{
 	  return $this->getCurrentTranslation($culture)->getName();
 	}
-	
+
 	/**
 	 * Sets the "name" value of the current {@link ProductI18n}.
 	 *
@@ -1030,7 +1022,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	  $this->getCurrentTranslation($culture)->setName($value);
 	  return $this;
 	}
-	
+
 	/**
 	 * Returns the current translation.
 	 *
@@ -1042,7 +1034,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	  {
 	    $culture = null === $this->culture ? sfPropel::getDefaultCulture() : $this->culture;
 	  }
-	
+
 	  if (!isset($this->current_i18n[$culture]))
 	  {
 	    $object = $this->isNew() ? null : ProductI18nPeer::retrieveByPK($this->getPrimaryKey(), $culture);
@@ -1056,10 +1048,10 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	      $this->current_i18n[$culture]->setCulture($culture);
 	    }
 	  }
-	
+
 	  return $this->current_i18n[$culture];
 	}
-	
+
 	/**
 	 * Sets the translation object for a culture.
 	 */
@@ -1074,7 +1066,7 @@ abstract class BaseProduct extends BaseObject  implements Persistent {
 	 *
 	 * @return string The value of the 'a_primary_string' column
 	 */
-  public function __toString()
+  public function __toString(): string
   {
     return (string) $this->getAPrimaryString();
   }

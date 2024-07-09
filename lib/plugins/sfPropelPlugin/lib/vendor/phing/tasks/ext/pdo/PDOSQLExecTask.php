@@ -332,18 +332,11 @@ class PDOSQLExecTask extends PDOTask {
     			} catch (Exception $e) {
     				throw $e;
     			}
-    		} catch (IOException $e) {
+    		} catch (IOException|PDOException $e) {
     			if (!$this->isAutocommit() && $this->conn !== null && $this->onError == "abort") {
     				try {
     					$this->conn->rollback();
-    				} catch (PDOException $ex) {}
-    			}
-    			throw new BuildException($e->getMessage(), $this->location);
-    		} catch (PDOException $e){
-    			if (!$this->isAutocommit() && $this->conn !== null && $this->onError == "abort") {
-    				try {
-    					$this->conn->rollback();
-    				} catch (PDOException $ex) {}
+    				} catch (PDOException) {}
     			}
     			throw new BuildException($e->getMessage(), $this->location);
     		}
@@ -405,7 +398,7 @@ class PDOSQLExecTask extends PDOTask {
 				// SQL defines "--" as a comment to EOL
 				// and in Oracle it may contain a hint
 				// so we cannot just remove it, instead we must end it
-				if (strpos($line, "--") !== false) {
+				if (str_contains($line, "--")) {
 					$sql .= "\n";
 				}
 

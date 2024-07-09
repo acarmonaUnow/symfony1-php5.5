@@ -63,7 +63,7 @@ class sfDeprecatedConfigurationFilesValidation extends sfValidation
     {
       $content = file_get_contents($file);
 
-      if (false !== strpos($content, 'sfPropelAdminGenerator'))
+      if (str_contains($content, 'sfPropelAdminGenerator'))
       {
         $found[$file] = true;
       }

@@ -87,7 +87,7 @@ class sfYamlParser
         }
 
         // array
-        if (!isset($values['value']) || '' == trim($values['value'], ' ') || 0 === strpos(ltrim($values['value'], ' '), '#'))
+        if (!isset($values['value']) || '' == trim($values['value'], ' ') || str_starts_with(ltrim($values['value'], ' '), '#'))
         {
           $c = $this->getRealCurrentLineNb() + 1;
           $parser = new sfYamlParser($c);
@@ -125,7 +125,7 @@ class sfYamlParser
 
         if ('<<' === $key)
         {
-          if (isset($values['value']) && '*' === substr($values['value'], 0, 1))
+          if (isset($values['value']) && str_starts_with($values['value'], '*'))
           {
             $isInPlace = substr($values['value'], 1);
             if (!array_key_exists($isInPlace, $this->refs))
@@ -186,7 +186,7 @@ class sfYamlParser
           $data = $isProcessed;
         }
         // hash
-        else if (!isset($values['value']) || '' == trim($values['value'], ' ') || 0 === strpos(ltrim($values['value'], ' '), '#'))
+        else if (!isset($values['value']) || '' == trim($values['value'], ' ') || str_starts_with(ltrim($values['value'], ' '), '#'))
         {
           // if next line is less indented or equal, then it means that the current value is null
           if ($this->isNextLineIndented())
@@ -222,7 +222,7 @@ class sfYamlParser
           if (is_array($value))
           {
             $first = reset($value);
-            if ('*' === substr($first, 0, 1))
+            if (str_starts_with($first, '*'))
             {
               $data = array();
               foreach ($value as $alias)
@@ -241,26 +241,14 @@ class sfYamlParser
           return $value;
         }
 
-        switch (preg_last_error())
-        {
-          case PREG_INTERNAL_ERROR:
-            $error = 'Internal PCRE error on line';
-            break;
-          case PREG_BACKTRACK_LIMIT_ERROR:
-            $error = 'pcre.backtrack_limit reached on line';
-            break;
-          case PREG_RECURSION_LIMIT_ERROR:
-            $error = 'pcre.recursion_limit reached on line';
-            break;
-          case PREG_BAD_UTF8_ERROR:
-            $error = 'Malformed UTF-8 data on line';
-            break;
-          case PREG_BAD_UTF8_OFFSET_ERROR:
-            $error = 'Offset doesn\'t correspond to the begin of a valid UTF-8 code point on line';
-            break;
-          default:
-            $error = 'Unable to parse line';
-        }
+        $error = match (preg_last_error()) {
+            PREG_INTERNAL_ERROR => 'Internal PCRE error on line',
+            PREG_BACKTRACK_LIMIT_ERROR => 'pcre.backtrack_limit reached on line',
+            PREG_RECURSION_LIMIT_ERROR => 'pcre.recursion_limit reached on line',
+            PREG_BAD_UTF8_ERROR => 'Malformed UTF-8 data on line',
+            PREG_BAD_UTF8_OFFSET_ERROR => 'Offset doesn\'t correspond to the begin of a valid UTF-8 code point on line',
+            default => 'Unable to parse line',
+        };
 
         throw new InvalidArgumentException(sprintf('%s %d (%s).', $error, $this->getRealCurrentLineNb() + 1, $this->currentLine));
       }
@@ -396,7 +384,7 @@ class sfYamlParser
    */
   protected function parseValue($value)
   {
-    if ('*' === substr($value, 0, 1))
+    if (str_starts_with($value, '*'))
     {
       if (false !== $pos = strpos($value, '#'))
       {

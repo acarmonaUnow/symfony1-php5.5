@@ -99,7 +99,7 @@ class sfFinder
   {
     $name = strtolower($name);
 
-    if (substr($name, 0, 3) === 'dir')
+    if (str_starts_with($name, 'dir'))
     {
       $this->type = 'directory';
 
@@ -499,7 +499,7 @@ class sfFinder
 
     foreach ($this->names as $args)
     {
-      list($not, $regex) = $args;
+      [$not, $regex] = $args;
       $not ? $one_not_name_rule = true : $one_name_rule = true;
       if (preg_match($regex, $entry))
       {

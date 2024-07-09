@@ -45,8 +45,8 @@ class sfWebDebugLogger extends sfVarLogger
 
     if (sfConfig::get('sf_web_debug'))
     {
-      $dispatcher->connect('context.load_factories', array($this, 'listenForLoadFactories'));
-      $dispatcher->connect('response.filter_content', array($this, 'filterResponseContent'));
+      $dispatcher->connect('context.load_factories', $this->listenForLoadFactories(...));
+      $dispatcher->connect('response.filter_content', $this->filterResponseContent(...));
     }
 
     $this->registerErrorHandler();
@@ -59,7 +59,7 @@ class sfWebDebugLogger extends sfVarLogger
    */
   protected function registerErrorHandler()
   {
-    set_error_handler(array($this,'handlePhpError'));
+    set_error_handler($this->handlePhpError(...));
   }
 
   /**
@@ -83,21 +83,13 @@ class sfWebDebugLogger extends sfVarLogger
     }
 
     $message = sprintf(' %%s at %s on line %s (%s)', $errfile, $errline, str_replace('%', '%%', $errstr));
-    switch ($errno)
-    {
-      case E_STRICT:
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::ERR, sprintf($message, 'Strict notice'))));
-        break;
-      case E_NOTICE:
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::NOTICE, sprintf($message, 'Notice'))));
-        break;
-      case E_WARNING:
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::WARNING, sprintf($message, 'Warning'))));
-        break;
-      case E_RECOVERABLE_ERROR:
-        $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::ERR, sprintf($message, 'Error'))));
-        break;
-    }
+    match ($errno) {
+        E_STRICT => $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::ERR, sprintf($message, 'Strict notice')))),
+        E_NOTICE => $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::NOTICE, sprintf($message, 'Notice')))),
+        E_WARNING => $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::WARNING, sprintf($message, 'Warning')))),
+        E_RECOVERABLE_ERROR => $this->dispatcher->notify(new sfEvent($this, 'application.log', array('priority' => sfLogger::ERR, sprintf($message, 'Error')))),
+        default => false,
+    };
 
     return false; // do not prevent default error handling
   }
@@ -159,9 +151,9 @@ class sfWebDebugLogger extends sfVarLogger
       ||
       $request->isXmlHttpRequest()
       ||
-      strpos($response->getContentType(), 'html') === false
+      !str_contains($response->getContentType(), 'html')
       ||
-      '3' == substr($response->getStatusCode(), 0, 1)
+      str_starts_with($response->getStatusCode(), '3')
       ||
       $this->context->getController()->getRenderMode() != sfView::RENDER_CLIENT
       ||

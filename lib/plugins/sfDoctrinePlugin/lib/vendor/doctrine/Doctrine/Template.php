@@ -154,10 +154,7 @@ abstract class Doctrine_Template extends Doctrine_Record_Abstract
      */
     public function getOption($name, $default = null)
     {
-        if (isset($this->_options[$name])) {
-            return $this->_options[$name];
-        }
-        return $default;
+        return $this->_options[$name] ?? $default;
     }
 
     /**

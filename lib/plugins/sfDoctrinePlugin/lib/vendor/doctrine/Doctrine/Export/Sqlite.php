@@ -107,15 +107,12 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
         $type  = '';
 
         if (isset($definition['type'])) {
-            switch (strtolower($definition['type'])) {
-                case 'unique':
-                    $type = strtoupper($definition['type']) . ' ';
-                break;
-                default:
-                    throw new Doctrine_Export_Exception(
-                        'Unknown type ' . $definition['type'] . ' for index ' . $name . ' in table ' . $table
-                    );
-            }
+            $type = match (strtolower($definition['type'])) {
+                'unique' => strtoupper($definition['type']) . ' ',
+                default => throw new Doctrine_Export_Exception(
+                    'Unknown type ' . $definition['type'] . ' for index ' . $name . ' in table ' . $table
+                ),
+            };
         }
 
         $query = 'CREATE ' . $type . 'INDEX ' . $name . ' ON ' . $table;
@@ -141,14 +138,10 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
             if (is_array($field)) {
                 if (isset($field['sorting'])) {
                     $sort = strtoupper($field['sorting']);
-                    switch ($sort) {
-                        case 'ASC':
-                        case 'DESC':
-                            $fieldString .= ' ' . $sort;
-                            break;
-                        default:
-                            throw new Doctrine_Export_Exception('Unknown index sorting option given.');
-                    }
+                    match ($sort) {
+                        'ASC', 'DESC' => $fieldString .= ' ' . $sort,
+                        default => throw new Doctrine_Export_Exception('Unknown index sorting option given.'),
+                    };
                 }
             } else {
                 $fieldString = $this->conn->quoteIdentifier($field);
@@ -208,7 +201,7 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
 
         if ( ! $autoinc && isset($options['primary']) && ! empty($options['primary'])) {
             $keyColumns = array_values($options['primary']);
-            $keyColumns = array_map(array($this->conn, 'quoteIdentifier'), $keyColumns);
+            $keyColumns = array_map($this->conn->quoteIdentifier(...), $keyColumns);
             $queryFields.= ', PRIMARY KEY('.implode(', ', $keyColumns).')';
         }
 
@@ -298,12 +291,12 @@ class Doctrine_Export_Sqlite extends Doctrine_Export
         try {
             $this->conn->exec('INSERT INTO ' . $sequenceName . ' (' . $seqcolName . ') VALUES (' . ($start-1) . ')');
             return true;
-        } catch(Doctrine_Connection_Exception $e) {
+        } catch(Doctrine_Connection_Exception) {
             // Handle error    
 
             try {
                 $result = $db->exec('DROP TABLE ' . $sequenceName);
-            } catch(Doctrine_Connection_Exception $e) {
+            } catch(Doctrine_Connection_Exception) {
                 throw new Doctrine_Export_Exception('could not drop inconsistent sequence table');
             }
         }

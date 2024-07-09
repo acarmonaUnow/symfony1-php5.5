@@ -156,7 +156,7 @@ class sfValidatorFile extends sfValidatorBase
     if ($this->hasOption('mime_types'))
     {
       $mimeTypes = is_array($this->getOption('mime_types')) ? $this->getOption('mime_types') : $this->getMimeTypesFromCategory($this->getOption('mime_types'));
-      if (!in_array($mimeType, array_map('strtolower', $mimeTypes)))
+      if (!in_array($mimeType, array_map(strtolower(...), $mimeTypes)))
       {
         throw new sfValidatorError($this, 'mime_types', array('mime_types' => $mimeTypes, 'mime_type' => $mimeType));
       }

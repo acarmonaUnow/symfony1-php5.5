@@ -259,7 +259,7 @@ class DeleteTask extends Task {
                     try {
                         $dir->delete();
                         $dirCount++;
-                    } catch (Exception $e) {
+                    } catch (Exception) {
                         $message="Unable to delete directory " . $dir->__toString();
                         if($this->failonerror) {
                             throw new BuildException($message);

@@ -211,9 +211,9 @@ EOF;
 
     // add doInsert and doUpdate hooks
     $class = new sfClassManipulator($script);
-    $class->filterMethod('doInsert', array($this, 'filterDoInsert'));
+    $class->filterMethod('doInsert', $this->filterDoInsert(...));
     $class->wrapMethod('doInsert', $doInsertPre);
-    $class->filterMethod('doUpdate', array($this, 'filterDoUpdate'));
+    $class->filterMethod('doUpdate', $this->filterDoUpdate(...));
     $class->wrapMethod('doUpdate', $doUpdatePre);
 
     $script = $class->getCode();
@@ -234,7 +234,7 @@ EOF;
    */
   public function filterDoInsert($line)
   {
-    if (false !== strpos($line, 'return'))
+    if (str_contains($line, 'return'))
     {
       $doInsertPost = <<<EOF
     // symfony_behaviors behavior
@@ -261,7 +261,7 @@ EOF;
    */
   public function filterDoUpdate($line)
   {
-    if (false !== strpos($line, 'return'))
+    if (str_contains($line, 'return'))
     {
       $replace = str_replace('return', '$ret =', $line);
       $doUpdatePost = <<<EOF

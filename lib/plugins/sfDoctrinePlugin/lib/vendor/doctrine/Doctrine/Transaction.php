@@ -109,16 +109,11 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
      */
     public function getState()
     {
-        switch ($this->_nestingLevel) {
-            case 0:
-                return Doctrine_Transaction::STATE_SLEEP;
-                break;
-            case 1:
-                return Doctrine_Transaction::STATE_ACTIVE;
-                break;
-            default:
-                return Doctrine_Transaction::STATE_BUSY;
-        }
+        return match ($this->_nestingLevel) {
+            0 => Doctrine_Transaction::STATE_SLEEP,
+            1 => Doctrine_Transaction::STATE_ACTIVE,
+            default => Doctrine_Transaction::STATE_BUSY,
+        };
     }
 
     /**
@@ -372,7 +367,7 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
      * @param string $savepoint     name of a savepoint to create
      * @return void
      */
-    protected function createSavePoint($savepoint)
+    protected function createSavePoint($savepoint): never
     {
         throw new Doctrine_Transaction_Exception('Savepoints not supported by this driver.');
     }
@@ -384,7 +379,7 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
      * @param string $savepoint     name of a savepoint to release
      * @return void
      */
-    protected function releaseSavePoint($savepoint)
+    protected function releaseSavePoint($savepoint): never
     {
         throw new Doctrine_Transaction_Exception('Savepoints not supported by this driver.');
     }
@@ -396,7 +391,7 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
      * @param string $savepoint     name of a savepoint to rollback to
      * @return void
      */
-    protected function rollbackSavePoint($savepoint)
+    protected function rollbackSavePoint($savepoint): never
     {
         throw new Doctrine_Transaction_Exception('Savepoints not supported by this driver.');
     }
@@ -477,7 +472,7 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
      * @throws PDOException                             if something fails at the PDO level
      * @return void
      */
-    public function setIsolation($isolation)
+    public function setIsolation($isolation): never
     {
         throw new Doctrine_Transaction_Exception('Transaction isolation levels not supported by this driver.');
     }
@@ -494,7 +489,7 @@ class Doctrine_Transaction extends Doctrine_Connection_Module
      * @throws PDOException                             if something fails at the PDO level
      * @return string                                   returns the current session transaction isolation level
      */
-    public function getIsolation()
+    public function getIsolation(): never
     {
         throw new Doctrine_Transaction_Exception('Fetching transaction isolation level not supported by this driver.');
     }

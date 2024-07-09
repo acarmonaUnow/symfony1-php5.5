@@ -77,7 +77,7 @@ abstract class sfFormPropel extends sfFormObject
     $class = $this->getI18nFormClass();
     foreach ($cultures as $culture)
     {
-      $method = sprintf('getCurrent%s', $this->getI18nModelName($culture));
+      $method = sprintf('getCurrent%s', $this->getI18nModelName());
       $i18nObject = $this->getObject()->$method($culture);
       $i18n = new $class($i18nObject);
       
@@ -120,7 +120,7 @@ abstract class sfFormPropel extends sfFormObject
       {
         $method = sprintf('update%sColumn', call_user_func(array(constant(get_class($this->getObject()).'::PEER'), 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
       }
-      catch (Exception $e)
+      catch (Exception)
       {
         // not a "real" column of this object
         if (!method_exists($this, $method = sprintf('update%sColumn', self::camelize($field))))

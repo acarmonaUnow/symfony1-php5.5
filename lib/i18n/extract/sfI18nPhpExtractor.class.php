@@ -51,7 +51,7 @@ class sfI18nPhpExtractor implements sfI18nExtractorInterface
       }
       else
       {
-        list($id, $text) = $token;
+        [$id, $text] = $token;
 
         switch ($id)
         {

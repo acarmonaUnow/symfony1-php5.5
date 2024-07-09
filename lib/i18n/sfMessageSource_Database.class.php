@@ -116,13 +116,13 @@ abstract class sfMessageSource_Database extends sfMessageSource
     }
     else
     {
-      if (strpos($dsn, '+') !== false)
+      if (str_contains($dsn, '+'))
       {
-        list($proto, $dsn) = explode('+', $dsn, 2);
+        [$proto, $dsn] = explode('+', $dsn, 2);
       }
-      if (strpos($dsn, '/') !== false)
+      if (str_contains($dsn, '/'))
       {
-        list($proto_opts, $dsn) = explode('/', $dsn, 2);
+        [$proto_opts, $dsn] = explode('/', $dsn, 2);
       }
       else
       {
@@ -136,9 +136,9 @@ abstract class sfMessageSource_Database extends sfMessageSource
     $proto_opts = rawurldecode($proto_opts);
     if ($parsed['protocol'] == 'tcp')
     {
-      if (strpos($proto_opts, ':') !== false)
+      if (str_contains($proto_opts, ':'))
       {
-        list($parsed['hostspec'], $parsed['port']) = explode(':', $proto_opts);
+        [$parsed['hostspec'], $parsed['port']] = explode(':', $proto_opts);
       }
       else
       {
@@ -164,7 +164,7 @@ abstract class sfMessageSource_Database extends sfMessageSource
       {
         $parsed['database'] = substr($dsn, 0, $pos);
         $dsn = substr($dsn, $pos + 1);
-        if (strpos($dsn, '&') !== false)
+        if (str_contains($dsn, '&'))
         {
           $opts = explode('&', $dsn);
         }
@@ -174,7 +174,7 @@ abstract class sfMessageSource_Database extends sfMessageSource
         }
         foreach ($opts as $opt)
         {
-          list($key, $value) = explode('=', $opt);
+          [$key, $value] = explode('=', $opt);
           if (!isset($parsed[$key]))
           { // don't allow params overwrite
             $parsed[$key] = rawurldecode($value);

@@ -63,10 +63,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
      */
     public function __get($option)
     {
-        if (isset($this->_options[$option])) {
-            return $this->_options[$option];
-        }
-        return null;
+        return $this->_options[$option] ?? null;
     }
 
     /**
@@ -252,7 +249,7 @@ abstract class Doctrine_Record_Generator extends Doctrine_Record_Abstract
         foreach ($this->_options['children'] as $child) {
             if ($child instanceof Doctrine_Template) {
                 if ($child->getPlugin() !== null) {
-                    $this->_table->addGenerator($child->getPlugin(), get_class($child->getPlugin()));
+                    $this->_table->addGenerator($child->getPlugin(), $child->getPlugin() !== null ? get_class($child->getPlugin()) : self::class);
                 }
 
                 $this->_table->addTemplate(get_class($child), $child);

@@ -666,7 +666,7 @@ class Doctrine_Connection_UnitOfWork extends Doctrine_Connection_Module
         $classesToOrder = array();
         foreach ($tables as $table) {
             if ( ! ($table instanceof Doctrine_Table)) {
-                $table = $this->conn->getTable($table, false);
+                $table = $this->conn->getTable($table);
             }
             $classesToOrder[] = $table->getComponentName();
         }
@@ -679,7 +679,7 @@ class Doctrine_Connection_UnitOfWork extends Doctrine_Connection_Module
         // build the correct order
         $flushList = array();
         foreach ($classesToOrder as $class) {
-            $table = $this->conn->getTable($class, false);
+            $table = $this->conn->getTable($class);
             $currentClass = $table->getComponentName();
 
             $index = array_search($currentClass, $flushList);

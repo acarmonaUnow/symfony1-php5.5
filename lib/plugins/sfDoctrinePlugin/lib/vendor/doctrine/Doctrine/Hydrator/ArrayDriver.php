@@ -62,8 +62,7 @@ class Doctrine_Hydrator_ArrayDriver extends Doctrine_Hydrator_Graph
 
     public function getLastKey(&$coll)
     {
-        end($coll);
-        return key($coll);
+        return array_key_last($coll);
     }
 
     public function setLastElement(&$prev, &$coll, $index, $dqlAlias, $oneToOne)
@@ -84,8 +83,7 @@ class Doctrine_Hydrator_ArrayDriver extends Doctrine_Hydrator_Graph
             if ($oneToOne) {
                 $prev[$dqlAlias] =& $coll;
             } else {
-                end($coll);
-                $prev[$dqlAlias] =& $coll[key($coll)];
+                $prev[$dqlAlias] =& $coll[array_key_last($coll)];
             }
         }
     }

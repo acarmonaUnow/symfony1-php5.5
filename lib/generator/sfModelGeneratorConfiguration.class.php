@@ -99,12 +99,12 @@ abstract class sfModelGeneratorConfiguration
       'new'    => array(
         'fields'  => array(),
         'title'   => $this->getNewTitle(),
-        'actions' => $this->getNewActions() ? $this->getNewActions() : $this->getFormActions(),
+        'actions' => $this->getNewActions() ?: $this->getFormActions(),
       ),
       'edit'   => array(
         'fields'  => array(),
         'title'   => $this->getEditTitle(),
-        'actions' => $this->getEditActions() ? $this->getEditActions() : $this->getFormActions(),
+        'actions' => $this->getEditActions() ?: $this->getFormActions(),
       ),
     );
 
@@ -121,7 +121,7 @@ abstract class sfModelGeneratorConfiguration
     // "virtual" fields for list
     foreach ($this->getListDisplay() as $field)
     {
-      list($field, $flag) = sfModelGeneratorConfigurationField::splitFieldWithFlag($field);
+      [$field, $flag] = sfModelGeneratorConfigurationField::splitFieldWithFlag($field);
 
       $this->configuration['list']['fields'][$field] = new sfModelGeneratorConfigurationField($field, array_merge(
         array('type' => 'Text', 'label' => sfInflector::humanize(sfInflector::underscore($field))),
@@ -152,7 +152,7 @@ abstract class sfModelGeneratorConfiguration
     {
       $parameters = $this->fixActionParameters($action, $parameters);
 
-      $action = 'batch'.ucfirst(0 === strpos($action, '_') ? substr($action, 1) : $action);
+      $action = 'batch'.ucfirst(str_starts_with($action, '_') ? substr($action, 1) : $action);
 
       $this->configuration['list']['batch_actions'][$action] = $parameters;
     }
@@ -167,7 +167,7 @@ abstract class sfModelGeneratorConfiguration
     $this->configuration['list']['display'] = array();
     foreach ($this->getListDisplay() as $name)
     {
-      list($name, $flag) = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
+      [$name, $flag] = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
       if (!isset($this->configuration['list']['fields'][$name]))
       {
         throw new InvalidArgumentException(sprintf('The field "%s" does not exist.', $name));
@@ -195,7 +195,7 @@ abstract class sfModelGeneratorConfiguration
     );
     foreach ($this->getActionsDefault() as $action => $params)
     {
-      if (0 === strpos($action, '_'))
+      if (str_starts_with($action, '_'))
       {
         $action = substr($action, 1);
       }
@@ -212,7 +212,7 @@ abstract class sfModelGeneratorConfiguration
     preg_match_all('/%%([^%]+)%%/', $this->configuration[$context][$key], $matches, PREG_PATTERN_ORDER);
     foreach ($matches[1] as $name)
     {
-      list($name, $flag) = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
+      [$name, $flag] = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
       if (!isset($this->configuration[$context]['fields'][$name]))
       {
         $this->configuration[$context]['fields'][$name] = new sfModelGeneratorConfigurationField($name, array_merge(
@@ -311,7 +311,7 @@ abstract class sfModelGeneratorConfiguration
       $fields = array();
       foreach ($this->getFilterDisplay() as $name)
       {
-        list($name, $flag) = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
+        [$name, $flag] = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
         if (!isset($this->configuration['filter']['fields'][$name]))
         {
           $this->configuration['filter']['fields'][$name] = new sfModelGeneratorConfigurationField($name, array_merge(
@@ -382,7 +382,7 @@ abstract class sfModelGeneratorConfiguration
 
         foreach ($names as $name)
         {
-          list($name, $flag) = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
+          [$name, $flag] = sfModelGeneratorConfigurationField::splitFieldWithFlag($name);
           if (!isset($this->configuration[$context]['fields'][$name]))
           {
             $this->configuration[$context]['fields'][$name] = new sfModelGeneratorConfigurationField($name, array_merge(
@@ -454,7 +454,7 @@ abstract class sfModelGeneratorConfiguration
 
   public function getCredentials($action)
   {
-    if (0 === strpos($action, '_'))
+    if (str_starts_with($action, '_'))
     {
       $action = substr($action, 1);
     }

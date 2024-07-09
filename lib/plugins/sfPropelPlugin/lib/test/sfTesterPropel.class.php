@@ -58,10 +58,10 @@ class sfTesterPropel extends sfTester
         $operator = Criteria::EQUAL;
         if ('!' == $condition[0])
         {
-          $operator = false !== strpos($condition, '%') ? Criteria::NOT_LIKE : Criteria::NOT_EQUAL;
+          $operator = str_contains($condition, '%') ? Criteria::NOT_LIKE : Criteria::NOT_EQUAL;
           $condition = substr($condition, 1);
         }
-        else if (false !== strpos($condition, '%'))
+        else if (str_contains($condition, '%'))
         {
           $operator = Criteria::LIKE;
         }

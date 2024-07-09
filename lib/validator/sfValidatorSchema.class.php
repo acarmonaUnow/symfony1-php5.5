@@ -361,7 +361,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
   /**
    * @see sfValidatorBase
    */
-  public function asString($indent = 0)
+  public function asString($indent = 0): never
   {
     throw new Exception('Unable to convert a sfValidatorSchema to string.');
   }
@@ -396,7 +396,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
     );
     if (array_key_exists($modifier, $exp_by_modifier)) {
       $exp = $exp_by_modifier[$modifier];
-      $number = $number * pow(1024, $exp);
+      $number = $number * 1024 ** $exp;
     }
 
     return $number;

@@ -85,8 +85,8 @@ EOF;
           $properties[$match[2]] = $match[1];
         }
 
-        $typePad = max(array_map('strlen', array_merge(array_values($properties), array($model))));
-        $namePad = max(array_map('strlen', array_keys(array_map(array('sfInflector', 'camelize'), $properties))));
+        $typePad = max(array_map(strlen(...), array_merge(array_values($properties), array($model))));
+        $namePad = max(array_map(strlen(...), array_keys(array_map(array('sfInflector', 'camelize'), $properties))));
         $setters = array();
         $getters = array();
 

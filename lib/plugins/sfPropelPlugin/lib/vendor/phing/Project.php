@@ -168,7 +168,7 @@ class Project {
                 $value = $props->getProperty($key);
                 $this->addDataTypeDefinition($key, $value);
             }
-        } catch(IOException $ioe) {
+        } catch(IOException) {
             throw new BuildException("Can't load default datatype list");
         }
     }
@@ -875,10 +875,7 @@ class Project {
 	 */
 	function getReference($key)
 	{
-		if (isset($this->references[$key])) {
-		    return $this->references[$key];
-		}
-		return null; // just to be explicit
+		return $this->references[$key] ?? null; // just to be explicit
 	}
 
     /**

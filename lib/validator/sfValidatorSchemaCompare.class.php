@@ -82,35 +82,17 @@ class sfValidatorSchemaCompare extends sfValidatorSchema
     $leftValue  = isset($values[$this->getOption('left_field')]) ? $values[$this->getOption('left_field')] : null;
     $rightValue = isset($values[$this->getOption('right_field')]) ? $values[$this->getOption('right_field')] : null;
 
-    switch ($this->getOption('operator'))
-    {
-      case self::GREATER_THAN:
-        $valid = $leftValue > $rightValue;
-        break;
-      case self::GREATER_THAN_EQUAL:
-        $valid = $leftValue >= $rightValue;
-        break;
-      case self::LESS_THAN:
-        $valid = $leftValue < $rightValue;
-        break;
-      case self::LESS_THAN_EQUAL:
-        $valid = $leftValue <= $rightValue;
-        break;
-      case self::NOT_EQUAL:
-        $valid = $leftValue != $rightValue;
-        break;
-      case self::EQUAL:
-        $valid = $leftValue == $rightValue;
-        break;
-      case self::NOT_IDENTICAL:
-        $valid = $leftValue !== $rightValue;
-        break;
-      case self::IDENTICAL:
-        $valid = $leftValue === $rightValue;
-        break;
-      default:
-        throw new InvalidArgumentException(sprintf('The operator "%s" does not exist.', $this->getOption('operator')));
-    }
+    $valid = match ($this->getOption('operator')) {
+        self::GREATER_THAN => $leftValue > $rightValue,
+        self::GREATER_THAN_EQUAL => $leftValue >= $rightValue,
+        self::LESS_THAN => $leftValue < $rightValue,
+        self::LESS_THAN_EQUAL => $leftValue <= $rightValue,
+        self::NOT_EQUAL => $leftValue != $rightValue,
+        self::EQUAL => $leftValue == $rightValue,
+        self::NOT_IDENTICAL => $leftValue !== $rightValue,
+        self::IDENTICAL => $leftValue === $rightValue,
+        default => throw new InvalidArgumentException(sprintf('The operator "%s" does not exist.', $this->getOption('operator'))),
+    };
 
     if (!$valid)
     {

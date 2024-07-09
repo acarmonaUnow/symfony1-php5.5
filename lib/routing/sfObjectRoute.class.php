@@ -227,7 +227,7 @@ class sfObjectRoute extends sfRequestRoute
 
     foreach (array_keys($this->variables) as $variable)
     {
-      if (0 === strpos($variable, 'sf_') || in_array($variable, array('module', 'action')))
+      if (str_starts_with($variable, 'sf_') || in_array($variable, array('module', 'action')))
       {
         continue;
       }

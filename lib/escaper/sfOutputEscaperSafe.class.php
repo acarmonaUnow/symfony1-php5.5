@@ -16,7 +16,7 @@
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @version    SVN: $Id: sfOutputEscaperSafe.class.php 16553 2009-03-24 16:49:06Z Kris.Wallsmith $
  */
-class sfOutputEscaperSafe extends ArrayIterator
+class sfOutputEscaperSafe extends ArrayIterator implements \Stringable
 {
   protected
     $value = null;
@@ -36,7 +36,7 @@ class sfOutputEscaperSafe extends ArrayIterator
     }
   }
 
-  public function __toString()
+  public function __toString(): string
   {
     return (string) $this->value;
   }

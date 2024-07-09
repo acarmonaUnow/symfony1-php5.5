@@ -122,7 +122,7 @@ EOF;
     $dir  = $properties['dir'];
     $user = isset($properties['user']) ? $properties['user'].'@' : '';
 
-    if (substr($dir, -1) != '/')
+    if (!str_ends_with($dir, '/'))
     {
       $dir .= '/';
     }
@@ -161,7 +161,7 @@ EOF;
     $dryRun = $options['go'] ? '' : '--dry-run';
     $command = "rsync $dryRun $parameters -e $ssh ./ $user$host:$dir";
 
-    $this->getFilesystem()->execute($command, $options['trace'] ? array($this, 'logOutput') : null, array($this, 'logErrors'));
+    $this->getFilesystem()->execute($command, $options['trace'] ? $this->logOutput(...) : null, $this->logErrors(...));
 
     $this->clearBuffers();
   }

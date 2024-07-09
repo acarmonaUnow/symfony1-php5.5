@@ -77,7 +77,7 @@ class Doctrine_Search_Query
         $foreignId = current(array_diff($this->_table->getColumnNames(), array('keyword', 'field', 'position')));
 
         $weighted = false;
-        if (strpos($text, '^') === false) {
+        if (!str_contains($text, '^')) {
             if ($includeRelevance) {
                 $select = 'SELECT COUNT(keyword) AS relevance, ' . $foreignId;
             } else {
@@ -154,7 +154,7 @@ class Doctrine_Search_Query
                         continue;
                     }
     
-                    if (substr($term, 0, 1) === '-') {
+                    if (str_starts_with($term, '-')) {
                         $operator = 'NOT IN';
                         $term = substr($term, 1);
                     } else {
@@ -180,7 +180,7 @@ class Doctrine_Search_Query
 
     public function isExpression($term)
     {
-        if (strpos($term, '(') !== false) {
+        if (str_contains($term, '(')) {
             return true;
         } else {
             $terms = $this->_tokenizer->quoteExplode($term);
@@ -193,7 +193,7 @@ class Doctrine_Search_Query
     {
         $negation = false;
 
-        if (strpos($term, "'") === false) {
+        if (!str_contains($term, "'")) {
             $where = $this->parseWord($term);
         } else {
             $term = trim($term, "' ");
@@ -215,8 +215,8 @@ class Doctrine_Search_Query
     {
         $this->_words[] = str_replace('*', '', $word);
 
-        if (strpos($word, '?') !== false ||
-            strpos($word, '*') !== false) {
+        if (str_contains($word, '?') ||
+            str_contains($word, '*')) {
 
             $word = str_replace('*', '%', $word);
 

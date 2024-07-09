@@ -59,7 +59,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	// symfony behavior
-	
+
 	const PEER = 'AuthorPeer';
 
 	/**
@@ -223,7 +223,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 		if (!$row) {
 			throw new PropelException('Cannot find matching row in the database to reload object values.');
 		}
-		$this->hydrate($row, 0, true); // rehydrate
+		$this->hydrate($row, 0); // rehydrate
 
 		if ($deep) {  // also de-associate any related objects?
 
@@ -251,7 +251,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 		if ($con === null) {
 			$con = Propel::getConnection(AuthorPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-		
+
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
@@ -261,7 +261,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 			  if (call_user_func($callable, $this, $con))
 			  {
 			    $con->commit();
-			
+
 			    return;
 			  }
 			}
@@ -308,7 +308,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 		if ($con === null) {
 			$con = Propel::getConnection(AuthorPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-		
+
 		$con->beginTransaction();
 		$isInsert = $this->isNew();
 		try {
@@ -319,7 +319,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 			  if (is_integer($affectedRows = call_user_func($callable, $this, $con)))
 			  {
 			    $con->commit();
-			
+
 			    return $affectedRows;
 			  }
 			}
@@ -513,17 +513,11 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 	 */
 	public function getByPosition($pos)
 	{
-		switch($pos) {
-			case 0:
-				return $this->getId();
-				break;
-			case 1:
-				return $this->getName();
-				break;
-			default:
-				return null;
-				break;
-		} // switch()
+		return match ($pos) {
+      0 => $this->getId(),
+      1 => $this->getName(),
+      default => null,
+  }; // switch()
 	}
 
 	/**
@@ -578,7 +572,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setName($value);
+				$this->setName();
 				break;
 		} // switch()
 	}
@@ -605,7 +599,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 		$keys = AuthorPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
+		if (array_key_exists($keys[1], $arr)) $this->setName();
 	}
 
 	/**
@@ -958,7 +952,7 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 	}
 
 	// symfony_behaviors behavior
-	
+
 	/**
 	 * Calls methods defined via {@link sfMixer}.
 	 */
@@ -968,9 +962,9 @@ abstract class BaseAuthor extends BaseObject  implements Persistent {
 	  {
 	    throw new sfException(sprintf('Call to undefined method BaseAuthor::%s', $method));
 	  }
-	
+
 	  array_unshift($arguments, $this);
-	
+
 	  return call_user_func_array($callable, $arguments);
 	}
 

@@ -124,7 +124,7 @@ EOF;
 
     // add accessors and mutators for each of the i18nTable's columns
     $foreignKey = $this->getI18nTable()->getBehavior('symfony_i18n_translation')->getForeignKey();
-    $refPhpName = $foreignKey->getRefPhpName() ? $foreignKey->getRefPhpName() : $this->getI18nTable()->getPhpName();
+    $refPhpName = $foreignKey->getRefPhpName() ?: $this->getI18nTable()->getPhpName();
 
     foreach ($this->getI18nTable()->getColumns() as $column)
     {
@@ -220,7 +220,7 @@ EOF;
   public function staticMethods()
   {
     $foreignKey = $this->getI18nTable()->getBehavior('symfony_i18n_translation')->getForeignKey();
-    $refPhpName = $foreignKey->getRefPhpName() ? $foreignKey->getRefPhpName() : $this->getI18nTable()->getPhpName();
+    $refPhpName = $foreignKey->getRefPhpName() ?: $this->getI18nTable()->getPhpName();
     $join = in_array($this->getBuildProperty('propel.useLeftJoinsInDoJoinMethods'), array(true, null), true) ? 'LEFT' : 'INNER';
 
     $behaviors = $this->getTable()->getBehaviors();

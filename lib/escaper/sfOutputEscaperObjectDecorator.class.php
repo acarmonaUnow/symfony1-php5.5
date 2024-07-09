@@ -18,7 +18,7 @@
  * @author     Mike Squire <mike@somosis.co.uk>
  * @version    SVN: $Id: sfOutputEscaperObjectDecorator.class.php 29990 2010-06-25 17:06:20Z Kris.Wallsmith $
  */
-class sfOutputEscaperObjectDecorator extends sfOutputEscaperGetterDecorator implements Countable
+class sfOutputEscaperObjectDecorator extends sfOutputEscaperGetterDecorator implements Countable, \Stringable
 {
   /**
    * Magic PHP method that intercepts method calls, calls them on the objects
@@ -47,7 +47,7 @@ class sfOutputEscaperObjectDecorator extends sfOutputEscaperGetterDecorator impl
     if (count($args) > 0)
     {
       $escapingMethod = $args[count($args) - 1];
-      if (is_string($escapingMethod) && substr($escapingMethod, 0, 4) === 'esc_')
+      if (is_string($escapingMethod) && str_starts_with($escapingMethod, 'esc_'))
       {
         array_pop($args);
       }
@@ -93,9 +93,9 @@ class sfOutputEscaperObjectDecorator extends sfOutputEscaperGetterDecorator impl
    *
    * @return string
    */
-  public function __toString()
+  public function __toString(): string
   {
-    return $this->escape($this->escapingMethod, (string) $this->value);
+    return (string) $this->escape($this->escapingMethod, (string) $this->value);
   }
 
   /**

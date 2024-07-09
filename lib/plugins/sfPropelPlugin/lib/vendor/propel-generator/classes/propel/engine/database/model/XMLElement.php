@@ -28,7 +28,7 @@ include_once 'propel/engine/database/model/VendorInfo.php';
  * @version    $Revision: 1262 $
  * @package    propel.engine.database.model
  */
-abstract class XMLElement {
+abstract class XMLElement implements \Stringable {
 
 	/**
 	 * The name => value attributes from XML.
@@ -158,7 +158,7 @@ abstract class XMLElement {
     }
     // first fallback: maybe the behavior is loaded or autoloaded
     $gen = new PhpNameGenerator();
-    if(class_exists($class = $gen->generateName($bname, PhpNameGenerator::CONV_METHOD_PHPNAME) . 'Behavior')) {
+    if(class_exists($class = $gen->generateName($bname) . 'Behavior')) {
       return $class;
     }
     // second fallback: use parent behavior class (mostly for unit tests)
@@ -185,8 +185,8 @@ abstract class XMLElement {
 	 * Magic string method
 	 * @see toString()
 	 */
-	public function __toString()
+	public function __toString(): string
 	{
-	  return $this->toString();
+	  return (string) $this->toString();
 	}
 }

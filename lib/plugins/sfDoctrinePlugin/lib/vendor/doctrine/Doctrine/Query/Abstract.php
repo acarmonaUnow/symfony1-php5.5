@@ -31,7 +31,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @todo        See {@link Doctrine_Query}
  */
-abstract class Doctrine_Query_Abstract
+abstract class Doctrine_Query_Abstract implements \Stringable
 {
     /**
      * QUERY TYPE CONSTANTS
@@ -2143,7 +2143,7 @@ abstract class Doctrine_Query_Abstract
      *
      * @return string DQL string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getDql();
     }

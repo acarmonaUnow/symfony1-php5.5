@@ -82,7 +82,7 @@ class sfAggregateLogger extends sfLogger
   {
     $this->loggers[] = $logger;
 
-    $this->dispatcher->disconnect('application.log', array($logger, 'listenToLogEvent'));
+    $this->dispatcher->disconnect('application.log', $logger->listenToLogEvent(...));
   }
 
   /**

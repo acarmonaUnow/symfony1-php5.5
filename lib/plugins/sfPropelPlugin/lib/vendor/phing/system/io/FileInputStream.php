@@ -61,8 +61,8 @@ class FileInputStream extends InputStream {
      * Returns a string representation of the attached file.
      * @return string
      */
-    public function __toString() {
-        return $this->file->getPath();
+    public function __toString(): string {
+        return (string) $this->file->getPath();
     }
     
     /**

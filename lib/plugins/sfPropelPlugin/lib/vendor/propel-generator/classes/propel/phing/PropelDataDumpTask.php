@@ -264,7 +264,7 @@ class PropelDataDumpTask extends AbstractPropelDataModelTask {
 		$this->validate();
 
 		$buf = "Database settings:\n"
-			. " driver: " . ($this->databaseDriver ? $this->databaseDriver : "(default)" ). "\n"
+			. " driver: " . ($this->databaseDriver ?: "(default)" ). "\n"
 			. " URL: " . $this->databaseUrl . "\n"
 			. ($this->databaseUser ? " user: " . $this->databaseUser . "\n" : "")
 			. ($this->databasePassword ? " password: " . $this->databasePassword . "\n" : "");

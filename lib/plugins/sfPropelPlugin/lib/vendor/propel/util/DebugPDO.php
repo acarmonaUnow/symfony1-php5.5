@@ -334,7 +334,7 @@ class DebugPDO extends PropelPDO
 		if (version_compare(PHP_VERSION, '5.3', '<')) {
 			$return	= call_user_func_array(array($this, 'parent::query'), $args);
 		} else {
-			$return	= call_user_func_array('parent::query', $args);
+			$return	= call_user_func_array(parent::query(...), $args);
 		}
 		
 		$sql = $args[0];

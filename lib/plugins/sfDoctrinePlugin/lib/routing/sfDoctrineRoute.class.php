@@ -130,11 +130,11 @@ class sfDoctrineRoute extends sfObjectRoute
     {
       try {
         $parameters[$variable] = $object->$variable;
-      } catch (Exception $e) {
+      } catch (Exception) {
         try {
           $method = 'get'.sfInflector::camelize($variable);
           $parameters[$variable] = $object->$method();
-        } catch (Exception $e) {}
+        } catch (Exception) {}
       }
     }
 

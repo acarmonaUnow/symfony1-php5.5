@@ -210,7 +210,7 @@ abstract class DBAdapter {
 	 * @return     string The quoted table name
 	 **/
 	public function quoteIdentifierTable($table) {
-		return implode(" ", array_map(array($this, "quoteIdentifier"), explode(" ", $table) ) );
+		return implode(" ", array_map($this->quoteIdentifier(...), explode(" ", $table) ) );
 	}
 
 	/**

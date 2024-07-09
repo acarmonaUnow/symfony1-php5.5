@@ -232,32 +232,16 @@ class PhpCodeSnifferTask extends Task {
 			$this->log('The list of used sniffs (#' . count($sniffs) . '): ' . PHP_EOL . $sniffStr, Project::MSG_INFO);
 		}
 
-		switch ($this->outputFormat) {
-			case 'default':
-				$this->outputCustomFormat($codeSniffer);
-				break;
-			case 'xml':
-				$codeSniffer->printXMLErrorReport($this->showWarnings);
-				break;
-			case 'checkstyle':
-				$codeSniffer->printCheckstyleErrorReport($this->showWarnings);
-				break;
-			case 'csv':
-				$codeSniffer->printCSVErrorReport($this->showWarnings);
-				break;
-			case 'report':
-				$codeSniffer->printErrorReport($this->showWarnings);
-				break;
-			case 'summary':
-				$codeSniffer->printErrorReportSummary($this->showWarnings);
-				break;
-			case 'doc':
-				$codeSniffer->generateDocs($this->standard, $this->sniffs);
-				break;
-			default:
-				$this->log('Unknown output format "' . $this->outputFormat . '"', Project::MSG_INFO);
-				break;
-		}
+		match ($this->outputFormat) {
+      'default' => $this->outputCustomFormat($codeSniffer),
+      'xml' => $codeSniffer->printXMLErrorReport($this->showWarnings),
+      'checkstyle' => $codeSniffer->printCheckstyleErrorReport($this->showWarnings),
+      'csv' => $codeSniffer->printCSVErrorReport($this->showWarnings),
+      'report' => $codeSniffer->printErrorReport($this->showWarnings),
+      'summary' => $codeSniffer->printErrorReportSummary($this->showWarnings),
+      'doc' => $codeSniffer->generateDocs($this->standard, $this->sniffs),
+      default => $this->log('Unknown output format "' . $this->outputFormat . '"', Project::MSG_INFO),
+  };
 	}
 
 	/**

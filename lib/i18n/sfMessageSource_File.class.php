@@ -159,7 +159,7 @@ abstract class sfMessageSource_File extends sfMessageSource
    */
   protected function getCatalogues($dir = null, $variant = null)
   {
-    $dir = $dir ? $dir : $this->getSource($variant);
+    $dir = $dir ?: $this->getSource($variant);
     $files = scandir($dir);
 
     $catalogue = array();
@@ -171,7 +171,7 @@ abstract class sfMessageSource_File extends sfMessageSource
         $catalogue = array_merge($catalogue, $this->getCatalogues($dir.'/'.$file, $file));
       }
 
-      $pos = strpos($file, $this->dataExt);
+      $pos = strpos($file, (string) $this->dataExt);
       if ($pos > 0 && substr($file, -1 * strlen($this->dataExt)) == $this->dataExt)
       {
         $name = substr($file, 0, $pos);

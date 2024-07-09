@@ -7,7 +7,7 @@
  *
  * @package lib.model
  */
-class Book extends BaseBook
+class Book extends BaseBook implements \Stringable
 {
 	/**
 	 * Initializes internal state of Book object.
@@ -20,7 +20,7 @@ class Book extends BaseBook
 		parent::__construct();
 	}
 
-  public function __toString()
+  public function __toString(): string
   {
     return $this->getName();
   }

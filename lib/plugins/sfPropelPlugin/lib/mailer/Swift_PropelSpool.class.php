@@ -129,7 +129,7 @@ class Swift_PropelSpool extends Swift_ConfigurableSpool
       {
         $count += $transport->send($message, $failedRecipients);
       }
-      catch (Exception $e)
+      catch (Exception)
       {
         // TODO: What to do with errors?
       }

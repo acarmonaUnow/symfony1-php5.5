@@ -179,7 +179,7 @@ abstract class sfPropelBaseTask extends sfBaseTask
       }
 
       // if the prefix is not in the schema filename, add it
-      if (!strstr(basename($schema), $prefix))
+      if (!strstr(basename($schema), (string) $prefix))
       {
         $localprefix = $prefix.$localprefix;
       }

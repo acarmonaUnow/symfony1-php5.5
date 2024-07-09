@@ -30,7 +30,7 @@ class SfPropelBehaviorI18nTranslation extends SfPropelBehaviorBase
     }
 
     $class = new sfClassManipulator($script);
-    $class->filterMethod('doSave', array($this, 'filterDoSave'));
+    $class->filterMethod('doSave', $this->filterDoSave(...));
 
     $script = $class->getCode();
   }
@@ -45,12 +45,12 @@ class SfPropelBehaviorI18nTranslation extends SfPropelBehaviorBase
   public function filterDoSave($line)
   {
     $foreignKey = $this->getForeignKey();
-    $phpName = $foreignKey->getPhpName() ? $foreignKey->getPhpName() : $foreignKey->getForeignTable()->getPhpName();
-    $refPhpName = $foreignKey->getRefPhpName() ? $foreignKey->getRefPhpName() : $this->getTable()->getPhpName();
+    $phpName = $foreignKey->getPhpName() ?: $foreignKey->getForeignTable()->getPhpName();
+    $refPhpName = $foreignKey->getRefPhpName() ?: $this->getTable()->getPhpName();
     $search = sprintf('$this->a%s->isModified()', $phpName);
     $insert = sprintf(' || ($this->a%s->getCulture() && $this->a%1$s->getCurrent%s()->isModified())', $phpName, $refPhpName);
 
-    if (false !== strpos($line, $search))
+    if (str_contains($line, $search))
     {
       $line = str_replace($search, $search.$insert, $line);
     }

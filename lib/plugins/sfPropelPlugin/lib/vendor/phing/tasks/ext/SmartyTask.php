@@ -384,7 +384,7 @@ class SmartyTask extends Task {
                 $this->log("Using contextProperties file: " . $fullPath->__toString());
                 $source->load($fullPath);
                 
-            } catch (Exception $e) {
+            } catch (Exception) {
               
               throw new BuildException("Context properties file " . $sources[$i] .
                             " could not be found in the file system!");
@@ -526,20 +526,20 @@ class SmartyTask extends Task {
         // control context so they are available
         // in the control/worker templates.
         if ($this->contextProperties !== null) {
-            
+
             foreach($this->contextProperties->keys() as $property) {
-                    
+
                 $value = $this->contextProperties->getProperty($property);
-                
+
                 // Special exception (from Texen)
                 // for properties ending in file.contents:
                 // in that case we dump the contents of the file
                 // as the "value" for the Property.
                 if (StringHelper::endsWith("file.contents", $property)) {
                     // pull in contents of file specified 
-                                            
+
                     $property = substr($property, 0, strpos($property, "file.contents") - 1);
-                    
+
                     // reset value, and then 
                     // read in teh contents of the file into that var
                     $value = "";
@@ -552,15 +552,15 @@ class SmartyTask extends Task {
                             throw $e;
                         }
                     }    
-                                                                    
+
                  } // if ends with file.contents
-                
+
                     if (StringHelper::isBoolean($value)) {
                         $value = StringHelper::booleanValue($value);
                     }
-                                                        
+
                  $c->assign($property, $value); 
-                 
+
             } // foreach property
                 
         } // if contextProperties !== null
@@ -569,7 +569,7 @@ class SmartyTask extends Task {
             //$c->display($this->controlTemplate);            
             $writer->write($c->fetch($this->controlTemplate));
             $writer->close();
-        } catch (IOException $ioe) {
+        } catch (IOException) {
             $writer->close();
             throw new BuildException("Cannot write parsed template.");
         }        

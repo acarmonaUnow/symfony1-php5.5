@@ -31,8 +31,8 @@ class sfInflector
     $tmp = sfToolkit::pregtrcb(
                         $tmp,
                         array(
-                          '#/(.?)#' => function ($matches) { return '::'.strtoupper($matches[1]); },
-                          '/(^|_|-)+(.)/' => function ($matches) { return strtoupper($matches[2]); }
+                          '#/(.?)#' => fn($matches) => '::'.strtoupper($matches[1]),
+                          '/(^|_|-)+(.)/' => fn($matches) => strtoupper($matches[2])
                         )
                       );
 
@@ -116,7 +116,7 @@ class sfInflector
    */
   public static function humanize($lower_case_and_underscored_word)
   {
-    if (substr($lower_case_and_underscored_word, -3) === '_id')
+    if (str_ends_with($lower_case_and_underscored_word, '_id'))
     {
       $lower_case_and_underscored_word = substr($lower_case_and_underscored_word, 0, -3);
     }

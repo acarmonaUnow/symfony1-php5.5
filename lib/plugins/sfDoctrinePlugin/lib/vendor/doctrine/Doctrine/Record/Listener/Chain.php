@@ -69,11 +69,7 @@ class Doctrine_Record_Listener_Chain extends Doctrine_Access implements Doctrine
      */ 
     public function getOption($name) 
     { 
-        if (isset($this->_options[$name])) { 
-            return $this->_options[$name]; 
-        } 
-
-        return null; 
+        return $this->_options[$name] ?? null; 
     }
 
     /**

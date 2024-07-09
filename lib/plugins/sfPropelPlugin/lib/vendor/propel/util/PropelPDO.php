@@ -224,13 +224,10 @@ class PropelPDO extends PDO {
 	 */
 	public function getAttribute($attribute)
 	{
-		switch($attribute) {
-			case self::PROPEL_ATTR_CACHE_PREPARES:
-				return $this->cachePreparedStatements;
-				break;
-			default:
-				return parent::getAttribute($attribute);
-		}
+		return match ($attribute) {
+      self::PROPEL_ATTR_CACHE_PREPARES => $this->cachePreparedStatements,
+      default => parent::getAttribute($attribute),
+  };
 	}
 
 	/**

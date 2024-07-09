@@ -402,7 +402,7 @@ abstract class FileSystem {
         
         try {
             $dest->setMode($src->getMode());
-        } catch(Exception $exc) {
+        } catch(Exception) {
             // [MA] does chmod returns an error on systems that do not support it ?
             // eat it up for now.
         }
@@ -576,7 +576,7 @@ abstract class FileSystem {
                         // This ONLY serves the purpose of making the Logger
                         // output look nice:)
 
-                        if (strpos(strrev($dir), DIRECTORY_SEPARATOR) === 0) {// there is a /
+                        if (str_starts_with(strrev($dir), DIRECTORY_SEPARATOR)) {// there is a /
                             $next_entry = $dir . $entry;
                         } else { // no /
                             $next_entry = $dir . DIRECTORY_SEPARATOR . $entry;
@@ -587,7 +587,7 @@ abstract class FileSystem {
 
                         // Don't error on is_dir()
                         if (false == @is_dir($next_entry)) { // Is file.
-                            
+
                             try {
                                 self::unlink($next_entry); // Delete.
                             } catch (Exception $e) {                            
@@ -596,7 +596,7 @@ abstract class FileSystem {
                             }
 
                         } else { // Is directory.
-                            
+
                             try {
                                 self::rmdir($next_entry, true); // Delete
                             } catch (Exception $e) {
@@ -673,13 +673,7 @@ abstract class FileSystem {
             // Add error from php to end of log message. $php_errormsg.
             $msg = "FileSystem::compareMTimes() FAILED. Cannot can not get modified time of $file2.";
             throw new Exception($msg);
-        } else { // Worked. Log and return compare.                
-            // Compare mtimes.
-            if ($mtime1 == $mtime2) {
-                return 0;
-            } else {
-                return ($mtime1 < $mtime2) ? -1 : 1;
-            } // end compare
+        } else { return $mtime1 <=> $mtime2; // end compare
         }
     }
         

@@ -51,7 +51,7 @@ class Doctrine_Table_Repository_None extends Doctrine_Table_Repository implement
      * @param integer $oid
      * @throws Doctrine_Table_Repository_Exception
      */
-    public function get($oid)
+    public function get($oid): never
     {
         throw new Doctrine_Table_Repository_Exception("Unknown object identifier");
     }

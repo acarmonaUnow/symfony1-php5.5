@@ -67,7 +67,7 @@ class GeneratorConfig {
 
     $renamedPropelProps = array();
     foreach ($props as $key => $propValue) {
-      if (strpos($key, "propel.") === 0) {
+      if (str_starts_with($key, "propel.")) {
         $newKey = substr($key, strlen("propel."));
         $j = strpos($newKey, '.');
         while ($j !== false) {
@@ -119,7 +119,7 @@ class GeneratorConfig {
     // Basically, we want to turn ?.?.?.sqliteDDLBuilder into ?.?.?.SqliteDDLBuilder
     $lastdotpos = strrpos($classpath, '.');
     if ($lastdotpos !== null) {
-      $classpath{$lastdotpos+1} = strtoupper($classpath{$lastdotpos+1});
+      $classpath[$lastdotpos+1] = strtoupper($classpath[$lastdotpos+1]);
     } else {
       $classpath = ucfirst($classpath);
     }
@@ -220,7 +220,7 @@ class GeneratorConfig {
     $propname = 'behavior' . ucfirst(strtolower($name)) . 'Class';
     try {
       $ret = $this->getClassname($propname);
-    } catch (BuildException $e) {
+    } catch (BuildException) {
       // class path not configured
       $ret = false;
     }

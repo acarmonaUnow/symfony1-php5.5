@@ -397,24 +397,16 @@ class Propel
 	{
 		if (self::hasLogger()) {
 			$logger = self::logger();
-			switch ($level) {
-				case self::LOG_EMERG:
-					return $logger->log($message, $level);
-				case self::LOG_ALERT:
-					return $logger->alert($message);
-				case self::LOG_CRIT:
-					return $logger->crit($message);
-				case self::LOG_ERR:
-					return $logger->err($message);
-				case self::LOG_WARNING:
-					return $logger->warning($message);
-				case self::LOG_NOTICE:
-					return $logger->notice($message);
-				case self::LOG_INFO:
-					return $logger->info($message);
-				default:
-					return $logger->debug($message);
-			}
+			return match ($level) {
+       self::LOG_EMERG => $logger->log($message, $level),
+       self::LOG_ALERT => $logger->alert($message),
+       self::LOG_CRIT => $logger->crit($message),
+       self::LOG_ERR => $logger->err($message),
+       self::LOG_WARNING => $logger->warning($message),
+       self::LOG_NOTICE => $logger->notice($message),
+       self::LOG_INFO => $logger->info($message),
+       default => $logger->debug($message),
+   };
 		}
 		return true;
 	}
@@ -653,7 +645,7 @@ class Propel
 	private static function processDriverOptions($source, &$write_to)
 	{
 		foreach ($source as $option => $optiondata) {
-			if (is_string($option) && strpos($option, '::') !== false) {
+			if (is_string($option) && str_contains($option, '::')) {
 				$key = $option;
 			} elseif (is_string($option)) {
 				$key = 'PropelPDO::' . $option;
@@ -664,7 +656,7 @@ class Propel
 			$key = constant($key);
 
 			$value = $optiondata['value'];
-			if (is_string($value) && strpos($value, '::') !== false) {
+			if (is_string($value) && str_contains($value, '::')) {
 				if (!defined($value)) {
 					throw new PropelException("Invalid PDO option/attribute value specified: ".$value);
 				}

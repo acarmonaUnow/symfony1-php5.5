@@ -105,7 +105,7 @@ EOF;
       return 1;
     }
 
-    $this->tmpDir = sys_get_temp_dir().'/propel_insert_sql_'.rand(11111, 99999);
+    $this->tmpDir = sys_get_temp_dir().'/propel_insert_sql_'.random_int(11111, 99999);
     register_shutdown_function(array($this, 'removeTmpDir'));
     mkdir($this->tmpDir, 0777, true);
     foreach ($sqls as $connection => $files)

@@ -116,7 +116,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
           break;
         }
       }
-      catch (Swift_TransportException $e)
+      catch (Swift_TransportException)
       {
         $this->_killCurrentTransport();
       }
@@ -175,7 +175,7 @@ class Swift_Transport_LoadBalancedTransport implements Swift_Transport
       {
         $transport->stop();
       }
-      catch (Exception $e)
+      catch (Exception)
       {
       }
       $this->_deadTransports[] = $transport;

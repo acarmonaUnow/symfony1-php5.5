@@ -24,7 +24,7 @@
  * 
  * @package   phing.system.io
  */
-class InputStream {
+class InputStream implements \Stringable {
 	
 	/**
 	 * @var resource The attached PHP stream.
@@ -172,7 +172,7 @@ class InputStream {
      * Returns string representation of attached stream.
      * @return string
      */
-    public function __toString() {
+    public function __toString(): string {
         return (string) $this->stream;
     }
 }

@@ -100,7 +100,7 @@ class PhpDocumentorExternalTask extends PhpDocumentorTask
 		
 		foreach($output as $line)
 		{
-			if(strpos($line, 'ERROR') !== false)
+			if(str_contains($line, 'ERROR'))
 			{
 				$this->log($line, Project::MSG_ERR);
 				continue;

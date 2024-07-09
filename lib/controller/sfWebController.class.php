@@ -42,7 +42,7 @@ abstract class sfWebController extends sfController
       }
 
       // relative URL?
-      if (0 === strpos($parameters, '/'))
+      if (str_starts_with($parameters, '/'))
       {
         return $parameters;
       }
@@ -59,7 +59,7 @@ abstract class sfWebController extends sfController
         $parameters = substr($parameters, 0, $pos);
       }
 
-      list($route, $parameters) = $this->convertUrlStringToParameters($parameters);
+      [$route, $parameters] = $this->convertUrlStringToParameters($parameters);
     }
     else if (is_array($parameters))
     {
@@ -126,9 +126,9 @@ abstract class sfWebController extends sfController
     {
       $route = substr($url, 1);
     }
-    else if (false !== strpos($url, '/'))
+    else if (str_contains($url, '/'))
     {
-      list($params['module'], $params['action']) = explode('/', $url);
+      [$params['module'], $params['action']] = explode('/', $url);
     }
     else if (!$queryString)
     {

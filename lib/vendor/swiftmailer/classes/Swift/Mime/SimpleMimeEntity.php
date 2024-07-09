@@ -15,7 +15,7 @@
  * @subpackage Mime
  * @author Chris Corbyn
  */
-class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
+class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity, \Stringable
 {
   
   /** A collection of Headers for this mime entity */
@@ -485,7 +485,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
    *
    * @see toString()
    */
-  public function __toString()
+  public function __toString(): string
   {
     return $this->toString();
   }
@@ -674,7 +674,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     {
       $this->_assertValidId($id);
     }
-    catch (Swift_RfcComplianceException $e)
+    catch (Swift_RfcComplianceException)
     {
       $id = $idLeft . '@swift.generated';
     }

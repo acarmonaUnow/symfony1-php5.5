@@ -171,7 +171,7 @@ class sfDateFormat
         {
           $date['year'] = date('Y', mktime(0, 0, 0, 1, 1, $date['year']));
         }
-        $date = array_map('intval', $date);
+        $date = array_map(intval(...), $date);
       }
     }
 
@@ -291,74 +291,29 @@ class sfDateFormat
       return $this->formatInfo->formatDateTime($this->getPattern($pattern[0]), $this->getPattern($pattern[1]));
     }
 
-    switch ($pattern)
-    {
-      case 'd':
-        return $this->formatInfo->ShortDatePattern;
-        break;
-      case 'D':
-        return $this->formatInfo->LongDatePattern;
-        break;
-      case 'p':
-        return $this->formatInfo->MediumDatePattern;
-        break;
-      case 'P':
-        return $this->formatInfo->FullDatePattern;
-        break;
-      case 't':
-        return $this->formatInfo->ShortTimePattern;
-        break;
-      case 'T':
-        return $this->formatInfo->LongTimePattern;
-        break;
-      case 'q':
-        return $this->formatInfo->MediumTimePattern;
-        break;
-      case 'Q':
-        return $this->formatInfo->FullTimePattern;
-        break;
-      case 'f':
-        return $this->formatInfo->formatDateTime($this->formatInfo->LongDatePattern, $this->formatInfo->ShortTimePattern);
-        break;
-      case 'F':
-        return $this->formatInfo->formatDateTime($this->formatInfo->LongDatePattern, $this->formatInfo->LongTimePattern);
-        break;
-      case 'g':
-        return $this->formatInfo->formatDateTime($this->formatInfo->ShortDatePattern, $this->formatInfo->ShortTimePattern);
-        break;
-      case 'G':
-        return $this->formatInfo->formatDateTime($this->formatInfo->ShortDatePattern, $this->formatInfo->LongTimePattern);
-        break;
-      case 'i':
-        return 'yyyy-MM-dd';
-        break;
-      case 'I':
-        return 'yyyy-MM-dd HH:mm:ss';
-        break;
-      case 'M':
-      case 'm':
-        return 'MMMM dd';
-        break;
-      case 'R':
-      case 'r':
-        return 'EEE, dd MMM yyyy HH:mm:ss';
-        break;
-      case 's':
-        return 'yyyy-MM-ddTHH:mm:ss';
-        break;
-      case 'u':
-        return 'yyyy-MM-dd HH:mm:ss z';
-        break;
-      case 'U':
-        return 'EEEE dd MMMM yyyy HH:mm:ss';
-        break;
-      case 'Y':
-      case 'y':
-        return 'yyyy MMMM';
-        break;
-      default :
-        return $pattern;
-    }
+    return match ($pattern) {
+        'd' => $this->formatInfo->ShortDatePattern,
+        'D' => $this->formatInfo->LongDatePattern,
+        'p' => $this->formatInfo->MediumDatePattern,
+        'P' => $this->formatInfo->FullDatePattern,
+        't' => $this->formatInfo->ShortTimePattern,
+        'T' => $this->formatInfo->LongTimePattern,
+        'q' => $this->formatInfo->MediumTimePattern,
+        'Q' => $this->formatInfo->FullTimePattern,
+        'f' => $this->formatInfo->formatDateTime($this->formatInfo->LongDatePattern, $this->formatInfo->ShortTimePattern),
+        'F' => $this->formatInfo->formatDateTime($this->formatInfo->LongDatePattern, $this->formatInfo->LongTimePattern),
+        'g' => $this->formatInfo->formatDateTime($this->formatInfo->ShortDatePattern, $this->formatInfo->ShortTimePattern),
+        'G' => $this->formatInfo->formatDateTime($this->formatInfo->ShortDatePattern, $this->formatInfo->LongTimePattern),
+        'i' => 'yyyy-MM-dd',
+        'I' => 'yyyy-MM-dd HH:mm:ss',
+        'M', 'm' => 'MMMM dd',
+        'R', 'r' => 'EEE, dd MMM yyyy HH:mm:ss',
+        's' => 'yyyy-MM-ddTHH:mm:ss',
+        'u' => 'yyyy-MM-dd HH:mm:ss z',
+        'U' => 'EEEE dd MMMM yyyy HH:mm:ss',
+        'Y', 'y' => 'yyyy MMMM',
+        default => $pattern,
+    };
   }
 
   /**
@@ -446,17 +401,11 @@ class sfDateFormat
   protected function getYear($date, $pattern = 'yyyy')
   {
     $year = $date['year'];
-    switch ($pattern)
-    {
-      case 'yy':
-        return substr($year, 2);
-      case 'y':
-      case 'yyy':
-      case 'yyyy':
-        return $year;
-      default:
-        throw new sfException('The pattern for year is either "y", "yy", "yyy" or "yyyy".');
-    }
+    return match ($pattern) {
+        'yy' => substr($year, 2),
+        'y', 'yyy', 'yyyy' => $year,
+        default => throw new sfException('The pattern for year is either "y", "yy", "yyy" or "yyyy".'),
+    };
   }
 
   /**
@@ -475,21 +424,14 @@ class sfDateFormat
   {
     $month = $date['mon'];
 
-    switch ($pattern)
-    {
-      case 'M':
-        return $month;
-      case 'MM':
-        return str_pad($month, 2, '0', STR_PAD_LEFT);
-      case 'MMM':
-        return $this->formatInfo->AbbreviatedMonthNames[$month - 1];
-      case 'MMMM':
-        return $this->formatInfo->MonthNames[$month - 1];
-      case 'MMMMM':
-        return $this->formatInfo->NarrowMonthNames[$month - 1];
-      default:
-        throw new sfException('The pattern for month is "M", "MM", "MMM", "MMMM", "MMMMM".');
-    }
+    return match ($pattern) {
+        'M' => $month,
+        'MM' => str_pad($month, 2, '0', STR_PAD_LEFT),
+        'MMM' => $this->formatInfo->AbbreviatedMonthNames[$month - 1],
+        'MMMM' => $this->formatInfo->MonthNames[$month - 1],
+        'MMMMM' => $this->formatInfo->NarrowMonthNames[$month - 1],
+        default => throw new sfException('The pattern for month is "M", "MM", "MMM", "MMMM", "MMMMM".'),
+    };
   }
 
   /**
@@ -512,22 +454,13 @@ class sfDateFormat
     }
     $day = $date['wday'];
 
-    switch ($pattern)
-    {
-      case 'E':
-        return $day;
-        break;
-      case 'EE':
-        return $this->formatInfo->NarrowDayNames[$day];
-      case 'EEE':
-        return $this->formatInfo->AbbreviatedDayNames[$day];
-        break;
-      case 'EEEE':
-        return $this->formatInfo->DayNames[$day];
-        break;
-      default:
-        throw new sfException('The pattern for day of the week is "E", "EE", "EEE", or "EEEE".');
-    }
+    return match ($pattern) {
+        'E' => $day,
+        'EE' => $this->formatInfo->NarrowDayNames[$day],
+        'EEE' => $this->formatInfo->AbbreviatedDayNames[$day],
+        'EEEE' => $this->formatInfo->DayNames[$day],
+        default => throw new sfException('The pattern for day of the week is "E", "EE", "EEE", or "EEEE".'),
+    };
   }
 
   /**
@@ -542,17 +475,12 @@ class sfDateFormat
   {
     $day = $date['mday'];
 
-    switch ($pattern)
-    {
-      case 'd':
-        return $day;
-      case 'dd':
-        return str_pad($day, 2, '0', STR_PAD_LEFT);
-      case 'dddd':
-        return $this->getWday($date);
-      default:
-        throw new sfException('The pattern for day of the month is "d", "dd" or "dddd".');
-    }
+    return match ($pattern) {
+        'd' => $day,
+        'dd' => str_pad($day, 2, '0', STR_PAD_LEFT),
+        'dddd' => $this->getWday($date),
+        default => throw new sfException('The pattern for day of the month is "d", "dd" or "dddd".'),
+    };
   }
 
   /**
@@ -585,15 +513,11 @@ class sfDateFormat
   {
     $hour = $date['hours'];
 
-    switch ($pattern)
-    {
-      case 'H':
-        return $hour;
-      case 'HH':
-        return str_pad($hour, 2, '0', STR_PAD_LEFT);
-      default:
-        throw new sfException('The pattern for 24 hour format is "H" or "HH".');
-    }
+    return match ($pattern) {
+        'H' => $hour,
+        'HH' => str_pad($hour, 2, '0', STR_PAD_LEFT),
+        default => throw new sfException('The pattern for 24 hour format is "H" or "HH".'),
+    };
   }
 
   /**
@@ -626,15 +550,11 @@ class sfDateFormat
     $hour = $date['hours'];
     $hour = ($hour == 12 | $hour == 0) ? 12 : $hour % 12;
 
-    switch ($pattern)
-    {
-      case 'h':
-        return $hour;
-      case 'hh':
-        return str_pad($hour, 2, '0', STR_PAD_LEFT);
-      default:
-        throw new sfException('The pattern for 24 hour format is "H" or "HH".');
-    }
+    return match ($pattern) {
+        'h' => $hour,
+        'hh' => str_pad($hour, 2, '0', STR_PAD_LEFT),
+        default => throw new sfException('The pattern for 24 hour format is "H" or "HH".'),
+    };
   }
 
   /**
@@ -649,15 +569,11 @@ class sfDateFormat
   {
     $minutes = $date['minutes'];
 
-    switch ($pattern)
-    {
-      case 'm':
-        return $minutes;
-      case 'mm':
-        return str_pad($minutes, 2, '0', STR_PAD_LEFT);
-      default:
-        throw new sfException('The pattern for minutes is "m" or "mm".');
-    }
+    return match ($pattern) {
+        'm' => $minutes,
+        'mm' => str_pad($minutes, 2, '0', STR_PAD_LEFT),
+        default => throw new sfException('The pattern for minutes is "m" or "mm".'),
+    };
   }
 
   /**
@@ -672,15 +588,11 @@ class sfDateFormat
   {
     $seconds = $date['seconds'];
 
-    switch ($pattern)
-    {
-      case 's':
-        return $seconds;
-      case 'ss':
-        return str_pad($seconds, 2, '0', STR_PAD_LEFT);
-      default:
-        throw new sfException('The pattern for seconds is "s" or "ss".');
-    }
+    return match ($pattern) {
+        's' => $seconds,
+        'ss' => str_pad($seconds, 2, '0', STR_PAD_LEFT),
+        default => throw new sfException('The pattern for seconds is "s" or "ss".'),
+    };
   }
 
   /**
@@ -734,17 +646,11 @@ class sfDateFormat
    */
   protected function getDayInMonth($date, $pattern = 'FF')
   {
-    switch ($pattern)
-    {
-      case 'F':
-        return @date('j', @mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']));
-        break;
-      case 'FF':
-        return @date('d', @mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']));
-        break;
-      default:
-        throw new sfException('The pattern for day in month is "F" or "FF".');
-    }
+    return match ($pattern) {
+        'F' => @date('j', @mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year'])),
+        'FF' => @date('d', @mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year'])),
+        default => throw new sfException('The pattern for day in month is "F" or "FF".'),
+    };
   }
 
   /**

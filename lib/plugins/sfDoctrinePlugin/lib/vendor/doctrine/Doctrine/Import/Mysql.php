@@ -165,7 +165,7 @@ class Doctrine_Import_Mysql extends Doctrine_Import
                           'primary'       => (strtolower($val['key']) == 'pri'),
                           'default'       => $val['default'],
                           'notnull'       => (bool) ($val['null'] != 'YES'),
-                          'autoincrement' => (bool) (strpos($val['extra'], 'auto_increment') !== false),
+                          'autoincrement' => (bool) (str_contains($val['extra'], 'auto_increment')),
                           );
             if (isset($decl['scale'])) {
                 $description['scale'] = $decl['scale'];

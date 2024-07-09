@@ -82,7 +82,7 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
   {
     if (!is_array($keys))
     {
-      list($key, $value) = $this->fixCategoryValue($prefix.strtolower($category), '', $keys);
+      [$key, $value] = $this->fixCategoryValue($prefix.strtolower($category), '', $keys);
 
       return array($key => $value);
     }
@@ -94,7 +94,7 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
     // loop through all key/value pairs
     foreach ($keys as $key => $value)
     {
-      list($key, $value) = $this->fixCategoryValue($category, $key, $value);
+      [$key, $value] = $this->fixCategoryValue($category, $key, $value);
       $values[$key] = $value;
     }
 

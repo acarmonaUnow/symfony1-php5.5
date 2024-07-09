@@ -14,10 +14,10 @@ class doctrine_route_testActions extends sfActions
   {
     try {
       $this->object = $this->getRoute()->getObjects();
-    } catch (Exception $e) {
+    } catch (Exception) {
       try {
         $this->object = $this->getRoute()->getObject();
-      } catch (Exception $e) {
+      } catch (Exception) {
         return sfView::NONE;
       }
     }

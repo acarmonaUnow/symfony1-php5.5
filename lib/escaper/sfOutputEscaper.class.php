@@ -238,6 +238,6 @@ abstract class sfOutputEscaper
    */
   public function __get($var)
   {
-    return $this->escape($this->escapingMethod, $this->value->$var);
+    return static::escape($this->escapingMethod, $this->value->$var);
   }
 }

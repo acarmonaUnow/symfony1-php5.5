@@ -88,8 +88,8 @@ abstract class sfRouting
 
     $this->options = $options;
 
-    $this->dispatcher->connect('user.change_culture', array($this, 'listenToChangeCultureEvent'));
-    $this->dispatcher->connect('request.filter_parameters', array($this, 'filterParametersEvent'));
+    $this->dispatcher->connect('user.change_culture', $this->listenToChangeCultureEvent(...));
+    $this->dispatcher->connect('request.filter_parameters', $this->filterParametersEvent(...));
 
     $this->loadConfiguration();
   }
@@ -254,7 +254,7 @@ abstract class sfRouting
   {
     if (isset($this->options['context']['prefix']))
     {
-      if (0 === strpos($url, 'http'))
+      if (str_starts_with($url, 'http'))
       {
         $url = preg_replace('#https?\://[^/]+#', '$0'.$this->options['context']['prefix'], $url);
       }
@@ -264,7 +264,7 @@ abstract class sfRouting
       }
     }
 
-    if ($absolute && isset($this->options['context']['host']) && 0 !== strpos($url, 'http'))
+    if ($absolute && isset($this->options['context']['host']) && !str_starts_with($url, 'http'))
     {
       $url = 'http'.(isset($this->options['context']['is_secure']) && $this->options['context']['is_secure'] ? 's' : '').'://'.$this->options['context']['host'].$url;
     }

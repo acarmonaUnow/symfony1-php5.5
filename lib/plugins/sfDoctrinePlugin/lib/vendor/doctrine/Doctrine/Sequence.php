@@ -42,7 +42,7 @@ class Doctrine_Sequence extends Doctrine_Connection_Module
      * @return integer          next id in the given sequence
      * @throws Doctrine_Sequence_Exception
      */
-    public function nextId($seqName, $ondemand = true)
+    public function nextId($seqName, $ondemand = true): never
     {
         throw new Doctrine_Sequence_Exception('method not implemented');
     }
@@ -54,7 +54,7 @@ class Doctrine_Sequence extends Doctrine_Connection_Module
      * @param   string  name of the table into which a new row was inserted
      * @param   string  name of the field into which a new row was inserted
      */
-    public function lastInsertId($table = null, $field = null)
+    public function lastInsertId($table = null, $field = null): never
     {
         throw new Doctrine_Sequence_Exception('method not implemented');
     }

@@ -47,10 +47,7 @@ class Doctrine_Cache_Array extends Doctrine_Cache_Driver
      */
     protected function _doFetch($id, $testCacheValidity = true)
     {
-        if (isset($this->data[$id])) {
-            return $this->data[$id];
-        }
-        return false;
+        return $this->data[$id] ?? false;
     }
 
     /**

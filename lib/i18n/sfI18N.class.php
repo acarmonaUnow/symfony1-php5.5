@@ -73,11 +73,11 @@ class sfI18N
       'untranslated_suffix' => '[/T]',
     ), $options);
 
-    $this->dispatcher->connect('user.change_culture', array($this, 'listenToChangeCultureEvent'));
+    $this->dispatcher->connect('user.change_culture', $this->listenToChangeCultureEvent(...));
 
-    if($this->isMessageSourceFileBased($this->options['source']))
+    if(static::isMessageSourceFileBased($this->options['source']))
     {
-      $this->dispatcher->connect('controller.change_action', array($this, 'listenToChangeActionEvent'));
+      $this->dispatcher->connect('controller.change_action', $this->listenToChangeActionEvent(...));
     }
   }
 
@@ -115,7 +115,7 @@ class sfI18N
     }
     else
     {
-      $this->messageSource = sfMessageSource::factory('Aggregate', array_map(array($this, 'createMessageSource'), $dirs));
+      $this->messageSource = sfMessageSource::factory('Aggregate', array_map($this->createMessageSource(...), $dirs));
     }
 
     if (null !== $this->cache)
@@ -189,7 +189,7 @@ class sfI18N
   {
     if (!isset($this->messageSource))
     {
-      $dirs = ($this->isMessageSourceFileBased($this->options['source'])) ? $this->configuration->getI18NGlobalDirs() : null;
+      $dirs = (static::isMessageSourceFileBased($this->options['source'])) ? $this->configuration->getI18NGlobalDirs() : null;
       $this->setMessageSource($dirs, $this->culture);
     }
 
@@ -268,8 +268,8 @@ class sfI18N
    */
   public function getTimestampForCulture($dateTime, $culture = null)
   {
-    list($day, $month, $year) = $this->getDateForCulture($dateTime, null === $culture ? $this->culture : $culture);
-    list($hour, $minute) = $this->getTimeForCulture($dateTime, null === $culture ? $this->culture : $culture);
+    [$day, $month, $year] = $this->getDateForCulture($dateTime, null === $culture ? $this->culture : $culture);
+    [$hour, $minute] = $this->getTimeForCulture($dateTime, null === $culture ? $this->culture : $culture);
 
     return null === $day ? null : mktime($hour, $minute, 0, $month, $day, $year);
   }
@@ -342,7 +342,7 @@ class sfI18N
 
     // We parse time format to see where things are (h, m)
     $timePositions = array(
-      'h' => strpos($timeFormat, 'H') !== false ? strpos($timeFormat, 'H') : strpos($timeFormat, 'h'),
+      'h' => str_contains($timeFormat, 'H') ? strpos($timeFormat, 'H') : strpos($timeFormat, 'h'),
       'm' => strpos($timeFormat, 'm'),
       'a' => strpos($timeFormat, 'a')
     );

@@ -128,7 +128,7 @@ abstract class OMBuilder extends DataModelBuilder {
 	 */
 	public function getPackage()
 	{
-		$pkg = ($this->getTable()->getPackage() ? $this->getTable()->getPackage() : $this->getDatabase()->getPackage());
+		$pkg = ($this->getTable()->getPackage() ?: $this->getDatabase()->getPackage());
 		if (!$pkg) {
 			$pkg = $this->getBuildProperty('targetPackage');
 		}
@@ -354,7 +354,7 @@ abstract class OMBuilder extends DataModelBuilder {
     foreach ($this->getTable()->getBehaviors() as $behavior) {
       $modifier = $behavior->$modifierGetter();
       if(method_exists($modifier, $hookName)) {
-        if (strpos($hookName, 'Filter') !== false) {
+        if (str_contains($hookName, 'Filter')) {
           // filter hook: the script string will be modified by the behavior
           $modifier->$hookName($script);
         } else {

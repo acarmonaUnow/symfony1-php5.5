@@ -120,20 +120,13 @@ class sfDoctrineGenerator extends sfModelGenerator
       return 'ForeignKey';
     }
 
-    switch ($column->getDoctrineType())
-    {
-      case 'enum':
-        return 'Enum';
-      case 'boolean':
-        return 'Boolean';
-      case 'date':
-      case 'timestamp':
-        return 'Date';
-      case 'time':
-        return 'Time';
-      default:
-        return 'Text';
-    }
+    return match ($column->getDoctrineType()) {
+        'enum' => 'Enum',
+        'boolean' => 'Boolean',
+        'date', 'timestamp' => 'Date',
+        'time' => 'Time',
+        default => 'Text',
+    };
   }
 
   /**

@@ -319,7 +319,7 @@ class PropertyTask extends Task {
      * @return void
      */
     protected function resolveAllProperties(Properties $props) {
-        
+
         $keys = $props->keys();
 
         while(count($keys)) {
@@ -329,13 +329,13 @@ class PropertyTask extends Task {
             // would probably be a lot uglier to work into a preg_replace_callback()
             // system.  The biggest problem is the fact that a resolution may require
             // multiple passes.
-            
+
             $name     = array_shift($keys);
             $value    = $props->getProperty($name);
             $resolved = false;
-            
+
             while(!$resolved) {
-            
+
                 $fragments = array();
                 $propertyRefs = array();
 
@@ -372,15 +372,15 @@ class PropertyTask extends Task {
                         }
                         $sb .= $fragment;
                     }
-                    
+
                     $this->log("Resolved Property \"$value\" to \"$sb\"", Project::MSG_DEBUG);
                     $value = $sb;                    
                     $props->setProperty($name, $value);
-                                 
+
                 } // if (count($propertyRefs))
-                
+
             } // while (!$resolved)
-            
+
         } // while (count($keys)
     }
 
@@ -412,7 +412,7 @@ class PropertyTask extends Task {
             if ($pos === (strlen($value) - 1)) {
                 array_push($fragments, '$');
                 $prev = $pos + 1;
-            } elseif ($value{$pos+1} !== '{' ) {
+            } elseif ($value[$pos+1] !== '{' ) {
 
                 // the string positions were changed to value-1 to correct
                 // a fatal error coming from function substring()

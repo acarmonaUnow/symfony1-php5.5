@@ -146,7 +146,7 @@ class DBMSSQL extends DBAdapter {
     $innerSelect = '';
     $outerSelect = '';
     foreach(explode(', ',$selectStatement) as $selCol) {
-      @list($column,,$alias) = explode(' ', $selCol);
+      @[$column, , $alias] = explode(' ', $selCol);
       //make sure the current column isn't * or an aggregate
       if ($column!='*' && !strstr($column,'(')) {
         //we can use the first non-aggregate column for ROW_NUMBER() if it wasn't already set from an order by clause

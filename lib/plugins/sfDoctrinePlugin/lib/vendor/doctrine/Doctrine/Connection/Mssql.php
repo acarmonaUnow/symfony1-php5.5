@@ -87,7 +87,7 @@ class Doctrine_Connection_Mssql extends Doctrine_Connection_Common
             return $identifier;
         }
         
-        if (strpos($identifier, '.') !== false) { 
+        if (str_contains($identifier, '.')) { 
             $parts = explode('.', $identifier); 
             $quotedParts = array(); 
             foreach ($parts as $p) { 
@@ -148,7 +148,7 @@ class Doctrine_Connection_Mssql extends Doctrine_Connection_Common
             $query = substr($query, strlen('SELECT '));
             $select = 'SELECT';
 
-            if (0 === strpos($query, 'DISTINCT'))
+            if (str_starts_with($query, 'DISTINCT'))
             {
               $query = substr($query, strlen('DISTINCT '));
               $select .= ' DISTINCT';
@@ -187,7 +187,7 @@ class Doctrine_Connection_Mssql extends Doctrine_Connection_Common
         $tokens = preg_split('/,/', $parsed);
         
         for ($i = 0, $iMax = count($tokens); $i < $iMax; $i++) {
-            $tokens[$i] = trim(preg_replace_callback('/##(\d+)##/', function($m) { return $chunks[$m[1]]; }, $tokens[$i]));
+            $tokens[$i] = trim(preg_replace_callback('/##(\d+)##/', fn($m) => $chunks[$m[1]], $tokens[$i]));
         }
 
         return $tokens;
@@ -333,9 +333,7 @@ class Doctrine_Connection_Mssql extends Doctrine_Connection_Common
         
 
         $self = $this;
-        $query = preg_replace_callback('/##(\d+)##/', function($m) use ($params, $self) {
-            return (null === $params[$m[1]]) ? 'NULL' : $self->quote($params[$m[1]]);
-        }, $query);
+        $query = preg_replace_callback('/##(\d+)##/', fn($m) => (null === $params[$m[1]]) ? 'NULL' : $self->quote($params[$m[1]]), $query);
 
         return $query;
 

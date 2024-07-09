@@ -16,7 +16,7 @@
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @version    SVN: $Id: sfFormField.class.php 22401 2009-09-25 03:49:27Z Kris.Wallsmith $
  */
-class sfFormField
+class sfFormField implements \Stringable
 {
   protected static
     $toStringException = null;
@@ -37,7 +37,7 @@ class sfFormField
    * @param string           $value  The field value
    * @param sfValidatorError $error  A sfValidatorError instance
    */
-  public function __construct(sfWidgetForm $widget, sfFormField $parent = null, $name, $value, sfValidatorError $error = null)
+  public function __construct(sfWidgetForm $widget, $name, $value, sfFormField $parent = null, sfValidatorError $error = null)
   {
     $this->widget = $widget;
     $this->parent = $parent;
@@ -51,7 +51,7 @@ class sfFormField
    *
    * @return string The rendered field
    */
-  public function __toString()
+  public function __toString(): string
   {
     try
     {

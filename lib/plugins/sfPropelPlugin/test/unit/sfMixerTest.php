@@ -87,7 +87,7 @@ try
   $m->newMethod();
   $t->fail('method call that does not exist');
 }
-catch (Exception $e)
+catch (Exception)
 {
   $t->pass('method call that does not exist');
 }

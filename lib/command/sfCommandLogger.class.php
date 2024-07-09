@@ -25,7 +25,7 @@ class sfCommandLogger extends sfConsoleLogger
    */
   public function initialize(sfEventDispatcher $dispatcher, $options = array())
   {
-    $dispatcher->connect('command.log', array($this, 'listenToLogEvent'));
+    $dispatcher->connect('command.log', $this->listenToLogEvent(...));
 
     return parent::initialize($dispatcher, $options);
   }

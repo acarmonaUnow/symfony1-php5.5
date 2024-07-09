@@ -67,10 +67,10 @@ class sfTesterDoctrine extends sfTester
         $operator = '=';
         if ('!' == $condition[0])
         {
-          $operator = false !== strpos($condition, '%') ? 'NOT LIKE' : '!=';
+          $operator = str_contains($condition, '%') ? 'NOT LIKE' : '!=';
           $condition = substr($condition, 1);
         }
-        else if (false !== strpos($condition, '%'))
+        else if (str_contains($condition, '%'))
         {
           $operator = 'LIKE';
         }

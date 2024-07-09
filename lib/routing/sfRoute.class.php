@@ -81,7 +81,7 @@ class sfRoute implements Serializable
      */
     public function __unserialize($data)
     {
-        list($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken) = $data;
+        [$this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken] = $data;
 
         $this->compiled = true;
     }
@@ -125,7 +125,7 @@ class sfRoute implements Serializable
     }
 
     // check the static prefix uf the URL first. Only use the more expensive preg_match when it matches
-    if ('' !== $this->staticPrefix  && 0 !== strpos($url, $this->staticPrefix))
+    if ('' !== $this->staticPrefix  && !str_starts_with($url, $this->staticPrefix))
     {
       return false;
     }
@@ -205,7 +205,7 @@ class sfRoute implements Serializable
     // all $params must be in $variables or $defaults if there is no * in route
     if (!$this->options['extra_parameters_as_query_string'])
     {
-      if (false === strpos($this->regex, '<_star>') && array_diff_key($params, $this->variables, $defaults))
+      if (!str_contains($this->regex, '<_star>') && array_diff_key($params, $this->variables, $defaults))
       {
         return false;
       }
@@ -719,7 +719,7 @@ class sfRoute implements Serializable
       'extra_parameters_as_query_string' => true,
     ), $this->getDefaultOptions(), $this->options);
 
-    $preg_quote_hash = function($a) { return preg_quote($a, '#'); };
+    $preg_quote_hash = fn($a) => preg_quote($a, '#');
 
     // compute some regexes
     $this->options['variable_prefix_regex'] = '(?:'.implode('|', array_map($preg_quote_hash, $this->options['variable_prefixes'])).')';
@@ -729,7 +729,7 @@ class sfRoute implements Serializable
       $this->options['segment_separators_regex'] = '(?:'.implode('|', array_map($preg_quote_hash, $this->options['segment_separators'])).')';
 
       // as of PHP 5.3.0, preg_quote automatically quotes dashes "-" (see http://bugs.php.net/bug.php?id=47229)
-      $preg_quote_hash_53 = function($a) { return str_replace('-', '\-', preg_quote($a, '#')); };
+      $preg_quote_hash_53 = fn($a) => str_replace('-', '\-', preg_quote($a, '#'));
       $this->options['variable_content_regex'] = '[^'.implode('',
           array_map(version_compare(PHP_VERSION, '5.3.0RC4', '>=') ? $preg_quote_hash : $preg_quote_hash_53, $this->options['segment_separators'])
         ).']+';
@@ -760,12 +760,12 @@ class sfRoute implements Serializable
 
   protected function hasStarParameter()
   {
-    return false !== strpos($this->regex, '<_star>');
+    return str_contains($this->regex, '<_star>');
   }
 
   protected function generateStarParameter($url, $defaults, $parameters)
   {
-    if (false === strpos($this->regex, '<_star>'))
+    if (!str_contains($this->regex, '<_star>'))
     {
       return $url;
     }
@@ -832,7 +832,7 @@ class sfRoute implements Serializable
       {
         $regex = substr($regex, 1);
       }
-      if ('$' == substr($regex, -1))
+      if (str_ends_with($regex, '$'))
       {
         $regex = substr($regex, 0, -1);
       }
@@ -878,7 +878,7 @@ class sfRoute implements Serializable
 
   public function unserialize($data)
   {
-    list($this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken) = unserialize($data);
+    [$this->tokens, $this->defaultOptions, $this->options, $this->pattern, $this->staticPrefix, $this->regex, $this->variables, $this->defaults, $this->requirements, $this->suffix, $this->customToken] = unserialize($data);
     $this->compiled = true;
   }
 }

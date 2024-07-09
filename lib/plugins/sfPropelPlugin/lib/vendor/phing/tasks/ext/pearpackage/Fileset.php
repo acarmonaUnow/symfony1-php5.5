@@ -124,9 +124,9 @@ class PEAR_PackageFileManager_Fileset {
             }                                        
         }
                 
-        uksort($struc,'strnatcasecmp');
+        uksort($struc,strnatcasecmp(...));
         foreach($struc as $key => $ind) {
-            usort($ind, array($this, 'sortfiles'));
+            usort($ind, $this->sortfiles(...));
             $struc[$key] = $ind;
         }
 
@@ -139,7 +139,7 @@ class PEAR_PackageFileManager_Fileset {
                 $struc['/'] = $this->setupDirs($struc['/'], explode('/', $key), $tempstruc[$key]);
             }
         }
-        uksort($struc['/'], array($this, 'mystrucsort'));
+        uksort($struc['/'], $this->mystrucsort(...));
 
         return $struc;
     }
@@ -194,7 +194,7 @@ class PEAR_PackageFileManager_Fileset {
      */
     function setDir($dir, $contents)
     {
-        while(list($one,$two) = each($contents)) {
+        foreach ($contents as $one => $two) {
             if (isset($dir[$one])) {
                 $dir[$one] = $this->setDir($dir[$one], $contents[$one]);
             } else {

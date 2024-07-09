@@ -1188,7 +1188,7 @@ class Doctrine_Node_NestedSet extends Doctrine_Node implements Doctrine_Node_Int
             
             $coll = $q->execute();
 
-            $this->record['level'] = count($coll) ? count($coll) : 0;
+            $this->record['level'] = count($coll) ?: 0;
         }
         return $this->record['level'];
     }

@@ -665,9 +665,9 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
 
 		if (\$con === null)
 			\$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_WRITE);
-		
+
 		if (!\$this->obj->isNew()) \$con->beginTransaction();
-		
+
 		try {	
 			if (\$beforeNode)
 			{
@@ -803,7 +803,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
 		if (\$con === null) {
 			\$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
-			
+
 		if (!\$this->obj->isNew()) {
 			$nodePeerClassname::deleteNodeSubTree(\$this->getNodePath(), \$con);
 		}
@@ -982,9 +982,9 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
 		if (!\$this->obj->isNew())
 		{
 			// Shift nodes in database.
-			
+
 			\$con->beginTransaction();
-			
+
 			try {
 				\$n = \$lastIdx - \$offsetIdx + 1;
 				\$i = \$direction < 1 ? \$offsetIdx : \$lastIdx;

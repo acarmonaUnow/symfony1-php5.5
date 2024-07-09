@@ -223,7 +223,7 @@ abstract class sfAction extends sfComponent
     {
       // compatibility with url_for2() style signature
       $arguments = func_get_args();
-      call_user_func_array(array($this, 'redirect'), array_slice($arguments, 1));
+      call_user_func_array($this->redirect(...), array_slice($arguments, 1));
     }
   }
 
@@ -246,7 +246,7 @@ abstract class sfAction extends sfComponent
     {
       // compatibility with url_for2() style signature
       $arguments = func_get_args();
-      call_user_func_array(array($this, 'redirect'), array_slice($arguments, 1));
+      call_user_func_array($this->redirect(...), array_slice($arguments, 1));
     }
   }
 
@@ -391,12 +391,7 @@ abstract class sfAction extends sfComponent
       return $this->security[$actionName][$name];
     }
 
-    if (isset($this->security['all'][$name]))
-    {
-      return $this->security['all'][$name];
-    }
-
-    return $default;
+    return $this->security['all'][$name] ?? $default;
   }
 
   /**

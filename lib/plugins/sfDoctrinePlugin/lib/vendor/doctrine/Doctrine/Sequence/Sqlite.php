@@ -55,7 +55,7 @@ class Doctrine_Sequence_Sqlite extends Doctrine_Sequence
                 // sequence at 2
                 try {
                     $result = $this->conn->export->createSequence($seqName, 2);
-                } catch(Doctrine_Exception $e) {
+                } catch(Doctrine_Exception) {
                     throw new Doctrine_Sequence_Exception('on demand sequence ' . $seqName . ' could not be created');
                 }
                 // First ID of a newly created sequence is 1

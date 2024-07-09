@@ -181,7 +181,7 @@ class XmlToAppData extends AbstractHandler {
 							$this->isForReferenceOnly = ($isForRefOnly !== null ? (strtolower($isForRefOnly) === "true") : true); // defaults to TRUE
 						}
 
-						if ($xmlFile{0} != '/') {
+						if ($xmlFile[0] != '/') {
 							$f = new PhingFile($this->currentXmlFile);
 							$xf = new PhingFile($f->getParent(), $xmlFile);
 							$xmlFile = $xf->getPath();
@@ -314,31 +314,21 @@ class XmlToAppData extends AbstractHandler {
 				}
 			} elseif ($parentTag == "behavior") {
 
-				switch($name) {
-					case "parameter":
-						$this->currBehavior->addParameter($attributes);
-					break;
-
-					default:
-						$this->_throwInvalidTagException($name);
-				}
+				match ($name) {
+        "parameter" => $this->currBehavior->addParameter($attributes),
+        default => $this->_throwInvalidTagException($name),
+    };
 			} elseif ($parentTag == "validator") {
-				switch($name) {
-					case "rule":
-						$this->currValidator->addRule($attributes);
-					break;
-					default:
-						$this->_throwInvalidTagException($name);
-				}
+				match ($name) {
+        "rule" => $this->currValidator->addRule($attributes),
+        default => $this->_throwInvalidTagException($name),
+    };
 			} elseif ($parentTag == "vendor") {
 
-				switch($name) {
-					case "parameter":
-						$this->currVendorObject->addParameter($attributes);
-					break;
-					default:
-						$this->_throwInvalidTagException($name);
-				}
+				match ($name) {
+        "parameter" => $this->currVendorObject->addParameter($attributes),
+        default => $this->_throwInvalidTagException($name),
+    };
 
 			} else {
 				// it must be an invalid tag
@@ -356,7 +346,7 @@ class XmlToAppData extends AbstractHandler {
 		}
 	}
 
-	function _throwInvalidTagException($tag_name)
+	function _throwInvalidTagException($tag_name): never
 	{
 		throw new BuildException("Unexpected tag <" . $tag_name . ">", $this->parser->getLocation());
 	}

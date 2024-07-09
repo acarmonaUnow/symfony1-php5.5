@@ -21,7 +21,7 @@ sfContext::createInstance($configuration);
 
 // remove all cache
 sf_functional_test_shutdown();
-register_shutdown_function('sf_functional_test_shutdown');
+register_shutdown_function(sf_functional_test_shutdown(...));
 
 $configuration->initializeDoctrine();
 if (isset($fixtures))

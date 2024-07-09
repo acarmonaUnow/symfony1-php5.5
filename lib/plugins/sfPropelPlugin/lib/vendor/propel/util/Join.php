@@ -236,9 +236,9 @@ class Join
 		{
 			$result .= $this->joinType . ' : ';
 		}
-		foreach ($$this->getConditions() as $index => $condition)
+		foreach (${$this}->getConditions() as $index => $condition)
 		{
-		  $result .= implode($condition);
+		  $result .= implode('', $condition);
 		  if ($index + 1 < $this->count) {
 				$result .= ' AND ';
 			}

@@ -77,7 +77,7 @@ class Doctrine_Cli
     public function __construct(array $config = array(), Doctrine_Cli_Formatter $formatter = null)
     {
         $this->setConfig($config);
-        $this->setFormatter($formatter ? $formatter : new Doctrine_Cli_AnsiColorFormatter());
+        $this->setFormatter($formatter ?: new Doctrine_Cli_AnsiColorFormatter());
         $this->includeAndRegisterTaskClasses();
     }
 
@@ -306,7 +306,7 @@ class Doctrine_Cli
              */
             $matched = (bool) preg_match('/^([A-Z].*?)\.php$/', $baseName, $matches);
 
-            if ( ! ($matched && (strpos($baseName, '.inc') === false))) {
+            if ( ! ($matched && (!str_contains($baseName, '.inc')))) {
                 continue;
             }
 

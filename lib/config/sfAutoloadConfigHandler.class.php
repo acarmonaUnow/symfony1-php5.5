@@ -112,7 +112,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
         {
           foreach ($finder->in($matches) as $file)
           {
-            $mapping = array_merge($mapping, $this->parseFile($path, $file, isset($entry['prefix']) ? $entry['prefix'] : ''));
+            $mapping = array_merge($mapping, static::parseFile($path, $file, isset($entry['prefix']) ? $entry['prefix'] : ''));
           }
         }
       }
@@ -180,7 +180,7 @@ class sfAutoloadConfigHandler extends sfYamlConfigHandler
       }
     }
 
-    $event = $configuration->getEventDispatcher()->filter(new sfEvent(__CLASS__, 'autoload.filter_config'), $config);
+    $event = $configuration->getEventDispatcher()->filter(new sfEvent(self::class, 'autoload.filter_config'), $config);
     $config = $event->getReturnValue();
 
     return $config;

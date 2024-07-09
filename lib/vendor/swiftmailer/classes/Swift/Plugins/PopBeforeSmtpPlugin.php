@@ -259,7 +259,7 @@ class Swift_Plugins_PopBeforeSmtpPlugin
   
   private function _assertOk($response)
   {
-    if (substr($response, 0, 3) != '+OK')
+    if (!str_starts_with($response, '+OK'))
     {
       throw new Swift_Plugins_Pop_Pop3Exception(
         sprintf('POP3 command failed [%s]', trim($response))
@@ -270,16 +270,11 @@ class Swift_Plugins_PopBeforeSmtpPlugin
   private function _getHostString()
   {
     $host = $this->_host;
-    switch (strtolower($this->_crypto))
-    {
-      case 'ssl':
-        $host = 'ssl://' . $host;
-        break;
-      
-      case 'tls':
-        $host = 'tls://' . $host;
-        break;
-    }
+    $host = match (strtolower($this->_crypto)) {
+        'ssl' => 'ssl://' . $host,
+        'tls' => 'tls://' . $host,
+        default => $host,
+    };
     return $host;
   }
   

@@ -226,11 +226,11 @@ class sfClassManipulator
         $line = $break ? '' : array_pop($lines);
         foreach (array_chunk($lines, 2) as $chunk)
         {
-          list($l, $eol) = array_pad($chunk, 2, '');
+          [$l, $eol] = array_pad($chunk, 2, '');
 
           if (1 == $insideSetup)
           {
-            list($before, $setup) = $this->splitSetup($l);
+            [$before, $setup] = $this->splitSetup($l);
             $code .= $before;
             $code .= call_user_func($callable, $setup.$eol);
           }

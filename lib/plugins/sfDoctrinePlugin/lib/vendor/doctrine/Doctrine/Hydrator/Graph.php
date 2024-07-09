@@ -50,9 +50,7 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
 
     public function hydrateResultSet($stmt)
     {
-        // Used variables during hydration
-        reset($this->_queryComponents);
-        $rootAlias = key($this->_queryComponents);
+        $rootAlias = array_key_first($this->_queryComponents);
         $this->_rootAlias = $rootAlias;
         $rootComponentName = $this->_queryComponents[$rootAlias]['table']->getComponentName();
         // if only one component is involved we can make our lives easier
@@ -121,7 +119,7 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
             $table = $this->_queryComponents[$rootAlias]['table'];
 
             if ($table->getConnection()->getAttribute(Doctrine_Core::ATTR_PORTABILITY) & Doctrine_Core::PORTABILITY_RTRIM) {
-                array_map('rtrim', $data);
+                array_map(rtrim(...), $data);
             }
 
             $id = $idTemplate; // initialize the id-memory

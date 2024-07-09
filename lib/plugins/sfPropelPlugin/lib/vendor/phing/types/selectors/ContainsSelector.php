@@ -79,16 +79,11 @@ class ContainsSelector extends BaseExtendSelector {
         if ($parameters !== null) {
             for ($i=0,$size=count($parameters); $i < $size; $i++) {
                 $paramname = $parameters[$i]->getName();
-                switch(strtolower($paramname)) {
-                    case self::CONTAINS_KEY:
-                        $this->setText($parameters[$i]->getValue());
-                        break;
-                    case self::CASE_KEY:
-                        $this->setCasesensitive($parameters[$i]->getValue());
-                        break;
-                    default:
-                        $this->setError("Invalid parameter " . $paramname);
-                }                
+                match (strtolower($paramname)) {
+                    self::CONTAINS_KEY => $this->setText($parameters[$i]->getValue()),
+                    self::CASE_KEY => $this->setCasesensitive($parameters[$i]->getValue()),
+                    default => $this->setError("Invalid parameter " . $paramname),
+                };                
             } // for each param
         } // if params
     }
@@ -134,13 +129,13 @@ class ContainsSelector extends BaseExtendSelector {
                 if (!$this->casesensitive) {
                     $teststr = strtolower($teststr);
                 }
-                if (strpos($teststr, $userstr) !== false) {
+                if (str_contains($teststr, $userstr)) {
                     return true;
                 }
                 $teststr = $in->readLine();
             }
             return false;
-        } catch (IOException $ioe) {
+        } catch (IOException) {
             if ($in) $in->close();
             throw new BuildException("Could not read file " . $filename);
         }

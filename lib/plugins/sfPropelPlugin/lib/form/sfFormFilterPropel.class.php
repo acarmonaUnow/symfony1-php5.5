@@ -71,7 +71,7 @@ abstract class sfFormFilterPropel extends sfFormFilter
       {
         $method = sprintf('convert%sValue', call_user_func(array(constant($this->getModelName().'::PEER'), 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
       }
-      catch (Exception $e)
+      catch (Exception)
       {
         // no a "real" column of this object
         continue;
@@ -137,7 +137,7 @@ abstract class sfFormFilterPropel extends sfFormFilter
       {
         $method = sprintf('add%sColumnCriteria', call_user_func(array($peer, 'translateFieldName'), $field, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_PHPNAME));
       }
-      catch (Exception $e)
+      catch (Exception)
       {
         // not a "real" column
         if (!method_exists($this, $method = sprintf('add%sColumnCriteria', self::camelize($field))))

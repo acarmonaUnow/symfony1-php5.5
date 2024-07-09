@@ -60,7 +60,7 @@ class StringHelper {
         $ret=array();
         $len=strlen($str);
         for ($i=0; $i < $len; $i++) {
-            $ret[] = $str{$i};
+            $ret[] = $str[$i];
         }
         return $ret;
     }
@@ -71,7 +71,7 @@ class StringHelper {
      * @return string
      */    
     public static function qualifier($qualifiedName, $seperator = '.') {
-        $pos = strrchr($qualifiedName, $seperator);
+        $pos = strrchr($qualifiedName, (string) $seperator);
         if ($pos === false) {
             return '';
         } else {
@@ -98,7 +98,7 @@ class StringHelper {
      * @return string
      */ 
     public static function root($qualifiedName, $separator = '.') {
-        $loc = strpos($qualifiedName, $separator);
+        $loc = strpos($qualifiedName, (string) $separator);
         return ($loc === false) ? $qualifiedName : substr($qualifiedName, 0, $loc);
     }
     
@@ -150,7 +150,7 @@ class StringHelper {
         if ($check === "" || $check === $string) {
             return true;
         } else {
-            return (strpos($string, $check) === 0) ? true : false;
+            return (str_starts_with($string, $check)) ? true : false;
         }
     }
     
@@ -159,7 +159,7 @@ class StringHelper {
         if ($check === "" || $check === $string) {
             return true;
         } else {
-            return (strpos(strrev($string), strrev($check)) === 0) ? true : false;
+            return (str_starts_with(strrev($string), strrev($check))) ? true : false;
         }
     }            
 
@@ -177,7 +177,7 @@ class StringHelper {
             trigger_error("substring(), Endindex out of bounds must be $startpos<n<".($len-1), E_USER_ERROR);
         }
         if ($startpos === $endpos) {
-            return (string) $string{$startpos};
+            return (string) $string[$startpos];
         } else {
             $len = $endpos-$startpos;
         }

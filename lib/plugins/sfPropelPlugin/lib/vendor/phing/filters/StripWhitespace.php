@@ -67,7 +67,7 @@ class StripWhitespace extends BaseFilterReader implements ChainableReader {
         }
 		        
 		// write buffer to a temporary file, since php_strip_whitespace() needs a filename
-		$file = new PhingFile(tempnam(PhingFile::getTempDir(), 'stripwhitespace'));
+		$file = new PhingFile(tempnam((new PhingFile())->getTempDir(), 'stripwhitespace'));
 		file_put_contents($file->getAbsolutePath(), $php);
 		$output = php_strip_whitespace($file->getAbsolutePath());
 		unlink($file->getAbsolutePath());

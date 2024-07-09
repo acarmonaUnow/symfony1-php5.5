@@ -51,11 +51,11 @@ class Doctrine_Query_Orderby extends Doctrine_Query_Part
             if ($pos !== false) {
                 $name = substr($term[0], 0, $pos);
 
-                $term[0] = $this->query->parseFunctionExpression($term[0], array($this, 'parse'));
+                $term[0] = $this->query->parseFunctionExpression($term[0], $this->parse(...));
             } else {
-                if (substr($term[0], 0, 1) !== "'" && substr($term[0], -1) !== "'") {
+                if (!str_starts_with($term[0], "'") && !str_ends_with($term[0], "'")) {
 
-                    if (strpos($term[0], '.') !== false) {
+                    if (str_contains($term[0], '.')) {
                         if ( ! is_numeric($term[0])) {
                             $e = explode('.', $term[0]);
 
@@ -114,7 +114,7 @@ class Doctrine_Query_Orderby extends Doctrine_Query_Part
                     } else {
                         if ( ! empty($term[0]) &&
                              ! is_numeric($term[0]) &&
-                            $term[0] !== '?' && substr($term[0], 0, 1) !== ':') {
+                            $term[0] !== '?' && !str_starts_with($term[0], ':')) {
 
                             $componentAlias = $this->query->getRootAlias();
 

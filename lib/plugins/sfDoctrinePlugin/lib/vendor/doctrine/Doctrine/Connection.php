@@ -53,7 +53,7 @@
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (MDB2 library)
  */
-abstract class Doctrine_Connection extends Doctrine_Configurable implements Countable, IteratorAggregate, Serializable
+abstract class Doctrine_Connection extends Doctrine_Configurable implements Countable, IteratorAggregate, Serializable, \Stringable
 {
     /**
      * @var $dbh                                the database handler
@@ -290,7 +290,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
         if ($this->isConnected) {
             try {
                 return $this->dbh->getAttribute($attribute);
-            } catch (Exception $e) {
+            } catch (Exception) {
                 throw new Doctrine_Connection_Exception('Attribute ' . $attribute . ' not found.');
             }
         } else {
@@ -923,8 +923,8 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
             $this->getAttribute(Doctrine_Core::ATTR_LISTENER)->postPrepare($event);
 
             return new Doctrine_Connection_Statement($this, $stmt);
-        } catch(Doctrine_Adapter_Exception $e) {
-        } catch(PDOException $e) { }
+        } catch(Doctrine_Adapter_Exception|PDOException $e) {
+        }
 
         $this->rethrowException($e, $this, $statement);
     }
@@ -1019,8 +1019,8 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
 
                 return $stmt;
             }
-        } catch (Doctrine_Adapter_Exception $e) {
-        } catch (PDOException $e) { }
+        } catch (Doctrine_Adapter_Exception|PDOException $e) {
+        }
 
         $this->rethrowException($e, $this, $query);
     }
@@ -1055,8 +1055,8 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
 
                 return $count;
             }
-        } catch (Doctrine_Adapter_Exception $e) {
-        } catch (PDOException $e) { }
+        } catch (Doctrine_Adapter_Exception|PDOException $e) {
+        }
 
         $this->rethrowException($e, $this, $query);
     }
@@ -1551,7 +1551,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      * returns a string representation of this object
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return Doctrine_Lib::getConnectionAsString($this);
     }

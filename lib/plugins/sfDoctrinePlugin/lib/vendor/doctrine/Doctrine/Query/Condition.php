@@ -82,7 +82,7 @@ abstract class Doctrine_Query_Condition extends Doctrine_Query_Part
                 $r = implode(' AND ', $ret);
             } else {
                 // Fix for #710
-                if (substr($parts[0],0,1) == '(' && substr($parts[0], -1) == ')') {
+                if (str_starts_with($parts[0], '(') && str_ends_with($parts[0], ')')) {
                     return $this->parse(substr($parts[0], 1, -1));
                 } else {
                     // Processing NOT here
@@ -110,7 +110,7 @@ abstract class Doctrine_Query_Condition extends Doctrine_Query_Part
     public function parseLiteralValue($value)
     {
         // check that value isn't a string
-        if (strpos($value, '\'') === false) {
+        if (!str_contains($value, '\'')) {
             // parse booleans
             $value = $this->query->getConnection()
                      ->dataDict->parseBoolean($value);

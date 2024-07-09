@@ -173,7 +173,7 @@ class XmlLogger implements BuildLogger {
         } catch (IOException $exc) {
         	try {
         		$stream->close(); // in case there is a stream open still ...
-        	} catch (Exception $x) {}
+        	} catch (Exception) {}
         	throw new BuildException("Unable to write log file.", $exc);
         }
         
@@ -272,20 +272,12 @@ class XmlLogger implements BuildLogger {
 		
 		$messageElement = $this->doc->createElement(XmlLogger::MESSAGE_TAG);
 		
-		switch ($priority) {
-			case Project::MSG_ERR: 
-				$name = "error"; 
-				break;
-			case Project::MSG_WARN:
-				$name = "warn";
-				break;
-			case Project::MSG_INFO:
-				$name = "info";
-				break;
-			default:
-				$name = "debug";
-				break;
-		}
+		$name = match ($priority) {
+      Project::MSG_ERR => "error",
+      Project::MSG_WARN => "warn",
+      Project::MSG_INFO => "info",
+      default => "debug",
+  };
 		
 		$messageElement->setAttribute(XmlLogger::PRIORITY_ATTR, $name);
 		

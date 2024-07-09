@@ -161,7 +161,7 @@ abstract class sfTask
       }
 
       // add -- before each option if needed
-      if (0 !== strpos($value, '--'))
+      if (!str_starts_with($value, '--'))
       {
         $value = '--'.$value;
       }
@@ -261,12 +261,12 @@ abstract class sfTask
 
     $name = get_class($this);
 
-    if ('sf' == substr($name, 0, 2))
+    if (str_starts_with($name, 'sf'))
     {
       $name = substr($name, 2);
     }
 
-    if ('Task' == substr($name, -4))
+    if (str_ends_with($name, 'Task'))
     {
       $name = substr($name, 0, -4);
     }
@@ -305,9 +305,7 @@ abstract class sfTask
   public function getDetailedDescription()
   {
     $formatter = $this->getFormatter();
-    return preg_replace_callback('/\[(.+?)\|(\w+)\]/s', function ($match) use ($formatter) {
-      return $formatter->format($match['1'], $match['2']);
-    }, $this->detailedDescription);
+    return preg_replace_callback('/\[(.+?)\|(\w+)\]/s', fn($match) => $formatter->format($match['1'], $match['2']), $this->detailedDescription);
   }
 
   /**
@@ -468,7 +466,7 @@ abstract class sfTask
 
     $ret = trim(fgets(STDIN));
 
-    return $ret ? $ret : $default;
+    return $ret ?: $default;
   }
 
   /**
@@ -535,7 +533,7 @@ abstract class sfTask
       {
         return $validator->clean($options['value']);
       }
-      catch (sfValidatorError $error)
+      catch (sfValidatorError)
       {
       }
     }
@@ -555,7 +553,7 @@ abstract class sfTask
       {
         return $validator->clean($value);
       }
-      catch (sfValidatorError $error)
+      catch (sfValidatorError)
       {
       }
     }
@@ -574,7 +572,7 @@ abstract class sfTask
     $dom->formatOutput = true;
     $dom->appendChild($taskXML = $dom->createElement('task'));
     $taskXML->setAttribute('id', $this->getFullName());
-    $taskXML->setAttribute('namespace', $this->getNamespace() ? $this->getNamespace() : '_global');
+    $taskXML->setAttribute('namespace', $this->getNamespace() ?: '_global');
     $taskXML->setAttribute('name', $this->getName());
 
     $taskXML->appendChild($usageXML = $dom->createElement('usage'));

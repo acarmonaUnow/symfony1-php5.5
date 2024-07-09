@@ -85,7 +85,7 @@ class TypeSelector extends BaseExtendSelector {
         if ($this->type === null) {
             $this->setError("The type attribute is required");
         } elseif (!in_array($this->type, self::$types, true)) {
-            $this->setError("Invalid type specified; must be one of (" . implode(self::$types) . ")");
+            $this->setError("Invalid type specified; must be one of (" . implode('', self::$types) . ")");
         }
     }
 

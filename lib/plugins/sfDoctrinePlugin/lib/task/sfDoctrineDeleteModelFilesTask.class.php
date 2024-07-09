@@ -61,9 +61,9 @@ EOF;
       $this->configuration->getPluginSubPaths('/lib/filter/doctrine')
     );
 
-    $prefixPattern    = $this->valuesToRegex($options['prefix'] ? $options['prefix'] : array('', 'Base', 'Plugin'));
-    $suffixPattern    = $this->valuesToRegex($options['suffix'] ? $options['suffix'] : array('', 'Table', 'Form', 'FormFilter'));
-    $extensionPattern = $this->valuesToRegex($options['extension'] ? $options['extension'] : array('.php', '.class.php'));
+    $prefixPattern    = $this->valuesToRegex($options['prefix'] ?: array('', 'Base', 'Plugin'));
+    $suffixPattern    = $this->valuesToRegex($options['suffix'] ?: array('', 'Table', 'Form', 'FormFilter'));
+    $extensionPattern = $this->valuesToRegex($options['extension'] ?: array('.php', '.class.php'));
 
     $total = 0;
 
@@ -76,7 +76,7 @@ EOF;
       {
         if (!$options['no-confirmation'] && !$this->askConfirmation(array_merge(
           array('The following '.$modelName.' files will be deleted:', ''),
-          array_map(function($v) { return ' - ' . sfDebug::shortenFilePath($v); }, $files),
+          array_map(fn($v) => ' - ' . sfDebug::shortenFilePath($v), $files),
           array('', 'Continue? (y/N)')
         ), 'QUESTION_LARGE', false))
         {

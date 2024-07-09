@@ -107,10 +107,10 @@ class sfEAcceleratorCache extends sfCache
     {
       foreach ($infos as $info)
       {
-        if (false !== strpos($info['name'], $this->getOption('prefix')))
+        if (str_contains($info['name'], $this->getOption('prefix')))
         {
           // eaccelerator bug (http://eaccelerator.net/ticket/287)
-          $key = 0 === strpos($info['name'], ':') ? substr($info['name'], 1) : $info['name'];
+          $key = str_starts_with($info['name'], ':') ? substr($info['name'], 1) : $info['name'];
           if (!eaccelerator_rm($key))
           {
             return false;

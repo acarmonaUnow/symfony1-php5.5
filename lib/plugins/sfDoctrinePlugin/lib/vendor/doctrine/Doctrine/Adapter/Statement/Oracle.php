@@ -96,7 +96,7 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
      * @param integer $type         Data type of the parameter, specified by the Doctrine_Core::PARAM_* constants.
      * @return boolean              Returns TRUE on success or FALSE on failure
      */
-    public function bindColumn($column, $param, $type = null)
+    public function bindColumn($column, $param, $type = null): never
     {
         throw new Doctrine_Adapter_Exception("Unsupported");
     }
@@ -306,41 +306,13 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
      */
     public function fetch($fetchStyle = Doctrine_Core::FETCH_BOTH, $cursorOrientation = Doctrine_Core::FETCH_ORI_NEXT, $cursorOffset = null)
     {
-        switch ($fetchStyle) {
-            case Doctrine_Core::FETCH_BOTH :
-                return oci_fetch_array($this->statement, OCI_BOTH + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
-            break;
-            case Doctrine_Core::FETCH_ASSOC :
-                return oci_fetch_array($this->statement, OCI_ASSOC + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
-            break;
-            case Doctrine_Core::FETCH_NUM :
-                return oci_fetch_array($this->statement, OCI_NUM + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
-            break;
-            case Doctrine_Core::FETCH_OBJ:
-                return oci_fetch_object($this->statement, OCI_NUM + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
-            break;
-            default:
-                throw new Doctrine_Adapter_Exception("This type of fetch is not supported: ".$fetchStyle); 
-/*
-            case Doctrine_Core::FETCH_BOUND:
-            case Doctrine_Core::FETCH_CLASS:
-            case FETCH_CLASSTYPE:
-            case FETCH_COLUMN:
-            case FETCH_FUNC:
-            case FETCH_GROUP:
-            case FETCH_INTO:
-            case FETCH_LAZY:
-            case FETCH_NAMED:
-            case FETCH_SERIALIZE:
-            case FETCH_UNIQUE:
-               case FETCH_ORI_ABS:
-            case FETCH_ORI_FIRST:
-            case FETCH_ORI_LAST:
-            case FETCH_ORI_NEXT:
-            case FETCH_ORI_PRIOR:
-            case FETCH_ORI_REL:
-*/
-        }
+        return match ($fetchStyle) {
+            Doctrine_Core::FETCH_BOTH => oci_fetch_array($this->statement, OCI_BOTH + OCI_RETURN_NULLS + OCI_RETURN_LOBS),
+            Doctrine_Core::FETCH_ASSOC => oci_fetch_array($this->statement, OCI_ASSOC + OCI_RETURN_NULLS + OCI_RETURN_LOBS),
+            Doctrine_Core::FETCH_NUM => oci_fetch_array($this->statement, OCI_NUM + OCI_RETURN_NULLS + OCI_RETURN_LOBS),
+            Doctrine_Core::FETCH_OBJ => oci_fetch_object($this->statement, OCI_NUM + OCI_RETURN_NULLS + OCI_RETURN_LOBS),
+            default => throw new Doctrine_Adapter_Exception("This type of fetch is not supported: ".$fetchStyle),
+        };
     }
 
     /**
@@ -493,7 +465,7 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
      *
      * @return boolean                      Returns TRUE on success or FALSE on failure.
      */
-    public function nextRowset()
+    public function nextRowset(): never
     {
         throw new Doctrine_Adapter_Exception("Unsupported");
     }
@@ -550,7 +522,7 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
      * @param integer $mode                 The fetch mode must be one of the Doctrine_Core::FETCH_* constants.
      * @return boolean                      Returns 1 on success or FALSE on failure.
      */
-    public function setFetchMode($mode, $arg1 = null, $arg2 = null)
+    public function setFetchMode($mode, $arg1 = null, $arg2 = null): never
     {
         throw new Doctrine_Adapter_Exception("Unsupported");
     }

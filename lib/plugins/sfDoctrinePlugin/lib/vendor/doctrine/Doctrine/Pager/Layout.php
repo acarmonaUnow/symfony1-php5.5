@@ -30,7 +30,7 @@
  * @link        www.doctrine-project.org
  * @since       0.9
  */
-class Doctrine_Pager_Layout
+class Doctrine_Pager_Layout implements \Stringable
 {
     /**
      * @var Doctrine_Pager $_pager      Doctrine_Pager object related to the pager layout
@@ -379,9 +379,9 @@ class Doctrine_Pager_Layout
     /**
      * Simply calls display, and returns the output.
      */
-    public function __toString()
+    public function __toString(): string
     {
-      return $this->display(array(), true);
+      return (string) $this->display(array(), true);
     }
 
     /**

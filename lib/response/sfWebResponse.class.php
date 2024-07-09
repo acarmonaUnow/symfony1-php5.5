@@ -101,7 +101,7 @@ class sfWebResponse extends sfResponse
      */
     public function __unserialize($data)
     {
-        list($this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots) = $data;
+        [$this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots] = $data;
     }
 
   /**
@@ -355,7 +355,7 @@ class sfWebResponse extends sfResponse
     $status = $this->options['http_protocol'].' '.$this->statusCode.' '.$this->statusText;
     header($status);
 
-    if (substr(php_sapi_name(), 0, 3) == 'cgi')
+    if (str_starts_with(php_sapi_name(), 'cgi'))
     {
       // fastcgi servers cannot send this status information because it was sent by them already due to the HTT/1.0 line
       // so we can safely unset them. see ticket #3191
@@ -385,7 +385,7 @@ class sfWebResponse extends sfResponse
     // cookies
     foreach ($this->cookies as $cookie)
     {
-      setrawcookie($cookie['name'], $cookie['value'], $cookie['expire'], $cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['httpOnly']);
+      setrawcookie($cookie['name'], $cookie['value'], ['expires' => $cookie['expire'], 'path' => $cookie['path'], 'domain' => $cookie['domain'], 'secure' => $cookie['secure'], 'httponly' => $cookie['httpOnly']]);
 
       if ($this->options['logging'])
       {
@@ -855,7 +855,7 @@ class sfWebResponse extends sfResponse
    */
   public function unserialize($serialized)
   {
-    list($this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots) = unserialize($serialized);
+    [$this->content, $this->statusCode, $this->statusText, $this->options, $this->headerOnly, $this->headers, $this->metas, $this->httpMetas, $this->stylesheets, $this->javascripts, $this->slots] = unserialize($serialized);
   }
 
   /**
