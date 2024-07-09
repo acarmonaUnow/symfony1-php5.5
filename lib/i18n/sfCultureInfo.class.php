@@ -225,7 +225,7 @@ class sfCultureInfo implements \Stringable
    */
   protected static function dataDir()
   {
-    return dirname(__FILE__).'/data/';
+    return __DIR__.'/data/';
   }
 
   /**

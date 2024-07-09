@@ -8,8 +8,8 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(__FILE__) . '/../HeaderEncoder.php';
-require_once dirname(__FILE__) . '/../../Encoder/Base64Encoder.php';
+require_once __DIR__ . '/../HeaderEncoder.php';
+require_once __DIR__ . '/../../Encoder/Base64Encoder.php';
 
 
 /**

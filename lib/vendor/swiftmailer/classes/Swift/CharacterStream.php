@@ -8,8 +8,8 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(__FILE__) . '/OutputByteStream.php';
-require_once dirname(__FILE__) . '/CharacterReaderFactory.php';
+require_once __DIR__ . '/OutputByteStream.php';
+require_once __DIR__ . '/CharacterReaderFactory.php';
 
 
 /**

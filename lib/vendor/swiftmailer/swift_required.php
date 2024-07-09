@@ -18,7 +18,7 @@ if (defined('SWIFT_REQUIRED_LOADED'))
 define('SWIFT_REQUIRED_LOADED', true);
 
 //Load Swift utility class
-require dirname(__FILE__) . '/classes/Swift.php';
+require __DIR__ . '/classes/Swift.php';
 
 //Start the autoloader and lazy-load the init script to set up dependency injection
-Swift::registerAutoload(dirname(__FILE__) . '/swift_init.php');
+Swift::registerAutoload(__DIR__ . '/swift_init.php');
