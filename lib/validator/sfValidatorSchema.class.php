@@ -361,7 +361,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
   /**
    * @see sfValidatorBase
    */
-  public function asString($indent = 0): never
+  public function asString($indent = 0)
   {
     throw new Exception('Unable to convert a sfValidatorSchema to string.');
   }

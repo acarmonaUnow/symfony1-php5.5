@@ -341,7 +341,7 @@ class XmlToAppData extends AbstractHandler {
 		}
 	}
 
-	function _throwInvalidTagException($tag_name): never
+	function _throwInvalidTagException($tag_name)
 	{
 		throw new BuildException("Unexpected tag <" . $tag_name . ">", $this->parser->getLocation());
 	}

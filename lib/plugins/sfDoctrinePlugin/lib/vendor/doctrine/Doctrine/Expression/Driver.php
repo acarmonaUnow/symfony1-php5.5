@@ -48,7 +48,7 @@ class Doctrine_Expression_Driver extends Doctrine_Connection_Module
      *
      * @return string
      */
-    public function regexp(): never
+    public function regexp()
     {
         throw new Doctrine_Expression_Exception('Regular expression operator is not supported by this database driver.');
     }
@@ -268,7 +268,7 @@ class Doctrine_Expression_Driver extends Doctrine_Connection_Module
      * @param string $value
      * @return string   SQL soundex function with given parameter
      */
-    public function soundex($value): never
+    public function soundex($value)
     {
         throw new Doctrine_Expression_Exception('SQL soundex function not supported by this driver.');
     }
@@ -572,7 +572,7 @@ class Doctrine_Expression_Driver extends Doctrine_Connection_Module
      *
      * @return string to get global unique identifier
      */
-    public function guid(): never
+    public function guid()
     {
         throw new Doctrine_Expression_Exception('method not implemented');
     }

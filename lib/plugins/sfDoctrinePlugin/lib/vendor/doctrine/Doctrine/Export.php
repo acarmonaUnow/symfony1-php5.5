@@ -56,7 +56,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      * @param string $name name of the database that should be dropped
      * @return void
      */
-    public function dropDatabaseSql($database): never
+    public function dropDatabaseSql($database)
     {
         throw new Doctrine_Export_Exception('Drop database not supported by this driver.');
     }
@@ -161,7 +161,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      * @param string $sequenceName name of the sequence to be dropped
      * @return void
      */
-    public function dropSequenceSql($sequenceName): never
+    public function dropSequenceSql($sequenceName)
     {
         throw new Doctrine_Export_Exception('Drop sequence not supported by this driver.');
     }
@@ -185,7 +185,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      * @param string $name name of the database that should be created
      * @return string
      */
-    public function createDatabaseSql($database): never
+    public function createDatabaseSql($database)
     {
         throw new Doctrine_Export_Exception('Create database not supported by this driver.');
     }
@@ -335,7 +335,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      *                          );
      * @return string
      */
-    public function createSequenceSql($seqName, $start = 1, array $options = []): never
+    public function createSequenceSql($seqName, $start = 1, array $options = [])
     {
         throw new Doctrine_Export_Exception('Create sequence not supported by this driver.');
     }
@@ -619,7 +619,7 @@ class Doctrine_Export extends Doctrine_Connection_Module
      * @see Doctrine_Export::alterTable()
      * @return string
      */
-    public function alterTableSql($name, array $changes, $check = false): never
+    public function alterTableSql($name, array $changes, $check = false)
     {
         throw new Doctrine_Export_Exception('Alter table not supported by this driver.');
     }

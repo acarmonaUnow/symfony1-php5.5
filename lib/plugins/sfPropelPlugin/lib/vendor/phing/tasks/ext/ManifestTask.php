@@ -243,7 +243,7 @@ class ManifestTask extends Task
     /**
      * @todo implement
      */
-    private function read(): never
+    private function read()
     {
     	throw new BuildException("Checking against manifest not yet supported.");
     }

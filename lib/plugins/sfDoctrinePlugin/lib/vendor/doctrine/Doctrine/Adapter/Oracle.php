@@ -186,7 +186,7 @@ class Doctrine_Adapter_Oracle implements Doctrine_Adapter_Interface
      *
      * @return integer $id
      */
-    public function lastInsertId(): never
+    public function lastInsertId()
     {
         throw new Doctrine_Adapter_Exception("unsupported");
     }

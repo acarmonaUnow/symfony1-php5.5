@@ -402,7 +402,7 @@ class Win32FileSystem extends FileSystem {
 
     /* -- Attribute accessors -- */
 
-    function setReadOnly($f): never {
+    function setReadOnly($f) {
         // dunno how to do this on win
         throw new Exception("WIN32FileSystem doesn't support read-only yet.");
     }

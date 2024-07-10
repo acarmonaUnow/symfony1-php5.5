@@ -84,7 +84,7 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
      * @param integer $type         Data type of the parameter, specified by the Doctrine_Core::PARAM_* constants.
      * @return boolean              Returns TRUE on success or FALSE on failure
      */
-    public function bindColumn($column, $param, $type = null): never
+    public function bindColumn($column, $param, $type = null)
     {
         throw new Doctrine_Adapter_Exception("Unsupported");
     }
@@ -453,7 +453,7 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
      *
      * @return boolean                      Returns TRUE on success or FALSE on failure.
      */
-    public function nextRowset(): never
+    public function nextRowset()
     {
         throw new Doctrine_Adapter_Exception("Unsupported");
     }
@@ -510,7 +510,7 @@ class Doctrine_Adapter_Statement_Oracle implements Doctrine_Adapter_Statement_In
      * @param integer $mode                 The fetch mode must be one of the Doctrine_Core::FETCH_* constants.
      * @return boolean                      Returns 1 on success or FALSE on failure.
      */
-    public function setFetchMode($mode, $arg1 = null, $arg2 = null): never
+    public function setFetchMode($mode, $arg1 = null, $arg2 = null)
     {
         throw new Doctrine_Adapter_Exception("Unsupported");
     }

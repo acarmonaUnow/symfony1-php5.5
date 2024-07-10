@@ -131,7 +131,7 @@ class Swift_Plugins_LoggerPlugin
    * 
    * @param Swift_Events_TransportExceptionEvent $evt
    */
-  public function exceptionThrown(Swift_Events_TransportExceptionEvent $evt): never
+  public function exceptionThrown(Swift_Events_TransportExceptionEvent $evt)
   {
     $e = $evt->getException();
     $message = $e->getMessage();

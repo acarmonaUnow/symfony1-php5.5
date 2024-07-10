@@ -42,7 +42,7 @@ class sfValidatorSchemaForEach extends sfValidatorSchema
   /**
    * @see sfValidatorBase
    */
-  public function asString($indent = 0): never
+  public function asString($indent = 0)
   {
     throw new Exception('Unable to convert a sfValidatorSchemaForEach to string.');
   }

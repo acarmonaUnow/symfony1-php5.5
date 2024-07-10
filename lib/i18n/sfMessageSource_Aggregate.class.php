@@ -178,7 +178,7 @@ class sfMessageSource_Aggregate extends sfMessageSource
     return md5($id);
   }
 
-  public function catalogues(): never
+  public function catalogues()
   {
     throw new sfException('The "catalogues()" method is not implemented for this message source.');
   }
