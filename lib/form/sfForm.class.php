@@ -1150,7 +1150,7 @@ class sfForm implements ArrayAccess, Iterator, Countable, \Stringable
     {
       $values = $this->isBound ? $this->taintedValues : $this->defaults + $this->widgetSchema->getDefaults();
 
-      $this->formFieldSchema = new sfFormFieldSchema($this->widgetSchema, null, $values, null, $this->errorSchema);
+      $this->formFieldSchema = new sfFormFieldSchema($this->widgetSchema, null, null, $values, $this->errorSchema);
     }
 
     return $this->formFieldSchema;
