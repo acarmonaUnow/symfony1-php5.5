@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Manager.php 7657 2010-06-08 17:57:01Z jwage $
+ *  $Id$
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -29,7 +29,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.doctrine-project.org
  * @since       1.0
- * @version     $Revision: 7657 $
+ * @version     $Revision$
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Manager extends Doctrine_Configurable implements Countable, IteratorAggregate
@@ -90,7 +90,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
         'oracle'   => 'Doctrine_Connection_Oracle',
         'mssql'    => 'Doctrine_Connection_Mssql',
         'dblib'    => 'Doctrine_Connection_Mssql',
-        'odbc'     => 'Doctrine_Connection_Mssql', 
+        'odbc'     => 'Doctrine_Connection_Mssql',
         'mock'     => 'Doctrine_Connection_Mock'
     );
 
@@ -120,8 +120,8 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
     /**
      * Sets default attributes values.
      *
-     * This method sets default values for all null attributes of this 
-     * instance. It is idempotent and can only be called one time. Subsequent 
+     * This method sets default values for all null attributes of this
+     * instance. It is idempotent and can only be called one time. Subsequent
      * calls does not alter the attribute values.
      *
      * @return boolean      true if inizialization was executed
@@ -134,6 +134,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
                         Doctrine_Core::ATTR_CACHE                        => null,
                         Doctrine_Core::ATTR_RESULT_CACHE                 => null,
                         Doctrine_Core::ATTR_QUERY_CACHE                  => null,
+                        Doctrine_Core::ATTR_TABLE_CACHE                  => null,
                         Doctrine_Core::ATTR_LOAD_REFERENCES              => true,
                         Doctrine_Core::ATTR_LISTENER                     => new Doctrine_EventListener(),
                         Doctrine_Core::ATTR_RECORD_LISTENER              => new Doctrine_Record_Listener(),
@@ -161,8 +162,10 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
                         Doctrine_Core::ATTR_COLLECTION_CLASS             => 'Doctrine_Collection',
                         Doctrine_Core::ATTR_TABLE_CLASS                  => 'Doctrine_Table',
                         Doctrine_Core::ATTR_CASCADE_SAVES                => true,
-                        Doctrine_Core::ATTR_TABLE_CLASS_FORMAT           => '%sTable'
-                        ); 
+                        Doctrine_Core::ATTR_TABLE_CLASS_FORMAT           => '%sTable',
+                        Doctrine_Core::ATTR_USE_TABLE_REPOSITORY         => true,
+                        Doctrine_Core::ATTR_USE_TABLE_IDENTITY_MAP       => true,
+                        );
             foreach ($attributes as $attribute => $value) {
                 $old = $this->getAttribute($attribute);
                 if ($old === null) {
@@ -243,7 +246,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
     public function setQueryRegistry(Doctrine_Query_Registry $registry)
     {
         $this->_queryRegistry = $registry;
-        
+
         return $this;
     }
 
@@ -345,7 +348,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
         }
         return $this->_connections[$name];
     }
-    
+
     /**
      * Parse a pdo style dsn in to an array of parts
      *
@@ -395,7 +398,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      * Build the blank dsn parts array used with parseDsn()
      *
      * @see parseDsn()
-     * @param string $dsn 
+     * @param string $dsn
      * @return array $parts
      */
     protected function _buildDsnPartsArray($dsn)
@@ -407,6 +410,10 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
 
         // silence any warnings
         $parts = @parse_url($dsn);
+
+        if ($parts === false) {
+            $parts = array();
+        }
 
         $names = array('dsn', 'scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment');
 
@@ -607,7 +614,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      * Sets the current connection to $key
      *
      * @param mixed $key                        the connection key
-     * @throws InvalidKeyException
+     * @throws Doctrine_Manager_Exception
      * @return void
      */
     public function setCurrentConnection($key)
@@ -768,7 +775,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
     /**
      * Register validators so that Doctrine is aware of them
      *
-     * @param  mixed $validators Name of validator or array of validators
+     * @param  mixed $validators Name of validator or array of validators
      * @return void
      */
     public function registerValidators($validators)
@@ -818,14 +825,14 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      */
     public function getConnectionDrivers()
     {
-        return $this->_connectionsDrivers;
+        return $this->_connectionDrivers;
     }
 
     /**
      * Register a Doctrine extension for extensionsAutoload() method
      *
-     * @param string $name 
-     * @param string $path 
+     * @param string $name
+     * @param string $path
      * @return void
      */
     public function registerExtension($name, $path = null)

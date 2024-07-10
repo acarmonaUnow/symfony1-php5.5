@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Table.php 7681 2010-08-24 15:55:34Z jwage $
+ *  $Id$
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,11 +28,9 @@
  * @package     Doctrine
  * @subpackage  Table
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @version     $Revision: 7681 $
+ * @version     $Revision$
  * @link        www.doctrine-project.org
  * @since       1.0
- * @method mixed findBy*(mixed $value) magic finders; @see __call()
- * @method mixed findOneBy*(mixed $value) magic finders; @see __call()
  */
 class Doctrine_Table extends Doctrine_Configurable implements Countable, Serializable
 {
@@ -223,6 +221,11 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
     protected $_invokedMethods = array();
 
     /**
+     * @var boolean $_useIdentityMap Use or not identyMap cache
+     */
+    protected $_useIdentityMap = true;
+
+    /**
      * @var Doctrine_Record $record             empty instance of the given model
      */
     protected $record;
@@ -270,7 +273,13 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         }
 
         $this->_filters[]  = new Doctrine_Record_Filter_Standard();
-        $this->_repository = new Doctrine_Table_Repository($this);
+        if ($this->getAttribute(Doctrine_Core::ATTR_USE_TABLE_REPOSITORY)) {
+            $this->_repository = new Doctrine_Table_Repository($this);
+        } else {
+            $this->_repository = new Doctrine_Table_Repository_None($this);
+        }
+
+        $this->_useIdentityMap = $this->getAttribute(Doctrine_Core::ATTR_USE_TABLE_IDENTITY_MAP);
 
         $this->construct();
     }
@@ -345,7 +354,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             }
             $ref = new ReflectionClass($parent);
 
-            if ($ref->isAbstract() || ! $class->isSubClassOf($parent)) {
+            if ($ref->isAbstract() || ! $class->isSubclassOf($parent)) {
                 continue;
             }
             $parentTable = $this->_conn->getTable($parent);
@@ -550,7 +559,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
     /**
      * Checks whether a column is inherited from a component further up in the hierarchy.
      *
-     * @param $columnName  The column name
+     * @param string $columnName The column name
      * @return boolean     TRUE if column is inherited, FALSE otherwise.
      */
     public function isInheritedColumn($columnName)
@@ -954,7 +963,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @param string $componentName     the name of the related component
      * @param string $options           relation options
      * @see Doctrine_Relation::_$definition
-     * @return Doctrine_Record          this object
+     * @return void
      */
     public function hasOne()
     {
@@ -967,7 +976,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @param string $componentName     the name of the related component
      * @param string $options           relation options
      * @see Doctrine_Relation::_$definition
-     * @return Doctrine_Record          this object
+     * @return void
      */
     public function hasMany()
     {
@@ -983,7 +992,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * side.
      *
      * @param string $alias      the relation alias to search for.
-     * @return boolean           true if the relation exists. Otherwise false.
+     * @return bool              true if the relation exists. Otherwise false.
      */
     public function hasRelation($alias)
     {
@@ -1121,6 +1130,11 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
            $alias = $this->getComponentName();
         }
 
+        // Php8.1 require a string
+        if (null === $orderBy) {
+            $orderBy = '';
+        }
+
         if ( ! is_array($orderBy)) {
             $e1 = explode(',', $orderBy);
         } else {
@@ -1163,6 +1177,10 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
 
         if (isset($this->_columnNames[$fieldName])) {
             return $this->_columnNames[$fieldName];
+        }
+
+        if (null === $fieldName) {
+            return '';
         }
 
         return strtolower($fieldName);
@@ -1375,7 +1393,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
 
         $options['type'] = $type;
         $options['length'] = $length;
-        
+
         if (strtolower($fieldName) != $name) {
             $options['alias'] = $fieldName;
         }
@@ -1484,8 +1502,9 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * This method assign the connection which this table will use
      * to create queries.
      *
-     * @params Doctrine_Connection      a connection object
-     * @return Doctrine_Table           this object; fluent interface
+     * @param Doctrine_Connection $conn a connection object
+     *
+     * @return Doctrine_Table this object; fluent interface
      */
     public function setConnection(Doctrine_Connection $conn)
     {
@@ -1512,13 +1531,14 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * This method create a new instance of the model defined by this table.
      * The class of this record is the subclass of Doctrine_Record defined by
      * this component. The record is not created in the database until you
-     * call @save().
+     * call Doctrine_Record::save().
      *
-     * @param $array             an array where keys are field names and
-     *                           values representing field values. Can contain
-     *                           also related components;
-     *                           @see Doctrine_Record::fromArray()
-     * @return Doctrine_Record   the created record object
+     * @param array $array an array where keys are field names and
+     *                     values representing field values. Can contain
+     *                     also related components;
+     *                     @see Doctrine_Record::fromArray()
+     *
+     * @return Doctrine_Record the created record object
      */
     public function create(array $array = array())
     {
@@ -1532,9 +1552,12 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * Adds a named query in the query registry.
      *
      * This methods register a query object with a name to use in the future.
+     *
      * @see createNamedQuery()
-     * @param $queryKey                       query key name to use for storage
+     *
+     * @param string                $queryKey query key name to use for storage
      * @param string|Doctrine_Query $query    DQL string or object
+     *
      * @return void
      */
     public function addNamedQuery($queryKey, $query)
@@ -1580,7 +1603,8 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      *                            Otherwise this argument expect an array of query params.
      * @param int $hydrationMode  Optional Doctrine_Core::HYDRATE_ARRAY or Doctrine_Core::HYDRATE_RECORD if
      *                            first argument is a NamedQuery
-     * @return mixed              Doctrine_Collection, array, Doctrine_Record or false if no result
+     *
+     * @return Doctrine_Collection|array|Doctrine_Record|false Doctrine_Collection, array, Doctrine_Record or false if no result
      */
     public function find()
     {
@@ -1633,8 +1657,6 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             $res = $q->fetchOne($params, $hydrationMode);
         }
 
-        $q->free();
-
         return $res;
     }
 
@@ -1646,8 +1668,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function findAll($hydrationMode = null)
     {
-        return $this->createQuery('dctrn_find')
-            ->execute(array(), $hydrationMode);
+        return $this->createQuery('dctrn_find')->execute(array(), $hydrationMode);
     }
 
     /**
@@ -1687,7 +1708,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * Find records basing on a field.
      *
      * @param string $column            field for the WHERE clause
-     * @param string $value             prepared statement parameter
+     * @param string|array $value       prepared statement parameter
      * @param int $hydrationMode        Doctrine_Core::HYDRATE_ARRAY or Doctrine_Core::HYDRATE_RECORD
      * @return Doctrine_Collection|array
      */
@@ -1702,7 +1723,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * Finds the first record that satisfy the clause.
      *
      * @param string $column            field for the WHERE clause
-     * @param string $value             prepared statement parameter
+     * @param string|array $value       prepared statement parameter
      * @param int $hydrationMode        Doctrine_Core::HYDRATE_ARRAY or Doctrine_Core::HYDRATE_RECORD
      * @return Doctrine_Record
      */
@@ -1773,6 +1794,10 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function addRecord(Doctrine_Record $record)
     {
+        if (!$this->_useIdentityMap) {
+            return false;
+        }
+
         $id = implode(' ', $record->identifier());
 
         if (isset($this->_identityMap[$id])) {
@@ -1796,6 +1821,10 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      */
     public function removeRecord(Doctrine_Record $record)
     {
+        if (!$this->_useIdentityMap) {
+            return false;
+        }
+
         $id = implode(' ', $record->identifier());
 
         if (isset($this->_identityMap[$id])) {
@@ -1842,7 +1871,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
 
             $id = implode(' ', $id);
 
-            if (isset($this->_identityMap[$id])) {
+            if ($this->_useIdentityMap && isset($this->_identityMap[$id])) {
                 $record = $this->_identityMap[$id];
                 if ($record->getTable()->getAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE)) {
                     $record->hydrate($this->_data);
@@ -1857,7 +1886,10 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             } else {
                 $recordName = $this->getComponentName();
                 $record = new $recordName($this);
-                $this->_identityMap[$id] = $record;
+
+                if ($this->_useIdentityMap) {
+                    $this->_identityMap[$id] = $record;
+                }
             }
             $this->_data = array();
         } else {
@@ -1943,6 +1975,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             $i = implode(' AND ', $a);
             $where .= ' AND ' . $i;
         }
+
         return $where;
     }
 
@@ -1964,6 +1997,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
     {
         $graph = $this->createQuery();
         $graph->load($this->getComponentName());
+
         return $graph;
     }
 
@@ -2629,6 +2663,8 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
                     || $name == 'fixed'
                     || $name == 'comment'
                     || $name == 'alias'
+                    || $name == 'charset'
+                    || $name == 'collation'
                     || $name == 'extra') {
                 continue;
             }
@@ -2755,10 +2791,10 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             $v = strtoupper($v);
         }
 
-        // Check if $fieldName has unidentified parts left 
+        // Check if $fieldName has unidentified parts left
         if (strlen(implode('', $fieldsFound) . implode('', $operatorFound)) !== strlen($fieldName)) {
             $expression = preg_replace('/(' . implode('|', $fields) . ')(Or|And)?/', '($1)$2', $fieldName);
-            throw new Doctrine_Table_Exception('Invalid expression found: ' . $expression);    
+            throw new Doctrine_Table_Exception('Invalid expression found: ' . $expression);
         }
 
         // Build result
@@ -2783,7 +2819,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
             }
 
             $where .= ' ' . strtoupper($operatorFound[$index]) . ' ';
-            
+
             $lastOperator = $operatorFound[$index];
         }
 
@@ -2979,6 +3015,7 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
      * @return array
      */
     public function __serialize() {
+
         $options = $this->_options;
         unset($options['declaringClass']);
 
@@ -3017,6 +3054,10 @@ class Doctrine_Table extends Doctrine_Configurable implements Countable, Seriali
         $this->_useIdentityMap = $data[10];
     }
 
+    /**
+     * Creates new instance and initialize it from cache.
+     *
+     */
     public function initializeFromCache(Doctrine_Connection $conn)
     {
         $this->_conn = $conn;

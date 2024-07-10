@@ -78,14 +78,14 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      */
     const STATE_LOCKED     = 6;
 
-    /**
-     * TLOCKED STATE
-     * a Doctrine_Record is temporarily locked (and transient) during deletes and saves
-     *
-     * This state is used internally to ensure that circular deletes
-     * and saves will not cause infinite loops
-     */
-    const STATE_TLOCKED     = 7;
+ 	/**
+ 	 * TLOCKED STATE
+ 	 * a Doctrine_Record is temporarily locked (and transient) during deletes and saves
+ 	 *
+ 	 * This state is used internally to ensure that circular deletes
+ 	 * and saves will not cause infinite loops
+ 	 */
+ 	const STATE_TLOCKED     = 7;
 
 
     /**
@@ -185,7 +185,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      *
      * @var array
      */
-    protected $_invokedSaveHooks = false;
+    protected $_invokedSaveHooks = array();
 
     /**
      * @var integer $index                  this index is used for creating object identifiers
@@ -798,6 +798,32 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      */
     public function serialize()
     {
+        $vars = $this->__serialize();
+
+        return serialize($vars);
+    }
+
+    /**
+     * this method is automatically called everytime an instance is unserialized
+     *
+     * @param string $serialized                Doctrine_Record as serialized string
+     * @throws Doctrine_Record_Exception        if the cleanData operation fails somehow
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        $array = unserialize($serialized);
+
+        $this->__unserialize($array);
+    }
+
+    /**
+     * Serializes the current instance for php 7.4+
+     *
+     * @return array
+     */
+    public function __serialize() {
+
         $event = new Doctrine_Event($this, Doctrine_Event::RECORD_SERIALIZE);
 
         $this->preSerialize($event);
@@ -839,22 +865,18 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
             }
         }
 
-        $str = serialize($vars);
-
         $this->postSerialize($event);
         $this->getTable()->getRecordListener()->postSerialize($event);
 
-        return $str;
+        return $vars;
     }
 
     /**
-     * this method is automatically called everytime an instance is unserialized
+     * Unserializes a Doctrine_Record instance for php 7.4+
      *
-     * @param string $serialized                Doctrine_Record as serialized string
-     * @throws Doctrine_Record_Exception        if the cleanData operation fails somehow
-     * @return void
+     * @param array $serialized
      */
-    public function unserialize($serialized)
+    public function __unserialize($data)
     {
         $event = new Doctrine_Event($this, Doctrine_Event::RECORD_UNSERIALIZE);
 
@@ -866,9 +888,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
         $this->preUnserialize($event);
         $this->getTable()->getRecordListener()->preUnserialize($event);
 
-        $array = unserialize($serialized);
-
-        foreach($array as $k => $v) {
+        foreach($data as $k => $v) {
             $this->$k = $v;
         }
 
@@ -962,7 +982,8 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      *
      * @throws Doctrine_Record_Exception        When the refresh operation fails (when the database row
      *                                          this record represents does not exist anymore)
-     * @return boolean
+     *
+     * @return false|Doctrine_Record false if the record is not saved yet
      */
     public function refresh($deep = false)
     {
@@ -1013,10 +1034,8 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      * refresh
      * refresh data of related objects from the database
      *
-     * @param string $name              name of a related component.
-     *                                  if set, this method only refreshes the specified related component
-     *
-     * @return Doctrine_Record          this object
+     * @param string $name name of a related component. if set, this method only refreshes
+     *                     the specified related component
      */
     public function refreshRelated($name = null)
     {
@@ -1476,19 +1495,11 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
                 $old = $this->_data[$fieldName];
             }
 
-            # http://www.doctrine-project.org/jira/browse/DC-797?page=com.atlassian.jira.plugin.system.issuetabpanels:changehistory-tabpanel
-            # DRP: I moved the next four lines here from inside the
-            # _isValueModified block to work around an issue where Doctrine
-            # set the record state to dirty during hydration when a NULL
-            # relationship field was replaced with a Doctrine_Null object.
-            if ($value === null) {
-              $value = $this->_table->getDefaultValueOf($fieldName);
-            }
-            $this->_data[$fieldName] = $value;
-
             if ($this->_isValueModified($type, $old, $value)) {
-                # DRP: This is where I moved the four lines mentioned above
-                # from.
+                if ($value === null) {
+                    $value = $this->_table->getDefaultValueOf($fieldName);
+                }
+                $this->_data[$fieldName] = $value;
                 $this->_modified[] = $fieldName;
                 $this->_oldValues[$fieldName] = $old;
 
@@ -1541,28 +1552,19 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      */
     protected function _isValueModified($type, $old, $new)
     {
-      # DRP: enforce equivalency between DB NULL & Doctrine_Null.  This
-      # works around an issue where the hydration engine marks relationships
-      # that were just loaded from the DB as dirty.  See the comment in
-      # _set() with my initials.
-      if ((is_null($old) || $old === self::$_null)
-        && (is_null($new) || $new === self::$_null)) {
-        return false;
-      }
-
         if ($new instanceof Doctrine_Expression) {
             return true;
         }
 
         if ($type == 'boolean' && (is_bool($old) || is_numeric($old)) && (is_bool($new) || is_numeric($new)) && $old == $new) {
             return false;
-        } else if (in_array($type, array('decimal', 'float')) && is_numeric($old) && is_numeric($new)) {
+        } else if (in_array($type, array('decimal', 'float', 'double')) && is_numeric($old) && is_numeric($new)) {
             return $old * 100 != $new * 100;
         } else if (in_array($type, array('integer', 'int')) && is_numeric($old) && is_numeric($new)) {
             return $old != $new;
         } else if ($type == 'timestamp' || $type == 'date') {
-            $oldStrToTime = strtotime($old);
-            $newStrToTime = strtotime($new);
+            $oldStrToTime = @strtotime((string) $old);
+            $newStrToTime = @strtotime((string) $new);
             if ($oldStrToTime && $newStrToTime) {
                 return $oldStrToTime !== $newStrToTime;
             } else {
@@ -1983,7 +1985,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
      * @link http://www.doctrine-project.org/documentation/manual/1_1/en/working-with-models
      * @param string $array  array of data, see link for documentation
      * @param bool   $deep   whether or not to act on relations
-     * @return void
+     * @return Doctrine_Record
      */
     public function fromArray(array $array, $deep = true)
     {
@@ -2071,7 +2073,7 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
 
         // Eliminate relationships missing in the $array
         foreach ($this->_references as $name => $relation) {
-          $rel = $this->getTable()->getRelation($name);
+	        $rel = $this->getTable()->getRelation($name);
 
             if ( ! $rel->isRefClass() && ! isset($array[$name]) && ( ! $rel->isOneToOne() || ! isset($array[$rel->getLocalFieldName()]))) {
                 unset($this->$name);

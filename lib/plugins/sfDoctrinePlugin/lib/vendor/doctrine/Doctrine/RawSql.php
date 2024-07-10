@@ -59,7 +59,7 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
 
     protected function clear()
     {
-        $this->_preQuery = false;
+        $this->_preQueried = false;
         $this->_pendingJoinConditions = array();
     }
 
@@ -135,7 +135,6 @@ class Doctrine_RawSql extends Doctrine_Query_Abstract
         $tokens = $this->_tokenizer->sqlExplode($query, ' ');
 
         $parts = array();
-        $type = '';
         foreach ($tokens as $key => $part) {
             $partLowerCase = strtolower($part);
             switch ($partLowerCase) {

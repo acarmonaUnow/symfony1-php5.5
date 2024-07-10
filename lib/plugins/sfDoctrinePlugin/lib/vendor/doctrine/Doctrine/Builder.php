@@ -51,9 +51,6 @@ class Doctrine_Builder
         $export = str_replace(', )', ')', $export);
         $export = str_replace('  ', ' ', $export);
 
-        // temp fix to maintain php 5.6 base classes
-        $export = str_replace("'default' => -1.0,", "'default' => -1,", $export);
-
         return $export;
     }
 }

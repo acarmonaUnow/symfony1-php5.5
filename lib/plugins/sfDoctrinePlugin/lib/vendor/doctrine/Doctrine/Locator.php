@@ -45,7 +45,7 @@ class Doctrine_Locator implements Countable, IteratorAggregate
      */
     protected $_classPrefix = 'Doctrine_';
 
-    /** 
+    /**
      * @var array $_instances       a pool of this object's instances
      */
     protected static $_instances = array();
@@ -69,7 +69,7 @@ class Doctrine_Locator implements Countable, IteratorAggregate
         self::$_instances[] = $this;
     }
 
-    /** 
+    /**
      * instance
      *
      * @return Sensei_Locator
@@ -87,7 +87,7 @@ class Doctrine_Locator implements Countable, IteratorAggregate
      *
      * @param string $prefix
      */
-    public function setClassPrefix($prefix) 
+    public function setClassPrefix($prefix)
     {
         $this->_classPrefix = $prefix;
     }
@@ -124,7 +124,7 @@ class Doctrine_Locator implements Countable, IteratorAggregate
     public function bind($name, $value)
     {
         $this->_resources[$name] = $value;
-        
+
         return $this;
     }
 
@@ -150,9 +150,9 @@ class Doctrine_Locator implements Countable, IteratorAggregate
                     $v = ucfirst(strtolower($v));
                 }
                 $name = implode('_', $name);
-                
+
                 $className = $this->_classPrefix . $name;
-                
+
                 if ( ! class_exists($className)) {
                     throw new Doctrine_Locator_Exception("Couldn't locate resource " . $className);
                 }
@@ -178,6 +178,7 @@ class Doctrine_Locator implements Countable, IteratorAggregate
      * @see Countable interface
      * @return integer              the number of resources
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->_resources);
@@ -185,12 +186,13 @@ class Doctrine_Locator implements Countable, IteratorAggregate
 
     /**
      * getIterator
-     * returns an ArrayIterator that iterates through all 
+     * returns an ArrayIterator that iterates through all
      * bound resources
      *
-     * @return ArrayIterator    an iterator for iterating through 
+     * @return ArrayIterator    an iterator for iterating through
      *                          all bound resources
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->_resources);

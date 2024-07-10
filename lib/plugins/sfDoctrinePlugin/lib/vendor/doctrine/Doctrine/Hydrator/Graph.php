@@ -35,7 +35,9 @@
  */
 abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
 {
-    protected $_tables = array();
+    protected
+        $_tables = array(),
+        $_rootAlias = null;
 
     /**
      * Gets the custom field used for indexing for the specified component alias.
@@ -48,6 +50,9 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
         return isset($this->_queryComponents[$alias]['map']) ? $this->_queryComponents[$alias]['map'] : null;
     }
 
+    /**
+     * @return Doctrine_Collection|mixed
+     */
     public function hydrateResultSet($stmt)
     {
         // Used variables during hydration
@@ -121,7 +126,9 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
             $table = $this->_queryComponents[$rootAlias]['table'];
 
             if ($table->getConnection()->getAttribute(Doctrine_Core::ATTR_PORTABILITY) & Doctrine_Core::PORTABILITY_RTRIM) {
-                array_map('rtrim', $data);
+                foreach($data as $key => $foo) {
+                    $data[$key] = (is_string($foo)) ? rtrim($foo) : $foo;
+                }
             }
 
             $id = $idTemplate; // initialize the id-memory
@@ -256,7 +263,7 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
                     } else if ( ! isset($prev[$parent][$relationAlias])) {
                         $element = $this->getElement($data, $componentName);
 
-						// [FIX] Tickets #1205 and #1237
+                        // [FIX] Tickets #1205 and #1237
                         $event->set('data', $element);
                         $listeners[$componentName]->postHydrate($event);
                         $instances[$componentName]->postHydrate($event);
@@ -304,11 +311,17 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
                 $table = $this->_queryComponents[$cache[$key]['dqlAlias']]['table'];
                 $fieldName = $table->getFieldName($last);
                 $cache[$key]['fieldName'] = $fieldName;
+
+                if (isset($this->_queryComponents[$cache[$key]['dqlAlias']]['agg_field'][$last])) {
+                    $fieldName = $this->_queryComponents[$cache[$key]['dqlAlias']]['agg_field'][$last];
+                }
+
                 if ($table->isIdentifier($fieldName)) {
                     $cache[$key]['isIdentifier'] = true;
                 } else {
                   $cache[$key]['isIdentifier'] = false;
                 }
+
                 $type = $table->getTypeOfColumn($last);
                 if ($type == 'integer' || $type == 'string') {
                     $cache[$key]['isSimpleType'] = true;
@@ -409,7 +422,7 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
                 $needMatches = count($inheritanceMap);
                 foreach ($inheritanceMap as $key => $value) {
                     $key = $this->_tables[$component]->getFieldName($key);
-                    if ( isset($data[$key]) && $data[$key] == $value) {
+                    if (isset($data[$key]) && $data[$key] == $value) {
                         --$needMatches;
                     }
                 }
@@ -417,14 +430,14 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
                     $matchedComponents[] = $table->getComponentName();
                 }
             } else {
-              foreach($inheritanceMap as $key => $value) {
-                $key = $this->_tables[$component]->getFieldName($key);
-                if ( ! isset($data[$key]) || $data[$key] != $value) {
-                  continue;
-                } else {
-                  $matchedComponents[] = $table->getComponentName();
+                foreach ($inheritanceMap as $key => $value) {
+                    $key = $this->_tables[$component]->getFieldName($key);
+                    if (!isset($data[$key]) || $data[$key] != $value) {
+                        continue;
+                    } else {
+                        $matchedComponents[] = $table->getComponentName();
+                    }
                 }
-              }
             }
         }
 

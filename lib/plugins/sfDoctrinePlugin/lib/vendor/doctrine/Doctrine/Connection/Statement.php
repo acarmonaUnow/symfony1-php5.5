@@ -59,7 +59,6 @@ class Doctrine_Connection_Statement implements Doctrine_Adapter_Statement_Interf
             throw new Doctrine_Exception('Unknown statement object given.');
         }
     }
-
     /**
      * destructor
      *
@@ -70,7 +69,6 @@ class Doctrine_Connection_Statement implements Doctrine_Adapter_Statement_Interf
     {
         $this->closeCursor();
     }
-
     /**
      * getConnection
      * returns the connection object this statement uses
@@ -235,7 +233,7 @@ class Doctrine_Connection_Statement implements Doctrine_Adapter_Statement_Interf
      *                                  bound parameters in the SQL statement being executed.
      * @return boolean                  Returns TRUE on success or FALSE on failure.
      */
-    public function execute($params = null)
+    public function execute($params = array())
     {
         try {
             $event = new Doctrine_Event($this, Doctrine_Event::STMT_EXECUTE, $this->getQuery(), $params);

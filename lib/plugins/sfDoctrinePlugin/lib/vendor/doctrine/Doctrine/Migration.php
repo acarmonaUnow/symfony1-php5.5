@@ -124,17 +124,18 @@ class Doctrine_Migration
      * Load migration classes from the passed directory. Any file found with a .php
      * extension will be passed to the loadMigrationClass()
      *
-     * @param string $directory Directory to load migration classes from
+     * @param string $directory  Directory to load migration classes from
      * @return void
      */
     public function loadMigrationClassesFromDirectory($directory = null)
     {
         $directory = $directory ? $directory:$this->_migrationClassesDirectory;
 
-        $classesToLoad = [];
+        $classesToLoad = array();
         $classes = get_declared_classes();
-        foreach ((array)$directory as $dir) {
-            $files = scandir($dir);
+        foreach ((array) $directory as $dir) {
+            $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir),
+                RecursiveIteratorIterator::LEAVES_ONLY);
 
             if (isset(self::$_migrationClassesForDirectories[$dir])) {
                 foreach (self::$_migrationClassesForDirectories[$dir] as $num => $className) {
@@ -142,26 +143,19 @@ class Doctrine_Migration
                 }
             }
 
-            foreach ($files as $file) {
-                if (in_array($file, ['.', '..'])) {
-                    continue;
-                }
-
-                $file_path = $dir.'/'.$file;
-
-                $info = pathinfo($file_path);
-
+            foreach ($it as $file) {
+                $info = pathinfo($file->getFileName());
                 if (isset($info['extension']) && $info['extension'] == 'php') {
-                    require_once($file_path);
+                    require_once($file->getPathName());
 
                     $array = array_diff(get_declared_classes(), $classes);
                     $className = end($array);
 
                     if ($className) {
-                        $e = explode('_', $file);
+                        $e = explode('_', $file->getFileName());
                         $timestamp = $e[0];
 
-                        $classesToLoad[$timestamp] = ['className' => $className, 'path' => $file_path];
+                        $classesToLoad[$timestamp] = array('className' => $className, 'path' => $file->getPathName());
                     }
                 }
             }

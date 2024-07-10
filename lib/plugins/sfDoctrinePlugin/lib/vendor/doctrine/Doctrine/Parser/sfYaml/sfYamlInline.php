@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-require_once dirname(__FILE__).'/sfYaml.php';
+require_once __DIR__.'/sfYaml.php';
 
 /**
  * sfYamlInline implements a YAML parser/dumper for the YAML inline syntax.
@@ -98,9 +98,9 @@ class sfYamlInline
         return 'true';
       case false === $value:
         return 'false';
-      case ctype_digit($value):
-        return is_string($value) ? "'$value'" : (int) $value;
-      case is_numeric($value):
+      case (is_string($value) && ctype_digit($value)):
+        return "'$value'";
+      case is_numeric($value) && false === strpbrk($value, "\f\n\r\t\v"):
         return is_infinite($value) ? str_ireplace('INF', '.Inf', strval($value)) : (is_string($value) ? "'$value'" : $value);
       case false !== strpos($value, "\n") || false !== strpos($value, "\r"):
         return sprintf('"%s"', str_replace(array('"', "\n", "\r"), array('\\"', '\n', '\r'), $value));
@@ -135,7 +135,7 @@ class sfYamlInline
     if (
       (1 == count($keys) && '0' == $keys[0])
       ||
-      (count($keys) > 1 && array_reduce($keys, function($v, $w) { return (integer) $v + $w; }, 0) == count($keys) * (count($keys) - 1) / 2))
+      (count($keys) > 1 && array_reduce($keys, function ($v, $w) { return (int)($v + $w);}, 0) == count($keys) * (count($keys) - 1) / 2))
     {
       $output = array();
       foreach ($value as $val)

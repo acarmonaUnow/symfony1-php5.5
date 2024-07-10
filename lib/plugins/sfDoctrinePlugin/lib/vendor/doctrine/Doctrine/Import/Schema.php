@@ -202,7 +202,7 @@ class Doctrine_Import_Schema
     /**
      * setOptions
      *
-     * @param string $options
+     * @param array $options
      * @return void
      */
     public function setOptions($options)
@@ -270,6 +270,7 @@ class Doctrine_Import_Schema
         $builder = new Doctrine_Import_Builder();
         $builder->setTargetPath($directory);
         $builder->setOptions($this->getOptions());
+
         $array = $this->buildSchema($schema, $format);
 
         if (count($array) == 0) {
