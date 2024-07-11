@@ -25,6 +25,33 @@ class sfDoctrinePager extends sfPager implements Serializable
     $tableMethodCalled = false;
 
   /**
+   * Serializes the current instance for php 7.4+.
+   *
+   * @return array
+   */
+  public function __serialize()
+  {
+    $vars = get_object_vars($this);
+    unset($vars['query']);
+
+    return $vars;
+  }
+
+  /**
+   * Unserializes a sfDoctrinePager instance for php 7.4+.
+   *
+   * @param array $data
+   */
+  public function __unserialize($data)
+  {
+    foreach ($data as $name => $values) {
+      $this->{$name} = $values;
+    }
+
+    $this->tableMethodCalled = false;
+  }
+
+  /**
    * Get the name of the table method used to retrieve the query object for the pager
    *
    * @return string $tableMethodName
@@ -52,9 +79,7 @@ class sfDoctrinePager extends sfPager implements Serializable
    */
   public function serialize()
   {
-    $vars = get_object_vars($this);
-    unset($vars['query']);
-    return serialize($vars);
+    return serialize($this->__serialize());
   }
 
   /**
@@ -66,12 +91,7 @@ class sfDoctrinePager extends sfPager implements Serializable
   {
     $array = unserialize($serialized);
 
-    foreach ($array as $name => $values)
-    {
-      $this->$name = $values;
-    }
-
-    $this->tableMethodCalled = false; 
+    return $this->__unserialize($array);
   }
 
   /**
